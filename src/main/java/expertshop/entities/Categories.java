@@ -3,5 +3,5 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public enum Categories {
-    Electronics, Computers, Mobile
+    Electronics, Computers, Mobile, Kitchen
 }

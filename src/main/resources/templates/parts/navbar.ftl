@@ -22,12 +22,36 @@
                         aria-expanded="false">
                     Выберите товар!
                 </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="/electronics">Electronic</a>
-                    <a class="dropdown-item" href="/computers">Computers</a>
-                    <a class="dropdown-item" href="/mobile">Mobile</a>
-                </div>
+
+                <ul class="dropdown-menu">
+                    <li class="dropdown-submenu">
+                        <a class="test" tabindex="-1" href="#">Электроника <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a tabindex="-1" href="/electronics"><h4>Вся электроника!</h4></a></li>
+                            <li><a tabindex="-1" href="/tv">ТВ</a></li>
+                            <li><a tabindex="-1" href="/projectors">Проекторы</a></li>
+                        </ul>
+
+                        <a class="test" tabindex="-1" href="#">Кухонная техника <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a tabindex="-1" href="/kitchen"><h4>Вся кухонная техника!</h4></a></li>
+                            <li><a tabindex="-1" href="/fridges">Холодильники</a></li>
+                            <li><a tabindex="-1" href="/ovens">Плиты</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </ul>
     </div>
+
+    <script>
+        $(document).ready(function(){
+            $('.dropdown a.test').on("click", function(e){
+                $(this).next('ul').toggle();
+                e.stopPropagation();
+                e.preventDefault();
+            });
+        });
+    </script>
+
 </nav>

@@ -2,10 +2,14 @@
 
 <@common.page>
 
-    <h1>Дорбо пожаловать в интернет-магазин Эксперт!</h1>
+    <h2>Холодильники!</h2>
 
-    <div class="card-columns">
-    <#list products as product>
+    <a href="/fridges?sortby=lowest" class="btn btn-light" role="button">Самые дешевые!</a>
+    <a href="/fridges?sortby=highest" class="btn btn-light" role="button">Самые дорогие!</a>
+    <a href="/fridges" class="btn btn-light" role="button">Сбросить</a>
+
+    <div class="card-deck">
+    <#list fridges as product>
         <div class="card my-2">
             <div class="card-body">
                 <h5 class="card-title">
@@ -22,5 +26,6 @@
             </div>
         </div>
     </#list>
+
 
 </@common.page>

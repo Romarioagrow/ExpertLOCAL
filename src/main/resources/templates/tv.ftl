@@ -2,10 +2,14 @@
 
 <@common.page>
 
-    <h2>Все компьютеры и коплектующие!</h2>
+    <h2>Телевизоры!</h2>
+
+    <a href="/tv?sortby=lowest" class="btn btn-light" role="button">Самые дешевые!</a>
+    <a href="/tv?sortby=highest" class="btn btn-light" role="button">Самые дорогие!</a>
+    <a href="/tv" class="btn btn-light" role="button">Сбросить</a>
 
     <div class="card-columns">
-    <#list computers as product>
+    <#list tv as product>
         <div class="card my-2">
             <div class="card-body">
                 <h5 class="card-title">
