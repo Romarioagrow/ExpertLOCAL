@@ -4,6 +4,8 @@
 
     <h1>Дорбо пожаловать в интернет-магазин Эксперт!</h1>
 
+   test
+
     <div class="card-columns">
     <#list products as product>
         <div class="card my-2">
