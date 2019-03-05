@@ -34,11 +34,11 @@ public class ProductController {
             @RequestParam(required = false, defaultValue = "") String sortby,
             Model model)
     {
-        List<Product> electronics = (List<Product>) productRepo.findByCategory(Categories.Electronics);
+        List<Product> products = (List<Product>) productRepo.findByCategory(Categories.Electronics);
 
-        sortService.sorted(electronics, sortby);
+        sortService.sorted(products, sortby);
 
-        model.addAttribute("electronics", electronics);
+        model.addAttribute("products", products);
         return "electronics";
     }
     @GetMapping("/tv") /// В путь /electronics/tv
@@ -46,11 +46,11 @@ public class ProductController {
             @RequestParam(required = false, defaultValue = "") String sortby,
             Model model)
     {
-        List<Product> tv = (List<Product>) productRepo.findByType(Types.TV);
+        List<Product> products = (List<Product>) productRepo.findByType(Types.TV);
 
-        sortService.sorted(tv, sortby);
+        sortService.sorted(products, sortby);
 
-        model.addAttribute("tv", tv);
+        model.addAttribute("products", products);
         return "tv";
     }
     @GetMapping("/projectors")
@@ -58,11 +58,11 @@ public class ProductController {
             @RequestParam(required = false, defaultValue = "") String sortby,
             Model model)
     {
-        List<Product> projectors = (List<Product>) productRepo.findByType(Types.Projector);
+        List<Product> products = (List<Product>) productRepo.findByType(Types.Projector);
 
-        sortService.sorted(projectors, sortby);
+        sortService.sorted(products, sortby);
 
-        model.addAttribute("projectors", projectors);
+        model.addAttribute("products", products);
         return "projectors";
     }
 
@@ -72,11 +72,11 @@ public class ProductController {
             @RequestParam(required = false, name = "") String sortby,
             Model model)
     {
-        List<Product> kitchens = (List<Product>) productRepo.findByCategory(Categories.Kitchen);
+        List<Product> products = (List<Product>) productRepo.findByCategory(Categories.Kitchen);
 
-        sortService.sorted(kitchens, sortby);
+        sortService.sorted(products, sortby);
 
-        model.addAttribute("kitchens", kitchens);
+        model.addAttribute("products", products);
         return "kitchen";
     }
     @GetMapping("/fridges")
@@ -84,11 +84,11 @@ public class ProductController {
             @RequestParam(required = false, name = "") String sortby,
             Model model)
     {
-        List<Product> fridges = (List<Product>) productRepo.findByType(Types.Fridge);
+        List<Product> products = (List<Product>) productRepo.findByType(Types.Fridge);
 
-        sortService.sorted(fridges, sortby);
+        sortService.sorted(products, sortby);
 
-        model.addAttribute("fridges", fridges);
+        model.addAttribute("products", products);
         return "fridges";
     }
     @GetMapping("/ovens")
@@ -96,11 +96,11 @@ public class ProductController {
             @RequestParam(required = false, name = "") String sortby,
             Model model)
     {
-        List<Product> ovens = (List<Product>) productRepo.findByType(Types.Oven);
+        List<Product> products = (List<Product>) productRepo.findByType(Types.Oven);
 
-        sortService.sorted(ovens, sortby);
+        sortService.sorted(products, sortby);
 
-        model.addAttribute("ovens", ovens);
+        model.addAttribute("products", products);
         return "ovens";
     }
 }

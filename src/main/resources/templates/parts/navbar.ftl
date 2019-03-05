@@ -27,19 +27,30 @@
                     <li class="dropdown-submenu">
                         <a class="test" tabindex="-1" href="#">Электроника <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a tabindex="-1" href="/electronics"><h4>Вся электроника!</h4></a></li>
-                            <li><a tabindex="-1" href="/tv">ТВ</a></li>
-                            <li><a tabindex="-1" href="/projectors">Проекторы</a></li>
+                            <li><a class="cat" tabindex="-1" href="/electronics"><h4>Вся электроника!</h4></a></li>
+                            <li><a class="cat" tabindex="-1" href="/tv">ТВ</a></li>
+                            <li><a class="cat" tabindex="-1" href="/projectors">Проекторы</a></li>
                         </ul>
 
                         <a class="test" tabindex="-1" href="#">Кухонная техника <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a tabindex="-1" href="/kitchen"><h4>Вся кухонная техника!</h4></a></li>
-                            <li><a tabindex="-1" href="/fridges">Холодильники</a></li>
-                            <li><a tabindex="-1" href="/ovens">Плиты</a></li>
+                            <li><a class="cat" tabindex="-1" href="/kitchen"><h4>Вся кухонная техника!</h4></a></li>
+                            <li><a class="cat" tabindex="-1" href="/fridges">Холодильники</a></li>
+                            <li><a class="cat" tabindex="-1" href="/ovens">Плиты</a></li>
                         </ul>
                     </li>
                 </ul>
+
+                <style>
+                    .dropdown-submenu .dropdown-menu {
+                        top: 0;
+                        left: 100%;
+                        margin-top: -1px;
+                    }
+                    .cat {
+                        text-align: left;
+                    }
+                </style>
             </div>
         </ul>
     </div>

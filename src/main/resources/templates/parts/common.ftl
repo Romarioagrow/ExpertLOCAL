@@ -6,10 +6,11 @@
         <meta charset="UTF-8">
         <title>Expert Store</title>
         <!-- Стили CSS -->
-        <!--<link rel="stylesheet" href="/static/style.css"-->
+        <!--<link rel="stylesheet" href="/static/style.css">-->
 
         <!-- Плотные шрифты-->
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
         <!-- Стили Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
               integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
@@ -17,33 +18,21 @@
 
         <!-- Скрипты для dropmenu -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-        <style>
-            .dropdown-submenu {
-                position: relative;
-            }
-
-            .dropdown-submenu .dropdown-menu {
-                top: 0;
-                left: 100%;
-                margin-top: -1px;
-            }
-        </style>
-
     </head>
 
     <body>
     <!-- Подключить навпанель -->
     <#include "navbar.ftl">
 
-    <!-- Сюда вставлются страницы -->
     <!-- Подлючить разметку и отступы Bootstrap -->
     <div class="container mt-5">
-        <#nested>
+        <#nested> <!-- Сюда вставлются страницы -->
     </div>
+
+    <#include "products.ftl">
 
     <!-- Блоки JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
