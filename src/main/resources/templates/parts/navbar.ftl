@@ -1,5 +1,5 @@
 <!-- Подгонка навпанели под экран и цветовая схема-->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light mark1">
     <!-- Название проекта-->
     <a class="navbar-brand" href="/"><h1>Expert Store</h1></a>
 
@@ -9,7 +9,7 @@
     </button>
 
     <!-- Основной блок навпанели -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse mark2" id="navbarSupportedContent">
         <!-- Кнопки меню -->
         <ul class="navbar-nav mr-auto">
 
@@ -41,16 +41,7 @@
                     </li>
                 </ul>
 
-                <style>
-                    .dropdown-submenu .dropdown-menu {
-                        top: 0;
-                        left: 100%;
-                        margin-top: -1px;
-                    }
-                    .cat {
-                        text-align: left;
-                    }
-                </style>
+
             </div>
         </ul>
     </div>

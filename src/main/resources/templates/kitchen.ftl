@@ -2,10 +2,12 @@
 
 <@common.page>
 
-    <h2>Вся кухонная техника!</h2>
+    <div class="header"><h2>Вся кухонная техника!</h2></div>
 
-    <a href="/kitchen?sortby=lowest" class="btn btn-light" role="button">Самые дешевые!</a>
-    <a href="/kitchen?sortby=highest" class="btn btn-light" role="button">Самые дорогие!</a>
-    <a href="/kitchen" class="btn btn-light" role="button">Сбросить</a>
+    <div class="sorting">
+        <a href="/kitchen?sortby=lowest" class="btn btn-light" role="button">Самые дешевые!</a>
+        <a href="/kitchen?sortby=highest" class="btn btn-light" role="button">Самые дорогие!</a>
+        <a href="/kitchen" class="btn btn-light" role="button">Сбросить</a>
+    </div>
 
 </@common.page>

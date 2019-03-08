@@ -2,7 +2,7 @@
 
 <@common.page>
 
-    <h2>Вся электроника!</h2>
+    <div class="header"><h2>Вся электроника!</h2></div>
 
     <div class="sorting">
         <a href="/electronics?sortby=lowest" class="btn btn-light" role="button">Самые дешевые!</a>
