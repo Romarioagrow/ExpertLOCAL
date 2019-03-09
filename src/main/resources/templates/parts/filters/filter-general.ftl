@@ -1,5 +1,5 @@
 <div>
-    <form class="filter-layout m2" method="get">
+    <form class="filter-layout m3" method="get">
         <div class="field m3">
             <label for="cheap">Не дешевле:</label>
             <input type="text" id="cheap" name="cheap">

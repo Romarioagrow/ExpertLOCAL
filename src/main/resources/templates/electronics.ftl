@@ -1,15 +1,20 @@
-<#import "parts/products.ftl" as p>
-
-<@p.info>
-        <div class="header"><h2>Вся электроника!</h2></div>
-</@p.info>
-
-<@p.sort>
-        <div class="sorting">
-            <a href="/electronics?sortby=lowest" class="btn btn-light" role="button">Самые дешевые!</a>
-            <a href="/electronics?sortby=highest" class="btn btn-light" role="button">Самые дорогие!</a>
-            <a href="/electronics" class="btn btn-light" role="button">Сбросить</a>
+<#import "parts/common.ftl" as c>
+<@c.page>
+    <div class="filter-container m1">
+        <div class="someinfo m2">Здесь что то будет</div>
+        <div class="filters m2">
+            <span class="filter-class">Фильтры для электроники</span>
+            <#include "parts/filters/filter-general.ftl">
         </div>
-</@p.sort>
-
-<!-- вставляет в имя название страницы -->
+    </div>
+    <!--Главный блок отображения товаров-->
+    <div class="products-container m1">
+        <div class="info-layout m2">
+            <h2>Вся электроника вместе!</h2>
+        </div>
+        <!--Витрина товаров c сортировкой-->
+        <div class="showcase m2">
+            <#include "parts/products.ftl">
+        </div>
+    </div>
+</@c.page>

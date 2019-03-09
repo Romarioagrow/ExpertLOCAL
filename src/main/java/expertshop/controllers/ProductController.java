@@ -24,7 +24,7 @@ public class ProductController {
     @GetMapping("/")
     public String showProducts(
             @RequestParam (required = false, defaultValue = "") String sortby,
-                    Model model)
+            Model model)
     {
         List<Product> products = productRepo.findAll();
 
@@ -43,7 +43,7 @@ public class ProductController {
 
         sortService.sorted(products, sortby);
         model.addAttribute("products", products);
-        return "main";
+        return "electronics";
     }
     @GetMapping("/tv") /// В путь /electronics/tv
     public String showTV(

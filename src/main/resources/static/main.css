@@ -20,15 +20,13 @@ form input:focus {
     display: table;
     clear: both;
 }
-
+/**/
 .m1 {
     border: 3px dashed red;
 }
-
 .m2 {
     border: 2px dashed #3498db;
 }
-
 .m3 {
     border: 1px dashed green;
 }
@@ -44,20 +42,28 @@ form input:focus {
     float: left;
     width: 20%;
 }
-
+.filter-container .someinfo {
+    min-height: 55px;
+    margin-bottom: 5px;
+}
 .filter-layout .field {
     margin-left: 20px;
 }
 
 .products-container {
-    float: left;
-    width: 70%;
-    margin-left: 10px;
-}
+    float: right;
+    width: 78%;
+    margin-right: 15px;
 
-.products-container .product-field {
+}
+.products-container .info-layout {
     min-height: 50px;
     margin-bottom: 10px;
+    padding-left: 20px;
+}
+
+#sorting {
+    padding-left: 20px;
 }
 
 
