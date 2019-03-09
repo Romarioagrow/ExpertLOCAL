@@ -2,17 +2,14 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light mark1">
     <!-- Название проекта-->
     <a class="navbar-brand" href="/"><h1>Expert Store</h1></a>
-
     <!-- Конопка меню на маленьких экранах-->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
-
     <!-- Основной блок навпанели -->
     <div class="collapse navbar-collapse mark2" id="navbarSupportedContent">
         <!-- Кнопки меню -->
         <ul class="navbar-nav mr-auto">
-
             <div class="dropdown">
                 <button class="btn btn-secondary dropdown-toggle"
                         type="button"
@@ -40,12 +37,9 @@
                         </ul>
                     </li>
                 </ul>
-
-
             </div>
         </ul>
     </div>
-
     <script>
         $(document).ready(function(){
             $('.dropdown a.test').on("click", function(e){
@@ -55,5 +49,4 @@
             });
         });
     </script>
-
 </nav>

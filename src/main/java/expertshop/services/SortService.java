@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public class SortService {
     public void sorted(List<Product> products, String sortby) {
-        if (sortby != null && !sortby.isEmpty()) { /// В SORT SERVICE
+        if (sortby != null && !sortby.isEmpty()) {
             switch (sortby) {
                 case "lowest":
                     products.sort(Comparator.comparing(Product::getPrice));

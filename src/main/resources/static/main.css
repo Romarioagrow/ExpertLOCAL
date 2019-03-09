@@ -3,18 +3,6 @@ body {
     background-color: #f3f3f3;
 }
 
-.sort {
-    float: left;
-    width: 150px;
-    min-height: 150px;
-    padding: 10px;
-    margin: 20px;
-    color: #212529;
-    /*background-color: #f8f9fa;*/
-    border: 3px solid red;
-    background-color: chartreuse;
-}
-
 .card-columns {
     margin-left: 20px;
     margin-right: 20px;
@@ -25,44 +13,52 @@ form input:focus {
     border-color: #0088cc;
 }
 
-input[type="text"] {
-    background-color: white;
-    width: 100%;
-}
 
-.header {
-    width: 90%;
-    margin-left: 100px;
-    background-color: aqua;
-    border: 3px solid red;/*!!!*/
-}
-
-.sorting {
-    width: 90%;
-    margin-left: 100px;
-    background-color: #0088cc;
-    border: 3px solid red;/*!!!*/
-}
-
-.card-columns {
-    border: 3px solid red;
-    background-color: blueviolet;
-}
-
-.mark1 {
-    border: 3px solid deeppink !important;
-    background-color: aquamarine !important;
-}
-
-.mark2 {
-    border: 3px solid deeppink !important;
-    background-color: darksalmon !important;
-}
-
+/*******************/
 .clearfix::after {
     content: "";
     display: table;
     clear: both;
-    background-color: #e74c3c;
-    border: 3px solid red;
 }
+
+.m1 {
+    border: 3px dashed red;
+}
+
+.m2 {
+    border: 2px dashed #3498db;
+}
+
+.m3 {
+    border: 1px dashed green;
+}
+
+.about {
+    float: left;
+    width: 100%;
+    min-height: 20px;
+    margin-bottom: 10px;
+}
+
+.filter-container {
+    float: left;
+    width: 20%;
+}
+
+.filter-layout .field {
+    margin-left: 20px;
+}
+
+.products-container {
+    float: left;
+    width: 70%;
+    margin-left: 10px;
+}
+
+.products-container .product-field {
+    min-height: 50px;
+    margin-bottom: 10px;
+}
+
+
+

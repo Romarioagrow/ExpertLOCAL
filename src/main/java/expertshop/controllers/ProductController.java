@@ -22,8 +22,13 @@ public class ProductController {
     private SortService sortService;
 
     @GetMapping("/")
-    public String showProducts(Model model) {
-        Iterable<Product> products = productRepo.findAll();
+    public String showProducts(
+            @RequestParam (required = false, defaultValue = "") String sortby,
+                    Model model)
+    {
+        List<Product> products = productRepo.findAll();
+
+        sortService.sorted(products, sortby);
         model.addAttribute("products", products);
         return "main";
     }
@@ -34,36 +39,33 @@ public class ProductController {
             @RequestParam(required = false, defaultValue = "") String sortby,
             Model model)
     {
-        List<Product> products = (List<Product>) productRepo.findByCategory(Categories.Electronics);
+        List<Product> products = productRepo.findByCategory(Categories.Electronics);
 
         sortService.sorted(products, sortby);
-
         model.addAttribute("products", products);
-        return "electronics";
+        return "main";
     }
     @GetMapping("/tv") /// В путь /electronics/tv
     public String showTV(
             @RequestParam(required = false, defaultValue = "") String sortby,
             Model model)
     {
-        List<Product> products = (List<Product>) productRepo.findByType(Types.TV);
+        List<Product> products = productRepo.findByType(Types.TV);
 
         sortService.sorted(products, sortby);
-
         model.addAttribute("products", products);
-        return "tv";
+        return "main";
     }
     @GetMapping("/projectors")
     public String showProjectors(
             @RequestParam(required = false, defaultValue = "") String sortby,
             Model model)
     {
-        List<Product> products = (List<Product>) productRepo.findByType(Types.Projector);
+        List<Product> products = productRepo.findByType(Types.Projector);
 
         sortService.sorted(products, sortby);
-
         model.addAttribute("products", products);
-        return "projectors";
+        return "main";
     }
 
     ///////////////////////
@@ -72,35 +74,32 @@ public class ProductController {
             @RequestParam(required = false, name = "") String sortby,
             Model model)
     {
-        List<Product> products = (List<Product>) productRepo.findByCategory(Categories.Kitchen);
+        List<Product> products = productRepo.findByCategory(Categories.Kitchen);
 
         sortService.sorted(products, sortby);
-
         model.addAttribute("products", products);
-        return "kitchen";
+        return "main";
     }
     @GetMapping("/fridges")
     public String showFridges(
             @RequestParam(required = false, name = "") String sortby,
             Model model)
     {
-        List<Product> products = (List<Product>) productRepo.findByType(Types.Fridge);
+        List<Product> products = productRepo.findByType(Types.Fridge);
 
         sortService.sorted(products, sortby);
-
         model.addAttribute("products", products);
-        return "fridges";
+        return "main";
     }
     @GetMapping("/ovens")
     public String showOvens(
             @RequestParam(required = false, name = "") String sortby,
             Model model)
     {
-        List<Product> products = (List<Product>) productRepo.findByType(Types.Oven);
+        List<Product> products = productRepo.findByType(Types.Oven);
 
         sortService.sorted(products, sortby);
-
         model.addAttribute("products", products);
-        return "ovens";
+        return "main";
     }
 }
