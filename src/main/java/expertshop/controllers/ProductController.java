@@ -54,7 +54,7 @@ public class ProductController {
 
         sortService.sorted(products, sortby);
         model.addAttribute("products", products);
-        return "main";
+        return "tv";
     }
     @GetMapping("/projectors")
     public String showProjectors(
@@ -65,7 +65,7 @@ public class ProductController {
 
         sortService.sorted(products, sortby);
         model.addAttribute("products", products);
-        return "main";
+        return "projectors";
     }
 
     ///////////////////////
@@ -78,7 +78,7 @@ public class ProductController {
 
         sortService.sorted(products, sortby);
         model.addAttribute("products", products);
-        return "main";
+        return "kitchen";
     }
     @GetMapping("/fridges")
     public String showFridges(
@@ -89,7 +89,7 @@ public class ProductController {
 
         sortService.sorted(products, sortby);
         model.addAttribute("products", products);
-        return "main";
+        return "fridges";
     }
     @GetMapping("/ovens")
     public String showOvens(
@@ -100,6 +100,6 @@ public class ProductController {
 
         sortService.sorted(products, sortby);
         model.addAttribute("products", products);
-        return "main";
+        return "ovens";
     }
 }

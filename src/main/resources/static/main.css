@@ -68,3 +68,101 @@ form input:focus {
 
 
 
+/*Для списка товаров*/
+.main-menu {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border: 1px solid #e5e5e5;
+}
+
+.main-menu > li {
+    position: relative;
+    display: inline-block;
+    margin-right: -4px;
+}
+
+.main-menu a {
+    display: block;
+    margin-left: -1px;
+    padding: 8px 10px;
+    color: black;
+    border-left: 1px solid #e5e5e5;
+    text-decoration: none;
+}
+
+.main-menu a:hover {
+    background-color: #f5f5f5;
+}
+
+.main-menu .main-sub-menu {
+    position: absolute;
+    left: 1px;
+    display: none;
+    width: 150px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background-color: #fcf8e3;
+}
+
+.main-menu .main-sub-menu a {
+    margin-bottom: -1px;
+    border: 1px solid #e5e5e5;
+}
+
+.main-menu > li:hover .main-sub-menu {
+    display: block;
+}
+
+/*
+.frozen {
+    position: fixed;
+    z-index: 10;
+    width: 100%;
+}
+*/
+
+.hor-main-menu {
+    width: 180px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background-color: whitesmoke;
+}
+
+.hor-main-menu a {
+    display: block;
+    margin-bottom: -1px;
+    padding: 8px 14px;
+    color: black;
+    text-decoration: none;
+    border: 1px solid #e5e5e5;
+}
+
+.hor-main-menu a:hover {
+    background-color: #e5e5e5;
+}
+
+.hor-main-menu > li {
+    position: relative;
+}
+
+.hor-main-menu .hor-sub-menu {
+    position: absolute;
+    top: 0;
+    left: 170px;
+    z-index: 10;
+    display: none;
+    width: 150px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    background-color: #fcf8e3;
+}
+
+/* Cелектор для подменю, если навести курсор на родительский элемент верхнего меню */
+
+.hor-main-menu > li:hover .hor-sub-menu {
+    display: block;
+}

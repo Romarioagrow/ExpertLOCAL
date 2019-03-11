@@ -1,12 +1,20 @@
-<#import "main.ftl" as common>
-
-<@common.page>
-
-    <div class="header"><h2>Вся кухонная техника!</h2></div>
-    <div class="sorting">
-        <a href="/kitchen?sortby=lowest" class="btn btn-light" role="button">Самые дешевые!</a>
-        <a href="/kitchen?sortby=highest" class="btn btn-light" role="button">Самые дорогие!</a>
-        <a href="/kitchen" class="btn btn-light" role="button">Сбросить</a>
+<#import "parts/common.ftl" as c>
+<@c.page>
+    <div class="filter-container m1">
+        <div class="someinfo m2">Здесь что то будет</div>
+        <div class="filters m2">
+            <span class="filter-class">Фильтры для кухни</span>
+            <#include "parts/filters/filter-general.ftl">
+        </div>
     </div>
-
-</@common.page>
+    <!--Главный блок отображения товаров-->
+    <div class="products-container m1">
+        <div class="info-layout m2">
+            <h2>Вся электроника вместе!</h2>
+        </div>
+        <!--Витрина товаров c сортировкой-->
+        <div class="showcase m2">
+            <#include "parts/products.ftl">
+        </div>
+    </div>
+</@c.page>

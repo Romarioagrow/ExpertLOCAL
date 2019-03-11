@@ -1,5 +1,5 @@
 <!-- Подгонка навпанели под экран и цветовая схема-->
-<nav class="navbar navbar-expand-lg navbar-light bg-light mark1">
+<nav class="navbar navbar-expand-lg navbar-light bg-light mark1 frozen">
     <!-- Название проекта-->
     <a class="navbar-brand" href="/"><h1>Expert Store</h1></a>
     <!-- Конопка меню на маленьких экранах-->
@@ -10,43 +10,30 @@
     <div class="collapse navbar-collapse mark2" id="navbarSupportedContent">
         <!-- Кнопки меню -->
         <ul class="navbar-nav mr-auto">
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle"
-                        type="button"
-                        id="dropdownMenuButton"
-                        data-toggle="dropdown"
-                        aria-haspopup="true"
-                        aria-expanded="false">
-                    Выберите товар!
-                </button>
+            <div class="selector">
+                <ul class="main-menu">
+                    <li><a href="#">Товар</a>
+                        <ul class="main-sub-menu">
+                            <div>
+                                <ul class="hor-main-menu">
+                                    <li><a href="http://localhost:8080/electronics">Электроника</a>
+                                        <ul class="hor-sub-menu">
+                                            <li><a href="http://localhost:8080/tv">Телевизоры</a></li>
+                                        </ul>
+                                    </li>
 
-                <ul class="dropdown-menu">
-                    <li class="dropdown-submenu">
-                        <a class="test" tabindex="-1" href="#">Электроника <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a class="cat" tabindex="-1" href="/electronics"><h4>Вся электроника!</h4></a></li>
-                            <li><a class="cat" tabindex="-1" href="/tv">ТВ</a></li>
-                            <li><a class="cat" tabindex="-1" href="/projectors">Проекторы</a></li>
-                        </ul>
-
-                        <a class="test" tabindex="-1" href="#">Кухонная техника <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a class="cat" tabindex="-1" href="/kitchen"><h4>Вся кухонная техника!</h4></a></li>
-                            <li><a class="cat" tabindex="-1" href="/fridges">Холодильники</a></li>
-                            <li><a class="cat" tabindex="-1" href="/ovens">Плиты</a></li>
+                                    <li><a href="http://localhost:8080/kitchen">Кухонная техника</a>
+                                        <ul class="hor-sub-menu">
+                                            <li><a href="http://localhost:8080/fridges">Холодильники</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Компьютеры</a></li>
+                                </ul>
+                            </div>
                         </ul>
                     </li>
                 </ul>
             </div>
         </ul>
     </div>
-    <script>
-        $(document).ready(function(){
-            $('.dropdown a.test').on("click", function(e){
-                $(this).next('ul').toggle();
-                e.stopPropagation();
-                e.preventDefault();
-            });
-        });
-    </script>
 </nav>
