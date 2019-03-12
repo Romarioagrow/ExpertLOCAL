@@ -2,8 +2,11 @@
 <@c.page>
     <!--Боковой вертикальный контейнер с фильтрами-->
     <div class="filter-container m1">
-        <#include "parts/filters/filter-general.ftl">
+        <#include "parts/components/some-info.ftl">
+
+        <#include "parts/filters/main-filter.ftl">
     </div>
+
     <!--Главный блок отображения товаров-->
     <div class="products-container m1">
         <!--Инфо о товарах-->

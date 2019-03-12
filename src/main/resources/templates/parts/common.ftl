@@ -16,7 +16,7 @@
     <body>
     <!-- Подключить навпанель -->
     <#include "navbar.ftl">
-    <div class="about m1">БЛОК ОБЩЕЙ ИНФОРМАЦИИ</div>
+    <div class="about mmm1">БЛОК ОБЩЕЙ ИНФОРМАЦИИ</div>
     <div class="nested">
         <#nested>
     </div>

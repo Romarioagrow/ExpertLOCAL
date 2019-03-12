@@ -19,6 +19,7 @@
                                     <li><a href="http://localhost:8080/electronics">Электроника</a>
                                         <ul class="hor-sub-menu">
                                             <li><a href="http://localhost:8080/tv">Телевизоры</a></li>
+                                            <li><a href="http://localhost:8080/monitors">Мониторы</a></li>
                                             <li><a href="http://localhost:8080/projectors">Прожекторы</a></li>
                                         </ul>
                                     </li>

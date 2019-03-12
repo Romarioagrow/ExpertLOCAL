@@ -1,7 +1,7 @@
 <div>
     <div class="sorting m3" id="sorting">
-        <a href="?sortby=lowest" class="btn btn-light" role="button">Самые дешевые!</a>
-        <a href="?sortby=highest" class="btn btn-light" role="button">Самые дорогие!</a>
+        <a href="?sortby=lowest" class="btn btn-light" role="button">Сначала дешевые</a>
+        <a href="?sortby=highest" class="btn btn-light" role="button">Сначала дорогие</a>
         <a href="/" class="btn btn-light" role="button">Сбросить</a>
     </div>
     <div class="card-columns m3">
@@ -11,10 +11,12 @@
                     <h5 class="card-title">
                         ${product.brand}
                         ${product.model}
+                        ${product.country}
                     </h5>
                     <p class="card-text">
                         ${product.category}
                         ${product.type}
+
                     </p>
                     <p class="card-text">
                         ${product.price}

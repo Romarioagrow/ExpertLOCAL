@@ -32,5 +32,8 @@ public class Product {
     private Integer price; // 8800
 
     @ManyToMany(mappedBy = "product",fetch = FetchType.EAGER)
-    private List<Parameters> parameters;
+    private List<Params> parameters;
+
+
+/*    private List<AllFeatures> features;*/
 }

@@ -1,20 +1,18 @@
-
 body {
     background-color: #f3f3f3;
 }
-
 .card-columns {
     margin-left: 20px;
     margin-right: 20px;
     text-align: center;
 }
-
 form input:hover {
     background-color: #e5e5e5;
 }
-
 form input:focus {
+    /*
     border-color: #0088cc;
+    */
 }
 
 
@@ -25,7 +23,7 @@ form input:focus {
     clear: both;
 }
 /**/
-.m1 {
+/*.m1 {
     border: 3px dashed red;
 }
 .m2 {
@@ -33,15 +31,23 @@ form input:focus {
 }
 .m3 {
     border: 1px dashed green;
+}*/
+
+.mmm1 {
+    border: 3px solid red;
+}
+.mmm2 {
+    border: 2px solid red;
 }
 
 .about {
     float: left;
-    width: 100%;
+    width: 99%;
     min-height: 20px;
-    margin-bottom: 10px;
+    margin: 10px;
 }
 
+/**/
 .filter-container {
     float: left;
     width: 20%;
@@ -54,11 +60,11 @@ form input:focus {
     margin-left: 20px;
 }
 
+/**/
 .products-container {
     float: right;
     width: 78%;
     margin-right: 15px;
-
 }
 .products-container .info-layout {
     min-height: 50px;
@@ -66,11 +72,10 @@ form input:focus {
     padding-left: 20px;
 }
 
+/**/
 #sorting {
     padding-left: 20px;
 }
-
-
 
 /*Для списка товаров*/
 .main-menu {
@@ -85,7 +90,6 @@ form input:focus {
     display: inline-block;
     margin-right: -4px;
 }
-
 .main-menu a {
     display: block;
     margin-left: -1px;
@@ -94,11 +98,9 @@ form input:focus {
     border-left: 1px solid #e5e5e5;
     text-decoration: none;
 }
-
 .main-menu a:hover {
     background-color: #e5e5e5;
 }
-
 .main-menu .main-sub-menu {
     position: absolute;
     left: 1px;
@@ -109,12 +111,10 @@ form input:focus {
     list-style: none;
     background-color: #fcf8e3;
 }
-
 .main-menu .main-sub-menu a {
     margin-bottom: -1px;
     border: 1px solid #e5e5e5;
 }
-
 .main-menu > li:hover .main-sub-menu {
     display: block;
 }
@@ -126,7 +126,7 @@ form input:focus {
     width: 100%;
 }
 */
-
+/**/
 .hor-main-menu {
     width: 180px;
     margin: 0;
@@ -134,7 +134,6 @@ form input:focus {
     list-style: none;
     background-color: whitesmoke;
 }
-
 .hor-main-menu a {
     display: block;
     margin-bottom: -1px;
@@ -143,7 +142,6 @@ form input:focus {
     text-decoration: none;
     border: 1px solid #e5e5e5;
 }
-
 .hor-main-menu a:hover {
     background-color: #e5e5e5;
 }
@@ -151,7 +149,6 @@ form input:focus {
 .hor-main-menu > li {
     position: relative;
 }
-
 .hor-main-menu .hor-sub-menu {
     position: absolute;
     top: 0;
@@ -166,7 +163,19 @@ form input:focus {
 }
 
 /* Cелектор для подменю, если навести курсор на родительский элемент верхнего меню */
-
 .hor-main-menu > li:hover .hor-sub-menu {
     display: block;
+}
+/**/
+.main-filter {
+    margin-left: 10px;
+}
+.find-button {
+    margin-left: 20px;
+}
+/**/
+.some-info {
+    margin-left: 10px;
+    min-height: 100px;
+    text-align: center;
 }

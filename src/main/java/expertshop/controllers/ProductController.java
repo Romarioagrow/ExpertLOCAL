@@ -3,6 +3,7 @@ import expertshop.domain.lists.Categories;
 import expertshop.domain.Product;
 import expertshop.domain.lists.Types;
 import expertshop.repos.ProductRepo;
+import expertshop.services.FilterService;
 import expertshop.services.SortService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,11 +16,18 @@ import java.util.List;
 
 @Controller
 public class ProductController {
-    @Autowired
-    private ProductRepo productRepo;
+    private final ProductRepo productRepo;
+
+    private final SortService sortService;
+
+    private final FilterService filterService;
 
     @Autowired
-    private SortService sortService;
+    public ProductController(ProductRepo productRepo, SortService sortService, FilterService filterService) {
+        this.productRepo = productRepo;
+        this.sortService = sortService;
+        this.filterService = filterService;
+    }
 
     @GetMapping("/")
     public String showProducts(
@@ -38,12 +46,31 @@ public class ProductController {
     public String showAllElectronics(
             @RequestParam(required = false, defaultValue = "") String sortby,
             Model model)
+            /*@RequestParam(required = false, defaultValue = "") String ... params
+            @RequestParam(required = false, defaultValue = "") String cheap, /// в массив ...params
+            @RequestParam(required = false, defaultValue = "") String expen,
+            @RequestParam(required = false, defaultValue = "") String brand,
+            @RequestParam(required = false, defaultValue = "") String country*/
+
     {
+
         List<Product> products = productRepo.findByCategory(Categories.Electronics);
 
         sortService.sorted(products, sortby);
         model.addAttribute("products", products);
         return "electronics";
+
+        /*if (!cheap.equals("")) {
+            *//*filterService.filter(params);*//*
+            model.addAttribute("cheap", cheap);
+            return "test";
+        }
+        else {
+            List<Product> products = productRepo.findByCategory(Categories.Electronics);
+            sortService.sorted(products, sortby);
+            model.addAttribute("products", products);
+            return "electronics";
+        }*/
     }
 
     @GetMapping("/tv") /// В путь /electronics/tv
@@ -67,6 +94,17 @@ public class ProductController {
         sortService.sorted(products, sortby);
         model.addAttribute("products", products);
         return "projectors";
+    }
+    @GetMapping("/monitors")
+    public String showMonitors(
+            @RequestParam(required = false, defaultValue = "") String sortby,
+            Model model)
+    {
+        List<Product> products = productRepo.findByType(Types.Monitor);
+
+        sortService.sorted(products, sortby);
+        model.addAttribute("products", products);
+        return "monitors";
     }
 
     ///////////////////////
