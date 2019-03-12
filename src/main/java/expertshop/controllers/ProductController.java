@@ -1,7 +1,7 @@
 package expertshop.controllers;
-import expertshop.entities.Categories;
-import expertshop.entities.Product;
-import expertshop.entities.Types;
+import expertshop.domain.lists.Categories;
+import expertshop.domain.Product;
+import expertshop.domain.lists.Types;
 import expertshop.repos.ProductRepo;
 import expertshop.services.SortService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +45,7 @@ public class ProductController {
         model.addAttribute("products", products);
         return "electronics";
     }
+
     @GetMapping("/tv") /// В путь /electronics/tv
     public String showTV(
             @RequestParam(required = false, defaultValue = "") String sortby,

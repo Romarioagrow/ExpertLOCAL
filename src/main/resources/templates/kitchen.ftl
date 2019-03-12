@@ -3,14 +3,14 @@
     <div class="filter-container m1">
         <div class="someinfo m2">Здесь что то будет</div>
         <div class="filters m2">
-            <span class="filter-class">Фильтры для кухни</span>
+            <span class="filter-class">Фильтры для кухной техники</span>
             <#include "parts/filters/filter-general.ftl">
         </div>
     </div>
     <!--Главный блок отображения товаров-->
     <div class="products-container m1">
         <div class="info-layout m2">
-            <h2>Вся электроника вместе!</h2>
+            <h2>Выберите кухонную технику</h2>
         </div>
         <!--Витрина товаров c сортировкой-->
         <div class="showcase m2">

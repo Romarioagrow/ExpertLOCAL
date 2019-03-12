@@ -19,12 +19,14 @@
                                     <li><a href="http://localhost:8080/electronics">Электроника</a>
                                         <ul class="hor-sub-menu">
                                             <li><a href="http://localhost:8080/tv">Телевизоры</a></li>
+                                            <li><a href="http://localhost:8080/projectors">Прожекторы</a></li>
                                         </ul>
                                     </li>
 
                                     <li><a href="http://localhost:8080/kitchen">Кухонная техника</a>
                                         <ul class="hor-sub-menu">
                                             <li><a href="http://localhost:8080/fridges">Холодильники</a></li>
+                                            <li><a href="http://localhost:8080/ovens">Плиты</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="#">Компьютеры</a></li>

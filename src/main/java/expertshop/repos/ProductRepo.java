@@ -1,7 +1,7 @@
 package expertshop.repos;
-import expertshop.entities.Categories;
-import expertshop.entities.Product;
-import expertshop.entities.Types;
+import expertshop.domain.lists.Categories;
+import expertshop.domain.Product;
+import expertshop.domain.lists.Types;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 

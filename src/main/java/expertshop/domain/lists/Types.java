@@ -1,4 +1,4 @@
-package expertshop.entities;
+package expertshop.domain.lists;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
