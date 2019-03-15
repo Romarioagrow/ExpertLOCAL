@@ -6,7 +6,12 @@
 </head>
 <body>
 
-    ${cheap}
+<#list products as parameter, argument>
+    <div>
+        ${parameter}
+        ${argument}
+    </div>
+</#list>
 
 </body>
 </html>

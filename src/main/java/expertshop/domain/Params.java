@@ -1,4 +1,5 @@
 package expertshop.domain;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
@@ -8,12 +9,15 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "parameters")
 public class Params {
     @Id
     private Long product_id;
     private String type_name;
     private Integer type_id;
+
+
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Product> product;

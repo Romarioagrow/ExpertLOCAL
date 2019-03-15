@@ -5,8 +5,8 @@
             <input type="text" id="cheap" name="cheap">
         </div>
         <div class="field m3">
-            <br><label for="expen">Не дороже:</label>
-            <br><input type="text" id="expen" name="expen">
+            <br><label for="expensive">Не дороже:</label>
+            <br><input type="text" id="expensive" name="expensive">
         </div>
         <div class="field m3">
             <br><label for="brand">Производитель</label>

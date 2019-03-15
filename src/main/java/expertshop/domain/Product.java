@@ -1,6 +1,7 @@
 package expertshop.domain;
 import expertshop.domain.lists.Categories;
 import expertshop.domain.lists.Types;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "products")
 public class Product {
     @Id
@@ -33,6 +35,8 @@ public class Product {
 
     @ManyToMany(mappedBy = "product",fetch = FetchType.EAGER)
     private List<Params> parameters;
+
+
 
 
 /*    private List<AllFeatures> features;*/
