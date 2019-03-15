@@ -1,9 +1,9 @@
 package expertshop.services;
 import expertshop.domain.Product;
+import expertshop.domain.lists.Categories;
 import expertshop.repos.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Map;
 
@@ -12,76 +12,43 @@ public class FilterService {
     @Autowired
     ProductRepo productRepo;
 
-    public void filterResolver (List<Product> products, Map<String, String> filterParams) {
-        /*List<String> filtered = new ArrayList<>();*/
+    public List<Product> mainFilterResolver(List<Product> products, Map<String, String> filterParams, Map<String, String> restrictionsParams) {
 
-        /*
-        String value = pair.getValue();
-        String val = value.getObjectNAME();
-        String key = pair.getKey();
-        */
+        ////-->V Параметры храняться в map имя_параметра-значение
+        ////-->V Отсеить все isEmpty параметры через стрим !!!
+        ////-->X Создать объект Params c соответствующими параметрами
+        ////-->V Достать параметры из массива и применить их в поиске
+        ////-->X* Через Params product_params = new Params();*/
+
+        String brand = null, country = null;
 
         showParams(filterParams);
+        showParams(restrictionsParams);
 
         // Отфильтровать пустые параментры
         filterParams.values().removeIf(String::isEmpty);
+        restrictionsParams.values().removeIf(String::isEmpty);
 
         showParams(filterParams);
+        showParams(restrictionsParams);
 
-        /*for (Map.Entry<String, String> pair : filterParams.entrySet()) {
+        for (Map.Entry<String, String> paramsWithArgs : filterParams.entrySet()) {
+            String parameter = paramsWithArgs.getKey();
+            String argument = paramsWithArgs.getValue();
 
-            String parameter = pair.getKey();
-            String argument = pair.getValue();
-
-            System.out.println(parameter + " " + argument);
-
-            --> отсеить все "" и null параметры через стрим !!!
-            filterParams.values().removeIf(String::isEmpty);
-
-            System.out.println(parameter + " " + argument);
-
+            switch (parameter) {
+                case("brand"):
+                    brand = argument;
+                    products = productRepo.findByCategoryAndBrand(Categories.Electronics, brand);
+                    break;
+                case("country"):
+                    country = argument;
+                    products = productRepo.findByCategoryAndCountry(Categories.Electronics, country);
+                    break;
+            }
         }
 
-        filterParams.values().removeIf(String::isEmpty);
-
-        for (Map.Entry<String, String> pair : filterParams.entrySet()) {
-
-            ////--> отсеить все "" и null параметры через стрим !!!
-
-            String parameter = pair.getKey();
-            String argument = pair.getValue();
-
-            System.out.println(parameter + " " + argument);
-
-        }*/
-            /*System.out.println(param);
-            if (param != null) {
-                //new Params(param);
-                filtered.add(param);
-            }*/
-
-
-        /*for (String param : filterParams) {
-            System.out.println(param);
-            if (param != null) {
-                *//*new Params(param);*//*
-                filtered.add(param);
-            }
-            // Проитерировать элементы filterParams
-            // Если эллемент не равен null добавить в список применяемых фильтров
-            // МЕТОД БД: найти все сущности категории электроника c совпадающими параметрами
-        }*/
-
-       /* String[] toFilter = new String[filterParams.size()];
-
-        filtered.toArray(toFilter);
-
-        products = productRepo.findProductByCategoryAndParameters(Categories.Electronics, toFilter);
-
-        return products;*/
-
-        /// должен разделять фильтра и
-        /// параметра храняться в мап имя_параметра-значение
+        return products;
     }
 
     private void showParams(Map<String, String> filterParams) {

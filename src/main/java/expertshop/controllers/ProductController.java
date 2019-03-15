@@ -6,15 +6,10 @@ import expertshop.repos.ProductRepo;
 import expertshop.services.FilterService;
 import expertshop.services.SortService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServlet;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.*;
 
 /// ПЕРЕНЕСТИ КОНТРОЛЛЕРЫ ПО КАТЕГОРИИ ТОВАРОВ
@@ -42,12 +37,12 @@ public class ProductController {
         List<Product> products = productRepo.findAll();
 
         sortService.sorted(products, sortby);
+
         model.addAttribute("products", products);
         return "main";
     }
 
     /////////////////////////// // Категория электроника
-
     @GetMapping("/electronics")
     public String showAllElectronics(
             Model model,
@@ -65,71 +60,37 @@ public class ProductController {
        return "electronics";
     */
 
+        /// ЛОГИКУ ОБРАБОТКИ ФИЛЬТРОВ В СЕРВИС!!!
         /// В boolean МЕТОД ПРОВЕРКИ УСЛОВИЙ!!!
         if ((!cheap.equals("") | !expensive.equals("") | !brand.equals("") | !country.equals(""))
         ){
-            Map<String, String> filterParams = new LinkedHashMap<String, String>();
-
+            Map<String, String> featuredFilterParams = new LinkedHashMap<String, String>();
+            Map<String, String> restrictionsFilterParams = new LinkedHashMap<String, String>();
 
             /// ОПТИМИЗИРОВАТЬ!
-            filterParams.put("cheap", cheap);
-            filterParams.put("expensive", expensive);
-            filterParams.put("brand", brand);
-            filterParams.put("country", country);
+            restrictionsFilterParams.put("cheap", cheap);
+            restrictionsFilterParams.put("expensive", expensive);
 
-            filterService.filterResolver(products, filterParams);
+            featuredFilterParams.put("brand", brand);
+            featuredFilterParams.put("country", country);
 
+            // Проверка и обработка фильтров
+            products = filterService.mainFilterResolver(products, featuredFilterParams, restrictionsFilterParams);
 
-            /// В filterResolver()!!! для проверки и обработки фильтров { return filteredProducts
-            /*products = filterService.filterResolver(products, filterParams);*/
-
-
-            model.addAttribute("products", filterParams);
-            /*model.addAttribute("products", products);*/
-            return "test";
+            model.addAttribute("products", products);
+            return "electronics";
         }
         else {
             products = productRepo.findByCategory(Categories.Electronics);
+
             sortService.sorted(products, sortby);
+
             model.addAttribute("products", products);
             return "electronics";
         }
     }
-
-    /*
-    @GetMapping("/electronics")
-    @RequestMapping(params = "filterParams", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE)
-    public String showAllElectronics(
-            Model model,
-            @RequestParam(required = false, defaultValue = "") String sortby,
-            @RequestBody String[] filterParams) throws MalformedURLException
-            @RequestParam(required = false, defaultValue = "") String cheap, /// в массив ...params
-            @RequestParam(required = false, defaultValue = "") String expen,
-            @RequestParam(required = false, defaultValue = "") String brand,
-            @RequestParam(required = false, defaultValue = "") String country)
-    {
-       List<Product> products = productRepo.findByCategory(Categories.Electronics);
-       sortService.sorted(products, sortby);
-       model.addAttribute("products", products);
-       return "electronics";
-        URL url = new URL("http://localhost:8080/electronics");
-        Map<String,Object> params = new LinkedHashMap<>();
-        HttpURLConnection conection = url
-        if (!filterParams[1].equals("")) { /// В filterResolver()! для проверки и обработки фильтров { return filteredProducts
-            //*filterService.filter(params);
-            model.addAttribute("cheap", filterParams);
-            return "test";
-        }
-        else {
-            List<Product> products = productRepo.findByCategory(Categories.Electronics);
-            sortService.sorted(products, sortby);
-            model.addAttribute("products", products);
-            return "electronics";
-        }
-    }
-    */
-
-    @GetMapping("/tv") /// В путь /electronics/tv
+    /// В путь /electronics/tv
+    @GetMapping("/tv")
     public String showTV(
             @RequestParam(required = false, defaultValue = "") String sortby,
             Model model)
@@ -137,6 +98,7 @@ public class ProductController {
         List<Product> products = productRepo.findByType(Types.TV);
 
         sortService.sorted(products, sortby);
+
         model.addAttribute("products", products);
         return "tv";
     }
@@ -148,6 +110,7 @@ public class ProductController {
         List<Product> products = productRepo.findByType(Types.Projector);
 
         sortService.sorted(products, sortby);
+
         model.addAttribute("products", products);
         return "projectors";
     }
@@ -159,6 +122,7 @@ public class ProductController {
         List<Product> products = productRepo.findByType(Types.Monitor);
 
         sortService.sorted(products, sortby);
+
         model.addAttribute("products", products);
         return "monitors";
     }
@@ -172,6 +136,7 @@ public class ProductController {
         List<Product> products = productRepo.findByCategory(Categories.Kitchen);
 
         sortService.sorted(products, sortby);
+
         model.addAttribute("products", products);
         return "kitchen";
     }
@@ -183,6 +148,7 @@ public class ProductController {
         List<Product> products = productRepo.findByType(Types.Fridge);
 
         sortService.sorted(products, sortby);
+
         model.addAttribute("products", products);
         return "fridges";
     }
@@ -194,6 +160,7 @@ public class ProductController {
         List<Product> products = productRepo.findByType(Types.Oven);
 
         sortService.sorted(products, sortby);
+
         model.addAttribute("products", products);
         return "ovens";
     }

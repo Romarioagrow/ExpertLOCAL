@@ -17,8 +17,6 @@ public class Params {
     private String type_name;
     private Integer type_id;
 
-
-
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Product> product;
 
