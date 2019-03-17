@@ -67,8 +67,6 @@ public class FilterService {
             resetHasCountry();
             return products;
         }
-
-
         return products;
     }
 
