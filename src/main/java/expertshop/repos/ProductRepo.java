@@ -11,14 +11,14 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
 
     List<Product> findByType(Types type);
 
-    List<Product> findByParameters(Params parameters);
-
-    /*List<Product> findAllByParameters(String[] parameters);*/
-
-    List<Product> findByCategoryAndParameters(Categories category, Params parameters);
+    /*List<Product> findByParameters(Params parameters);
+    List<Product> findAllByParameters(String[] parameters);
+    List<Product> findByCategoryAndParameters(Categories category, Params parameters);*/
 
     List<Product> findByCategoryAndBrand(Categories category, String brand);
 
     List<Product> findByCategoryAndCountry(Categories category, String country);
+
+    List<Product> findByCategoryAndBrandOrCategoryAndCountry(Categories category, String brand, Categories category2, String country);
 
 }
