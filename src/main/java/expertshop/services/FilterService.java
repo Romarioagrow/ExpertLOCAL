@@ -6,11 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class FilterService {
-    @Autowired
+    private final
     ProductRepo productRepo;
+
+    @Autowired
+    public FilterService(ProductRepo productRepo) {
+        this.productRepo = productRepo;
+    }
 
     public List<Product> mainFilterResolver(List<Product> products, Map<String, String> filterParams, Map<String, String> restrictionsParams) {
 
@@ -21,6 +28,7 @@ public class FilterService {
         ////-->X* Через Params product_params = new Params();*/
 
         String brand = null, country = null;
+        Integer sortMin = null, sortMax = null;
 
         showParams(filterParams);
         showParams(restrictionsParams);
@@ -32,6 +40,8 @@ public class FilterService {
         showParams(filterParams);
         showParams(restrictionsParams);
 
+        /// В МЕТОД!!!
+        // Извлечение, наполнение и применение параметров
         for (Map.Entry<String, String> paramsWithArgs : filterParams.entrySet()) {
             String parameter = paramsWithArgs.getKey();
             String argument = paramsWithArgs.getValue();
@@ -48,6 +58,49 @@ public class FilterService {
             }
         }
 
+        /// В МЕТОД!!!
+        // Извлечение, наполнение ограничивающих параметров
+        for (Map.Entry<String, String> paramsWithArgs : restrictionsParams.entrySet()) {
+            String parameter = paramsWithArgs.getKey();
+            String argument = paramsWithArgs.getValue();
+
+            if (parameter.equals("cheap") && !argument.equals("")) {
+                sortMin = Integer.parseInt(argument);
+            }
+            else if (parameter.equals("expensive") && !argument.equals("")) {
+                sortMax = Integer.parseInt(argument);
+            }
+        }
+
+        /// В МЕТОД!!!
+        // Фильтрация по ценам
+        Integer finalSortMin = sortMin;
+        Integer finalSortMax = sortMax;
+        if (sortMin != null & sortMax != null) {
+            products = productRepo.findByCategory(Categories.Electronics);
+
+            products = products.stream()
+                    .filter(product -> (product.getPrice()) >= finalSortMin)
+                    .filter(product -> (product.getPrice()) <= finalSortMax)
+                    .collect(Collectors.toList());
+            return products;
+        }
+        else if (sortMin != null) {
+            products = productRepo.findByCategory(Categories.Electronics);
+
+            products = products.stream()
+                    .filter(product -> (product.getPrice()) >= finalSortMin)
+                    .collect(Collectors.toList());
+            return products;
+        }
+        else if (sortMax != null) {
+            products = productRepo.findByCategory(Categories.Electronics);
+
+            products = products.stream()
+                    .filter(product -> (product.getPrice()) <= finalSortMax)
+                    .collect(Collectors.toList());
+            return products;
+        }
         return products;
     }
 

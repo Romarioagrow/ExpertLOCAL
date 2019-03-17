@@ -13,9 +13,9 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
 
     List<Product> findByParameters(Params parameters);
 
-    /*List<Product> findAllByParameters(String parameters);*/
+    /*List<Product> findAllByParameters(String[] parameters);*/
 
-    List<Product> findProductByCategoryAndParameters(Categories category, Params parameters);
+    List<Product> findByCategoryAndParameters(Categories category, Params parameters);
 
     List<Product> findByCategoryAndBrand(Categories category, String brand);
 

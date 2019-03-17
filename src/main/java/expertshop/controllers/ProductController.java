@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.*;
 
-/// ПЕРЕНЕСТИ КОНТРОЛЛЕРЫ ПО КАТЕГОРИИ ТОВАРОВ
+////--> ПЕРЕНЕСТИ КОНТРОЛЛЕРЫ ПО КАТЕГОРИИ ТОВАРОВ
+////--> ВЫНЕСТИ СЛОЖНУЮ ЛОГИКУ ИЗ КОНТРОЛЛЕРОВ В СЕРВИСЫ
 
 @Controller
 public class ProductController {
@@ -62,7 +62,7 @@ public class ProductController {
 
         /// ЛОГИКУ ОБРАБОТКИ ФИЛЬТРОВ В СЕРВИС!!!
         /// В boolean МЕТОД ПРОВЕРКИ УСЛОВИЙ!!!
-        if ((!cheap.equals("") | !expensive.equals("") | !brand.equals("") | !country.equals(""))
+        if ((!cheap.isEmpty() | !expensive.isEmpty() | !brand.isEmpty() | !country.isEmpty())
         ){
             Map<String, String> featuredFilterParams = new LinkedHashMap<String, String>();
             Map<String, String> restrictionsFilterParams = new LinkedHashMap<String, String>();
@@ -76,6 +76,8 @@ public class ProductController {
 
             // Проверка и обработка фильтров
             products = filterService.mainFilterResolver(products, featuredFilterParams, restrictionsFilterParams);
+
+            sortService.sorted(products, sortby);
 
             model.addAttribute("products", products);
             return "electronics";

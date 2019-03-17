@@ -10,6 +10,7 @@
     <div class="collapse navbar-collapse mark2" id="navbarSupportedContent">
         <!-- Кнопки меню -->
         <ul class="navbar-nav mr-auto">
+
             <div class="selector">
                 <ul class="main-menu">
                     <li><a href="#">Товар</a>
@@ -37,6 +38,7 @@
                     </li>
                 </ul>
             </div>
+
         </ul>
     </div>
 </nav>
