@@ -19,128 +19,111 @@ public class FilterService {
 
     private String brand, country;
     private Integer sortMin = null, sortMax = null;
-    /// Object howToSort;
     private Boolean hasBrand = false, hasCountry = false , hasSortMin = false, hasSortMax = false;
 
-    ////-->V Параметры храняться в map имя_параметра-значение
-    ////-->V Отсеить все isEmpty параметры через стрим !!!
-    ////-->X* Создать объект Params c соответствующими параметрами
-    ////-->V Достать параметры из массива и применить их в поиске
-    ////-->X* Через Params product_params = new Params();
-    ////-->V Вынести обработчики параметров в отдельные методы
-    ////--> Создать логику наполнения модели отфильтрованными товарами
-    ////    !!!СНАЧАЛА ФИЛЬТРЫ-ПАРАМЕТРЫ, ПОТОМ ЦЕНА И СОРТИРОВКА!!!
+    public List<Product> mainFilterResolver(Map<String, String> allFilterParams) {
 
-    public List<Product> mainFilterResolver(List<Product> products, Map<String, String> filterParams, Map<String, String> restrictionsParams) {
-        // Отфильтровать пустые параментры  /// В МЕТОД!
-        filterParams.values().removeIf(String::isEmpty);
-        restrictionsParams.values().removeIf(String::isEmpty);
+        showParams(allFilterParams);
 
-        showParams(filterParams);
-        showParams(restrictionsParams);
+        getFilterParameters(allFilterParams);
 
-        // Извлечение и наполнение параметров фильтра всех категорий
-        getFilterParameters(filterParams);
-        getRestrictionsParameters(restrictionsParams);
-
-        products = constructFinalProductList(products);
-
-        /*products = filterByPrice(products);*/
-
-        return products;
+        return constructFinalProductList();
     }
 
-    private List<Product> constructFinalProductList(List<Product> products) throws NullPointerException {
-        if (hasBrand() && !hasCountry) {
-            products = productRepo.findByCategoryAndBrand(Categories.Electronics, getBrand());
-            resetHasBrand();
-            return products;
+    private List<Product> constructFinalProductList() throws NullPointerException {
+        List<Product> products;
+        /// В МЕТОД ФИЛЬТРА ПО ПАРАМЕТРАМ!
+        {
+            if (hasBrand() && !hasCountry())
+            {
+                products = productRepo.findByCategoryAndBrand(Categories.Electronics, getBrand());
+                resetHasBrand();
+                //return products;
+            }
+            else if (hasCountry() && !hasBrand())
+            {
+                products = productRepo.findByCategoryAndCountry(Categories.Electronics, getCountry());
+                resetHasCountry();
+                //return products;
+            }
+            else if (hasBrand() && hasCountry())
+            {
+                products = productRepo.findByCategoryAndBrandOrCategoryAndCountry(Categories.Electronics, getBrand(), Categories.Electronics, getCountry());
+                resetHasBrand();
+                resetHasCountry();
+                //return products;
+            }
+            else products = productRepo.findByCategory(Categories.Electronics);
         }
-        else if (hasCountry() && !hasBrand) {
-            products = productRepo.findByCategoryAndCountry(Categories.Electronics, getCountry());
-            resetHasCountry();
-            return products;
-        }
-        else if (hasBrand() && hasCountry()) {
-            products = productRepo.findByCategoryAndBrandOrCategoryAndCountry(Categories.Electronics, getBrand(), Categories.Electronics, getCountry());
-            resetHasBrand();
-            resetHasCountry();
-            return products;
+        /// В МЕТОД ФИЛЬТРА ПО ЦЕНАМ!
+        {
+            if (hasSortMin() && !hasSortMax())
+            {
+                products = products.stream()
+                        .filter(product -> (product.getPrice()) >= getSortMin())
+                        .collect(Collectors.toList());
+                resetHasSortMin();
+            }
+            else if (hasSortMax() && !hasSortMin())
+            {
+                products = products.stream()
+                        .filter(product -> (product.getPrice()) <= getSortMax())
+                        .collect(Collectors.toList());
+                resetHasSortMax();
+            }
+            else if (hasSortMin() && hasSortMax())
+            {
+                products = products.stream()
+                        .filter(product -> (product.getPrice()) >= getSortMin())
+                        .filter(product -> (product.getPrice()) <= getSortMax())
+                        .collect(Collectors.toList());
+                resetHasSortMin();
+                resetHasSortMax();
+            }
         }
         return products;
     }
 
     private void getFilterParameters(Map<String, String> filterParams) {
-        for (Map.Entry<String, String> paramsWithArgs : filterParams.entrySet()) {
-            String parameter = paramsWithArgs.getKey();
-            String argument = paramsWithArgs.getValue();
-            switch (parameter) {
-                case("brand"): {
-                    setBrand(argument);
-                    setHasBrand();
-                    break;
-                }
-                case("country"): {
-                    setCountry(argument);
-                    setHasCountry();
-                    break;
+        for (Map.Entry<String, String> paramWithArg : filterParams.entrySet()) {
+            String parameter = paramWithArg.getKey();
+            String argument = paramWithArg.getValue();
+            if (!argument.isEmpty()) {
+                switch (parameter) {
+                    case("brand"): {
+                        setBrand(argument);
+                        setHasBrand();
+                        break;
+                    }
+                    case("country"): {
+                        setCountry(argument);
+                        setHasCountry();
+                        break;
+                    }
+                    case("sortmin"): {
+                        setSortMin(Integer.parseInt(argument));
+                        setHasSortMin();
+                        break;
+                    }
+                    case("sortmax"): {
+                        setSortMax(Integer.parseInt(argument));
+                        setHasSortMax();
+                        break;
+                    }
                 }
             }
         }
     }
 
-    private void getRestrictionsParameters(Map<String, String> restrictionsParams) {
-        for (Map.Entry<String, String> paramsWithArgs : restrictionsParams.entrySet()) {
-            String parameter = paramsWithArgs.getKey();
-            String argument = paramsWithArgs.getValue();
-            if (parameter.equals("cheap") && !argument.equals("")) {
-                setSortMin(Integer.parseInt(argument));
-                setHasSortMax();
-            }
-            else if (parameter.equals("expensive") && !argument.equals("")) {
-                setSortMax(Integer.parseInt(argument));
-                setHasSortMax();
-            }
-        }
-    }
-
-    /// РАЗДЕЛИТЬ НА ПОДМЕТОДЫ!
-    /*private List<Product> filterByPrice(List<Product> products) {
-        Integer finalSortMin = sortMin;
-        Integer finalSortMax = sortMax;
-        if (hasSortMin & hasSortMax) {
-            products = productRepo.findByCategory(Categories.Electronics);
-
-            products = products.stream()
-                    .filter(product -> (product.getPrice()) >= finalSortMin)
-                    .filter(product -> (product.getPrice()) <= finalSortMax)
-                    .collect(Collectors.toList());
-            return products;
-        }
-        else if (hasSortMin) {
-            products = productRepo.findByCategory(Categories.Electronics);
-
-            products = products.stream()
-                    .filter(product -> (product.getPrice()) >= finalSortMin)
-                    .collect(Collectors.toList());
-            return products;
-        }
-        else if (hasSortMax) {
-            products = productRepo.findByCategory(Categories.Electronics);
-
-            products = products.stream()
-                    .filter(product -> (product.getPrice()) <= finalSortMax)
-                    .collect(Collectors.toList());
-            return products;
-        }
-        return products;
-    }*/
     private void showParams(Map<String, String> filterParams) {
         System.out.println();
         for (Map.Entry<String, String> pair : filterParams.entrySet()) {
             String parameter = pair.getKey();
             String argument = pair.getValue();
             System.out.println(parameter + " " + argument);
+        }
+        if (filterParams.size() == 0) {
+            System.out.println("No parameters!");
         }
     }
 
@@ -209,3 +192,19 @@ public class FilterService {
         this.sortMax = sortMax;
     }
 }
+
+////-->X* Object howToSort;
+////-->V Параметры храняться в map имя_параметра-значение
+////-->V Отсеить все isEmpty параметры через стрим !!!
+////-->X* Создать объект Params c соответствующими параметрами
+////-->V Достать параметры из массива и применить их в поиске
+////-->X* Через Params product_params = new Params();
+////-->V Вынести обработчики параметров в отдельные методы
+////-->V Создать логику наполнения модели отфильтрованными товарами
+////    !!!СНАЧАЛА ФИЛЬТРЫ-ПАРАМЕТРЫ, ПОТОМ ЦЕНА И СОРТИРОВКА!!!
+////    V1) передача параметров фильтров из формы на странице в контроллер
+////    V2) распределение параметров в списки по типу
+////    V3) отсев и извлечение параметров
+////    V4) наполнение модели товарами с удовлетворяющими параметрами
+////    V5) фильтр наполненой модели по цене
+////    V6) отображение отфильтрованной модели на странице

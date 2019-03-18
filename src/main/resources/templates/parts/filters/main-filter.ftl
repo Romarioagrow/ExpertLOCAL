@@ -1,12 +1,12 @@
 <div>
     <form class="main-filter m3" method="get">
         <div class="field m3">
-            <label for="cheap">Не дешевле:</label>
-            <input type="text" id="cheap" name="cheap">
+            <label for="sortmin">Не дешевле:</label>
+            <input type="text" id="sortmin" name="sortmin">
         </div>
         <div class="field m3">
-            <br><label for="expensive">Не дороже:</label>
-            <br><input type="text" id="expensive" name="expensive">
+            <br><label for="sortmax">Не дороже:</label>
+            <br><input type="text" id="sortmax" name="sortmax">
         </div>
         <div class="field m3">
             <br><label for="brand">Производитель</label>

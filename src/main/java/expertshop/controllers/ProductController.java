@@ -42,41 +42,37 @@ public class ProductController {
         return "main";
     }
 
-    /////////////////////////// // Категория электроника
+    //////////////////////////
+    // Категория электроника
     @GetMapping("/electronics")
     public String showAllElectronics(
             Model model,
             @RequestParam(required = false, defaultValue = "") String sortby,
             /// в массив ...params
-            @RequestParam(required = false, name = "cheap", defaultValue = "") String cheap,
-            @RequestParam(required = false, name = "expensive", defaultValue = "") String expensive,
+            @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin,
+            @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax,
             @RequestParam(required = false, name = "brand", defaultValue = "") String brand,
             @RequestParam(required = false, name = "country", defaultValue = "") String country)
     {
-        List<Product> products = new ArrayList<>();//= productRepo.findByCategory(Categories.Electronics);
-
-    /*  sortService.sorted(products, sortby);
-       model.addAttribute("products", products);
-       return "electronics";
-    */
+        List<Product> products;//= productRepo.findByCategory(Categories.Electronics);
 
         /// ЛОГИКУ ОБРАБОТКИ ФИЛЬТРОВ В СЕРВИС!!!
         /// В boolean МЕТОД ПРОВЕРКИ УСЛОВИЙ!!!
-        if ((!cheap.isEmpty() | !expensive.isEmpty() | !brand.isEmpty() | !country.isEmpty())
+        if ((!sortmin.isEmpty() | !sortmax.isEmpty() | !brand.isEmpty() | !country.isEmpty())
         ){
-            Map<String, String> featuredFilterParams = new LinkedHashMap<String, String>();
-            Map<String, String> restrictionsFilterParams = new LinkedHashMap<String, String>();
+            Map<String, String> allFilterParams = new LinkedHashMap<String, String>();
 
-            /// ОПТИМИЗИРОВАТЬ!
-            restrictionsFilterParams.put("cheap", cheap);
-            restrictionsFilterParams.put("expensive", expensive);
+            ///V добавить в метод фильтр пустых
+            allFilterParams.put("brand", brand);
+            allFilterParams.put("country", country);
+            allFilterParams.put("sortmin", sortmin);
+            allFilterParams.put("sortmax", sortmax);
+            allFilterParams.values().removeIf(String::isEmpty);
 
-            featuredFilterParams.put("brand", brand);
-            featuredFilterParams.put("country", country);
+            // Проверка и обработка фильтров, наполнение модели
+            products = filterService.mainFilterResolver(allFilterParams);
 
-            // Проверка и обработка фильтров
-            products = filterService.mainFilterResolver(products, featuredFilterParams, restrictionsFilterParams);
-
+            /// В mainFilterResolver()!!!
             sortService.sorted(products, sortby);
 
             model.addAttribute("products", products);
@@ -91,6 +87,8 @@ public class ProductController {
             return "electronics";
         }
     }
+    ////////////////////////////////////////////////////
+
     /// В путь /electronics/tv
     @GetMapping("/tv")
     public String showTV(
