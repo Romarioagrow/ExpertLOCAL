@@ -89,6 +89,7 @@ form input:focus {
     position: relative;
     display: inline-block;
     margin-right: -4px;
+    z-index: 100;
 }
 .main-menu a {
     display: block;

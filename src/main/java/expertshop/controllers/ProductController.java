@@ -54,7 +54,7 @@ public class ProductController {
             @RequestParam(required = false, name = "brand", defaultValue = "") String brand,
             @RequestParam(required = false, name = "country", defaultValue = "") String country)
     {
-        List<Product> products;//= productRepo.findByCategory(Categories.Electronics);
+        List<Product> products;
 
         /// ЛОГИКУ ОБРАБОТКИ ФИЛЬТРОВ В СЕРВИС!!!
         /// В boolean МЕТОД ПРОВЕРКИ УСЛОВИЙ!!!
@@ -62,7 +62,8 @@ public class ProductController {
         ){
             Map<String, String> allFilterParams = new LinkedHashMap<String, String>();
 
-            ///V добавить в метод фильтр пустых
+            ///V добавить в метод фильтр пустых параметров
+            /// ОПТИМИЗИРОВАТЬ ФОРМУ!
             allFilterParams.put("brand", brand);
             allFilterParams.put("country", country);
             allFilterParams.put("sortmin", sortmin);
@@ -73,7 +74,7 @@ public class ProductController {
             products = filterService.mainFilterResolver(allFilterParams);
 
             /// В mainFilterResolver()!!!
-            sortService.sorted(products, sortby);
+            /*sortService.sorted(products, sortby);*/
 
             model.addAttribute("products", products);
             return "electronics";

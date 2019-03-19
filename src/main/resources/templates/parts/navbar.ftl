@@ -12,6 +12,7 @@
         <ul class="navbar-nav mr-auto">
 
             <div class="selector">
+                <#--В ОТДЕЛЬНЫЙ DIV <#include>-->
                 <ul class="main-menu">
                     <li><a href="#">Товар</a>
                         <ul class="main-sub-menu">
@@ -26,6 +27,62 @@
                                     </li>
 
                                     <li><a href="http://localhost:8080/kitchen">Кухонная техника</a>
+                                        <ul class="hor-sub-menu">
+                                            <li><a href="http://localhost:8080/fridges">Холодильники</a></li>
+                                            <li><a href="http://localhost:8080/ovens">Плиты</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li><a href="http://localhost:8080/kitchen">Техника для дома</a>
+                                        <ul class="hor-sub-menu">
+                                            <li><a href="http://localhost:8080/fridges">Холодильники</a></li>
+                                            <li><a href="http://localhost:8080/ovens">Плиты</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li><a href="http://localhost:8080/kitchen">Компьютеры и офисная техника</a>
+                                        <ul class="hor-sub-menu">
+                                            <li><a href="http://localhost:8080/fridges">Холодильники</a></li>
+                                            <li><a href="http://localhost:8080/ovens">Плиты</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li><a href="http://localhost:8080/kitchen">Климатическая техника</a>
+                                        <ul class="hor-sub-menu">
+                                            <li><a href="http://localhost:8080/fridges">Холодильники</a></li>
+                                            <li><a href="http://localhost:8080/ovens">Плиты</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li><a href="http://localhost:8080/kitchen">Авто-электроника</a>
+                                        <ul class="hor-sub-menu">
+                                            <li><a href="http://localhost:8080/fridges">Холодильники</a></li>
+                                            <li><a href="http://localhost:8080/ovens">Плиты</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li><a href="http://localhost:8080/kitchen">Инструменты для дома</a>
+                                        <ul class="hor-sub-menu">
+                                            <li><a href="http://localhost:8080/fridges">Холодильники</a></li>
+                                            <li><a href="http://localhost:8080/ovens">Плиты</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li><a href="http://localhost:8080/kitchen">Приборы персонального ухода</a>
+                                        <ul class="hor-sub-menu">
+                                            <li><a href="http://localhost:8080/fridges">Холодильники</a></li>
+                                            <li><a href="http://localhost:8080/ovens">Плиты</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li><a href="http://localhost:8080/kitchen">Бытовая химия</a>
+                                        <ul class="hor-sub-menu">
+                                            <li><a href="http://localhost:8080/fridges">Холодильники</a></li>
+                                            <li><a href="http://localhost:8080/ovens">Плиты</a></li>
+                                        </ul>
+                                    </li>
+
+                                    <li><a href="http://localhost:8080/kitchen">Товары для отдыха</a>
                                         <ul class="hor-sub-menu">
                                             <li><a href="http://localhost:8080/fridges">Холодильники</a></li>
                                             <li><a href="http://localhost:8080/ovens">Плиты</a></li>
