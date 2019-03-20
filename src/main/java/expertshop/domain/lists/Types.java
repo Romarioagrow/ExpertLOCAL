@@ -5,10 +5,11 @@ import lombok.NoArgsConstructor;
 public enum Types {
     // Электроника (Теле-видео-аудио)
     /*
-    * Телеизоры
-    * Спутниковая техника
-    * Мультимедийные системы
-    * Портативная техника*
+     * Телеизоры
+     * Спутниковая техника
+     * Мультимедийные системы
+     * Портативная техника
+     * Кабели и шнуры
     */
     Reciver_DVBT2,
     PlayerDVD,
@@ -74,6 +75,13 @@ public enum Types {
     Iron_Accessory,
 
     // Климат
+    /*
+    Кондиционеры
+    Вентиляторы
+    Обогреватели
+    Водонагреватели
+    Газовые колонки
+    */
     Ventilator,
     WaterHeater,
     Gas_WaterHeater,
@@ -82,6 +90,11 @@ public enum Types {
     Thermometer,
 
     // Приборы персонального ухода
+    /*
+    Для бритья и стрижки
+    Для ухода за волосами
+    Аксуссуары
+    */
     Razor,
     HaircutMachine,
     Trimmer,
@@ -91,6 +104,13 @@ public enum Types {
     Razor_Accessory,
 
     // Автотехника
+    /*
+    Автомагнитолы
+    Акустика и автозвук
+    Видеорегистраторы
+    Навигация
+    Автоаксессуары
+    */
     AutoKolonki,
     AutoMagnitola,
     CarCharger,
@@ -99,6 +119,13 @@ public enum Types {
     Compressor,
 
     // Компьютеры и офис
+    /*
+    ПК и переферия
+    Ноутбуки
+    Комплектующие
+    Офисная техника
+    Аксессуары
+    */
     UsbFlash,
     Notebook_Accessory,
     Tablet_Accessory,
@@ -115,7 +142,7 @@ public enum Types {
     Projector,
     Tablet,
 
-    // Товары для отдыха ///
+    // Товары для отдыха ///ПЕРЕРАСПРЕДЕЛИТЬ В ОСТАЛЬНЫЕ КАТЕГОРИИ
     Mangal,
     Lamp,
     Bluetooth_Garnitura,
