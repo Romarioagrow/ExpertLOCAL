@@ -1,5 +1,5 @@
 <div>
-    <form class="main-filter m3" method="get">
+    <form class="main-filter m2" method="get">
         <div class="field m3">
             <label for="sortmin">Не дешевле:</label>
             <input type="text" id="sortmin" name="sortmin">

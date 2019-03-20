@@ -11,6 +11,7 @@
         <!-- Стили CSS -->
         <#--noinspection HtmlUnknownTarget-->
         <link rel="stylesheet" href="main.css">
+        <link rel="stylesheet" href="service.css">
     </head>
     <body>
     <#include "navbar.ftl">

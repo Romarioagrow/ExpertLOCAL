@@ -11,12 +11,12 @@ public enum Types {
      * Портативная техника
      * Кабели и шнуры
     */
-    Reciver_DVBT2,
+    Reciver_DVBT2, ///
     PlayerDVD,
     Charger,
-    TV_Antenna,
+    TV_Antenna,///
     Kronshteyn,
-    MusicCenter,
+    MusicCenter,///
     TV,
     Cords,
 
@@ -28,32 +28,37 @@ public enum Types {
     * Готовит еду
     * Аксессуары
     */
+    ChaynikElectro,///
+    Toaster,///
+    Blender,///
+    Mixer,///
+    Juicer,///
+    CoffeeMaker,///
+    MeatGrinder,///
+
+    Combine,///
+        Chopper,
+    MultiCooker,///
+    Microwave,///
+    Breakfast,///
+        Vafelnitsa,
+        Shashlychnitsa,
+        YogurtMaker,
+
     Kitchen_Accessory,
-    Shashlychnitsa,
-    Blender,
-    Chopper,
-    Mixer,
-    Vafelnitsa,
-    Kitchen_Vesi,
-    Vytyazhka,
-    YogurtMaker,
-    Combine,
-    CoffeeMaker,
-    Kitchen_Tool,
-    MultiCooker,
-    MeatGrinder,
-    Microwave,
-    Stove,
-    Dish,
-    Juicer,
-    Toaster,
-    Water_Filter,
-    ChaynikElectro,
-    Oven,
-    Fridge,
-    Freezer,
-    BuiltIn_Oven,
-    BuiltIn_Stove,
+    Kitchen_Tool,///
+    Dish,///
+    Water_Filter,///
+    Kitchen_Vesi,///
+
+    Stove,///
+    Oven,///
+    Fridge,///
+    Freezer,///
+
+    BuiltIn_Oven,///
+    BuiltIn_Stove,///
+    Vytyazhka,///
 
     // Техника для дома
     /*
@@ -62,32 +67,74 @@ public enum Types {
     * Для одежды
     * Аксессуары для дома
     */
-    Pilesbornik,
-    VacuumCleaner_Filter,
-    IroningBoard,
-    VacuumCleaner,
-    WashingMachine,
-    ClothesDryer,
-    Iron,
-    SewingMachine,
-    VacuumCleaner_Accessory,
-    WashingMachine_Accessory,
-    Iron_Accessory,
+    WashingMachine,///
+        WashingMachine_Accessory,
+    ClothesDryer,///
+
+    VacuumCleaner,///
+        VacuumCleaner_Accessory,
+        VacuumCleaner_Filter,
+        Pilesbornik,
+
+    IroningBoard,///
+    Utug,///
+        Iron_Accessory,
+    SewingMachine,///
 
     // Климат
     /*
     Кондиционеры
-    Вентиляторы
-    Обогреватели
     Водонагреватели
     Газовые колонки
+    Обогреватели
+    Вентиляторы
     */
-    Ventilator,
-    WaterHeater,
-    Gas_WaterHeater,
-    Conditioner,
-    Heaters,
-    Thermometer,
+    Conditioner,///
+
+    WaterHeater,///
+
+    Gas_WaterHeater,///
+
+    Heaters,///
+        Thermometer,
+
+    Ventilator,///
+
+    // Компьютеры и офис
+    /*
+    ПК и переферия
+    Ноутбуки
+    Комплектующие
+    Офисная техника
+    Аксессуары
+    */
+    UsbFlash,///
+    MemoryStick,///
+    Наушники,///
+
+    PC,///
+    Monitor,///
+    Keyboard,///
+    Mouse,///
+    Kolonki,///
+    Naushniki,///
+    Microfon,///
+    WebCam,///
+
+    Notebook,/// для всех подкатегорий одна страница с разными фильтрами
+        Notebook_Accessory,
+
+    Printer,///
+    Scanner,///
+    Projector,///
+
+
+    // Портативная техника
+
+
+    // Smart техника
+    Tablet,
+        Tablet_Accessory,
 
     // Приборы персонального ухода
     /*
@@ -118,30 +165,6 @@ public enum Types {
     AutoSound,
     Compressor,
 
-    // Компьютеры и офис
-    /*
-    ПК и переферия
-    Ноутбуки
-    Комплектующие
-    Офисная техника
-    Аксессуары
-    */
-    UsbFlash,
-    Notebook_Accessory,
-    Tablet_Accessory,
-    WebCam,
-    MemoryStick,
-    PC,
-    Notebook,
-    Naushniki,
-    Kolonki,
-    Keyboard,
-    Mouse,
-    Printer,
-    Monitor,
-    Projector,
-    Tablet,
-
     // Товары для отдыха ///ПЕРЕРАСПРЕДЕЛИТЬ В ОСТАЛЬНЫЕ КАТЕГОРИИ
     Mangal,
     Lamp,
@@ -149,8 +172,8 @@ public enum Types {
     ProtectGlass,
     Camera,
     Wireless_Sound,
-    Radio_Tel,
-    MobilePhone,
+    Radio_Tel,///
+    MobilePhone,///
     SmartPhone,
     Reader,
 

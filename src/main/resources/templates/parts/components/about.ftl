@@ -1,1 +1,1 @@
-<div class="about mmm1">БЛОК ОБЩЕЙ ИНФОРМАЦИИ</div>
+<div class="about m2">БЛОК ОБЩЕЙ ИНФОРМАЦИИ</div>
