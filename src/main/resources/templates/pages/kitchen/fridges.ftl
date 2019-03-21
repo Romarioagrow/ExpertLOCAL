@@ -4,7 +4,7 @@
         <#include "../../parts/components/some-info.ftl">
         <div class="all-filters">
             <strong class="filter-name ml-30"><span>Фильтры для холодильников</span></strong>
-            <#include "../../parts/filters/main-filter.ftl">
+            <#include "../../parts/components/filters/main-filter.ftl">
         </div>
     </div>
     <!--Главный блок отображения товаров-->

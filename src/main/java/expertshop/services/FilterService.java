@@ -1,13 +1,13 @@
 package expertshop.services;
 import expertshop.domain.Product;
-import expertshop.domain.lists.Categories;
+import expertshop.domain.lists.Category;
 import expertshop.repos.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
+///НАСЛЕДОВАТЬ СЕРВИСЫ!!
 @Service
 public class FilterService {
     private final
@@ -36,24 +36,24 @@ public class FilterService {
         {
             if (hasBrand() && !hasCountry())
             {
-                products = productRepo.findByCategoryAndBrand(Categories.Electronics, getBrand());
+                products = productRepo.findByBrand(getBrand());
                 resetHasBrand();
                 //return products;
             }
             else if (hasCountry() && !hasBrand())
             {
-                products = productRepo.findByCategoryAndCountry(Categories.Electronics, getCountry());
+                products = productRepo.findByCountry(getCountry());
                 resetHasCountry();
                 //return products;
             }
             else if (hasBrand() && hasCountry())
             {
-                products = productRepo.findByCategoryAndBrandOrCategoryAndCountry(Categories.Electronics, getBrand(), Categories.Electronics, getCountry());
+                products = productRepo.findByBrandOrCountry(getBrand(), getCountry());
                 resetHasBrand();
                 resetHasCountry();
                 //return products;
             }
-            else products = productRepo.findByCategory(Categories.Electronics);
+            else products = productRepo.findAll();
         }
         /// В МЕТОД ФИЛЬТРА ПО ЦЕНАМ!
         {

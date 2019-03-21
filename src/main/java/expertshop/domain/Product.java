@@ -1,10 +1,9 @@
 package expertshop.domain;
-import expertshop.domain.lists.Categories;
-import expertshop.domain.lists.Types;
+import expertshop.domain.lists.Category;
+import expertshop.domain.lists.SubCategory;
+import expertshop.domain.lists.Type;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -23,11 +22,15 @@ public class Product {
 
     @Column(name = "category")
     @Enumerated(EnumType.STRING)
-    private Categories category; // Кухонная техника /// В ОТДЕЛЬНУЮ ТАБЛИЦУ РОЛЕЙ (ENUM)
+    private Category category; // Техника для дома /// В ОТДЕЛЬНУЮ ТАБЛИЦУ РОЛЕЙ (ENUM)
+
+    @Column(name = "subcategory")
+    @Enumerated(EnumType.STRING)
+    private SubCategory subCategory; // Техника для уборки /// В ОТДЕЛЬНУЮ ТАБЛИЦУ РОЛЕЙ (ENUM)
 
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
-    private Types type; // Холодильник /// В ОТДЕЛЬНУЮ ТАБЛИЦУ ТИПОВ (ENUM)
+    private Type type; // Холодильник /// В ОТДЕЛЬНУЮ ТАБЛИЦУ ТИПОВ (ENUM)
 
     private String brand; // LG
 
@@ -47,16 +50,16 @@ public class Product {
     public void setProduct_id(Long product_id) {
         this.product_id = product_id;
     }
-    public Categories getCategory() {
+    public Category getCategory() {
         return category;
     }
-    public void setCategory(Categories category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
-    public Types getType() {
+    public Type getType() {
         return type;
     }
-    public void setType(Types type) {
+    public void setType(Type type) {
         this.type = type;
     }
     public String getBrand() {

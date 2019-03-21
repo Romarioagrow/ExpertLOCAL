@@ -1,7 +1,7 @@
 package expertshop.controllers;
 import expertshop.domain.Product;
-import expertshop.domain.lists.Categories;
-import expertshop.domain.lists.Types;
+import expertshop.domain.lists.Category;
+import expertshop.domain.lists.Type;
 import expertshop.repos.ProductRepo;
 import expertshop.services.FilterService;
 import expertshop.services.SortService;
@@ -35,8 +35,8 @@ public class ElectronicsController {
             @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin,
             @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax,
             @RequestParam(required = false, name = "brand", defaultValue = "") String brand,
-            @RequestParam(required = false, name = "country", defaultValue = "") String country)
-    {
+            @RequestParam(required = false, name = "country", defaultValue = "") String country
+    ){
         List<Product> products;
 
         ///V ЛОГИКУ ОБРАБОТКИ ФИЛЬТРОВ В СЕРВИС!!!
@@ -63,7 +63,7 @@ public class ElectronicsController {
             return "pages/electronics/electronics";
         }
         else {
-            products = productRepo.findByCategory(Categories.Electronics);
+            products = productRepo.findByCategory(Category.Electronics);
 
             sortService.sorted(products, sortby);
 
@@ -77,7 +77,7 @@ public class ElectronicsController {
             @RequestParam(required = false, defaultValue = "") String sortby,
             Model model)
     {
-        List<Product> products = productRepo.findByType(Types.TV);
+        List<Product> products = productRepo.findByType(Type.TV);
 
         sortService.sorted(products, sortby);
 
@@ -90,7 +90,7 @@ public class ElectronicsController {
             @RequestParam(required = false, defaultValue = "") String sortby,
             Model model)
     {
-        List<Product> products = productRepo.findByType(Types.Projector);
+        List<Product> products = productRepo.findByType(Type.Projector);
 
         sortService.sorted(products, sortby);
 
@@ -103,7 +103,7 @@ public class ElectronicsController {
             @RequestParam(required = false, defaultValue = "") String sortby,
             Model model)
     {
-        List<Product> products = productRepo.findByType(Types.Monitor);
+        List<Product> products = productRepo.findByType(Type.Monitor);
 
         sortService.sorted(products, sortby);
 
@@ -116,7 +116,7 @@ public class ElectronicsController {
             @RequestParam(required = false, defaultValue = "") String sortby,
             Model model)
     {
-        List<Product> products = productRepo.findByType(Types.TV);
+        List<Product> products = productRepo.findByType(Type.TV);
 
         model.addAttribute("products", products);
         return "pages/electronics/tv";

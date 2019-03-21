@@ -1,7 +1,7 @@
 package expertshop.controllers;
 import expertshop.domain.Product;
-import expertshop.domain.lists.Categories;
-import expertshop.domain.lists.Types;
+import expertshop.domain.lists.Category;
+import expertshop.domain.lists.Type;
 import expertshop.repos.ProductRepo;
 import expertshop.services.FilterService;
 import expertshop.services.SortService;
@@ -29,7 +29,7 @@ public class KitchenController {
             @RequestParam(required = false, name = "") String sortby,
             Model model)
     {
-        List<Product> products = productRepo.findByCategory(Categories.Kitchen);
+        List<Product> products = productRepo.findByCategory(Category.Kitchen);
 
         sortService.sorted(products, sortby);
 
@@ -42,7 +42,7 @@ public class KitchenController {
             @RequestParam(required = false, name = "") String sortby,
             Model model)
     {
-        List<Product> products = productRepo.findByType(Types.Fridge);
+        List<Product> products = productRepo.findByType(Type.Fridge);
 
         sortService.sorted(products, sortby);
 
@@ -55,7 +55,7 @@ public class KitchenController {
             @RequestParam(required = false, name = "") String sortby,
             Model model)
     {
-        List<Product> products = productRepo.findByType(Types.Oven);
+        List<Product> products = productRepo.findByType(Type.Oven);
 
         sortService.sorted(products, sortby);
 

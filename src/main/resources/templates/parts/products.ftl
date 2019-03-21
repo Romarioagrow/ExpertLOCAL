@@ -8,15 +8,17 @@
         <#list products as product>
             <div class="card my-3">
                 <div class="card-body">
+                    <h6 class="card-title type">
+                        <strong>${product.type}</strong>
+                    </h6>
                     <h5 class="card-title">
                         ${product.brand}
                         ${product.model}
-                        ${product.country}
+
                     </h5>
                     <p class="card-text">
                         ${product.category}
-                        ${product.type}
-
+                        ${product.country}
                     </p>
                     <p class="card-text">
                         ${product.price}
@@ -26,3 +28,11 @@
         </#list>
     </div>
 </div>
+<style>
+    .type {
+        text-align: left;
+/*
+        padding-left: -20px;
+*/
+    }
+</style>

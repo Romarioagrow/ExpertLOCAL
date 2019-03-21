@@ -87,13 +87,13 @@
                     </div>
                 </li>
                 <#---->
-                <li><a href="http://localhost:8080/home-equipment">Техника для дома</a>
+                <li><a href="http://localhost:8080/home">Техника для дома</a>
                     <div class="product-type-menu">
                         <div class="product-type-list m3">
                             <ul class="products-list">
-                                <li class="list-head"><a href="http://localhost:8080/washing"><strong>Для стирки</strong></a></li>
-                                <li><a href="#">Стиральные машины</a></li>
-                                <li><a href="#">Машины для сушки</a></li>
+                                <li class="list-head"><a href="http://localhost:8080/wash"><strong>Для стирки</strong></a></li>
+                                <li><a href="http://localhost:8080/washing-machine">Стиральные машины</a></li>
+                                <li><a href="http://localhost:8080/drying-machine">Машины для сушки</a></li>
                             </ul>
                         </div>
                         <div class="product-type-list m3">

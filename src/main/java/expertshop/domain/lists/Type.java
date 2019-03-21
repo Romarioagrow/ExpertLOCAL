@@ -2,7 +2,7 @@ package expertshop.domain.lists;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public enum Types {
+public enum Type {
     // Электроника (Теле-видео-аудио)
     /*
      * Телеизоры
