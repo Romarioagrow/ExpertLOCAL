@@ -1,4 +1,4 @@
-<div>
+<div class="m2">
     <div class="sorting m3" id="sorting">
         <a href="?sortby=lowest" class="btn btn-light" role="button">Сначала дешевые</a>
         <a href="?sortby=highest" class="btn btn-light" role="button">Сначала дорогие</a>

@@ -15,52 +15,35 @@ form input:focus {
     */
 }
 
-
 /*******************/
 .clearfix::after {
     content: "";
     display: table;
     clear: both;
 }
-/**//*
-.m1 {
-    border: 3px dashed red;
-}*/
-.m2 {
-    border: 2px dashed #3498db;
-}
-/*.m3 {
-    border: 1px dashed green;
-}
-
-.mmm1 {
-    border: 3px solid red;
-}
-.mmm2 {
-    border: 2px solid red;
-}*/
-
+/*
+*/
 .about {
     float: left;
     width: 99%;
     min-height: 20px;
     margin: 10px;
 }
-
-/**/
-.filter-container {
+/*
+*/
+.filters-container {
     float: left;
     width: 20%;
 }
-.filter-container .someinfo {
+.filters-container .someinfo {
     min-height: 55px;
     margin-bottom: 5px;
 }
 .filter-layout .field {
     margin-left: 20px;
 }
-
-/**/
+/*
+*/
 .products-container {
     float: right;
     width: 78%;
@@ -71,13 +54,13 @@ form input:focus {
     margin-bottom: 10px;
     padding-left: 20px;
 }
-
-/**/
+/*
+*/
 #sorting {
     padding-left: 20px;
 }
-
-/*Для списка товаров*/
+/*
+Для списка товаров*/
 .main-menu {
     margin: 0;
     padding: 0;
@@ -118,7 +101,8 @@ form input:focus {
 .main-menu > li:hover .products-menu {
     display: block;
 }
-
+/*
+*/
 .category-menu {
     width: 180px;
     margin: 0;
@@ -137,7 +121,6 @@ form input:focus {
 .category-menu a:hover {
     background-color: #e5e5e5;
 }
-
 .category-menu > li {
     position: relative;
 }
@@ -157,44 +140,41 @@ form input:focus {
 .category-menu .product-type-menu .product-type-list {
     display: inline-block;
     vertical-align: top;
-    margin-right: 10px;
+    /*margin-right: 10px;*/
     padding: 0;
 }
-
+.category-menu > li:hover .product-type-menu {
+    display: inline-block;
+}
 .products-list {
     list-style: none;
     margin: 0;
     padding: 0;
 }
-
-
-/* Cелектор для подменю, если навести курсор на родительский элемент верхнего меню */
-.category-menu > li:hover .product-type-menu {
-    display: inline-block;
+.product-type-list a {
+    border: none !important;
+    padding: 5px 15px;
+    margin-top: -5px;
 }
 
-/**/
+.list-head {
+    margin-top: 5px !important;
+}
+
+/*
+*/
 .main-filter {
     margin-left: 10px;
     margin-top: 5px;
     padding-left: 15px;
 }
-
-/**/
+/*
+*/
 .some-info {
     margin-left: 10px;
     min-height: 100px;
     text-align: center;
 }
 
-/*display: inline-block;
-  vertical-align: bottom;
-  width: 100px;*/
 
 
-/*
-Служеблные
-*/
-.ml-10 {
-    margin-left: 10px;
-}

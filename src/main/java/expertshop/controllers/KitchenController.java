@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-public class KitchenEquipmentController {
+public class KitchenController {
     private final ProductRepo productRepo;
     private final SortService sortService;
     private final FilterService filterService;
     @Autowired
-    public KitchenEquipmentController(ProductRepo productRepo, SortService sortService, FilterService filterService) {
+    public KitchenController(ProductRepo productRepo, SortService sortService, FilterService filterService) {
         this.productRepo = productRepo;
         this.sortService = sortService;
         this.filterService = filterService;
@@ -34,7 +34,7 @@ public class KitchenEquipmentController {
         sortService.sorted(products, sortby);
 
         model.addAttribute("products", products);
-        return "kitchen";
+        return "pages/kitchen/kitchen";
     }
 
     @GetMapping("/fridges")
@@ -47,7 +47,7 @@ public class KitchenEquipmentController {
         sortService.sorted(products, sortby);
 
         model.addAttribute("products", products);
-        return "fridges";
+        return "pages/kitchen/fridges";
     }
 
     @GetMapping("/ovens")
@@ -60,6 +60,6 @@ public class KitchenEquipmentController {
         sortService.sorted(products, sortby);
 
         model.addAttribute("products", products);
-        return "ovens";
+        return "pages/kitchen/ovens";
     }
 }

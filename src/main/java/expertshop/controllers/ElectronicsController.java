@@ -60,7 +60,7 @@ public class ElectronicsController {
             /*sortService.sorted(products, sortby);*/
 
             model.addAttribute("products", products);
-            return "electronics";
+            return "pages/electronics/electronics";
         }
         else {
             products = productRepo.findByCategory(Categories.Electronics);
@@ -68,7 +68,7 @@ public class ElectronicsController {
             sortService.sorted(products, sortby);
 
             model.addAttribute("products", products);
-            return "electronics";
+            return "pages/electronics/electronics";
         }
     }
 
@@ -82,7 +82,7 @@ public class ElectronicsController {
         sortService.sorted(products, sortby);
 
         model.addAttribute("products", products);
-        return "tv";
+        return "pages/electronics/tv";
     }
 
     @GetMapping("/projectors")
@@ -95,7 +95,7 @@ public class ElectronicsController {
         sortService.sorted(products, sortby);
 
         model.addAttribute("products", products);
-        return "projectors";
+        return "pages/computers/projectors";
     }
 
     @GetMapping("/monitors")
@@ -108,9 +108,19 @@ public class ElectronicsController {
         sortService.sorted(products, sortby);
 
         model.addAttribute("products", products);
-        return "monitors";
+        return "pages/electronics/monitors";
     }
 
+    @GetMapping("/tv-4k")
+    public String showTV4K(
+            @RequestParam(required = false, defaultValue = "") String sortby,
+            Model model)
+    {
+        List<Product> products = productRepo.findByType(Types.TV);
+
+        model.addAttribute("products", products);
+        return "pages/electronics/tv";
+    }
 
 
 }

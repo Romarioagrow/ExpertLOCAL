@@ -9,9 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
-////-->V ПЕРЕНЕСТИ КОНТРОЛЛЕРЫ ПО КАТЕГОРИИ ТОВАРОВ
-////-->V ВЫНЕСТИ СЛОЖНУЮ ЛОГИКУ ИЗ КОНТРОЛЛЕРОВ В СЕРВИСЫ
-
 @Controller
 public class ProductController {
     private final ProductRepo productRepo;
@@ -34,6 +31,6 @@ public class ProductController {
         sortService.sorted(products, sortby);
 
         model.addAttribute("products", products);
-        return "main";
+        return "pages/main";
     }
 }
