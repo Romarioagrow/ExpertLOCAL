@@ -37,7 +37,6 @@ public class HomeController {
         return "pages/home/home";
     }
 
-
     @GetMapping("/wash")///SubCategory
     public String showTV(
             @RequestParam(required = false, defaultValue = "") String sortby,
@@ -65,7 +64,7 @@ public class HomeController {
         return "pages/home/washing-machine";
     }
 
-    @GetMapping("/clothes-dryer")///Type
+    @GetMapping("/drying-machine")///Type
     public String showCD(
             @RequestParam(required = false, defaultValue = "") String sortby,
             Model model)

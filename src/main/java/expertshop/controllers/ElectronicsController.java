@@ -14,6 +14,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+///V ЛОГИКУ ОБРАБОТКИ ФИЛЬТРОВ В СЕРВИС!!!
+///V В boolean МЕТОД ПРОВЕРКИ УСЛОВИЙ!!!
+
 @Controller
 public class ElectronicsController {
     private final ProductRepo productRepo;
@@ -26,45 +29,38 @@ public class ElectronicsController {
         this.filterService = filterService;
     }
 
+    private boolean formIsActive(String sortmin, String sortmax, String brand, String country) {
+
+        return (!sortmin.isEmpty() | !sortmax.isEmpty() | !brand.isEmpty() | !country.isEmpty());
+    }
+
     // Категория электроника
     @GetMapping("/electronics")
     public String showAllElectronics(
             Model model,
-            @RequestParam(required = false, defaultValue = "") String sortby,
-            /// в массив ...params
             @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin,
             @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax,
             @RequestParam(required = false, name = "brand", defaultValue = "") String brand,
-            @RequestParam(required = false, name = "country", defaultValue = "") String country
+            @RequestParam(required = false, name = "country", defaultValue = "") String country,
+            @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         List<Product> products;
 
-        ///V ЛОГИКУ ОБРАБОТКИ ФИЛЬТРОВ В СЕРВИС!!!
-        /// В boolean МЕТОД ПРОВЕРКИ УСЛОВИЙ!!!
-        if ((!sortmin.isEmpty() | !sortmax.isEmpty() | !brand.isEmpty() | !country.isEmpty())
-        ){
-            Map<String, String> allFilterParams = new LinkedHashMap<String, String>();
+        if (formIsActive(sortmin, sortmax, brand, country)) {
+            Map<String, String> filterParams = new LinkedHashMap<>();
 
-            ///V добавить в метод фильтр пустых параметров
-            /// ОПТИМИЗИРОВАТЬ ФОРМУ!
-            allFilterParams.put("brand", brand);
-            allFilterParams.put("country", country);
-            allFilterParams.put("sortmin", sortmin);
-            allFilterParams.put("sortmax", sortmax);
-            allFilterParams.values().removeIf(String::isEmpty);
-
+            filterService.collectParams(filterParams, brand, country, sortmin, sortmax);
             // Проверка и обработка фильтров, наполнение модели
-            products = filterService.mainFilterResolver(allFilterParams);
+            products = filterService.mainFilterResolver(filterParams, Category.Electronics);
 
-            /// В mainFilterResolver()!!!
-            /*sortService.sorted(products, sortby);*/
+            // Сортировка наполненной модели
+            sortService.sorted(products, sortby);
 
             model.addAttribute("products", products);
             return "pages/electronics/electronics";
         }
         else {
             products = productRepo.findByCategory(Category.Electronics);
-
             sortService.sorted(products, sortby);
 
             model.addAttribute("products", products);

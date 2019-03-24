@@ -41,7 +41,7 @@ public class ProductController {
 
         List<Product> products;
 
-        if ((!sortmin.isEmpty() | !sortmax.isEmpty() | !brand.isEmpty() | !country.isEmpty())
+        /*if ((!sortmin.isEmpty() | !sortmax.isEmpty() | !brand.isEmpty() | !country.isEmpty())
         ){
             Map<String, String> allFilterParams = new LinkedHashMap<String, String>();
 
@@ -57,19 +57,19 @@ public class ProductController {
             products = filterService.mainFilterResolver(allFilterParams);
 
             /// В mainFilterResolver()!!!
-            /*sortService.sorted(products, sortby);*/
+            *//*sortService.sorted(products, sortby);*//*
 
             model.addAttribute("products", products);
             return "pages/main";
-        }
-        else {
+        }*/
+        //else {
             products = productRepo.findAll();
 
             sortService.sorted(products, sortby);
 
             model.addAttribute("products", products);
             return "pages/main";
-        }
+       // }
 
     }
 }

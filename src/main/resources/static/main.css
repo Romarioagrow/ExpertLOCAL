@@ -9,11 +9,11 @@ body {
 form input:hover {
     background-color: #e5e5e5;
 }
-form input:focus {
-    /*
-    border-color: #0088cc;
-    */
+
+.card-deck {
+    display: inline-block
 }
+
 
 /*******************/
 .clearfix::after {

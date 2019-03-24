@@ -1,13 +1,15 @@
 package expertshop.services;
 import expertshop.domain.Product;
 import expertshop.domain.lists.Category;
+import expertshop.domain.lists.SubCategory;
+import expertshop.domain.lists.Type;
 import expertshop.repos.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-///НАСЛЕДОВАТЬ СЕРВИСЫ!!
+
 @Service
 public class FilterService {
     private final
@@ -21,15 +23,104 @@ public class FilterService {
     private Integer sortMin = null, sortMax = null;
     private Boolean hasBrand = false, hasCountry = false , hasSortMin = false, hasSortMax = false;
 
-    public List<Product> mainFilterResolver(Map<String, String> allFilterParams) {
+    public List<Product> mainFilterResolver(Map<String, String> allFilterParams, Category category) {
 
-        showParams(allFilterParams);
+        getFilterParameters(allFilterParams);
+
+        return constructFinalProductList(category);
+    }
+    public List<Product> mainFilterResolver(Map<String, String> allFilterParams, SubCategory subCategory) {
+
+        getFilterParameters(allFilterParams);
+
+        return constructFinalProductList(subCategory);
+    }
+    public List<Product> mainFilterResolver(Map<String, String> allFilterParams, Type type) {
+
+        getFilterParameters(allFilterParams);
+
+        return constructFinalProductList(type);
+    }
+    public List<Product> mainFilterResolver(Map<String, String> allFilterParams) {
 
         getFilterParameters(allFilterParams);
 
         return constructFinalProductList();
     }
 
+    private List<Product> constructFinalProductList(Category category) throws NullPointerException {
+        List<Product> products;
+        /// В МЕТОД ФИЛЬТРА ПО ПАРАМЕТРАМ!
+        {
+            if (hasBrand() && !hasCountry())
+            {
+                products = productRepo.findByCategoryAndBrand(category, getBrand());
+                resetHasBrand();
+            }
+            else if (hasCountry() && !hasBrand())
+            {
+                products = productRepo.findByCategoryAndCountry(category, getCountry());
+                resetHasCountry();
+            }
+            else if (hasBrand() && hasCountry())
+            {
+                products = productRepo.findByCategoryAndBrandOrCategoryAndCountry(category, getBrand(), category, getCountry());
+                resetHasBrand();
+                resetHasCountry();
+            }
+            else products = productRepo.findByCategory(category);
+        }
+        return filterByPrice(products);
+    }
+    private List<Product> constructFinalProductList(SubCategory subCategory) throws NullPointerException {
+        List<Product> products;
+        /// В МЕТОД ФИЛЬТРА ПО ПАРАМЕТРАМ!
+        {
+            if (hasBrand() && !hasCountry())
+            {
+                products = productRepo.findBySubCategoryAndBrand(subCategory, getBrand());
+                resetHasBrand();
+            }
+            else if (hasCountry() && !hasBrand())
+            {
+                products = productRepo.findBySubCategoryAndCountry(subCategory, getCountry());
+                resetHasCountry();
+            }
+            else if (hasBrand() && hasCountry())
+            {
+                products = productRepo.findBySubCategoryAndBrandOrSubCategoryAndCountry(subCategory, getBrand(), subCategory, getCountry());
+                resetHasBrand();
+                resetHasCountry();
+            }
+            else products = productRepo.findBySubCategory(subCategory);
+        }
+
+        return filterByPrice(products);
+    }
+    private List<Product> constructFinalProductList(Type type) throws NullPointerException {
+        List<Product> products;
+        /// В МЕТОД ФИЛЬТРА ПО ПАРАМЕТРАМ!
+        {
+            if (hasBrand() && !hasCountry())
+            {
+                products = productRepo.findByTypeAndBrand(type, getBrand());
+                resetHasBrand();
+            }
+            else if (hasCountry() && !hasBrand())
+            {
+                products = productRepo.findByTypeAndCountry(type,getCountry());
+                resetHasCountry();
+            }
+            else if (hasBrand() && hasCountry())
+            {
+                products = productRepo.findByTypeAndBrandOrTypeAndCountry(type, getBrand(), type, getCountry());
+                resetHasBrand();
+                resetHasCountry();
+            }
+            else products = productRepo.findByType(type);
+        }
+        return filterByPrice(products);
+    }
     private List<Product> constructFinalProductList() throws NullPointerException {
         List<Product> products;
         /// В МЕТОД ФИЛЬТРА ПО ПАРАМЕТРАМ!
@@ -38,53 +129,63 @@ public class FilterService {
             {
                 products = productRepo.findByBrand(getBrand());
                 resetHasBrand();
-                //return products;
             }
             else if (hasCountry() && !hasBrand())
             {
                 products = productRepo.findByCountry(getCountry());
                 resetHasCountry();
-                //return products;
             }
             else if (hasBrand() && hasCountry())
             {
                 products = productRepo.findByBrandOrCountry(getBrand(), getCountry());
                 resetHasBrand();
                 resetHasCountry();
-                //return products;
             }
             else products = productRepo.findAll();
         }
-        /// В МЕТОД ФИЛЬТРА ПО ЦЕНАМ!
+        return filterByPrice(products);
+    }
+
+    private List<Product> filterByPrice(List<Product> products) {
+        if (hasSortMin() && !hasSortMax())
         {
-            if (hasSortMin() && !hasSortMax())
-            {
-                products = products.stream()
-                        .filter(product -> (product.getPrice()) >= getSortMin())
-                        .collect(Collectors.toList());
-                resetHasSortMin();
-            }
-            else if (hasSortMax() && !hasSortMin())
-            {
-                products = products.stream()
-                        .filter(product -> (product.getPrice()) <= getSortMax())
-                        .collect(Collectors.toList());
-                resetHasSortMax();
-            }
-            else if (hasSortMin() && hasSortMax())
-            {
-                products = products.stream()
-                        .filter(product -> (product.getPrice()) >= getSortMin())
-                        .filter(product -> (product.getPrice()) <= getSortMax())
-                        .collect(Collectors.toList());
-                resetHasSortMin();
-                resetHasSortMax();
-            }
+            products = products.stream()
+                    .filter(product -> (product.getPrice()) >= getSortMin())
+                    .collect(Collectors.toList());
+            resetHasSortMin();
+            return products;
+        }
+        else if (hasSortMax() && !hasSortMin())
+        {
+            products = products.stream()
+                    .filter(product -> (product.getPrice()) <= getSortMax())
+                    .collect(Collectors.toList());
+            resetHasSortMax();
+            return products;
+        }
+        else if (hasSortMin() && hasSortMax())
+        {
+            products = products.stream()
+                    .filter(product -> (product.getPrice()) >= getSortMin())
+                    .filter(product -> (product.getPrice()) <= getSortMax())
+                    .collect(Collectors.toList());
+            resetHasSortMin();
+            resetHasSortMax();
+            return products;
         }
         return products;
     }
 
+    public void collectParams(Map<String, String> filterParams, String brand, String country, String sortmin, String sortmax) {
+        filterParams.put("brand", brand);
+        filterParams.put("country", country);
+        filterParams.put("sortmin", sortmin);
+        filterParams.put("sortmax", sortmax);
+        filterParams.values().removeIf(String::isEmpty);
+    }
+
     private void getFilterParameters(Map<String, String> filterParams) {
+        showParams(filterParams);
         for (Map.Entry<String, String> paramWithArg : filterParams.entrySet()) {
             String parameter = paramWithArg.getKey();
             String argument = paramWithArg.getValue();
@@ -191,6 +292,8 @@ public class FilterService {
     private void setSortMax(Integer sortMax) {
         this.sortMax = sortMax;
     }
+
+
 }
 
 ////-->X* Object howToSort;

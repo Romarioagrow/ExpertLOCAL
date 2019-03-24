@@ -7,13 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ProductRepo extends JpaRepository<Product, Long> {
+
     List<Product> findByCategory(Category category);
 
     List<Product> findByType(Type type);
-
-    /*List<Product> findByParameters(Params parameters);
-    List<Product> findAllByParameters(String[] parameters);
-    List<Product> findByCategoryAndParameters(Category category, Params parameters);*/
 
     List<Product> findByCategoryAndBrand(Category category, String brand);
 
@@ -25,8 +22,25 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
 
     List<Product> findBySubCategory(SubCategory subCategory);
 
+    List<Product> findBySubCategoryAndBrand(SubCategory subCategory, String brand);
+
+    List<Product> findBySubCategoryAndBrandOrSubCategoryAndCountry(SubCategory subCategory, String brand, SubCategory subCategory2, String county);
+
+    List<Product> findBySubCategoryAndCountry(SubCategory subCategory, String country);
+
     List<Product> findByBrand(String brand);
 
     List<Product> findByCountry(String country);
 
-}
+    List<Product> findByTypeAndBrand(Type type, String brand);
+
+    List<Product> findByTypeAndCountry(Type type, String country);
+
+    List<Product> findByTypeAndBrandOrTypeAndCountry(Type type, String brand, Type type2, String country);
+
+
+    /*List<Product> findByParameters(Params parameters);
+    List<Product> findAllByParameters(String[] parameters);
+    List<Product> findByCategoryAndParameters(Category category, Params parameters);*/
+
+    }
