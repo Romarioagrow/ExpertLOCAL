@@ -1,7 +1,7 @@
 package expertshop.domain;
-import expertshop.domain.lists.Category;
-import expertshop.domain.lists.SubCategory;
-import expertshop.domain.lists.Type;
+import expertshop.domain.categories.Category;
+import expertshop.domain.categories.SubCategory;
+import expertshop.domain.categories.Type;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 

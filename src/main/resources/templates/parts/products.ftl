@@ -11,7 +11,7 @@
         <#list products as product>
             <div class="card-deck">
                 <div class="card">
-                    <img src="#" class="card-img-top" alt="#">
+                    <#--<img src="#" class="card-img-top" alt="#">-->
                     <div class="card-body">
                         <h6 class="card-title type">
                             <strong>${product.type}</strong>

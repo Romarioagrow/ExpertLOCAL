@@ -1,4 +1,4 @@
-package expertshop.domain.lists;
+package expertshop.domain.categories;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
@@ -19,6 +19,7 @@ public enum Type {
     MusicCenter,///
     TV,
     Cords,
+
 
     // Техника для кухни
     /*
@@ -60,6 +61,7 @@ public enum Type {
     BuiltIn_Stove,///
     Vytyazhka,///
 
+
     // Техника для дома
     /*
     * Стирка
@@ -81,6 +83,7 @@ public enum Type {
         Iron_Accessory,
     SewingMachine,///
 
+
     // Климат
     /*
     Кондиционеры
@@ -93,9 +96,9 @@ public enum Type {
 
     WaterHeater,///
 
-    Gas_WaterHeater,///
+    GasWaterHeater,///
 
-    Heaters,///
+    ElectricHeaters,///
         Thermometer,
 
     Ventilator,///
@@ -176,5 +179,12 @@ public enum Type {
     MobilePhone,///
     SmartPhone,
     Reader,
+
+
+
+    PhotoCamera, VideoCamera, PortableRadio,
+
+     SmartHeaders, BluetoothTech
+
 
 }
