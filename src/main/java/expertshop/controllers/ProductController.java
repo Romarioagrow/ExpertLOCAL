@@ -15,7 +15,7 @@ import java.util.*;
 /// ДЛЯ ВСЕХ КОНТРОЛЛЕРОВ!!!!
 /// НАСЛЕДОВАТЬ, ОБЩИЕ МЕТОДЫ!!!
 /// CategoryController, SubCategoryController, TypeController и ProductController!!!
-
+/// !!!
 @Controller
 public class ProductController {
     private final ProductRepo productRepo;
@@ -59,6 +59,7 @@ public class ProductController {
         }
     }
 
+    /// !!!
     public void showProductsByCategory(Category category, Model model,
             @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin,
             @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax,
@@ -66,28 +67,25 @@ public class ProductController {
             @RequestParam(required = false, name = "country", defaultValue = "") String country,
             @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
-        List<Product> products;
-
         if (formIsActive(sortmin, sortmax, brand, country)) {
             Map<String, String> filterParams = new LinkedHashMap<>();
 
             // Проверка и обработка фильтров, наполнение модели
             filterService.collectParams(filterParams, brand, country, sortmin, sortmax);
-            products = filterService.mainFilterResolver(filterParams, category);
-
+            List<Product> products = filterService.mainFilterResolver(filterParams, category);
             // Сортировка наполненной модели
             sortService.sorted(products, sortby);
 
             model.addAttribute("products", products);
         }
         else {
-            products = productRepo.findByCategory(category);
+            List<Product> products = productRepo.findByCategory(category);
             sortService.sorted(products, sortby);
 
             model.addAttribute("products", products);
         }
     }
-
+    /// !!!
     public void showProductsBySubCategory(SubCategory subCategory, Model model,
             @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin,
             @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax,
@@ -95,14 +93,12 @@ public class ProductController {
             @RequestParam(required = false, name = "country", defaultValue = "") String country,
             @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
-        List<Product> products;
-
         if (formIsActive(sortmin, sortmax, brand, country)) {
             Map<String, String> filterParams = new LinkedHashMap<>();
 
             // Проверка и обработка фильтров, наполнение модели
             filterService.collectParams(filterParams, brand, country, sortmin, sortmax);
-            products = filterService.mainFilterResolver(filterParams, subCategory);
+            List<Product> products = filterService.mainFilterResolver(filterParams, subCategory);
 
             // Сортировка наполненной модели
             sortService.sorted(products, sortby);
@@ -110,13 +106,13 @@ public class ProductController {
             model.addAttribute("products", products);
         }
         else {
-            products = productRepo.findBySubCategory(subCategory);
+            List<Product> products = productRepo.findBySubCategory(subCategory);
             sortService.sorted(products, sortby);
 
             model.addAttribute("products", products);
         }
     }
-
+    /// !!!
     public void showProductsByType(
             Type type,
             Model model,

@@ -2,12 +2,12 @@
     <li><a href="#">Выберите товар</a>
         <ul class="products-menu">
             <ul class="category-menu">
-                <li><a href="http://localhost:8080/electronics">Электроника</a>
+                <li><a href="http://localhost:8080/electronics-all">Электроника</a>
                     <div class="product-type-menu m2">
                         <div class="product-type-list m3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/tv"><strong>Телевизоры</strong></a></li>
-                                <li><a href="http://localhost:8080/tv-4k">4K</a></li>
+                                <li><a href="http://localhost:8080/tv-4K">4K</a></li>
                                 <li><a href="http://localhost:8080/tv-fullhd">FullHD</a></li>
                                 <li><a href="http://localhost:8080/tv-smart">SmartTV</a></li>
                                 <li><a href="http://localhost:8080/tv-curved">Гибкий экран</a></li>
@@ -32,7 +32,7 @@
                     </div>
                 </li>
                 <#---->
-                <li><a href="http://localhost:8080/kitchen">Кухонная техника</a>
+                <li><a href="http://localhost:8080/kitchen-all">Кухонная техника</a>
                     <div class="product-type-menu m2 wid-400">
                         <div class="product-type-list m3">
                             <ul class="products-list">
@@ -87,13 +87,13 @@
                     </div>
                 </li>
                 <#---->
-                <li><a href="http://localhost:8080/home">Техника для дома</a>
+                <li><a href="http://localhost:8080/home-all">Техника для дома</a>
                     <div class="product-type-menu">
                         <div class="product-type-list m3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/home-washing"><strong>Для стирки</strong></a></li>
-                                <li><a href="http://localhost:8080/washing-machine">Стиральные машины</a></li>
-                                <li><a href="http://localhost:8080/drying-machine">Машины для сушки</a></li>
+                                <li><a href="http://localhost:8080/washing-machines">Стиральные машины</a></li>
+                                <li><a href="http://localhost:8080/drying-machines">Машины для сушки</a></li>
                             </ul>
                         </div>
                         <div class="product-type-list m3">

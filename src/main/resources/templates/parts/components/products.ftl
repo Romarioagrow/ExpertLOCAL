@@ -3,9 +3,6 @@
         <a href="?sortby=lowest" class="btn btn-light" role="button">Сначала дешевые</a>
         <a href="?sortby=highest" class="btn btn-light" role="button">Сначала дорогие</a>
         <a href="/" class="btn btn-light" role="button">Сбросить</a>
-
-
-
     </div>
     <div class="container">
         <#list products as product>

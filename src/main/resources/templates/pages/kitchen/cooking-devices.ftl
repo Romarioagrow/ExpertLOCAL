@@ -13,6 +13,6 @@
             <h3 class="ml-20 m2"><span>Техника для готовки</span></h3>
             <div class="product-type-buttons"></div>
         </div>
-        <#include "../../parts/products.ftl">
+        <#include "../../parts/components/products.ftl">
     </div>
 </@c.page>
