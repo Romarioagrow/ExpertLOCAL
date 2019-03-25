@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @AllArgsConstructor
 public class SubCategoriesController {
-    private final ProductController productController;
+    private final ProductsController productController;
 
     //Electronics
     @GetMapping("/tv")

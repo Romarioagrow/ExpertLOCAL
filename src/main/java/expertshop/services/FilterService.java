@@ -23,28 +23,24 @@ public class FilterService {
     private Integer sortMin = null, sortMax = null;
     private Boolean hasBrand = false, hasCountry = false , hasSortMin = false, hasSortMax = false;
 
-    public List<Product> mainFilterResolver(Map<String, String> allFilterParams, Category category) {
-
+    public List<Product> mainCategoryFilterResolver(Map<String, String> allFilterParams, Category category)
+    {
         getFilterParameters(allFilterParams);
-
         return constructFinalProductList(category);
     }
-    public List<Product> mainFilterResolver(Map<String, String> allFilterParams, SubCategory subCategory) {
-
+    public List<Product> mainSubFilterResolver(Map<String, String> allFilterParams, SubCategory subCategory)
+    {
         getFilterParameters(allFilterParams);
-
         return constructFinalProductList(subCategory);
     }
-    public List<Product> mainFilterResolver(Map<String, String> allFilterParams, Type type) {
-
+    public List<Product> mainTypeFilterResolver(Map<String, String> allFilterParams, Type type)
+    {
         getFilterParameters(allFilterParams);
-
         return constructFinalProductList(type);
     }
-    public List<Product> mainFilterResolver(Map<String, String> allFilterParams) {
-
+    public List<Product> mainFilterResolver(Map<String, String> allFilterParams)
+    {
         getFilterParameters(allFilterParams);
-
         return constructFinalProductList();
     }
 

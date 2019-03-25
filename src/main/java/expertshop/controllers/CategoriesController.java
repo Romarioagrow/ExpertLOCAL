@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @AllArgsConstructor
 public class CategoriesController {
-    private final ProductController productController;
+    private final ProductsController productController;
 
     @GetMapping("/electronics-all")
     public String showElectronics(
