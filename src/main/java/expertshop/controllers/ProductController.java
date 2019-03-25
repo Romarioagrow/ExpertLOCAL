@@ -1,5 +1,8 @@
 package expertshop.controllers;
 import expertshop.domain.Product;
+import expertshop.domain.categories.Category;
+import expertshop.domain.categories.SubCategory;
+import expertshop.domain.categories.Type;
 import expertshop.repos.ProductRepo;
 import expertshop.services.FilterService;
 import expertshop.services.SortService;
@@ -25,6 +28,7 @@ public class ProductController {
         this.filterService = filterService;
     }
 
+    /// ВЫНЕСТИ!
     @GetMapping("/")
     public String showProducts(
             Model model,
@@ -52,6 +56,95 @@ public class ProductController {
 
             model.addAttribute("products", products);
             return "pages/main";
+        }
+    }
+
+    public void showProductsByCategory(Category category, Model model,
+            @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin,
+            @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax,
+            @RequestParam(required = false, name = "brand", defaultValue = "") String brand,
+            @RequestParam(required = false, name = "country", defaultValue = "") String country,
+            @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
+    ){
+        List<Product> products;
+
+        if (formIsActive(sortmin, sortmax, brand, country)) {
+            Map<String, String> filterParams = new LinkedHashMap<>();
+
+            // Проверка и обработка фильтров, наполнение модели
+            filterService.collectParams(filterParams, brand, country, sortmin, sortmax);
+            products = filterService.mainFilterResolver(filterParams, category);
+
+            // Сортировка наполненной модели
+            sortService.sorted(products, sortby);
+
+            model.addAttribute("products", products);
+        }
+        else {
+            products = productRepo.findByCategory(category);
+            sortService.sorted(products, sortby);
+
+            model.addAttribute("products", products);
+        }
+    }
+
+    public void showProductsBySubCategory(SubCategory subCategory, Model model,
+            @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin,
+            @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax,
+            @RequestParam(required = false, name = "brand", defaultValue = "") String brand,
+            @RequestParam(required = false, name = "country", defaultValue = "") String country,
+            @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
+    ){
+        List<Product> products;
+
+        if (formIsActive(sortmin, sortmax, brand, country)) {
+            Map<String, String> filterParams = new LinkedHashMap<>();
+
+            // Проверка и обработка фильтров, наполнение модели
+            filterService.collectParams(filterParams, brand, country, sortmin, sortmax);
+            products = filterService.mainFilterResolver(filterParams, subCategory);
+
+            // Сортировка наполненной модели
+            sortService.sorted(products, sortby);
+
+            model.addAttribute("products", products);
+        }
+        else {
+            products = productRepo.findBySubCategory(subCategory);
+            sortService.sorted(products, sortby);
+
+            model.addAttribute("products", products);
+        }
+    }
+
+    public void showProductsByType(
+            Type type,
+            Model model,
+            @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin,
+            @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax,
+            @RequestParam(required = false, name = "brand", defaultValue = "") String brand,
+            @RequestParam(required = false, name = "country", defaultValue = "") String country,
+            @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
+    ){
+        List<Product> products;
+
+        if (formIsActive(sortmin, sortmax, brand, country)) {
+            Map<String, String> filterParams = new LinkedHashMap<>();
+
+            // Проверка и обработка фильтров, наполнение модели
+            filterService.collectParams(filterParams, brand, country, sortmin, sortmax);
+            products = filterService.mainFilterResolver(filterParams, type);
+
+            // Сортировка наполненной модели
+            sortService.sorted(products, sortby);
+
+            model.addAttribute("products", products);
+        }
+        else {
+            products = productRepo.findByType(type);
+            sortService.sorted(products, sortby);
+
+            model.addAttribute("products", products);
         }
     }
 
