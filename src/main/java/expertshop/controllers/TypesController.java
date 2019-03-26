@@ -12,12 +12,12 @@ public class TypesController {
     private final ProductsController productController;
 
     //ELECTRONICS
-    @GetMapping("/tv-4K")
+    /*@GetMapping("/tv-4K")
     public String showTV4K(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         productController.showProductsByType(Type.TV, model, sortmin, sortmax, brand, country, sortby);
         return "pages/electronics/tv";
-    }
+    }*/
 
     /**/
     //KITCHEN
@@ -40,13 +40,13 @@ public class TypesController {
     public String showWashingMachine(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         productController.showProductsByType(Type.WashingMachine, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/electronics/washing-machines";
+        return "pages/home/washing-machines";
     }
     @GetMapping("/drying-machines")
     public String showClothesDryer(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         productController.showProductsByType(Type.ClothesDryer, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/electronics/washing-machines";
+        return "pages/home/drying-machines";
     }
 
     /**/

@@ -90,7 +90,6 @@ public class FilterService {
             }
             else products = productRepo.findBySubCategory(subCategory);
         }
-
         return filterByPrice(products);
     }
     private List<Product> constructFinalProductList(Type type) throws NullPointerException {

@@ -17,7 +17,6 @@ import java.util.List;
 @Table(name = "products")
 public class Product {
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
     private Long product_id;
 
     @Column(name = "category")
@@ -40,7 +39,7 @@ public class Product {
 
     private Integer price; // 8800
 
-    @ManyToMany(mappedBy = "product",fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "product",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Params> parameters;
 
 

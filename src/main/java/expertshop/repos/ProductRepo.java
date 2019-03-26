@@ -1,4 +1,5 @@
 package expertshop.repos;
+import expertshop.domain.Params;
 import expertshop.domain.Product;
 import expertshop.domain.categories.Category;
 import expertshop.domain.categories.SubCategory;
@@ -38,6 +39,11 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
 
     List<Product> findByTypeAndBrandOrTypeAndCountry(Type type, String brand, Type type2, String country);
 
+    /*List<Product> findByTypeAndParameters (Type type, Params params);*/
+
+    /*List<Product> findByTypeAndParameters(Type type, Params params);
+
+    List<Product> findByTypeAndParametersEquals(Type type, Params params);*/
 
     /*List<Product> findByParameters(Params parameters);
     List<Product> findAllByParameters(String[] parameters);
