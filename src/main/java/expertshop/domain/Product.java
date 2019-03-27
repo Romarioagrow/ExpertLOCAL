@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Data
@@ -37,10 +36,5 @@ public class Product implements Serializable {
     private String model; // PSJ 600
     private String country; // Korea
     private Integer price; // 8800
-
-
-
-    /*@ManyToMany(mappedBy = "product",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<ProductParams> parameters;*/
 
 }

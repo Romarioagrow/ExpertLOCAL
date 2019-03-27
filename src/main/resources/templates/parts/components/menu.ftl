@@ -1,5 +1,5 @@
-<ul class="main-menu">
-    <li><a href="#">Выберите товар</a>
+<ul class="main-menu test">
+    <li><a style="color: #fcf8e3" href="#">Выберите товар</a>
         <ul class="products-menu">
             <ul class="category-menu">
                 <li><a href="http://localhost:8080/electronics-all">Электроника</a>

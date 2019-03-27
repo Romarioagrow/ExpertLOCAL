@@ -2,10 +2,8 @@ package expertshop.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Map;
 
 @Entity
 @Data
@@ -16,10 +14,6 @@ public class ProductWrap implements Serializable {
     @Id
     private Long product_id;
 
-    /*private Long product_parameters_id;*/
-
-    /*private Map<Product, ProductParams> productWithParams;*/
-
     @OneToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
     private Product product;
@@ -27,5 +21,4 @@ public class ProductWrap implements Serializable {
     @OneToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "product_parameters_id")
     private ProductParams productParams;
-
 }

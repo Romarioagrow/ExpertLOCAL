@@ -22,7 +22,7 @@ public class CategoriesController {
     {
         productController.showProductsByCategory(Category.Electronics, model, sortmin, sortmax, brand, country, sortby);
         return "pages/electronics/electronics";
-    }
+}
 
     @GetMapping("/kitchen-all")
     public String showKitchenEquipment(

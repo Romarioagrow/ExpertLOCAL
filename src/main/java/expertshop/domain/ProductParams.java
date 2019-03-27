@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Data
@@ -24,16 +23,11 @@ public class ProductParams implements Serializable {
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    /*@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Product> product;*/
-
     /*STRING*/
     @Nullable
-    private String resolution;
-    @Nullable
-    private String resolutionType;
-    @Nullable
     private String diagonal;
+    @Nullable
+    private String resolution;
     @Nullable
     private String updateFrequency;
 
@@ -43,6 +37,7 @@ public class ProductParams implements Serializable {
     @Nullable
     private Boolean hasWifi;
     @Nullable
+    private Boolean has3D;
+    @Nullable
     private Boolean curvedScreen;
-
 }

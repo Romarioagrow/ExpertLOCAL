@@ -83,6 +83,7 @@ form input:hover {
 }
 .main-menu a:hover {
     background-color: #e5e5e5;
+    color: black;
 }
 .main-menu .products-menu {
     position: absolute;
@@ -100,6 +101,7 @@ form input:hover {
 }
 .main-menu > li:hover .products-menu {
     display: block;
+    color: black;
 }
 /*
 */
@@ -175,6 +177,16 @@ form input:hover {
     min-height: 100px;
     text-align: center;
 }
+/*
+*/
+.card {
+    width: 300px;
+    margin-right: 25px !important;
+    margin-bottom: 25px !important;
+}
 
-
-
+.test {
+    display: inline-block !important;
+    background-color: cornflowerblue;
+    color: #fcf8e3;
+}

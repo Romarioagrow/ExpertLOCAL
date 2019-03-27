@@ -12,6 +12,7 @@
         <ul class="navbar-nav mr-auto">
             <div class="selector">
                 <#include "components/menu.ftl">
+                <a href="/test" class="btn btn-light test" role="button">Test</a>
             </div>
         </ul>
     </div>
