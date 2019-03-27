@@ -109,7 +109,6 @@ public class ProductsController {
             @RequestParam(required = false, name = "country", defaultValue = "") String country,
             @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
-
         if (formIsActive(sortmin, sortmax, brand, country)) {
             Map<String, String> filterParams = new LinkedHashMap<>();
 

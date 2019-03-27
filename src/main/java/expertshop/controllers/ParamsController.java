@@ -1,8 +1,8 @@
 package expertshop.controllers;
-import expertshop.domain.Params;
-import expertshop.domain.Product;
-import expertshop.domain.categories.Type;
+import expertshop.domain.ProductWrap;
+import expertshop.repos.ParamsRepo;
 import expertshop.repos.ProductRepo;
+import expertshop.repos.WrapRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,22 +10,24 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
+
 @Controller
 @AllArgsConstructor
 public class ParamsController {
     private final ProductRepo productRepo;
+    private final ParamsRepo paramsRepo;
+    private final WrapRepo wrapRepo;
 
-    @GetMapping("/tv-4K")
+    @GetMapping("/test")
     public String showTV4K(
             Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
 
     ){
-        Params tvParams = new Params();
-        tvParams.setResolution_type("4K");
+        List<ProductWrap> productsWithParams;
 
-        /*List<Product> products = productRepo.findByTypeAndParametersEquals(Type.TV, tvParams);*/
+        productsWithParams = wrapRepo.findAll();
 
-        /*model.addAttribute("products", products);*/
-        return "pages/electronics/tv";
+        model.addAttribute("productsWithParams", productsWithParams);
+        return "pages/test_page";
     }
 }
