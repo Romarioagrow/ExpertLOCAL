@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @AllArgsConstructor
 public class SubCategoriesController {
-    private final ProductsController productController;
+    /*private final ProductsController productController;
 
     //Electronics
     @GetMapping("/tv")
@@ -33,7 +33,7 @@ public class SubCategoriesController {
         productController.showProductsBySubCategory(SubCategory.Sputnik, model, sortmin, sortmax, brand, country, sortby);
         return "pages/electronics/sputnik";
     }
-    /**/
+    *//**//*
     //Kitchen
     @GetMapping("/kitchen-big")
     public String showKitchenBig(
@@ -70,7 +70,7 @@ public class SubCategoriesController {
         productController.showProductsBySubCategory(SubCategory.KitchenAccessory, model, sortmin, sortmax, brand, country, sortby);
         return "pages/kitchen/kitchen-accessory";
     }
-    /**/
+    *//**//*
     //Home
     @GetMapping("/home-washing")
     public String showWashing(
@@ -101,7 +101,7 @@ public class SubCategoriesController {
         productController.showProductsBySubCategory(SubCategory.HomeAccessory, model, sortmin, sortmax, brand, country, sortby);
         return "pages/home/home-accessory";
     }
-    /**/
+    *//**//*
     //Computers
     @GetMapping("/computers-pc")
     public String showPC(
@@ -130,7 +130,7 @@ public class SubCategoriesController {
     ){
         productController.showProductsBySubCategory(SubCategory.ComputersAccessory, model, sortmin, sortmax, brand, country, sortby);
         return "pages/computers/computers-accessory";
-    }
+    }*/
 
 
 }

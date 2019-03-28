@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @Service
+@Deprecated
 public class SortService {
     public void sorted(List<Product> products, String sortby) {
         if (sortby != null && !sortby.isEmpty()) {

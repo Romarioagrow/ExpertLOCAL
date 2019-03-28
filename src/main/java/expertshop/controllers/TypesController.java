@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @AllArgsConstructor
 public class TypesController {
-    private final ProductsController productController;
+    /*private final ProductsController productController;
 
     //ELECTRONICS
-    /**/
+    *//**//*
 
-    /**/
+    *//**//*
     //KITCHEN
     @GetMapping("/fridges")
     public String showFridges(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
@@ -29,7 +29,7 @@ public class TypesController {
         return "pages/kitchen/ovens";
     }
 
-    /**/
+    *//**//*
     //HOME
     @GetMapping("/washing-machines")
     public String showWashingMachine(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
@@ -44,7 +44,7 @@ public class TypesController {
         return "pages/home/drying-machines";
     }
 
-    /**/
+    *//**//*
     //CLIMATE
     @GetMapping("/conditioners")
     public String showConditioners(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
@@ -78,7 +78,7 @@ public class TypesController {
         return "pages/climate/ventilators";
     }
 
-    /**/
+    *//**//*
     //COMPUTERS
     @GetMapping("/notebooks")
     public String showNotebooks(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
@@ -93,7 +93,7 @@ public class TypesController {
         return "pages/electronics/electronics";
     }
 
-    /**/
+    *//**//*
     //PORTABLE
     @GetMapping("/photo")
     public String showPhoto(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
@@ -120,7 +120,7 @@ public class TypesController {
         return "pages/portable/mobile-phones";
     }
 
-    /**/
+    *//**//*
     //SMART
     @GetMapping("/smartphones")
     public String showSmartphones(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
@@ -145,5 +145,5 @@ public class TypesController {
     ){
         productController.showProductsByType(Type.BluetoothTech, model, sortmin, sortmax, brand, country, sortby);
         return "pages/smart/bluetooth";
-    }
+    }*/
 }

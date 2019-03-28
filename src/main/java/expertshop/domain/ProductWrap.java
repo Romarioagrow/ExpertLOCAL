@@ -1,4 +1,5 @@
 package expertshop.domain;
+import expertshop.domain.categories.Type;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,4 +22,7 @@ public class ProductWrap implements Serializable {
     @OneToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "product_parameters_id")
     private ProductParams productParams;
+
+    @Enumerated(EnumType.STRING)
+    private Type type;
 }

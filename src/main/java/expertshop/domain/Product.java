@@ -36,5 +36,4 @@ public class Product implements Serializable {
     private String model; // PSJ 600
     private String country; // Korea
     private Integer price; // 8800
-
 }

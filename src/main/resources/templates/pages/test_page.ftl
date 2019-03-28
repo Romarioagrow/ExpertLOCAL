@@ -38,8 +38,8 @@
                         </div>
                         <div class="card-footer">
                             <small class="text-muted">
-                                ${bigproduct.productParams.resolutionType}
-                                <strong style="margin-left: 30%"><i >${bigproduct.product.price}</i></strong>
+                                ${bigproduct.productParams.resolution}
+                                <strong style="margin-left: 50%"><i >${bigproduct.product.price}</i></strong>
                             </small>
                         </div>
                     </div>

@@ -19,14 +19,15 @@ import java.util.stream.Stream;
 @Service
 @AllArgsConstructor
 public class ProductsController {
-    private final ProductRepo productRepo;
+    /*private final ProductRepo productRepo;
     private final SortService sortService;
     private final FilterService filterService;
 
     @GetMapping("/")
     public String showAllProducts(
             Model model,
-            /*@RequestParam(required = false, value = "param[]") String[] paramValues*/
+@RequestParam(required = false, value = "param[]") String[] paramValues
+
 
             @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin,
             @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax,
@@ -57,8 +58,9 @@ public class ProductsController {
             return "pages/main";
         }
 
-        /*if (paramValues != null) {
-            *//*List<String> params = new ArrayList<>(Arrays.asList(paramValues));*//*
+if (paramValues != null) {
+
+List<String> params = new ArrayList<>(Arrays.asList(paramValues));
 
             List<String> params = new ArrayList<>();
 
@@ -66,14 +68,16 @@ public class ProductsController {
                 params.add(param);
             }
 
-            *//*params = params.stream()
+
+params = params.stream()
                     .filter(String::isEmpty)
-                    .collect(Collectors.toList());*//*
+                    .collect(Collectors.toList());
             ;
 
             params.forEach(System.out::println);
 
-            *//*Stream<String> params = paramValues*//*
+
+Stream<String> params = paramValues
 
             List<Product> products = productRepo.findAll();
             model.addAttribute("products", products);
@@ -84,7 +88,8 @@ public class ProductsController {
             model.addAttribute("products", products);
 
         }
-        return "pages/main";*/
+        return "pages/main";
+
     }
 
     void showProductsByCategory(Category category, Model model,
@@ -148,7 +153,9 @@ public class ProductsController {
             Map<String, String> filterParams = new LinkedHashMap<>();
 
             filterService.collectParams(filterParams, brand, country, sortmin, sortmax);
+
             List<Product> products = filterService.mainTypeFilterResolver(filterParams, type);
+
             sortService.sorted(products, sortby);
 
             model.addAttribute("products", products);
@@ -163,5 +170,5 @@ public class ProductsController {
 
     private boolean formIsActive(String sortmin, String sortmax, String brand, String country) {
         return (!sortmin.isEmpty() | !sortmax.isEmpty() | !brand.isEmpty() | !country.isEmpty());
-    }
+    }*/
 }

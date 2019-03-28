@@ -181,10 +181,8 @@ public enum Type {
     Reader,
 
 
-
     PhotoCamera, VideoCamera, PortableRadio,
 
      SmartHeaders, BluetoothTech
-
 
 }

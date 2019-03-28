@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @AllArgsConstructor
 public class CategoriesController {
-    private final ProductsController productController;
+    /*private final ProductsController productController;
 
     @GetMapping("/electronics-all")
     public String showElectronics(
@@ -100,5 +100,5 @@ public class CategoriesController {
     ){
         productController.showProductsByCategory(Category.Smart, model, sortmin, sortmax, brand, country, sortby);
         return "pages/smart/smart";
-    }
+    }*/
 }
