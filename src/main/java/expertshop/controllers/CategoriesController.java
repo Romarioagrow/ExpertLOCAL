@@ -12,6 +12,19 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class CategoriesController {
     private final FilterService filterService;
 
+    @GetMapping("/")
+    public String showAll(
+            Model model,
+            @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin,
+            @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax,
+            @RequestParam(required = false, name = "brand", defaultValue = "") String brand,
+            @RequestParam(required = false, name = "country", defaultValue = "") String country,
+            @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
+    ){
+        filterService.showAllProducts(model, sortmin, sortmax, brand, country, sortby);
+        return "pages/main";
+    }
+
     @GetMapping("/electronics-all")
     public String showElectronics(
             Model model,
@@ -101,18 +114,5 @@ public class CategoriesController {
     ){
         filterService.constructAndFilter(Category.Smart, model, sortmin, sortmax, brand, country, sortby);
         return "pages/smart/smart";
-    }
-
-    @GetMapping("/")
-    public String showAll(
-            Model model,
-            @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin,
-            @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax,
-            @RequestParam(required = false, name = "brand", defaultValue = "") String brand,
-            @RequestParam(required = false, name = "country", defaultValue = "") String country,
-            @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
-    ){
-        filterService.showAllProducts(model, sortmin, sortmax, brand, country, sortby);
-        return "pages/main";
     }
 }

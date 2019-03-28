@@ -31,6 +31,8 @@ public class ParamsController {
         return "pages/electronics/tv";
     }
 
+
+
     @GetMapping("/test")
     public String showTest(
             Model model,

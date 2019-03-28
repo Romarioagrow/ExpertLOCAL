@@ -17,13 +17,13 @@ public class TypesController {
     public String showFridges(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Type.Fridge, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/kitchen/fridges";
+        return "pages/kitchen/kitchen-big-fridges";
     }
     @GetMapping("/ovens")
     public String showOvens(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Type.Oven, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/kitchen/ovens";
+        return "pages/kitchen/kitchen-big-ovens";
     }
 
     //HOME
