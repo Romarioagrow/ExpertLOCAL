@@ -27,7 +27,7 @@ public class ParamsController {
             @RequestParam(required = false, name = "country") String country,
             @RequestParam(required = false, name = "sortby") String sortby
     ){
-        filterService.constructAndFilterTV(model, sortmin, sortmax, brand, country, sortby);
+        filterService.constructAndFilter(Type.TV, model, sortmin, sortmax, brand, country, sortby);
         return "pages/electronics/tv";
     }
 

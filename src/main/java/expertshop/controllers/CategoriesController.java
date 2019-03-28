@@ -1,5 +1,6 @@
 package expertshop.controllers;
 import expertshop.domain.categories.Category;
+import expertshop.services.FilterService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 @AllArgsConstructor
 public class CategoriesController {
-    /*private final ProductsController productController;
+    private final FilterService filterService;
 
     @GetMapping("/electronics-all")
     public String showElectronics(
@@ -20,9 +21,9 @@ public class CategoriesController {
             @RequestParam(required = false, name = "country", defaultValue = "") String country,
             @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby)
     {
-        productController.showProductsByCategory(Category.Electronics, model, sortmin, sortmax, brand, country, sortby);
+        filterService.constructAndFilter(Category.Electronics, model, sortmin, sortmax, brand, country, sortby);
         return "pages/electronics/electronics";
-}
+    }
 
     @GetMapping("/kitchen-all")
     public String showKitchenEquipment(
@@ -33,7 +34,7 @@ public class CategoriesController {
             @RequestParam(required = false, name = "country", defaultValue = "") String country,
             @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
-        productController.showProductsByCategory(Category.KitchenEquipment, model, sortmin, sortmax, brand, country, sortby);
+        filterService.constructAndFilter(Category.KitchenEquipment, model, sortmin, sortmax, brand, country, sortby);
         return "pages/kitchen/kitchen";
     }
 
@@ -46,7 +47,7 @@ public class CategoriesController {
             @RequestParam(required = false, name = "country", defaultValue = "") String country,
             @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
-        productController.showProductsByCategory(Category.HomeEquipment, model, sortmin, sortmax, brand, country, sortby);
+        filterService.constructAndFilter(Category.HomeEquipment, model, sortmin, sortmax, brand, country, sortby);
         return "pages/home/home";
     }
 
@@ -59,7 +60,7 @@ public class CategoriesController {
             @RequestParam(required = false, name = "country", defaultValue = "") String country,
             @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
-        productController.showProductsByCategory(Category.ClimateControl, model, sortmin, sortmax, brand, country, sortby);
+        filterService.constructAndFilter(Category.ClimateControl, model, sortmin, sortmax, brand, country, sortby);
         return "pages/climate/climate";
     }
 
@@ -72,7 +73,7 @@ public class CategoriesController {
             @RequestParam(required = false, name = "country", defaultValue = "") String country,
             @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
-        productController.showProductsByCategory(Category.Computers, model, sortmin, sortmax, brand, country, sortby);
+        filterService.constructAndFilter(Category.Computers, model, sortmin, sortmax, brand, country, sortby);
         return "pages/computers/computers";
     }
 
@@ -85,7 +86,7 @@ public class CategoriesController {
             @RequestParam(required = false, name = "country", defaultValue = "") String country,
             @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
-        productController.showProductsByCategory(Category.Portable, model, sortmin, sortmax, brand, country, sortby);
+        filterService.constructAndFilter(Category.Portable, model, sortmin, sortmax, brand, country, sortby);
         return "pages/portable/portable";
     }
 
@@ -98,7 +99,20 @@ public class CategoriesController {
             @RequestParam(required = false, name = "country", defaultValue = "") String country,
             @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
-        productController.showProductsByCategory(Category.Smart, model, sortmin, sortmax, brand, country, sortby);
+        filterService.constructAndFilter(Category.Smart, model, sortmin, sortmax, brand, country, sortby);
         return "pages/smart/smart";
-    }*/
+    }
+
+    @GetMapping("/")
+    public String showAll(
+            Model model,
+            @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin,
+            @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax,
+            @RequestParam(required = false, name = "brand", defaultValue = "") String brand,
+            @RequestParam(required = false, name = "country", defaultValue = "") String country,
+            @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
+    ){
+        filterService.showAllProducts(model, sortmin, sortmax, brand, country, sortby);
+        return "pages/main";
+    }
 }
