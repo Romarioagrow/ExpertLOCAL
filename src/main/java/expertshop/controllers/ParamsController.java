@@ -43,36 +43,12 @@ public class ParamsController {
             @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
 
     ){
-        List<ProductWrap> productsWithParams = new ArrayList<>();
-
-        if (sortmin.isEmpty()) sortmin = null; else
-        if (sortmax.isEmpty()) sortmax = null;
-        if (brand.isEmpty()) brand = null;
-        if (country.isEmpty()) country = null;
-
-        String finalSortmin = sortmin;
-        String finalSortmax = sortmax;
-        String finalBrand = brand;
-        String finalCountry = country;
-
-        productsWithParams = productsWithParams.stream()
-                .filter(productWrap -> productWrap.getProduct().getPrice() >= Integer.parseInt(finalSortmin))//ifNotEquals("")
-                .filter(productWrap -> productWrap.getProduct().getPrice() <= Integer.parseInt(finalSortmax))//ifNotEquals("")
-                .filter(productWrap -> productWrap.getProduct().getBrand().equals(finalBrand)) //ifNotEquals("")
-                .filter(productWrap -> productWrap.getProduct().getCountry().equals(finalCountry))//ifNotEquals("")
-                .collect(Collectors.toList());
-
-        productsWithParams = wrapRepo.findByType(Type.TV);
+        filterService.showAllProducts(model, sortmin, sortmax, brand, country, sortby);
 
 
-        /*productsWithParams = productsWithParams.stream()
-         *//*.filter(productWrap -> Objects.equals(productWrap.getProductParams().getResolution(), "4K 3840x2160"))*//*
-                .filter(productWrap -> if (sortmin == null) {
 
-        } )
-                .collect(Collectors.toList());*/
 
-        model.addAttribute("productsWithParams", productsWithParams);
+
         return "pages/test_page";
     }
 

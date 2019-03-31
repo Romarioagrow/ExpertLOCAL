@@ -13,41 +13,69 @@
 <#include "../parts/navbar.ftl">
 <div class="container-fluid">
     <div class="row">
-        <div class="col-2 marker1">
+        <div class="col-3 marker1">
             <div class="marker2">
                 Фильтры для категории техники
             </div>
             <div class="marker2">
-                <form id="main-filter" method="get">
+                <form method="get">
                     <div>
-                        <div class="form-group">
-                            <label for="sortmin">Не дешевле:</label>
-                            <br><input type="text" id="sortmin" name="sortmin">
+                        <button class="btn btn-info btn-lg btn-block"
+                                type="button"
+                                data-toggle="collapse"
+                                data-target="#filter1"
+                                aria-expanded="false"
+                                aria-controls="collapseExample">
+                            Цена
+                        </button>
+                        <div class="collapse" id="filter1">
+                            <div class="card card-body">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">От</span>
+                                    </div>
+                                    <input type="text" id="sortmin" name="sortmin" placeholder="₽" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                </div>
+                                <div class="input-group">
+                                    <input type="text" id="sortmax" name="sortmax" placeholder="₽" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">До</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div>
-                        <div class="form-group">
-                            <br><label for="sortmax">Не дороже:</label>
-                            <br><input type="text" id="sortmax" name="sortmax">
+                        <button class="btn btn-info btn-lg btn-block"
+                                type="button"
+                                data-toggle="collapse"
+                                data-target="#filter2"
+                                aria-expanded="false"
+                                aria-controls="collapseExample">
+                            Страна и бренд
+                        </button>
+                        <div class="collapse" id="filter2">
+                            <div class="card card-body">
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="filter-brand">Бренд</span>
+                                    </div>
+                                    <input type="text" id="brand" name="brand" class="form-control" aria-label="Default" aria-describedby="filter-brand">
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="filter-country">Страна</span>
+                                    </div>
+                                    <input type="text" id="country" name="country" class="form-control" aria-label="Default" aria-describedby="filter-country">
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        <div class="form-group">
-                            <br><label for="brand">Производитель</label>
-                            <br><input type="text" id="brand" name="brand">
-                        </div>
-                    </div>
-                    <div>
-                        <div class="form-group">
-                            <br><label for="country">Страна</label>
-                            <br><input type="text" id="country" name="country">
-                        </div>
-                    </div>
-                    <br><div class="find-button"><input type="submit" value="Найти"></div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Найти</button>
                 </form>
             </div>
         </div>
-        <div class="col ml-2 marker1">
+        <div class="col marker1">
             <div class="marker2">
                 Какая техника вас интересует?
             </div>
@@ -120,5 +148,11 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
 </body>
 </html>
+
+<style>
+    .btn {
+        margin-bottom: 2%;
+    }
+</style>
 
 
