@@ -29,7 +29,6 @@ public class FilterService {
             model.addAttribute("products", products);
         }
     }
-
     public void constructAndFilter(SubCategory subCategory, Model model, String sortmin, String sortmax, String brand, String country, String sortby) {
         List<Product> products = productRepo.findBySubCategory(subCategory);
 
@@ -41,7 +40,6 @@ public class FilterService {
             model.addAttribute("products", products);
         }
     }
-
     public void constructAndFilter(Type type, Model model, String sortmin, String sortmax, String brand, String country, String sortby) {
         List<ProductWrap> productsWithParams = wrapRepo.findByType(type);
 

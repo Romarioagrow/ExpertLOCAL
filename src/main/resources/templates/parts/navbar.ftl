@@ -7,7 +7,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <!-- Основной блок навпанели -->
-    <div class="collapse navbar-collapse mark2" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <!-- Кнопки меню -->
         <ul class="navbar-nav mr-auto">
             <div class="selector">

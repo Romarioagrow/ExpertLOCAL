@@ -1,10 +1,11 @@
-<div class="m2">
+<div class="marker2">
 
-    <div class="sorting m3" id="sorting">
+    <div class="sorting marker3" id="sorting">
         <a href="?sortby=lowest" class="btn btn-light" role="button">Сначала дешевые</a>
         <a href="?sortby=highest" class="btn btn-light" role="button">Сначала дорогие</a>
         <a href="/" class="btn btn-light" role="button">Сбросить</a>
     </div>
+
     <div class="container">
         <#if products??>
             <#list products as product>

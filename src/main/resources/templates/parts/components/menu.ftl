@@ -3,8 +3,8 @@
         <ul class="products-menu">
             <ul class="category-menu">
                 <li><a href="http://localhost:8080/electronics-all">Электроника</a>
-                    <div class="product-type-menu m2">
-                        <div class="product-type-list m3">
+                    <div class="product-type-menu marker2">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/tv"><strong>Телевизоры</strong></a></li>
                                 <li><a href="http://localhost:8080/tv-4K">4K</a></li>
@@ -14,7 +14,7 @@
                                 <li><a href="http://localhost:8080/tv-dvbt2">DVBT2</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/multimedia"><strong>Мультимедийные системы</strong></a></li>
                                 <li><a href="http://localhost:8080/music-centers">Музыкальные центры</a></li>
@@ -22,7 +22,7 @@
                                 <li><a href="http://localhost:8080/projectors">Проекторы</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/sputnik"><strong>Спутниковая техника</strong></a></li>
                                 <li><a href="http://localhost:8080/sputnik-resicers">Ресиверы</a></li>
@@ -33,8 +33,8 @@
                 </li>
                 <#---->
                 <li><a href="http://localhost:8080/kitchen-all">Кухонная техника</a>
-                    <div class="product-type-menu m2 wid-400">
-                        <div class="product-type-list m3">
+                    <div class="product-type-menu marker2 wid-400">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/kitchen-big"><strong>Крупная техника</strong></a></li>
                                 <li><a href="http://localhost:8080/fridges">Холодильники</a></li>
@@ -44,7 +44,7 @@
                                 <li><a href="http://localhost:8080/dishwashers">Посудомоечные машины</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/kitchen-builtin"><strong>Встраиваемая техника</strong></a></li>
                                 <li><a href="http://localhost:8080/builtin-ovens">Встраиваемые духовки</a></li>
@@ -52,7 +52,7 @@
                                 <li><a href="http://localhost:8080/vent">Вытяжки</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/cooking-devices"><strong>Техника для приготовления пищи</strong></a></li>
                                 <li><a href="http://localhost:8080/fridges">Мультиварки</a></li>
@@ -61,7 +61,7 @@
                                 <li><a href="http://localhost:8080/waffles-breakfast">Вафельницы, йогуртницы и шашлычницы</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/kitchen-small"><strong>Маленькая техника</strong></a></li>
                                 <li><a href="http://localhost:8080/teapots">Электрочайники</a></li>
@@ -74,7 +74,7 @@
                                 <li><a href="http://localhost:8080/coffe-makers">Кофеварки</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/kitchen-accessory"><strong>Кухонные аксессуары</strong></a></li>
                                 <li><a href="http://localhost:8080/fridges">Фильтры для воды</a></li>
@@ -89,14 +89,14 @@
                 <#---->
                 <li><a href="http://localhost:8080/home-all">Техника для дома</a>
                     <div class="product-type-menu">
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/home-washing"><strong>Для стирки</strong></a></li>
                                 <li><a href="http://localhost:8080/washing-machines">Стиральные машины</a></li>
                                 <li><a href="http://localhost:8080/drying-machines">Машины для сушки</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/home-cleaning"><strong>Для уборки</strong></a></li>
                                 <li><a href="http://localhost:8080/vacuum-cleaners">Пылесосы и аксессуары</a></li>
@@ -104,7 +104,7 @@
                                 <li><a href="#">Роботы-уборщики</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/home-clothes"><strong>Для ухода за одеждой</strong></a></li>
                                 <li><a href="http://localhost:8080/irons">Утюги и аксессуары</a></li>
@@ -112,7 +112,7 @@
                                 <li><a href="http://localhost:8080/sewing-machines">Швейные машинки</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/home-accessory"><strong>Аксессуары для дома</strong></a></li>
                             </ul>
@@ -122,7 +122,7 @@
                 <#---->
                 <li><a href="http://localhost:8080/climate-all">Климатическая техника</a>
                     <div class="product-type-menu">
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/conditioners"><strong>Кондиционеры</strong></a></li>
                                 <li><a href="http://localhost:8080/#">Кондиционер 1</a></li>
@@ -130,7 +130,7 @@
                                 <li><a href="http://localhost:8080/#">Кондиционер 3</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/water-heaters"><strong>Водонагреватели</strong></a></li>
                                 <li><a href="http://localhost:8080/#">Водонагреватель 1</a></li>
@@ -138,7 +138,7 @@
                                 <li><a href="http://localhost:8080/#">Водонагреватель 3</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/gas-heaters"><strong>Газовые колонки</strong></a></li>
                                 <li><a href="http://localhost:8080/#">Колонка 1</a></li>
@@ -146,7 +146,7 @@
                                 <li><a href="http://localhost:8080/#">Колонка 3</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/electric-heaters"><strong>Обогреватели</strong></a></li>
                                 <li><a href="http://localhost:8080/#">Обогреватель 1</a></li>
@@ -154,7 +154,7 @@
                                 <li><a href="http://localhost:8080/#">Обогреватель 3</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/ventilators"><strong>Вентиляторы</strong></a></li>
                                 <li><a href="http://localhost:8080/#">Вентилятор 1</a></li>
@@ -167,7 +167,7 @@
                 <#---->
                 <li><a href="http://localhost:8080/computers-all">Компьютеры и офисная техника</a>
                     <div class="product-type-menu wid-400">
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/computers-pc"><strong>ПК и переферия</strong></a></li>
                                 <li><a href="http://localhost:8080/#">Готовые системные блоки</a></li>
@@ -179,7 +179,7 @@
                                 <li><a href="http://localhost:8080/#">Вебкамеры</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/notebooks"><strong>Ноутбуки</strong></a></li>
                                 <li><a href="http://localhost:8080/#">Ультра-тонкие</a></li>
@@ -188,7 +188,7 @@
                                 <li><a href="http://localhost:8080/#">Аксессуары для ноутбуков</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/computer-parts"><strong>Компьютерные комплектующие</strong></a></li>
                                 <li><a href="http://localhost:8080/#">Товар 1</a></li>
@@ -196,7 +196,7 @@
                                 <li><a href="http://localhost:8080/#">Товар 3</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/computers-office"><strong>Офисная техника</strong></a></li>
                                 <li><a href="http://localhost:8080/#">Принтеры</a></li>
@@ -204,7 +204,7 @@
                                 <li><a href="http://localhost:8080/#">Проекторы</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/computers-accessory"><strong>Аксессуары</strong></a></li>
                                 <li><a href="http://localhost:8080/#">USB-карты</a></li>
@@ -219,7 +219,7 @@
                 <#---->
                 <li><a href="http://localhost:8080/portable-all">Портативная техника</a>
                     <div class="product-type-menu">
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/photo"><strong>Фотоапараты</strong></a></li>
                                 <li><a href="http://localhost:8080/#">Товар 1</a></li>
@@ -227,7 +227,7 @@
                                 <li><a href="http://localhost:8080/#">Товар 3</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/video"><strong>Камеры</strong></a></li>
                                 <li><a href="http://localhost:8080/#">Товар 1</a></li>
@@ -235,7 +235,7 @@
                                 <li><a href="http://localhost:8080/#">Товар 3</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/radio"><strong>Рации</strong></a></li>
                                 <li><a href="http://localhost:8080/#">Товар 1</a></li>
@@ -243,7 +243,7 @@
                                 <li><a href="http://localhost:8080/#">Товар 3</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/mobile-phones"><strong>Сотовые телефоны</strong></a></li>
                                 <li><a href="http://localhost:8080/#">Товар 1</a></li>
@@ -256,7 +256,7 @@
                 <#---->
                 <li><a href="http://localhost:8080/smart-all">Smart техника</a>
                     <div class="product-type-menu">
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/smartphones"><strong>Смартфоны</strong></a></li>
                                 <li><a href="http://localhost:8080/#">Товар 1</a></li>
@@ -264,7 +264,7 @@
                                 <li><a href="http://localhost:8080/#">Товар 3</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/tablets"><strong>Планшеты</strong></a></li>
                                 <li><a href="http://localhost:8080/#">Товар 1</a></li>
@@ -272,7 +272,7 @@
                                 <li><a href="http://localhost:8080/#">Товар 3</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/smart-headers"><strong>Умные колонки</strong></a></li>
                                 <li><a href="http://localhost:8080/#">Товар 1</a></li>
@@ -280,7 +280,7 @@
                                 <li><a href="http://localhost:8080/#">Товар 3</a></li>
                             </ul>
                         </div>
-                        <div class="product-type-list m3">
+                        <div class="product-type-list marker3">
                             <ul class="products-list">
                                 <li class="list-head"><a href="http://localhost:8080/bluetooth"><strong>Bluetooth устройства</strong></a></li>
                                 <li><a href="http://localhost:8080/#">Товар 1</a></li>
@@ -294,3 +294,104 @@
         </ul>
     </li>
 </ul>
+<style>
+    .main-menu {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border: 1px solid #e5e5e5;
+    }
+    .main-menu > li {
+        position: relative;
+        display: inline-block;
+        margin-right: -4px;
+        z-index: 100;
+    }
+    .main-menu a {
+        display: block;
+        margin-left: -1px;
+        padding: 8px 10px;
+        color: black;
+        border-left: 1px solid #e5e5e5;
+        text-decoration: none;
+    }
+    .main-menu a:hover {
+        background-color: #e5e5e5;
+        color: black;
+    }
+    .main-menu .products-menu {
+        position: absolute;
+        left: 1px;
+        display: none;
+        width: 150px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        background-color: #fcf8e3;
+    }
+    .main-menu .products-menu a {
+        margin-bottom: -1px;
+        border: 1px solid #e5e5e5;
+    }
+    .main-menu > li:hover .products-menu {
+        display: block;
+        color: black;
+    }
+    /*
+    */
+    .category-menu {
+        width: 180px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        background-color: whitesmoke;
+    }
+    .category-menu a {
+        display: block;
+        margin-bottom: -1px;
+        padding: 8px 14px;
+        color: black;
+        text-decoration: none;
+        border: 1px solid #e5e5e5;
+    }
+    .category-menu a:hover {
+        background-color: #e5e5e5;
+    }
+    .category-menu > li {
+        position: relative;
+    }
+    .category-menu .product-type-menu {
+        width: 350%;
+        min-height: auto;
+        position: absolute;
+        top: 0;
+        left: 180px;
+        z-index: 10;
+        display: none;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        background-color: whitesmoke;
+    }
+    .category-menu .product-type-menu .product-type-list {
+        display: inline-block;
+        vertical-align: top;
+        padding: 0;
+    }
+    .category-menu > li:hover .product-type-menu {
+        display: inline-block;
+    }
+    .products-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .product-type-list a {
+        border: none !important;
+        padding: 5px 15px;
+        margin-top: -5px;
+    }
+    .list-head {
+        margin-top: 5px !important;
+    }
+</style>

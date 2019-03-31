@@ -1,11 +1,13 @@
 body {
     background-color: #fff;
 }
-.card-columns {
-    margin-left: 20px;
-    margin-right: 20px;
-    text-align: center;
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
 }
+
 form input:hover {
     background-color: #e5e5e5;
 }
@@ -13,176 +15,8 @@ form input:hover {
 .card-deck {
     display: inline-block
 }
-
-
-/*******************/
-.clearfix::after {
-    content: "";
-    display: table;
-    clear: both;
-}
-/*
-*/
-.about {
-    float: left;
-    width: 99%;
-    min-height: 20px;
-    margin: 10px;
-}
-/*
-*/
-.filters-container {
-    float: left;
-    width: 20%;
-}
-.filters-container .someinfo {
-    min-height: 55px;
-    margin-bottom: 5px;
-}
-.filter-layout .field {
-    margin-left: 20px;
-}
-/*
-*/
-.products-container {
-    float: right;
-    width: 78%;
-    margin-right: 15px;
-}
-.products-container .info-layout {
-    min-height: 50px;
-    margin-bottom: 10px;
-    padding-left: 20px;
-}
-/*
-*/
-#sorting {
-    padding-left: 20px;
-}
-/*
-Для списка товаров*/
-.main-menu {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    border: 1px solid #e5e5e5;
-}
-.main-menu > li {
-    position: relative;
-    display: inline-block;
-    margin-right: -4px;
-    z-index: 100;
-}
-.main-menu a {
-    display: block;
-    margin-left: -1px;
-    padding: 8px 10px;
-    color: black;
-    border-left: 1px solid #e5e5e5;
-    text-decoration: none;
-}
-.main-menu a:hover {
-    background-color: #e5e5e5;
-    color: black;
-}
-.main-menu .products-menu {
-    position: absolute;
-    left: 1px;
-    display: none;
-    width: 150px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    background-color: #fcf8e3;
-}
-.main-menu .products-menu a {
-    margin-bottom: -1px;
-    border: 1px solid #e5e5e5;
-}
-.main-menu > li:hover .products-menu {
-    display: block;
-    color: black;
-}
-/*
-*/
-.category-menu {
-    width: 180px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    background-color: whitesmoke;
-}
-.category-menu a {
-    display: block;
-    margin-bottom: -1px;
-    padding: 8px 14px;
-    color: black;
-    text-decoration: none;
-    border: 1px solid #e5e5e5;
-}
-.category-menu a:hover {
-    background-color: #e5e5e5;
-}
-.category-menu > li {
-    position: relative;
-}
-.category-menu .product-type-menu {
-    width: 350%;
-    min-height: auto;
-    position: absolute;
-    top: 0;
-    left: 180px;
-    z-index: 10;
-    display: none;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    background-color: whitesmoke;
-}
-.category-menu .product-type-menu .product-type-list {
-    display: inline-block;
-    vertical-align: top;
-    /*margin-right: 10px;*/
-    padding: 0;
-}
-.category-menu > li:hover .product-type-menu {
-    display: inline-block;
-}
-.products-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-.product-type-list a {
-    border: none !important;
-    padding: 5px 15px;
-    margin-top: -5px;
-}
-
-.list-head {
-    margin-top: 5px !important;
-}
-
-/*
-*/
-.main-filter {
-    margin-left: 10px;
-    margin-top: 5px;
-    padding-left: 15px;
-}
-/*
-*/
-.some-info {
-    margin-left: 10px;
-    min-height: 100px;
-    text-align: center;
-}
-/*
-*/
 .card {
-    width: 300px;
-    margin-right: 25px !important;
-    margin-bottom: 25px !important;
+    min-width: 200px;
 }
 
 .test {

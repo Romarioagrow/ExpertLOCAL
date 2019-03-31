@@ -18,7 +18,6 @@ public class SortService {
                     products.sort(Comparator.comparing(Product::getPrice));
                     Collections.reverse(products);
                     break;
-                //case "n":
             }
         }
     }

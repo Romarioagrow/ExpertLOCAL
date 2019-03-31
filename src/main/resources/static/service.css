@@ -1,33 +1,9 @@
-/*.m1 {
+.marker1 {
     border: 3px dashed red;
-}*/
-.m2 {
+}
+.marker2 {
     border: 2px dashed #3498db;
 }
-/*.m3 {
+.marker3 {
     border: 1px dashed green;
-}*/
-
-/*
-.mmm1 {
-    border: 3px solid red;
-}
-.mmm2 {
-    border: 2px solid red;
-}*/
-/*
-*/
-.ml-10 {
-    margin-left: 10px;
-}
-.ml-20 {
-    margin-left: 20px;
-}
-.ml-30 {
-    margin-left: 30px;
-}
-/*
-*/
-.wid-400 {
-    width: 450% !important;
 }
