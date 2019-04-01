@@ -17,10 +17,6 @@ public class Product implements Serializable {
     @Id
     private Long product_id;
 
-    /*@OneToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id")
-    private Product product;*/
-
     @Column(name = "category")
     @Enumerated(EnumType.STRING)
     private Category category;
@@ -33,10 +29,6 @@ public class Product implements Serializable {
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    /*@Column(name = "type")
-    @Enumerated(EnumType.STRING)
-    private Type type;*/
-
     private String brand;
     private String model;
     private String country;
@@ -45,7 +37,6 @@ public class Product implements Serializable {
     @OneToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "product_parameters_id")
     private ProductParams productParams;
-
 }
 
 

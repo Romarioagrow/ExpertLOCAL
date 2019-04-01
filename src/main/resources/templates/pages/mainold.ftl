@@ -1,3 +1,4 @@
+<#--
 <#import "../parts/common.ftl" as c>
 <@c.page>
     <div class="filters-container marker1">
@@ -7,7 +8,7 @@
             <#include "../parts/components/filters/main-filter.ftl">
         </div>
     </div>
-    <!--Главный блок отображения товаров-->
+    <!--Главный блок отображения товаров&ndash;&gt;
     <div class="products-container marker1">
         <div>
             <h3 class="ml-20 marker2"><span>Все товары</span></h3>
@@ -15,4 +16,4 @@
         </div>
         <#include "../parts/components/products.ftl">
     </div>
-</@c.page>
+</@c.page>-->

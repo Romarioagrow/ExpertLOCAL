@@ -37,7 +37,7 @@ public class ParamsController {
 
     ){
         filterService.showAllProducts(model, sortmin, sortmax, brand, country, sortby);
-        return "pages/test_page";
+        return "pages/test";
     }
 
 

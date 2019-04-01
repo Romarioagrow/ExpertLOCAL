@@ -1,0 +1,13 @@
+.marker1 {
+    border: 2px solid red;
+}
+.marker2 {
+    border: 1px dashed #3498db;
+}
+.marker3 {
+    border: 2px solid green;
+}
+
+.pl-4vw {
+    padding-left: 4vw;
+}

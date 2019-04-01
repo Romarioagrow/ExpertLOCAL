@@ -22,7 +22,7 @@ public class CategoriesController {
             @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.showAllProducts(model, sortmin, sortmax, brand, country, sortby);
-        return "pages/main";
+        return "pages/test";
     }
 
     @GetMapping("/electronics-all")

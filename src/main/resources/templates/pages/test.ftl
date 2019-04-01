@@ -5,8 +5,9 @@
     <title>Expert Store</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" href="../main.css">
-    <link rel="stylesheet" href="../service.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/service.css">
+    <link rel="stylesheet" href="css/main-menu.css">
 </head>
 <body>
 <#include "../parts/navbar.ftl">
@@ -72,16 +73,15 @@
                 </form>
             </div>
         </div>
-        <div class="col marker1">
-            <div class="marker2">
+        <div class="col marker3">
+            <div class="pl-4vw marker2">
                 <#if appliedFilters??>Телевизоры${appliedFilters}
                 <#else>Все телевизоры</#if>
             </div>
-            <div id="sorting" class="marker2">
+            <div class="pl-4vw mt-2 marker2" id="sorting" >
                 <a href="?sortby=lowest" class="btn btn-light" role="button">Сначала дешевые</a>
                 <a href="?sortby=highest" class="btn btn-light" role="button">Сначала дорогие</a>
             </div>
-
             <div class="flex-container marker2">
                 <#if products??>
                 <#list products as product>
@@ -98,6 +98,7 @@
                             </p>
                             <p class="card-text">
                                 <small class="text-muted">
+                                    ${product.subCategory}
                                     <#if product.productParams.diagonal??>диагональ ${product.productParams.diagonal}</#if>
                                     <#if product.productParams.resolution??>${product.productParams.resolution}</#if>
                                     <#if product.productParams.hasSmartTV??>SmartTV</#if>
