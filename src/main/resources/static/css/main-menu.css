@@ -64,15 +64,17 @@
     position: relative;
 }
 .category-menu .product-type-menu {
-    width: 350%;
-    min-height: auto;
+    /*width: 350%;*/
+    /*min-height: auto;*/
     position: absolute;
     top: 0;
     left: 180px;
     z-index: 10;
     display: none;
-    margin: 0;
-    padding: 0;
+    /*width: 40vw;*/
+
+    /*margin: 0;
+    padding: 0;*/
     list-style: none;
     background-color: whitesmoke;
 }
@@ -82,7 +84,9 @@
     padding: 0;
 }
 .category-menu > li:hover .product-type-menu {
-    display: inline-block;
+    display: flex;
+    flex-wrap: wrap;
+
 }
 .products-list {
     list-style: none;

@@ -75,12 +75,25 @@
         </div>
         <div class="col marker3">
             <div class="pl-4vw marker2">
-                <#if appliedFilters??>Телевизоры${appliedFilters}
-                <#else>Все телевизоры</#if>
+                <#if appliedFilters??>
+                    <h5>Телевизоры${appliedFilters}</h5>
+                <#else>
+                    <h5>Все телевизоры</h5></#if>
             </div>
             <div class="pl-4vw mt-2 marker2" id="sorting" >
-                <a href="?sortby=lowest" class="btn btn-light" role="button">Сначала дешевые</a>
-                <a href="?sortby=highest" class="btn btn-light" role="button">Сначала дорогие</a>
+                <#--<a href="?sortby=lowest" class="btn btn-light" role="button">Сначала дешевые</a>
+                <a href="?sortby=highest" class="btn btn-light" role="button">Сначала дорогие</a>-->
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary active">
+                        <input type="radio" name="options" id="option1" autocomplete="off" checked> Дешевле
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="options" id="option2" autocomplete="off"> Дороже
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="options" id="option3" autocomplete="off"> По алфавиту
+                    </label>
+                </div>
             </div>
             <div class="flex-container marker2">
                 <#if products??>

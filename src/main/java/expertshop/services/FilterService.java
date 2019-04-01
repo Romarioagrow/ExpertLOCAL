@@ -61,35 +61,21 @@ public class FilterService {
         }
     }
 
-    /// ОБЪЕДЕНИТЬ
-    /*private void filterProducts(Model model, String sortmin, String sortmax, String brand, String country, List<Product> products) {
-        if (!sortmin.isEmpty()) {
-            products = products.stream().filter(product -> product.getPrice() >= Integer.parseInt(sortmin)).collect(Collectors.toList());
-        }
-        if (!sortmax.isEmpty()) {
-            products = products.stream().filter(product -> product.getPrice() <= Integer.parseInt(sortmax)).collect(Collectors.toList());
-        }
-        if (!brand.isEmpty() | !country.isEmpty()) {
-            products = products.stream().filter(product -> product.getBrand().equals(brand) | product.getCountry().equals(country)).collect(Collectors.toList());
-        }
-        model.addAttribute("products", products);
-    }*/
-
     private void filterProducts(Model model, String sortmin, String sortmax, String brand, String country, List<Product> products) {
         StringBuilder filters = new StringBuilder();
 
         if (!sortmin.isEmpty()) {
             products = products.stream().filter(product -> product.getPrice() >= Integer.parseInt(sortmin)).collect(Collectors.toList());
-            filters.append(" Не дешевле ").append(sortmin);
+            filters.append(" не дешевле ").append(sortmin);
         }
         if (!sortmax.isEmpty()) {
             products = products.stream().filter(product -> product.getPrice() <= Integer.parseInt(sortmax)).collect(Collectors.toList());
-            filters.append(" Не дороже ").append(sortmax);
+            filters.append(" не дороже ").append(sortmax);
         }
         if (!brand.isEmpty() | !country.isEmpty()) {
             products = products.stream().filter(product -> product.getBrand().equals(brand) | product.getCountry().equals(country)).collect(Collectors.toList());
-            if (!country.isEmpty()) filters.append(" Страна ").append(country);
-            if (!brand.isEmpty()) filters.append(" Бренд ").append(brand);
+            if (!country.isEmpty()) filters.append(" страна ").append(country);
+            if (!brand.isEmpty()) filters.append(" бренд ").append(brand);
 
         }
 
