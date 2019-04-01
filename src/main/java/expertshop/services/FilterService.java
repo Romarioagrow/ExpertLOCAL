@@ -1,21 +1,19 @@
 package expertshop.services;
 import expertshop.domain.Product;
-import expertshop.domain.ProductWrap;
 import expertshop.domain.categories.Category;
 import expertshop.domain.categories.SubCategory;
 import expertshop.domain.categories.Type;
 import expertshop.repos.ProductRepo;
-import expertshop.repos.WrapRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class FilterService {
-    private final WrapRepo wrapRepo;
     private final ProductRepo productRepo;
 
     public void constructAndFilter(Category category, Model model, String sortmin, String sortmax, String brand, String country, String sortby) {
@@ -41,29 +39,30 @@ public class FilterService {
         }
     }
     public void constructAndFilter(Type type, Model model, String sortmin, String sortmax, String brand, String country, String sortby) {
-        List<ProductWrap> productsWithParams = wrapRepo.findByType(type);
+        List<Product> products = productRepo.findByType(type);
 
         if (formIsActive(sortmin, sortmax, brand, country)) {
 
-            filterProductsWrap(model, sortmin, sortmax, brand, country, productsWithParams);
+            filterProducts(model, sortmin, sortmax, brand, country, products);
         }
         else {
-            model.addAttribute("productsWithParams", productsWithParams);
+            model.addAttribute("productsWithParams", products);
         }
     }
 
     public void showAllProducts(Model model, String sortmin, String sortmax, String brand, String country, String sortby) {
-        List<ProductWrap> productsWithParams = wrapRepo.findAll();
+        List<Product> products = productRepo.findAll();
 
         if (formIsActive(sortmin, sortmax, brand, country)) {
-            filterProductsWrap(model, sortmin, sortmax, brand, country, productsWithParams);
+            filterProducts(model, sortmin, sortmax, brand, country, products);
         }
         else {
-            model.addAttribute("productsWithParams", productsWithParams);
+            model.addAttribute("productsWithParams", products);
         }
     }
 
-    private void filterProducts(Model model, String sortmin, String sortmax, String brand, String country, List<Product> products) {
+    /// ОБЪЕДЕНИТЬ
+    /*private void filterProducts(Model model, String sortmin, String sortmax, String brand, String country, List<Product> products) {
         if (!sortmin.isEmpty()) {
             products = products.stream().filter(product -> product.getPrice() >= Integer.parseInt(sortmin)).collect(Collectors.toList());
         }
@@ -74,19 +73,30 @@ public class FilterService {
             products = products.stream().filter(product -> product.getBrand().equals(brand) | product.getCountry().equals(country)).collect(Collectors.toList());
         }
         model.addAttribute("products", products);
-    }
+    }*/
 
-    private void filterProductsWrap(Model model, String sortmin, String sortmax, String brand, String country, List<ProductWrap> productsWithParams) {
+    private void filterProducts(Model model, String sortmin, String sortmax, String brand, String country, List<Product> products) {
+        StringBuilder filters = new StringBuilder();
+
         if (!sortmin.isEmpty()) {
-            productsWithParams = productsWithParams.stream().filter(productWrap -> productWrap.getProduct().getPrice() >= Integer.parseInt(sortmin)).collect(Collectors.toList());
+            products = products.stream().filter(product -> product.getPrice() >= Integer.parseInt(sortmin)).collect(Collectors.toList());
+            filters.append(" Не дешевле ").append(sortmin);
         }
         if (!sortmax.isEmpty()) {
-            productsWithParams = productsWithParams.stream().filter(productWrap -> productWrap.getProduct().getPrice() <= Integer.parseInt(sortmax)).collect(Collectors.toList());
+            products = products.stream().filter(product -> product.getPrice() <= Integer.parseInt(sortmax)).collect(Collectors.toList());
+            filters.append(" Не дороже ").append(sortmax);
         }
         if (!brand.isEmpty() | !country.isEmpty()) {
-            productsWithParams = productsWithParams.stream().filter(productWrap -> productWrap.getProduct().getBrand().equals(brand) | productWrap.getProduct().getCountry().equals(country)).collect(Collectors.toList());
+            products = products.stream().filter(product -> product.getBrand().equals(brand) | product.getCountry().equals(country)).collect(Collectors.toList());
+            if (!country.isEmpty()) filters.append(" Страна ").append(country);
+            if (!brand.isEmpty()) filters.append(" Бренд ").append(brand);
+
         }
-        model.addAttribute("productsWithParams", productsWithParams);
+
+        String appliedFilters = filters.toString();
+        if (!appliedFilters.isEmpty()) model.addAttribute("appliedFilters", appliedFilters);
+
+        model.addAttribute("products", products);
     }
 
     private boolean formIsActive(String sortmin, String sortmax, String brand, String country) {

@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link rel="stylesheet" href="../main.css">
     <link rel="stylesheet" href="../service.css">
-    <link rel="stylesheet" href="/static/css/main-menu.css">
 </head>
 <body>
 <#include "../parts/navbar.ftl">
@@ -15,21 +14,20 @@
     <div class="row">
         <div class="col-3 marker1">
             <div class="marker2">
-                Фильтры для категории техники
+                <span>Фильтры для категории техники</span>
             </div>
             <div class="marker2">
                 <form method="get">
-                    <div>
-                        <button class="btn btn-info btn-lg btn-block"
+                    <div class="main-filter">
+                        <button class="btn btn-secondary btn-lg btn-block filter-button"
                                 type="button"
                                 data-toggle="collapse"
                                 data-target="#filter1"
-                                aria-expanded="false"
-                                aria-controls="collapseExample">
-                            Цена
+                                aria-expanded="false">
+                            <span>Цена</span>
                         </button>
                         <div class="collapse" id="filter1">
-                            <div class="card card-body">
+                            <div class="card card-body filter-filed">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">От</span>
@@ -46,100 +44,80 @@
                         </div>
                     </div>
                     <div>
-                        <button class="btn btn-info btn-lg btn-block"
+                        <button class="btn btn-secondary btn-lg btn-block filter-button"
                                 type="button"
                                 data-toggle="collapse"
                                 data-target="#filter2"
-                                aria-expanded="false"
-                                aria-controls="collapseExample">
+                                aria-expanded="true">
                             Страна и бренд
                         </button>
                         <div class="collapse" id="filter2">
-                            <div class="card card-body">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="filter-brand">Бренд</span>
-                                    </div>
-                                    <input type="text" id="brand" name="brand" class="form-control" aria-label="Default" aria-describedby="filter-brand">
-                                </div>
+                            <div class="card card-body filter-filed">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="filter-country">Страна</span>
                                     </div>
                                     <input type="text" id="country" name="country" class="form-control" aria-label="Default" aria-describedby="filter-country">
                                 </div>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="filter-brand">Бренд</span>
+                                    </div>
+                                    <input type="text" id="brand" name="brand" class="form-control" aria-label="Default" aria-describedby="filter-brand">
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-lg btn-block">Найти</button>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block filter-button">Показать</button>
                 </form>
             </div>
         </div>
         <div class="col marker1">
             <div class="marker2">
-                Какая техника вас интересует?
+                <#if appliedFilters??>Телевизоры${appliedFilters}
+                <#else>Все телевизоры</#if>
             </div>
             <div id="sorting" class="marker2">
                 <a href="?sortby=lowest" class="btn btn-light" role="button">Сначала дешевые</a>
                 <a href="?sortby=highest" class="btn btn-light" role="button">Сначала дорогие</a>
-                <a href="/" class="btn btn-light" role="button">Сбросить</a>
             </div>
-            <div id="products" class="marker2">
+
+            <div class="flex-container marker2">
                 <#if products??>
-                    <#list products as product>
-                        <div class="card-deck">
-                            <div class="card">
-                                <#--<img src="#" class="card-img-top" alt="#">-->
-                                <div class="card-body">
-                                    <h6 class="card-title type">
-                                        <strong>${product.type}</strong>
-                                    </h6>
-                                    <h5 class="card-title">
-                                        ${product.brand}
-                                        ${product.model}
-                                    </h5>
-                                    <p class="card-text">
-                                        ${product.category}
-                                        ${product.country}
-                                    </p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">
-                                        <strong><i>${product.price}</i></strong>
-                                    </small>
-                                </div>
-                            </div>
+                <#list products as product>
+                    <div class="card mr-3 mt-3">
+                        <img class="card-img-top" src="img/tv1.jpg" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                ${product.brand}
+                                ${product.model}
+                            </h5>
+                            <p class="card-text">
+                                ${product.category}
+                                ${product.country}
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    <#if product.productParams.diagonal??>диагональ ${product.productParams.diagonal}</#if>
+                                    <#if product.productParams.resolution??>${product.productParams.resolution}</#if>
+                                    <#if product.productParams.hasSmartTV??>SmartTV</#if>
+                                    <#if product.productParams.hasWifi??>Wi-Fi</#if>
+                                    <#if product.productParams.has3D??>3D</#if>
+                                    <#if product.productParams.curvedScreen??>изогнутый экран</#if>
+                                </small>
+                            </p>
                         </div>
-                    </#list>
-                <#else>
-                    <#list productsWithParams as item>
-                        <div class="card-deck">
-                            <div class="card">
-                                <#--<img src="#" class="card-img-top" alt="#">-->
-                                <div class="card-body">
-                                    <h6 class="card-title type">
-                                        <strong>${item.product.type}</strong>
-                                    </h6>
-                                    <h5 class="card-title">
-                                        ${item.product.brand}
-                                        ${item.product.model}
-                                    </h5>
-                                    <p class="card-text">
-                                        ${item.product.category}
-                                        ${item.product.country}
-                                    </p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">
-                                        ${item.productParams.resolution}
-                                        <strong><i>${item.product.price}</i></strong>
-                                    </small>
-                                </div>
-                            </div>
+                        <div class="card-footer">
+                            <small class="text-muted">
+                                <strong><i>${product.price}</i></strong>
+                            </small>
                         </div>
-                    </#list>
-                </#if>
+                    </div>
+                </#list>
             </div>
+            <#else>
+                <i>Нет подходящих товаров :(</i>
+            </#if>
         </div>
     </div>
 </div>
@@ -150,8 +128,24 @@
 </html>
 
 <style>
-    .btn {
-        margin-bottom: 2%;
+    .filter-button {
+        margin-top: 1vh;
+    }
+
+    .filter-filed {
+        margin-top: 1vh;
+    }
+
+    .flex-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .card {
+        min-width: 20vw;
+        max-width: 20vw;
+        text-align: center;
     }
 </style>
 

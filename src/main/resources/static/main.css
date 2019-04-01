@@ -12,13 +12,6 @@ form input:hover {
     background-color: #e5e5e5;
 }
 
-.card-deck {
-    display: inline-block
-}
-.card {
-    min-width: 200px;
-}
-
 .test {
     display: inline-block !important;
     background-color: cornflowerblue;

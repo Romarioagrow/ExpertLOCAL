@@ -1,21 +1,15 @@
 package expertshop.controllers;
-import expertshop.domain.ProductWrap;
 import expertshop.domain.categories.Type;
-import expertshop.repos.WrapRepo;
 import expertshop.services.FilterService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
 public class ParamsController {
-    private final WrapRepo wrapRepo;
     private final FilterService filterService;
 
     @GetMapping("/tv-4K")
@@ -32,7 +26,6 @@ public class ParamsController {
     }
 
 
-
     @GetMapping("/test")
     public String showTest(
             Model model,
@@ -44,11 +37,6 @@ public class ParamsController {
 
     ){
         filterService.showAllProducts(model, sortmin, sortmax, brand, country, sortby);
-
-
-
-
-
         return "pages/test_page";
     }
 

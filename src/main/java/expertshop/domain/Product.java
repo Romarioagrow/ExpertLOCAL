@@ -17,23 +17,35 @@ public class Product implements Serializable {
     @Id
     private Long product_id;
 
-    @OneToOne(optional = false, mappedBy = "product")
-    private ProductWrap wrap;
+    /*@OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id")
+    private Product product;*/
 
     @Column(name = "category")
     @Enumerated(EnumType.STRING)
-    private Category category; // Техника для дома
+    private Category category;
 
     @Column(name = "subcategory")
     @Enumerated(EnumType.STRING)
-    private SubCategory subCategory; // Техника для уборки
+    private SubCategory subCategory;
 
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
-    private Type type; // Холодильник
+    private Type type;
 
-    private String brand; // LG
-    private String model; // PSJ 600
-    private String country; // Korea
-    private Integer price; // 8800
+    /*@Column(name = "type")
+    @Enumerated(EnumType.STRING)
+    private Type type;*/
+
+    private String brand;
+    private String model;
+    private String country;
+    private Integer price;
+
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_parameters_id")
+    private ProductParams productParams;
+
 }
+
+
