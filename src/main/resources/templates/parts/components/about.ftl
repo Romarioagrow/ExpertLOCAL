@@ -1,1 +1,0 @@
-<div class="about marker2">БЛОК ОБЩЕЙ ИНФОРМАЦИИ</div>

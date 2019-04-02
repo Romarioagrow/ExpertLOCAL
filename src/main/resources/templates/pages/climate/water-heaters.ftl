@@ -1,4 +1,4 @@
-<#import "../../parts/common.ftl" as c>
+<#import "../../parts/components/common.ftl" as c>
 <@c.page>
     <div class="filters-container marker1">
         <#include "../../parts/components/some-info.ftl">

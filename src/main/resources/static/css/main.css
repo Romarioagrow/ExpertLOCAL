@@ -2,18 +2,13 @@ body {
     background-color: #fff;
 }
 
-.clearfix::after {
+/*.clearfix::after {
     content: "";
     display: table;
     clear: both;
-}
+}*/
 
 form input:hover {
     background-color: #e5e5e5;
 }
 
-.test {
-    display: inline-block !important;
-    background-color: cornflowerblue;
-    color: #fcf8e3;
-}

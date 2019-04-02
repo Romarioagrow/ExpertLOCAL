@@ -76,7 +76,6 @@ public class FilterService {
             products = products.stream().filter(product -> product.getBrand().equals(brand) | product.getCountry().equals(country)).collect(Collectors.toList());
             if (!country.isEmpty()) filters.append(" страна ").append(country);
             if (!brand.isEmpty()) filters.append(" бренд ").append(brand);
-
         }
 
         String appliedFilters = filters.toString();

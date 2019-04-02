@@ -14,7 +14,6 @@
     </head>
     <body>
     <#include "navbar.ftl">
-    <#include "components/about.ftl">
     <div class="nested">
         <#nested>
     </div>
