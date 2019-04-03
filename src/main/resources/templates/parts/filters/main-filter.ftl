@@ -1,5 +1,5 @@
 <div>
-    <button class="btn btn-secondary btn-lg btn-block filter-button"
+    <button class="btn btn-secondary btn-block filter-button"
             type="button"
             data-toggle="collapse"
             data-target="#filter1"
@@ -24,7 +24,7 @@
     </div>
 </div>
 <div>
-    <button class="btn btn-secondary btn-lg btn-block filter-button"
+    <button class="btn btn-secondary btn-block filter-button"
             type="button"
             data-toggle="collapse"
             data-target="#filter2"

@@ -1,5 +1,5 @@
 <div>
-    <button class="btn btn-secondary btn-lg btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-filter1" aria-expanded="false">
+    <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-filter1" aria-expanded="false">
         <span>Особенности экрана</span>
     </button>
     <div class="collapse" id="tv-filter1">
@@ -46,7 +46,7 @@
     </div>
 </div>
 <div>
-    <button class="btn btn-secondary btn-lg btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-filter2" aria-expanded="false">
+    <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-filter2" aria-expanded="false">
         Особенности TV
     </button>
     <div class="collapse" id="tv-filter2">

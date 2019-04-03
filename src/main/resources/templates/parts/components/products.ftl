@@ -28,7 +28,8 @@
                 </p>
                 <p class="card-text">
                     <small class="text-muted">
-                        ${product.subCategory}
+                        <#--<#if showTV??><#include tv-params></#if>-->
+                        <#if product.subCategory??>${product.subCategory}</#if>
                         <#if product.productParams.diagonal??>диагональ ${product.productParams.diagonal}</#if>
                         <#if product.productParams.resolution??>${product.productParams.resolution}</#if>
                         <#if product.productParams.hasSmartTV??>SmartTV</#if>

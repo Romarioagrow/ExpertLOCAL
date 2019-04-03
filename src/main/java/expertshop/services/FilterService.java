@@ -20,7 +20,6 @@ public class FilterService {
         List<Product> products = productRepo.findByCategory(category);
 
         if (formIsActive(sortmin, sortmax, brand, country)) {
-
             filterProducts(model, sortmin, sortmax, brand, country, products);
         }
         else {
@@ -31,7 +30,6 @@ public class FilterService {
         List<Product> products = productRepo.findBySubCategory(subCategory);
 
         if (formIsActive(sortmin, sortmax, brand, country)) {
-
             filterProducts(model, sortmin, sortmax, brand, country, products);
         }
         else {
@@ -42,11 +40,10 @@ public class FilterService {
         List<Product> products = productRepo.findByType(type);
 
         if (formIsActive(sortmin, sortmax, brand, country)) {
-
             filterProducts(model, sortmin, sortmax, brand, country, products);
         }
         else {
-            model.addAttribute("productsWithParams", products);
+            model.addAttribute("products", products);
         }
     }
 
@@ -57,7 +54,7 @@ public class FilterService {
             filterProducts(model, sortmin, sortmax, brand, country, products);
         }
         else {
-            model.addAttribute("productsWithParams", products);
+            model.addAttribute("products", products);
         }
     }
 

@@ -22,6 +22,7 @@ public class CategoriesController {
             @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.showAllProducts(model, sortmin, sortmax, brand, country, sortby);
+        model.addAttribute("currentProduct", "вся техника");
         return "pages/test";
     }
 
@@ -35,7 +36,8 @@ public class CategoriesController {
             @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby)
     {
         filterService.constructAndFilter(Category.Electronics, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/electronics/electronics";
+        model.addAttribute("currentProduct", "электроника");
+        return "pages/test";
     }
 
     @GetMapping("/kitchen-all")
@@ -48,7 +50,8 @@ public class CategoriesController {
             @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Category.KitchenEquipment, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/kitchen/kitchen";
+        model.addAttribute("currentProduct", "техника для кухни");
+        return "pages/test";
     }
 
     @GetMapping("/home-all")
@@ -61,7 +64,8 @@ public class CategoriesController {
             @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Category.HomeEquipment, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/home/home";
+        model.addAttribute("currentProduct", "техника для дома");
+        return "pages/test";
     }
 
     @GetMapping("/climate-all")
@@ -74,7 +78,8 @@ public class CategoriesController {
             @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Category.ClimateControl, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/climate/climate";
+        model.addAttribute("currentProduct", "климатическая техника");
+        return "pages/test";
     }
 
     @GetMapping("/computers-all")
@@ -87,7 +92,8 @@ public class CategoriesController {
             @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Category.Computers, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/computers/computers";
+        model.addAttribute("currentProduct", "компьютеры ");
+        return "pages/test";
     }
 
     @GetMapping("/portable-all")
@@ -100,7 +106,8 @@ public class CategoriesController {
             @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Category.Portable, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/portable/portable";
+        model.addAttribute("currentProduct", "портативная техника");
+        return "pages/test";
     }
 
     @GetMapping("/smart-all")
@@ -113,6 +120,7 @@ public class CategoriesController {
             @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Category.Smart, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/smart/smart";
+        model.addAttribute("currentProduct", "smart-техника");
+        return "pages/test";
     }
 }

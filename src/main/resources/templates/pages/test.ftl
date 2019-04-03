@@ -15,14 +15,14 @@
     <div class="row">
         <div class="col-3 marker1">
             <div class="marker2">
-                <span>Фильтры для <#--requestedType.getType--></span>
+                <#if currentProduct??><span>Фильтры для ${currentProduct}</span></#if>
             </div>
             <div class="marker2">
                 <form method="get">
                     <#include "../parts/filters/main-filter.ftl">
-                    <#include "../parts/filters/tv-filter.ftl">
+                    <#if showTV??><#include "../parts/filters/tv-filter.ftl"></#if>
 
-                    <button type="submit" class="btn btn-primary btn-lg btn-block filter-button">Показать</button>
+                    <button type="submit" class="btn btn-primary btn-block filter-button">Показать</button>
                 </form>
             </div>
         </div>
@@ -30,9 +30,9 @@
             <div>
                 <div class="pl-4vw marker2">
                     <#if appliedFilters??>
-                        <h5><#--requestedType.getType-->${appliedFilters}</h5>
+                        <h5>${currentProduct} ${appliedFilters}</h5>
                     <#else>
-                        <h5>Все телевизоры</h5></#if>
+                    <#if currentProduct??><h5>${currentProduct}</h5></#if></#if>
                 </div>
                 <div>
                     <#--подкатегории для товаров-->
@@ -51,19 +51,14 @@
     .filter-button {
         margin-top: 1vh;
     }
-
     .filter-filed {
         margin-top: 1vh;
     }
-
-
-
     .flex-container {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
     }
-
     .product-card {
         min-width: 20vw;
         max-width: 20vw;
