@@ -27,26 +27,14 @@ public class TypesController {
         return "pages/test";
     }
 
-    @GetMapping("/test")
-    public String showTest(
-            Model model,
-            @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin,
-            @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax,
-            @RequestParam(required = false, name = "brand", defaultValue = "") String brand,
-            @RequestParam(required = false, name = "country", defaultValue = "") String country,
-            @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
-
-    ){
-        filterService.showAllProducts(model, sortmin, sortmax, brand, country, sortby);
-        return "pages/test";
-    }
-
-
     //KITCHEN
     @GetMapping("/fridges")
     public String showFridges(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Type.Fridge, model, sortmin, sortmax, brand, country, sortby);
+
+        model.addAttribute("showFridges", Type.Fridge);
+        model.addAttribute("currentProduct", "Холодильники");
         return "pages/test";
     }
     @GetMapping("/ovens")

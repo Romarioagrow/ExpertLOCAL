@@ -19,8 +19,11 @@
             </div>
             <div class="marker2">
                 <form method="get">
+                    <#--<#include "../all-filters.ftl">--><#--вынести фильтры на отдельную страницу-->
+
                     <#include "../parts/filters/main-filter.ftl">
                     <#if showTV??><#include "../parts/filters/tv-filter.ftl"></#if>
+                    <#if showFridges??><#include "../parts/filters/fridges-filter.ftl"></#if>
 
                     <button type="submit" class="btn btn-primary btn-block filter-button">Показать</button>
                 </form>
