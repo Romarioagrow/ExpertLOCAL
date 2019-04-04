@@ -24,7 +24,7 @@ public class TypesController {
         filterService.constructAndFilter(Type.TV, model, sortmin, sortmax, brand, country, sortby);
 
         model.addAttribute("showTV", Type.TV);
-        return "pages/test";
+        return "pages/main";
     }
 
     //KITCHEN
@@ -35,13 +35,13 @@ public class TypesController {
 
         model.addAttribute("showFridges", Type.Fridge);
         model.addAttribute("currentProduct", "Холодильники");
-        return "pages/test";
+        return "pages/main";
     }
     @GetMapping("/ovens")
     public String showOvens(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Type.Oven, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/test";
+        return "pages/main";
     }
 
     //HOME
@@ -49,13 +49,13 @@ public class TypesController {
     public String showWashingMachine(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Type.WashingMachine, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/test";
+        return "pages/main";
     }
     @GetMapping("/drying-machines")
     public String showClothesDryer(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Type.ClothesDryer, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/test";
+        return "pages/main";
     }
 
     //CLIMATE
@@ -63,32 +63,32 @@ public class TypesController {
     public String showConditioners(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Type.Conditioner, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/test";
+        return "pages/main";
     }
     @GetMapping("/water-heaters")
     public String showWaterHeaters(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Type.WaterHeater, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/test";
+        return "pages/main";
     }
     @GetMapping("/gas-heaters")
     public String showGasWaterHeater(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Type.GasWaterHeater, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/test";
+        return "pages/main";
     }
     @GetMapping("/electric-heaters")
     public String showElectricHeaters(
             Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Type.ElectricHeaters, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/test";
+        return "pages/main";
     }
     @GetMapping("/ventilators")
     public String showVentilators(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Type.Ventilator, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/test";
+        return "pages/main";
     }
 
     //COMPUTERS
@@ -96,13 +96,13 @@ public class TypesController {
     public String showNotebooks(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Type.Notebook, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/test";
+        return "pages/main";
     }
     @GetMapping("/monitors")
     public String showMonitors(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Type.Projector, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/test";
+        return "pages/main";
     }
 
     //PORTABLE
@@ -110,25 +110,25 @@ public class TypesController {
     public String showPhoto(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Type.PhotoCamera, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/test";
+        return "pages/main";
     }
     @GetMapping("/video")
     public String showAllVideo(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Type.VideoCamera, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/test";
+        return "pages/main";
     }
     @GetMapping("/radio")
     public String showPortableRadio(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Type.PortableRadio, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/test";
+        return "pages/main";
     }
     @GetMapping("/mobile-phones")
     public String showMobilePhones(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Type.MobilePhone, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/test";
+        return "pages/main";
     }
 
     //SMART
@@ -136,24 +136,24 @@ public class TypesController {
     public String showSmartphones(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Type.SmartPhone, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/test";
+        return "pages/main";
     }
     @GetMapping("/tablets")
     public String showTablets(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Type.Tablet, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/test";
+        return "pages/main";
     }
     @GetMapping("/smart-headers")
     public String showSmartHeaders(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Type.SmartHeaders, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/test";
+        return "pages/main";
     }
     @GetMapping("/bluetooth")
     public String showAllPortable(Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
         filterService.constructAndFilter(Type.BluetoothTech, model, sortmin, sortmax, brand, country, sortby);
-        return "pages/test";
+        return "pages/main";
     }
 }
