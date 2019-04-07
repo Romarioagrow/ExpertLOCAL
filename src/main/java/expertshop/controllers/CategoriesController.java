@@ -1,16 +1,48 @@
 package expertshop.controllers;
+import expertshop.domain.Product;
 import expertshop.domain.categories.Category;
+import expertshop.repos.ProductRepo;
 import expertshop.services.FilterService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
 public class CategoriesController {
     private final FilterService filterService;
+    private final ProductRepo productRepo;
+
+    @GetMapping("/test")
+    public String showmda(
+            Model model
+    ){
+        List<Product> products = productRepo.findAll();
+
+        model.addAttribute("products", products);
+        return "pages/test";
+    }
+
+    @GetMapping("/lol")
+    public String shodwmda(
+            Model model
+    ){
+
+        return "pages/lol";
+    }
+
+    @PostMapping("/test")
+    public String showlmda(
+            Model model
+    ){
+        return "pages/test";
+    }
+
 
     @GetMapping("/")
     public String showAll(
@@ -37,7 +69,7 @@ public class CategoriesController {
     {
         filterService.constructAndFilter(Category.Electronics, model, sortmin, sortmax, brand, country, sortby);
         model.addAttribute("currentProduct", "электроника");
-        return "main";
+        return "pages/main";
     }
 
     @GetMapping("/kitchen-all")
@@ -125,17 +157,5 @@ public class CategoriesController {
         return "pages/main";
     }
 
-    /*@GetMapping("/ajax-test")
-    public String showmda(
-            Model model
-    ){
-        return "pages/mda";
-    }
 
-    @PostMapping("/ajax-test")
-    public String showlmda(
-            Model model
-    ){
-        return "pages/mda";
-    }*/
 }

@@ -19,26 +19,26 @@
             <div class="mt-2">
                 <h5>Разрешение экрана</h5>
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="720p">
+                    <input type="checkbox" class="custom-control-input" name="tv_resolution" id="720p" value="720p">
                     <label class="custom-control-label" for="720p">720p HD</label>
                 </div>
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="1080p">
+                    <input type="checkbox" class="custom-control-input" name="tv_resolution" id="1080p" value="1080p">
                     <label class="custom-control-label" for="1080p">1080p Full HD</label>
                 </div>
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="4K">
+                    <input type="checkbox" class="custom-control-input" name="tv_resolution" id="4K" value="4K">
                     <label class="custom-control-label" for="4K">4K UHD</label>
                 </div>
             </div>
             <div class="mt-2">
                 <h5>Особенности</h5>
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="3D">
+                    <input type="checkbox" class="custom-control-input" name="tv_params" id="3D" value="3D">
                     <label class="custom-control-label" for="3D">3D</label>
                 </div>
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="curved">
+                    <input type="checkbox" class="custom-control-input" name="tv_params" id="curved" value="curved">
                     <label class="custom-control-label" for="curved">Изогнутый экран</label>
                 </div>
             </div>
@@ -54,11 +54,11 @@
             <div class="form-group">
                 <div>
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="SmartTV">
+                        <input type="checkbox" class="custom-control-input" name="tv_params" id="SmartTV" value="SmartTV">
                         <label class="custom-control-label" for="SmartTV">SmartTV</label>
                     </div>
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="WiFI">
+                        <input type="checkbox" class="custom-control-input" name="tv_params" id="WiFI" value="SmartTV">
                         <label class="custom-control-label" for="WiFI">Wi-FI</label>
                     </div>
                 </div>

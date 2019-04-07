@@ -2,13 +2,24 @@ body {
     background-color: #fff;
 }
 
-/*.clearfix::after {
-    content: "";
-    display: table;
-    clear: both;
-}*/
-
 form input:hover {
     background-color: #e5e5e5;
 }
 
+.filter-button {
+    margin-top: 1vh;
+}
+.filter-filed {
+    margin-top: 1vh;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.product-card {
+    min-width: 20vw;
+    max-width: 20vw;
+    text-align: center;
+}
