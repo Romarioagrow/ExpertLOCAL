@@ -35,15 +35,14 @@ function collectFilters(e) {
     console.log(tv_data);
 
     /// !!!
-    $.ajax({
-        url: 'http://localhost:8080/tv',
+    /*$.ajax({
+        url: 'http://localhost:8080/TV',
         type: 'GET',
         dataType: 'json',
         data: tv_data,
         success: function (products) {
-
         }
-    })
+    })*/
 }
 
 

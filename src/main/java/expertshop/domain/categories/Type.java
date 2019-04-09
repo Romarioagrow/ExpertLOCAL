@@ -1,7 +1,6 @@
 package expertshop.domain.categories;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
 public enum Type {
     // Электроника (Теле-видео-аудио)
     /*

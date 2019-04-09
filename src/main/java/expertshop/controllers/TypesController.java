@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class TypesController {
     private final ProductService productService;
 
-    @GetMapping
+    @GetMapping("/")
     public String showAll(Model model)
     {
         model.addAttribute("currentProduct", "вся техника");
@@ -27,7 +27,7 @@ public class TypesController {
     }
 
     @GetMapping("/{req_product}")
-    public String showTypes(
+    public String showByTypes(
             Model model,
             @PathVariable String req_product
     ){

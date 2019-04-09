@@ -35,7 +35,7 @@ public class ProductService {
 
 
     //////////////////////////////////////////////
-    public void constructAndFilter(Category category, Model model, String sortmin, String sortmax, String brand, String country, String sortby) {
+    /*public void constructAndFilter(Category category, Model model, String sortmin, String sortmax, String brand, String country, String sortby) {
         List<Product> products = productRepo.findByCategory(category);
 
         if (formIsActive(sortmin, sortmax, brand, country)) {
@@ -78,31 +78,31 @@ public class ProductService {
     }
 
     private void filterProducts(Model model, String sortmin, String sortmax, String brand, String country, List<Product> products) {
-        /*StringBuilder filters = new StringBuilder();*/
+        *//*StringBuilder filters = new StringBuilder();*//*
 
         if (!sortmin.isEmpty()) {
             products = products.stream().filter(product -> product.getPrice() >= Integer.parseInt(sortmin)).collect(Collectors.toList());
-            /*filters.append(" не дешевле ").append(sortmin);*/
+            *//*filters.append(" не дешевле ").append(sortmin);*//*
         }
         if (!sortmax.isEmpty()) {
             products = products.stream().filter(product -> product.getPrice() <= Integer.parseInt(sortmax)).collect(Collectors.toList());
-            /*filters.append(" не дороже ").append(sortmax);*/
+            *//*filters.append(" не дороже ").append(sortmax);*//*
         }
         if (!brand.isEmpty() | !country.isEmpty()) {
             products = products.stream().filter(product -> product.getBrand().equals(brand) | product.getCountry().equals(country)).collect(Collectors.toList());
-            /*if (!country.isEmpty()) filters.append(" страна ").append(country);
-            if (!brand.isEmpty()) filters.append(" бренд ").append(brand);*/
+            *//*if (!country.isEmpty()) filters.append(" страна ").append(country);
+            if (!brand.isEmpty()) filters.append(" бренд ").append(brand);*//*
         }
 
-        /*String appliedFilters = filters.toString();
-        if (!appliedFilters.isEmpty()) model.addAttribute("appliedFilters", appliedFilters);*/
+        *//*String appliedFilters = filters.toString();
+        if (!appliedFilters.isEmpty()) model.addAttribute("appliedFilters", appliedFilters);*//*
 
         model.addAttribute("products", products);
     }
 
     private boolean formIsActive(String sortmin, String sortmax, String brand, String country) {
         return (sortmin != null | sortmax != null | brand != null | country != null);
-    }
+    }*/
 }
 
 
