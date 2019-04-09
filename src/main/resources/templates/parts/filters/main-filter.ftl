@@ -37,7 +37,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text w-10" id="filter-country">Страна</span>
                 </div>
-                <input type="text" id="country" name="country" class="form-control" placeholder="Japan" aria-label="Default" aria-describedby="filter-country">
+                <input type="text" id="country" name="country" class="form-control" placeholder="Япония" aria-label="Default" aria-describedby="filter-country">
             </div>
             <div class="input-group">
                 <div class="input-group-prepend">
