@@ -3,17 +3,11 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public enum Category {
-    Electronics,
-    KitchenEquipment,
-    HomeEquipment,
-    ClimateControl,
-    Computers,
-    Portable,
-    Smart,
-
-    AutomobileElectronics,
-    HouseTools,
-    HouseChemistry,
-    PersonalCareTools,
-    RestTools
+    electronics,
+    kitchen_equipment,
+    home_equipment,
+    climate_control,
+    computers,
+    portable,
+    smart
 }

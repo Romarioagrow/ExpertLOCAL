@@ -3,13 +3,11 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public enum SubCategory {
+    multimedia,sputnik,
 
-    TV, LED19_25, LED32, LED32_Smart, LED39_44, LED39_44_Smart, LED45_65, LED45_65_Smart,
+    kitchen_big,kitchen_builtin,cooking_devices,kitchen_small,kitchen_accessory,
 
+    home_washing,home_cleaning,home_clothes,home_accessory,
 
-    Multimedia, Sputnik,
-    KitchenBig, KitchenBuiltin, CookingDevice, KitchenSmall, KitchenAccessory,
-    ForWashing, ForCleaning, ForClothes, HomeAccessory,
-    /// No SubCategories in Climate
-    PC, ComputerParts, ComputersOffice, ComputersAccessory,
+    computers_pc,computers_office,computer_parts,computers_accessories,
 }

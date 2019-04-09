@@ -4,291 +4,293 @@
     </button>
     <div class="dropdown-menu">
         <ul class="category-menu">
-            <li><a href="http://localhost:8080/categories/Electronics">Электроника</a>
+            <li><a href="/categories/electronics">Электроника</a>
                 <div class="product-type-menu marker2" style="width: 45vw">
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/TV"><strong>Телевизоры</strong></a></li>
-                            <li><a href="http://localhost:8080/tv-4K">4K</a></li>
-                            <li><a href="http://localhost:8080/tv-fullhd">FullHD</a></li>
-                            <li><a href="http://localhost:8080/tv-smart">SmartTV</a></li>
-                            <li><a href="http://localhost:8080/tv-curved">Гибкий экран</a></li>
-                            <li><a href="http://localhost:8080/tv-dvbt2">DVBT2</a></li>
+                            <li class="list-head"><a href="/tv"><strong>Телевизоры</strong></a></li>
+                            <li><a href="/tv">4K</a></li>
+                            <li><a href="/tv">FullHD</a></li>
+                            <li><a href="/tv">SmartTV</a></li>
+                            <li><a href="/tv">Гибкий экран</a></li>
+                            <li><a href="/tv">DVBT2</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/multimedia"><strong>Мультимедийные системы</strong></a></li>
-                            <li><a href="http://localhost:8080/music-centers">Музыкальные центры</a></li>
-                            <li><a href="http://localhost:8080/home-cinema">Домашние кинотеатры</a></li>
-                            <li><a href="http://localhost:8080/projectors">Проекторы</a></li>
+                            <li class="list-head"><a href="/subcategories/multimedia"><strong>Мультимедийные системы</strong></a></li>
+                            <li><a href="/music_centers">Музыкальные центры</a></li>
+                            <li><a href="/home_cinema">Домашние кинотеатры</a></li>
+                            <li><a href="/projectors">Проекторы</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/sputnik"><strong>Спутниковая техника</strong></a></li>
-                            <li><a href="http://localhost:8080/sputnik-resicers">Ресиверы</a></li>
-                            <li><a href="http://localhost:8080/antens">Антенны</a></li>
+                            <li class="list-head"><a href="/subcategories/sputnik"><strong>Спутниковая техника</strong></a></li>
+                            <li><a href="/sputnik_receivers">Ресиверы</a></li>
+                            <li><a href="/antennas">Антенны</a></li>
                         </ul>
                     </div>
                 </div>
             </li>
             <#---->
-            <li><a href="http://localhost:8080/categories/KitchenEquipment">Кухонная техника</a>
+            <li><a href="/categories/kitchen_equipment">Кухонная техника</a>
                 <div class="product-type-menu marker2" style="width: 60vw">
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/kitchen-big"><strong>Крупная техника</strong></a></li>
-                            <li><a href="http://localhost:8080/Fridges">Холодильники</a></li>
-                            <li><a href="http://localhost:8080/freezers">Морозильники</a></li>
-                            <li><a href="http://localhost:8080/stoves">Плиты</a></li>
-                            <li><a href="http://localhost:8080/ovens">Духовки</a></li>
-                            <li><a href="http://localhost:8080/dishwashers">Посудомоечные машины</a></li>
+                            <li class="list-head"><a href="/subcategories/kitchen_big"><strong>Крупная техника</strong></a></li>
+                            <li><a href="/fridges">Холодильники</a></li>
+                            <li><a href="/freezers">Морозильники</a></li>
+                            <li><a href="/stoves">Плиты</a></li>
+                            <li><a href="/ovens">Духовки</a></li>
+                            <li><a href="/dishwashers">Посудомоечные машины</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/kitchen-builtin"><strong>Встраиваемая техника</strong></a></li>
-                            <li><a href="http://localhost:8080/builtin-ovens">Встраиваемые духовки</a></li>
-                            <li><a href="http://localhost:8080/builtin-stoves">Встраиваемые плиты</a></li>
-                            <li><a href="http://localhost:8080/vent">Вытяжки</a></li>
+                            <li class="list-head"><a href="/subcategories/kitchen_builtin"><strong>Встраиваемая техника</strong></a></li>
+                            <li><a href="/builtin_ovens">Встраиваемые духовки</a></li>
+                            <li><a href="/builtin_stoves">Встраиваемые плиты</a></li>
+                            <li><a href="/vent">Вытяжки</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/cooking-devices"><strong>Техника для приготовления пищи</strong></a></li>
-                            <li><a href="http://localhost:8080/fridges">Мультиварки</a></li>
-                            <li><a href="http://localhost:8080/freezers">Микроволновки</a></li>
-                            <li><a href="http://localhost:8080/stoves">Кухонные комбайны</a></li>
-                            <li><a href="http://localhost:8080/waffles-breakfast">Вафельницы, йогуртницы и шашлычницы</a></li>
+                            <li class="list-head"><a href="/subcategories/cooking_devices"><strong>Техника для приготовления пищи</strong></a></li>
+                            <li><a href="/multi_cookers">Мультиварки</a></li>
+                            <li><a href="/microwaves">Микроволновки</a></li>
+                            <li><a href="/kitchen_combines">Кухонные комбайны</a></li>
+                            <li><a href="/waffles_breakfast">Вафельницы, йогуртницы и шашлычницы</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/kitchen-small"><strong>Маленькая техника</strong></a></li>
-                            <li><a href="http://localhost:8080/teapots">Электрочайники</a></li>
-                            <li><a href="http://localhost:8080/toasters">Тостеры</a></li>
-                            <li><a href="http://localhost:8080/blenders">Блендеры</a></li>
-                            <li><a href="http://localhost:8080/meat-grinders">Мясорубки</a></li>
-                            <li><a href="http://localhost:8080/mixers">Миксеры</a></li>
-                            <li><a href="http://localhost:8080/juicers">Соковыжималки</a></li>
-                            <li><a href="http://localhost:8080/waffles">Вафельницы и йогуртницы</a></li>
-                            <li><a href="http://localhost:8080/coffe-makers">Кофеварки</a></li>
+                            <li class="list-head"><a href="/subcategories/kitchen_small"><strong>Маленькая техника</strong></a></li>
+                            <li><a href="/teapots">Электрочайники</a></li>
+                            <li><a href="/toasters">Тостеры</a></li>
+                            <li><a href="/blenders">Блендеры</a></li>
+                            <li><a href="/meat_grinders">Мясорубки</a></li>
+                            <li><a href="/mixers">Миксеры</a></li>
+                            <li><a href="/juicers">Соковыжималки</a></li>
+                            <li><a href="/waffles">Вафельницы и йогуртницы</a></li>
+                            <li><a href="/coffee_makers">Кофеварки</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/kitchen-accessory"><strong>Кухонные аксессуары</strong></a></li>
-                            <li><a href="http://localhost:8080/fridges">Фильтры для воды</a></li>
-                            <li><a href="http://localhost:8080/freezers">Весы</a></li>
-                            <li><a href="http://localhost:8080/stoves">Посуда </a></li>
-                            <li><a href="http://localhost:8080/ovens">Кухонная утварь</a></li>
-                            <li><a href="http://localhost:8080/dishwashers">Кухонные аксессуары</a></li>
+                            <li class="list-head"><a href="/subcategories/kitchen_accessory"><strong>Кухонные аксессуары</strong></a></li>
+                            <li><a href="/#">Фильтры для воды</a></li>
+                            <li><a href="/#">Весы</a></li>
+                            <li><a href="/#">Посуда </a></li>
+                            <li><a href="/#">Кухонная утварь</a></li>
+                            <li><a href="/#">Кухонные аксессуары</a></li>
                         </ul
                     </div>
                 </div>
             </li>
             <#---->
-            <li><a href="http://localhost:8080/categories/HomeEquipment">Техника для дома</a>
+            <li><a href="/categories/home_equipment">Техника для дома</a>
                 <div class="product-type-menu" style="width: 50vw">
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/home-washing"><strong>Для стирки</strong></a></li>
-                            <li><a href="http://localhost:8080/washing-machines">Стиральные машины</a></li>
-                            <li><a href="http://localhost:8080/drying-machines">Машины для сушки</a></li>
+                            <li class="list-head"><a href="/subcategories/home_washing"><strong>Для стирки</strong></a></li>
+                            <li><a href="/washing_machines">Стиральные машины</a></li>
+                            <li><a href="/drying_machines">Машины для сушки</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/home-cleaning"><strong>Для уборки</strong></a></li>
-                            <li><a href="http://localhost:8080/vacuum-cleaners">Пылесосы и аксессуары</a></li>
+                            <li class="list-head"><a href="/subcategories/home_cleaning"><strong>Для уборки</strong></a></li>
+                            <li><a href="/vacuum_cleaners">Пылесосы и аксессуары</a></li>
                             <li><a href="#">Компактные пылесосы</a></li>
                             <li><a href="#">Роботы-уборщики</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/home-clothes"><strong>Для ухода за одеждой</strong></a></li>
-                            <li><a href="http://localhost:8080/irons">Утюги и аксессуары</a></li>
-                            <li><a href="http://localhost:8080/ironing-boards">Гладильные доски</a></li>
-                            <li><a href="http://localhost:8080/sewing-machines">Швейные машинки</a></li>
+                            <li class="list-head"><a href="/subcategories/home_clothes"><strong>Для ухода за одеждой</strong></a></li>
+                            <li><a href="/irons">Утюги и аксессуары</a></li>
+                            <li><a href="/ironing_boards">Гладильные доски</a></li>
+                            <li><a href="/sewing_machines">Швейные машинки</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/home-accessory"><strong>Аксессуары для дома</strong></a></li>
-                        </ul>
-                    </div>
-                </div>
-            </li>
-            <#---->
-            <li><a href="http://localhost:8080/categories/ClimateControl">Климатическая техника</a>
-                <div class="product-type-menu" style="width: 50vw">
-                    <div class="product-type-list marker2">
-                        <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/conditioners"><strong>Кондиционеры</strong></a></li>
-                            <li><a href="http://localhost:8080/#">Кондиционер 1</a></li>
-                            <li><a href="http://localhost:8080/#">Кондиционер 2</a></li>
-                            <li><a href="http://localhost:8080/#">Кондиционер 3</a></li>
-                        </ul>
-                    </div>
-                    <div class="product-type-list marker2">
-                        <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/water-heaters"><strong>Водонагреватели</strong></a></li>
-                            <li><a href="http://localhost:8080/#">Водонагреватель 1</a></li>
-                            <li><a href="http://localhost:8080/#">Водонагреватель 2</a></li>
-                            <li><a href="http://localhost:8080/#">Водонагреватель 3</a></li>
-                        </ul>
-                    </div>
-                    <div class="product-type-list marker2">
-                        <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/gas-heaters"><strong>Газовые колонки</strong></a></li>
-                            <li><a href="http://localhost:8080/#">Колонка 1</a></li>
-                            <li><a href="http://localhost:8080/#">Колонка 2</a></li>
-                            <li><a href="http://localhost:8080/#">Колонка 3</a></li>
-                        </ul>
-                    </div>
-                    <div class="product-type-list marker2">
-                        <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/electric-heaters"><strong>Обогреватели</strong></a></li>
-                            <li><a href="http://localhost:8080/#">Обогреватель 1</a></li>
-                            <li><a href="http://localhost:8080/#">Обогреватель 2</a></li>
-                            <li><a href="http://localhost:8080/#">Обогреватель 3</a></li>
-                        </ul>
-                    </div>
-                    <div class="product-type-list marker2">
-                        <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/ventilators"><strong>Вентиляторы</strong></a></li>
-                            <li><a href="http://localhost:8080/#">Вентилятор 1</a></li>
-                            <li><a href="http://localhost:8080/#">Вентиляторы 2</a></li>
-                            <li><a href="http://localhost:8080/#">Вентиляторы 3</a></li>
+                            <li class="list-head"><a href="/subcategories/home_accessory"><strong>Аксессуары для дома</strong></a></li>
                         </ul>
                     </div>
                 </div>
             </li>
             <#---->
-            <li><a href="http://localhost:8080/categories/Computers">Компьютеры и офисная техника</a>
+            <li><a href="/categories/climate_control">Климатическая техника</a>
                 <div class="product-type-menu" style="width: 50vw">
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/computers-pc"><strong>ПК и переферия</strong></a></li>
-                            <li><a href="http://localhost:8080/#">Готовые системные блоки</a></li>
-                            <li><a href="http://localhost:8080/#">Мониторы</a></li>
-                            <li><a href="http://localhost:8080/#">Клавиатуры</a></li>
-                            <li><a href="http://localhost:8080/#">Мыши</a></li>
-                            <li><a href="http://localhost:8080/#">Колонки</a></li>
-                            <li><a href="http://localhost:8080/#">Наушники и микрофоны</a></li>
-                            <li><a href="http://localhost:8080/#">Вебкамеры</a></li>
+                            <li class="list-head"><a href="/conditioners"><strong>Кондиционеры</strong></a></li>
+                            <li><a href="/#">Кондиционер 1</a></li>
+                            <li><a href="/#">Кондиционер 2</a></li>
+                            <li><a href="/#">Кондиционер 3</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/notebooks"><strong>Ноутбуки</strong></a></li>
-                            <li><a href="http://localhost:8080/#">Ультра-тонкие</a></li>
-                            <li><a href="http://localhost:8080/#">Игровые</a></li>
-                            <li><a href="http://localhost:8080/#">Для работы</a></li>
-                            <li><a href="http://localhost:8080/#">Аксессуары для ноутбуков</a></li>
+                            <li class="list-head"><a href="/water_heaters"><strong>Водонагреватели</strong></a></li>
+                            <li><a href="/#">Водонагреватель 1</a></li>
+                            <li><a href="/#">Водонагреватель 2</a></li>
+                            <li><a href="/#">Водонагреватель 3</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/computers-office"><strong>Офисная техника</strong></a></li>
-                            <li><a href="http://localhost:8080/#">Принтеры</a></li>
-                            <li><a href="http://localhost:8080/#">Сканеры</a></li>
-                            <li><a href="http://localhost:8080/#">Проекторы</a></li>
+                            <li class="list-head"><a href="/gas_heaters"><strong>Газовые колонки</strong></a></li>
+                            <li><a href="/#">Колонка 1</a></li>
+                            <li><a href="/#">Колонка 2</a></li>
+                            <li><a href="/#">Колонка 3</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/computer-parts"><strong>Компьютерные комплектующие</strong></a></li>
-                            <li><a href="http://localhost:8080/#">Товар 1</a></li>
-                            <li><a href="http://localhost:8080/#">Товар 2</a></li>
-                            <li><a href="http://localhost:8080/#">Товар 3</a></li>
+                            <li class="list-head"><a href="/electric_heaters"><strong>Обогреватели</strong></a></li>
+                            <li><a href="/#">Обогреватель 1</a></li>
+                            <li><a href="/#">Обогреватель 2</a></li>
+                            <li><a href="/#">Обогреватель 3</a></li>
+                        </ul>
+                    </div>
+                    <div class="product-type-list marker2">
+                        <ul class="products-list">
+                            <li class="list-head"><a href="/ventilators"><strong>Вентиляторы</strong></a></li>
+                            <li><a href="/#">Вентилятор 1</a></li>
+                            <li><a href="/#">Вентиляторы 2</a></li>
+                            <li><a href="/#">Вентиляторы 3</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+            <#---->
+            <li><a href="/categories/computers">Компьютеры и офисная техника</a>
+                <div class="product-type-menu" style="width: 50vw">
+                    <div class="product-type-list marker2">
+                        <ul class="products-list">
+                            <li class="list-head"><a href="/subcategories/computers_pc"><strong>ПК и переферия</strong></a></li>
+                            <li><a href="/pc">Готовые системные блоки</a></li>
+                            <li><a href="/monitors">Мониторы</a></li>
+                            <li><a href="/keyboards">Клавиатуры</a></li>
+                            <li><a href="/mouses">Мыши</a></li>
+                            <li><a href="/speakers">Колонки</a></li>
+                            <li><a href="/pc_headers">Компьютерные наушники</a></li>
+                            <li><a href="/microphones">Микрофоны</a></li>
+                            <li><a href="/web_cameras">Вебкамеры</a></li>
+                            <li><a href="/pc_accessory">ПК аксессуары</a></li>
+                        </ul>
+                    </div>
+                    <div class="product-type-list marker2">
+                        <ul class="products-list">
+                            <li class="list-head"><a href="/notebooks"><strong>Ноутбуки</strong></a></li>
+                            <li><a href="/#">Ультра-тонкие</a></li>
+                            <li><a href="/#">Игровые</a></li>
+                            <li><a href="/#">Для работы</a></li>
+                            <li><a href="/#">Аксессуары для ноутбуков</a></li>
+                        </ul>
+                    </div>
+                    <div class="product-type-list marker2">
+                        <ul class="products-list">
+                            <li class="list-head"><a href="/subcategories/computers_office"><strong>Офисная техника</strong></a></li>
+                            <li><a href="/printers">Принтеры</a></li>
+                            <li><a href="/scanners">Сканеры</a></li>
+                            <li><a href="/projectors">Проекторы</a></li>
+                        </ul>
+                    </div>
+                    <div class="product-type-list marker2">
+                        <ul class="products-list">
+                            <li class="list-head"><a href="/subcategories/computer_parts"><strong>Компьютерные комплектующие</strong></a></li>
+                            <li><a href="/#">Товар 1</a></li>
+                            <li><a href="/#">Товар 2</a></li>
+                            <li><a href="/#">Товар 3</a></li>
                         </ul>
                     </div>
 
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/computers-accessory"><strong>Аксессуары</strong></a></li>
-                            <li><a href="http://localhost:8080/#">USB-карты</a></li>
-                            <li><a href="http://localhost:8080/#">Карты памяти</a></li>
-                            <li><a href="http://localhost:8080/#">Наушники</a></li>
-                            <li><a href="http://localhost:8080/#">Сетевые фильтры</a></li>
-                            <li><a href="http://localhost:8080/#">Шнуры, кабели и переходники</a></li>
+                            <li class="list-head"><a href="/subcategories/computers_accessories"><strong>Аксессуары</strong></a></li>
+                            <li><a href="/usb_card">USB-карты</a></li>
+                            <li><a href="/memory_sticks">Карты памяти</a></li>
+                            <li><a href="/headers">Наушники</a></li>
+                            <li><a href="/network_filters">Сетевые фильтры</a></li>
+                            <li><a href="/cords">Шнуры, кабели и переходники</a></li>
                         </ul>
                     </div>
                 </div>
             </li>
             <#---->
-            <li><a href="http://localhost:8080/categories/Portable">Портативная техника</a>
+            <li><a href="/categories/portable">Портативная техника</a>
                 <div class="product-type-menu" style="width: 50vw">
                     <div class="product-type-list marker3">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/photo"><strong>Фотоапараты</strong></a></li>
-                            <li><a href="http://localhost:8080/#">Товар 1</a></li>
-                            <li><a href="http://localhost:8080/#">Товар 2</a></li>
-                            <li><a href="http://localhost:8080/#">Товар 3</a></li>
+                            <li class="list-head"><a href="/photo"><strong>Фотоапараты</strong></a></li>
+                            <li><a href="/#">Товар 1</a></li>
+                            <li><a href="/#">Товар 2</a></li>
+                            <li><a href="/#">Товар 3</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/video"><strong>Камеры</strong></a></li>
-                            <li><a href="http://localhost:8080/#">Товар 1</a></li>
-                            <li><a href="http://localhost:8080/#">Товар 2</a></li>
-                            <li><a href="http://localhost:8080/#">Товар 3</a></li>
+                            <li class="list-head"><a href="/video"><strong>Камеры</strong></a></li>
+                            <li><a href="/#">Товар 1</a></li>
+                            <li><a href="/#">Товар 2</a></li>
+                            <li><a href="/#">Товар 3</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/radio"><strong>Рации</strong></a></li>
-                            <li><a href="http://localhost:8080/#">Товар 1</a></li>
-                            <li><a href="http://localhost:8080/#">Товар 2</a></li>
-                            <li><a href="http://localhost:8080/#">Товар 3</a></li>
+                            <li class="list-head"><a href="/radio"><strong>Рации</strong></a></li>
+                            <li><a href="/#">Товар 1</a></li>
+                            <li><a href="/#">Товар 2</a></li>
+                            <li><a href="/#">Товар 3</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/mobile-phones"><strong>Сотовые телефоны</strong></a></li>
-                            <li><a href="http://localhost:8080/#">Товар 1</a></li>
-                            <li><a href="http://localhost:8080/#">Товар 2</a></li>
-                            <li><a href="http://localhost:8080/#">Товар 3</a></li>
+                            <li class="list-head"><a href="/mobile_phones"><strong>Сотовые телефоны</strong></a></li>
+                            <li><a href="/#">Товар 1</a></li>
+                            <li><a href="/#">Товар 2</a></li>
+                            <li><a href="/#">Товар 3</a></li>
                         </ul>
                     </div>
                 </div>
             </li>
             <#---->
-            <li><a href="http://localhost:8080/categories/Smart">Smart техника</a>
+            <li><a href="/categories/smart">Smart техника</a>
                 <div class="product-type-menu" style="width: 50vw">
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/smartphones"><strong>Смартфоны</strong></a></li>
-                            <li><a href="http://localhost:8080/#">Товар 1</a></li>
-                            <li><a href="http://localhost:8080/#">Товар 2</a></li>
-                            <li><a href="http://localhost:8080/#">Товар 3</a></li>
+                            <li class="list-head"><a href="/smartphones"><strong>Смартфоны</strong></a></li>
+                            <li><a href="/#">Товар 1</a></li>
+                            <li><a href="/#">Товар 2</a></li>
+                            <li><a href="/#">Товар 3</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/tablets"><strong>Планшеты</strong></a></li>
-                            <li><a href="http://localhost:8080/#">Товар 1</a></li>
-                            <li><a href="http://localhost:8080/#">Товар 2</a></li>
-                            <li><a href="http://localhost:8080/#">Товар 3</a></li>
+                            <li class="list-head"><a href="/tablets"><strong>Планшеты</strong></a></li>
+                            <li><a href="/#">Товар 1</a></li>
+                            <li><a href="/#">Товар 2</a></li>
+                            <li><a href="/#">Товар 3</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/smart-headers"><strong>Умные колонки</strong></a></li>
-                            <li><a href="http://localhost:8080/#">Товар 1</a></li>
-                            <li><a href="http://localhost:8080/#">Товар 2</a></li>
-                            <li><a href="http://localhost:8080/#">Товар 3</a></li>
+                            <li class="list-head"><a href="/smart_headers"><strong>Умные колонки</strong></a></li>
+                            <li><a href="/#">Товар 1</a></li>
+                            <li><a href="/#">Товар 2</a></li>
+                            <li><a href="/#">Товар 3</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/bluetooth"><strong>Bluetooth устройства</strong></a></li>
-                            <li><a href="http://localhost:8080/#">Товар 1</a></li>
-                            <li><a href="http://localhost:8080/#">Товар 2</a></li>
-                            <li><a href="http://localhost:8080/#">Товар 3</a></li>
+                            <li class="list-head"><a href="/bluetooth"><strong>Bluetooth устройства</strong></a></li>
+                            <li><a href="/#">Товар 1</a></li>
+                            <li><a href="/#">Товар 2</a></li>
+                            <li><a href="/#">Товар 3</a></li>
                         </ul>
                     </div>
                 </div>

@@ -2,186 +2,43 @@ package expertshop.domain.categories;
 import lombok.NoArgsConstructor;
 
 public enum Type {
-    // Электроника (Теле-видео-аудио)
-    /*
-     * Телеизоры
-     * Спутниковая техника
-     * Мультимедийные системы
-     * Портативная техника
-     * Кабели и шнуры
-    */
-    Reciver_DVBT2, ///
-    PlayerDVD,
-    Charger,
-    TV_Antenna,///
-    Kronshteyn,
-    MusicCenter,///
-    TV,
-    Cords,
+    //ЭЛЕКТРОНИКА
+    tv,music_centers,sputnik_receivers,home_cinema,antennas,
 
+    //ТЕХНИКА ДЛЯ КУХНИ
+    //Крупная техника
+    fridges,freezers,stoves,ovens,dishwashers,
+    //Встраиваемая техника
+    builtin_ovens,builtin_stoves,vent,
+    //Готовит еду
+    multi_cookers,microwaves,kitchen_combines,waffles_breakfast,
+    // Маленькая техника
+    teapots,toasters,blenders,meat_grinders,mixers,juicers,waffles,coffee_makers,
 
-    // Техника для кухни
-    /*
-    * Крупная техника
-    * Встраиваемая техника
-    * Маленькая техника
-    * Готовит еду
-    * Аксессуары
-    */
-    ChaynikElectro,///
-    Toaster,///
-    Blender,///
-    Mixer,///
-    Juicer,///
-    CoffeeMaker,///
-    MeatGrinder,///
+    //ТЕХНИКА ДЛЯ ДОМА
+    //Для Стирки
+    washing_machines,drying_machines,
+    //Уборка
+    vacuum_cleaners,
+    //Для одежды
+    irons,ironing_boards,sewing_machines,
 
-    Combine,///
-        Chopper,
-    MultiCooker,///
-    Microwave,///
-    Breakfast,///
-        Vafelnitsa,
-        Shashlychnitsa,
-        YogurtMaker,
+    //КЛИМАТИЧЕСКАЯ ТЕХНИКА
+    conditioners,water_heaters,gas_heaters,electric_heaters,ventilators,
 
-    Kitchen_Accessory,
-    Kitchen_Tool,///
-    Dish,///
-    Water_Filter,///
-    Kitchen_Vesi,///
+    //КОМПЬЮТЕРЫ И ОФИСНАЯ ТЕХНИКА
+    //ПК
+    pc,monitors,keyboards,mouses,speakers,pc_headers,microphones,web_cameras,pc_accessory,
+    //Ноутбуки
+    notebooks,
+    //Для офиса
+    printers,scanners,projectors,
+    //Аксессуары
+    usb_card,memory_sticks,headers,network_filters,cords,
 
-    Stove,///
-    Oven,///
-    Fridges,///
-    Freezer,///
+    //ПОРТАТИВНАЯ ТЕХНИКА
+    photo,video,radio,mobile_phones,
 
-    BuiltIn_Oven,///
-    BuiltIn_Stove,///
-    Vytyazhka,///
-
-
-    // Техника для дома
-    /*
-    * Стирка
-    * Уборка
-    * Для одежды
-    * Аксессуары для дома
-    */
-    WashingMachine,///
-        WashingMachine_Accessory,
-    ClothesDryer,///
-
-    VacuumCleaner,///
-        VacuumCleaner_Accessory,
-        VacuumCleaner_Filter,
-        Pilesbornik,
-
-    IroningBoard,///
-    Utug,///
-        Iron_Accessory,
-    SewingMachine,///
-
-
-    // Климат
-    /*
-    Кондиционеры
-    Водонагреватели
-    Газовые колонки
-    Обогреватели
-    Вентиляторы
-    */
-    Conditioner,///
-
-    WaterHeater,///
-
-    GasWaterHeater,///
-
-    ElectricHeaters,///
-        Thermometer,
-
-    Ventilator,///
-
-    // Компьютеры и офис
-    /*
-    ПК и переферия
-    Ноутбуки
-    Комплектующие
-    Офисная техника
-    Аксессуары
-    */
-    UsbFlash,///
-    MemoryStick,///
-    Наушники,///
-
-    PC,///
-    Monitor,///
-    Keyboard,///
-    Mouse,///
-    Kolonki,///
-    Naushniki,///
-    Microfon,///
-    WebCam,///
-
-    Notebook,/// для всех подкатегорий одна страница с разными фильтрами
-        Notebook_Accessory,
-
-    Printer,///
-    Scanner,///
-    Projector,///
-
-
-    // Портативная техника
-
-
-    // Smart техника
-    Tablet,
-        Tablet_Accessory,
-
-    // Приборы персонального ухода
-    /*
-    Для бритья и стрижки
-    Для ухода за волосами
-    Аксуссуары
-    */
-    Razor,
-    HaircutMachine,
-    Trimmer,
-    PloykaWithShipci,
-    Styler,
-    HairDryer,
-    Razor_Accessory,
-
-    // Автотехника
-    /*
-    Автомагнитолы
-    Акустика и автозвук
-    Видеорегистраторы
-    Навигация
-    Автоаксессуары
-    */
-    AutoKolonki,
-    AutoMagnitola,
-    CarCharger,
-    VideoRegistrator,
-    AutoSound,
-    Compressor,
-
-    // Товары для отдыха ///ПЕРЕРАСПРЕДЕЛИТЬ В ОСТАЛЬНЫЕ КАТЕГОРИИ
-    Mangal,
-    Lamp,
-    Bluetooth_Garnitura,
-    ProtectGlass,
-    Camera,
-    Wireless_Sound,
-    Radio_Tel,///
-    MobilePhone,///
-    SmartPhone,
-    Reader,
-
-
-    PhotoCamera, VideoCamera, PortableRadio,
-
-     SmartHeaders, BluetoothTech
-
+    //SMART ТЕХНИКА
+    smartphones,tablets,smart_headers,bluetooth
 }
