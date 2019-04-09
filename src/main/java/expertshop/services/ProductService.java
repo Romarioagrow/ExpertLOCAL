@@ -31,10 +31,9 @@ public class ProductService {
     public List<Product> findAll() {
         return productRepo.findAll();
     }
+}
 
-
-
-    //////////////////////////////////////////////
+//////////////////////////////////////////////
     /*public void constructAndFilter(Category category, Model model, String sortmin, String sortmax, String brand, String country, String sortby) {
         List<Product> products = productRepo.findByCategory(category);
 
@@ -103,7 +102,7 @@ public class ProductService {
     private boolean formIsActive(String sortmin, String sortmax, String brand, String country) {
         return (sortmin != null | sortmax != null | brand != null | country != null);
     }*/
-}
+
 
 
 
