@@ -13,9 +13,28 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class FilterService {
+public class ProductService {
     private final ProductRepo productRepo;
 
+    public List<Product> findProducts(Category category) {
+        return productRepo.findByCategory(category);
+    }
+
+    public List<Product> findProducts(SubCategory subCategory) {
+        return productRepo.findBySubCategory(subCategory);
+    }
+
+    public List<Product> findProducts(Type type) {
+        return productRepo.findByType(type);
+    }
+
+    public List<Product> findAll() {
+        return productRepo.findAll();
+    }
+
+
+
+    //////////////////////////////////////////////
     public void constructAndFilter(Category category, Model model, String sortmin, String sortmax, String brand, String country, String sortby) {
         List<Product> products = productRepo.findByCategory(category);
 
@@ -59,24 +78,24 @@ public class FilterService {
     }
 
     private void filterProducts(Model model, String sortmin, String sortmax, String brand, String country, List<Product> products) {
-        StringBuilder filters = new StringBuilder();
+        /*StringBuilder filters = new StringBuilder();*/
 
         if (!sortmin.isEmpty()) {
             products = products.stream().filter(product -> product.getPrice() >= Integer.parseInt(sortmin)).collect(Collectors.toList());
-            filters.append(" не дешевле ").append(sortmin);
+            /*filters.append(" не дешевле ").append(sortmin);*/
         }
         if (!sortmax.isEmpty()) {
             products = products.stream().filter(product -> product.getPrice() <= Integer.parseInt(sortmax)).collect(Collectors.toList());
-            filters.append(" не дороже ").append(sortmax);
+            /*filters.append(" не дороже ").append(sortmax);*/
         }
         if (!brand.isEmpty() | !country.isEmpty()) {
             products = products.stream().filter(product -> product.getBrand().equals(brand) | product.getCountry().equals(country)).collect(Collectors.toList());
-            if (!country.isEmpty()) filters.append(" страна ").append(country);
-            if (!brand.isEmpty()) filters.append(" бренд ").append(brand);
+            /*if (!country.isEmpty()) filters.append(" страна ").append(country);
+            if (!brand.isEmpty()) filters.append(" бренд ").append(brand);*/
         }
 
-        String appliedFilters = filters.toString();
-        if (!appliedFilters.isEmpty()) model.addAttribute("appliedFilters", appliedFilters);
+        /*String appliedFilters = filters.toString();
+        if (!appliedFilters.isEmpty()) model.addAttribute("appliedFilters", appliedFilters);*/
 
         model.addAttribute("products", products);
     }
@@ -86,14 +105,6 @@ public class FilterService {
     }
 }
 
-/// СОБРАТЬ ВСЕ ПАРАМЕТРЫ NOTNULL И ПРИМЕНИТЬ ИХ В STREAM ФИЛЬТР!!!
-/*productsWithParams = productsWithParams.stream()
- *//*.filter(productWrap -> Objects.equals(productWrap.getProductParams().getResolution(), "4K 3840x2160"))*//* //resolution
-                .filter(productWrap -> productWrap.getProduct().getPrice() >= Integer.parseInt(sortmin))//ifNotEquals("")
-                .filter(productWrap -> productWrap.getProduct().getPrice() <= Integer.parseInt(sortmax))//ifNotEquals("")
-                .filter(productWrap -> productWrap.getProduct().getBrand().equals(brand)) //ifNotEquals("")
-                .filter(productWrap -> productWrap.getProduct().getCountry().equals(country))//ifNotEquals("")
-                .collect(Collectors.toList());*/
 
 
 

@@ -10,6 +10,7 @@ public enum Category {
     Computers,
     Portable,
     Smart,
+
     AutomobileElectronics,
     HouseTools,
     HouseChemistry,

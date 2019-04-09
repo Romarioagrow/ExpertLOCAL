@@ -54,7 +54,7 @@ public enum Type {
 
     Stove,///
     Oven,///
-    Fridge,///
+    Fridges,///
     Freezer,///
 
     BuiltIn_Oven,///

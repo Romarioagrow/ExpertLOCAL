@@ -1,30 +1,17 @@
 package expertshop.controllers;
-import expertshop.domain.categories.SubCategory;
-import expertshop.domain.categories.Type;
-import expertshop.services.FilterService;
+import expertshop.services.ProductService;
 import lombok.AllArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+@Log
 @Controller
 @AllArgsConstructor
 public class SubCategoriesController {
-    private final FilterService filterService;
+    private final ProductService filterService;
 
     //Electronics
-    @GetMapping("/tv")
-    public String showTV(
-            Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
-    ){
-        filterService.constructAndFilter(Type.TV, model, sortmin, sortmax, brand, country, sortby);
-
-        model.addAttribute("currentProduct", "TV");
-        model.addAttribute("showTV", Type.TV);
-        return "pages/main";
-    }
-    @GetMapping("/multimedia")
+     /*@GetMapping("/multimedia")
     public String showMultimedia(
             Model model, @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin, @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax, @RequestParam(required = false, name = "brand", defaultValue = "") String brand, @RequestParam(required = false, name = "country", defaultValue = "") String country, @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
     ){
@@ -135,5 +122,5 @@ public class SubCategoriesController {
     ){
         filterService.constructAndFilter(SubCategory.ComputersAccessory, model, sortmin, sortmax, brand, country, sortby);
         return "pages/main";
-    }
+    }*/
 }

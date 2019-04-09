@@ -1,161 +1,38 @@
 package expertshop.controllers;
-import expertshop.domain.Product;
 import expertshop.domain.categories.Category;
-import expertshop.repos.ProductRepo;
-import expertshop.services.FilterService;
+import expertshop.services.ProductService;
+
 import lombok.AllArgsConstructor;
+import lombok.extern.java.Log;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
+@Log
 @Controller
 @AllArgsConstructor
+@RequestMapping("/categories")
 public class CategoriesController {
-    private final FilterService filterService;
-    private final ProductRepo productRepo;
+    private final ProductService productService;
 
-    @GetMapping("/test")
-    public String showmda(
-            Model model
-    ){
-        List<Product> products = productRepo.findAll();
-
-        model.addAttribute("products", products);
-        return "pages/test";
-    }
-
-    @GetMapping("/lol")
-    public String shodwmda(
-            Model model
-    ){
-
-        return "pages/lol";
-    }
-
-    @PostMapping("/test")
-    public String showlmda(
-            Model model
-    ){
-        return "pages/test";
-    }
-
-
-    @GetMapping("/")
-    public String showAll(
-            Model model,
-            @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin,
-            @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax,
-            @RequestParam(required = false, name = "brand", defaultValue = "") String brand,
-            @RequestParam(required = false, name = "country", defaultValue = "") String country,
-            @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
-    ){
-        filterService.showAllProducts(model, sortmin, sortmax, brand, country, sortby);
-        model.addAttribute("currentProduct", "вся техника");
+    @GetMapping
+    public String categories(Model model) {
+        model.addAttribute("products", productService.findAll());
         return "pages/main";
     }
 
-    @GetMapping("/electronics-all")
-    public String showElectronics(
+    @GetMapping("{req_category}")
+    public String showByCategories(
             Model model,
-            @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin,
-            @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax,
-            @RequestParam(required = false, name = "brand", defaultValue = "") String brand,
-            @RequestParam(required = false, name = "country", defaultValue = "") String country,
-            @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby)
-    {
-        filterService.constructAndFilter(Category.Electronics, model, sortmin, sortmax, brand, country, sortby);
-        model.addAttribute("currentProduct", "электроника");
-        return "pages/main";
-    }
-
-    @GetMapping("/kitchen-all")
-    public String showKitchenEquipment(
-            Model model,
-            @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin,
-            @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax,
-            @RequestParam(required = false, name = "brand", defaultValue = "") String brand,
-            @RequestParam(required = false, name = "country", defaultValue = "") String country,
-            @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
+            @PathVariable String req_category
     ){
-        filterService.constructAndFilter(Category.KitchenEquipment, model, sortmin, sortmax, brand, country, sortby);
-        model.addAttribute("currentProduct", "техника для кухни");
+        log.info("Category: " + req_category);
+
+        model.addAttribute(req_category, "category");
+        model.addAttribute("currentProduct", req_category);
+        model.addAttribute("products", productService.findProducts(Category.valueOf(req_category)));
+
         return "pages/main";
     }
-
-    @GetMapping("/home-all")
-    public String showHomeEquipment(
-            Model model,
-            @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin,
-            @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax,
-            @RequestParam(required = false, name = "brand", defaultValue = "") String brand,
-            @RequestParam(required = false, name = "country", defaultValue = "") String country,
-            @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
-    ){
-        filterService.constructAndFilter(Category.HomeEquipment, model, sortmin, sortmax, brand, country, sortby);
-        model.addAttribute("currentProduct", "техника для дома");
-        return "pages/main";
-    }
-
-    @GetMapping("/climate-all")
-    public String showClimateControl(
-            Model model,
-            @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin,
-            @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax,
-            @RequestParam(required = false, name = "brand", defaultValue = "") String brand,
-            @RequestParam(required = false, name = "country", defaultValue = "") String country,
-            @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
-    ){
-        filterService.constructAndFilter(Category.ClimateControl, model, sortmin, sortmax, brand, country, sortby);
-        model.addAttribute("currentProduct", "климатическая техника");
-        return "pages/main";
-    }
-
-    @GetMapping("/computers-all")
-    public String showComputers(
-            Model model,
-            @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin,
-            @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax,
-            @RequestParam(required = false, name = "brand", defaultValue = "") String brand,
-            @RequestParam(required = false, name = "country", defaultValue = "") String country,
-            @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
-    ){
-        filterService.constructAndFilter(Category.Computers, model, sortmin, sortmax, brand, country, sortby);
-
-        model.addAttribute("currentProduct", "компьютеры");
-        return "pages/main";
-    }
-
-    @GetMapping("/portable-all")
-    public String showPortable(
-            Model model,
-            @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin,
-            @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax,
-            @RequestParam(required = false, name = "brand", defaultValue = "") String brand,
-            @RequestParam(required = false, name = "country", defaultValue = "") String country,
-            @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
-    ){
-        filterService.constructAndFilter(Category.Portable, model, sortmin, sortmax, brand, country, sortby);
-        model.addAttribute("currentProduct", "портативная техника");
-        return "pages/main";
-    }
-
-    @GetMapping("/smart-all")
-    public String showSmart(
-            Model model,
-            @RequestParam(required = false, name = "sortmin", defaultValue = "") String sortmin,
-            @RequestParam(required = false, name = "sortmax", defaultValue = "") String sortmax,
-            @RequestParam(required = false, name = "brand", defaultValue = "") String brand,
-            @RequestParam(required = false, name = "country", defaultValue = "") String country,
-            @RequestParam(required = false, name = "sortby", defaultValue = "") String sortby
-    ){
-        filterService.constructAndFilter(Category.Smart, model, sortmin, sortmax, brand, country, sortby);
-        model.addAttribute("currentProduct", "smart-техника");
-        return "pages/main";
-    }
-
-
 }

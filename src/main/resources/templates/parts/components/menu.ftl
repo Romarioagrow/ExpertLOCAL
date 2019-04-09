@@ -4,11 +4,11 @@
     </button>
     <div class="dropdown-menu">
         <ul class="category-menu">
-            <li><a href="http://localhost:8080/electronics-all">Электроника</a>
+            <li><a href="http://localhost:8080/categories/Electronics">Электроника</a>
                 <div class="product-type-menu marker2" style="width: 45vw">
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="http://localhost:8080/tv"><strong>Телевизоры</strong></a></li>
+                            <li class="list-head"><a href="http://localhost:8080/TV"><strong>Телевизоры</strong></a></li>
                             <li><a href="http://localhost:8080/tv-4K">4K</a></li>
                             <li><a href="http://localhost:8080/tv-fullhd">FullHD</a></li>
                             <li><a href="http://localhost:8080/tv-smart">SmartTV</a></li>
@@ -34,12 +34,12 @@
                 </div>
             </li>
             <#---->
-            <li><a href="http://localhost:8080/kitchen-all">Кухонная техника</a>
+            <li><a href="http://localhost:8080/categories/KitchenEquipment">Кухонная техника</a>
                 <div class="product-type-menu marker2" style="width: 60vw">
                     <div class="product-type-list marker2">
                         <ul class="products-list">
                             <li class="list-head"><a href="http://localhost:8080/kitchen-big"><strong>Крупная техника</strong></a></li>
-                            <li><a href="http://localhost:8080/fridges">Холодильники</a></li>
+                            <li><a href="http://localhost:8080/Fridges">Холодильники</a></li>
                             <li><a href="http://localhost:8080/freezers">Морозильники</a></li>
                             <li><a href="http://localhost:8080/stoves">Плиты</a></li>
                             <li><a href="http://localhost:8080/ovens">Духовки</a></li>
@@ -89,7 +89,7 @@
                 </div>
             </li>
             <#---->
-            <li><a href="http://localhost:8080/home-all">Техника для дома</a>
+            <li><a href="http://localhost:8080/categories/HomeEquipment">Техника для дома</a>
                 <div class="product-type-menu" style="width: 50vw">
                     <div class="product-type-list marker2">
                         <ul class="products-list">
@@ -122,7 +122,7 @@
                 </div>
             </li>
             <#---->
-            <li><a href="http://localhost:8080/climate-all">Климатическая техника</a>
+            <li><a href="http://localhost:8080/categories/ClimateControl">Климатическая техника</a>
                 <div class="product-type-menu" style="width: 50vw">
                     <div class="product-type-list marker2">
                         <ul class="products-list">
@@ -167,7 +167,7 @@
                 </div>
             </li>
             <#---->
-            <li><a href="http://localhost:8080/computers-all">Компьютеры и офисная техника</a>
+            <li><a href="http://localhost:8080/categories/Computers">Компьютеры и офисная техника</a>
                 <div class="product-type-menu" style="width: 50vw">
                     <div class="product-type-list marker2">
                         <ul class="products-list">
@@ -220,7 +220,7 @@
                 </div>
             </li>
             <#---->
-            <li><a href="http://localhost:8080/portable-all">Портативная техника</a>
+            <li><a href="http://localhost:8080/categories/Portable">Портативная техника</a>
                 <div class="product-type-menu" style="width: 50vw">
                     <div class="product-type-list marker3">
                         <ul class="products-list">
@@ -257,7 +257,7 @@
                 </div>
             </li>
             <#---->
-            <li><a href="http://localhost:8080/smart-all">Smart техника</a>
+            <li><a href="http://localhost:8080/categories/Smart">Smart техника</a>
                 <div class="product-type-menu" style="width: 50vw">
                     <div class="product-type-list marker2">
                         <ul class="products-list">

@@ -15,7 +15,7 @@
     <#if products??>
     <#list products as product>
         <div class="card product-card mr-3 mt-3" id="products">
-            <img class="card-img-top" src="img/tv1.jpg" alt="Card image cap">
+            <img class="card-img-top" src="../img/tv1.jpg" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">
                     <i>${product.type}</i>
