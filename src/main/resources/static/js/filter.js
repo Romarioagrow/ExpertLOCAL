@@ -27,13 +27,14 @@ function collectFilters(e) {
         }
     });
 
+    //Указ контролеру какие товары наполнять
+    /*var requiredType = $('#someFieldWithURL')*/
+
     var tv_data = {
         'sortmin':sortmin, 'sortmax': sortmax, 'brands': brand, 'country': country,
         'diag_min': diag_min, 'diag_max': diag_max, 'resolution': tv_resolution, 'params': tv_params
     };
-    
     console.log(tv_data);
-
     tv_data = JSON.stringify(tv_data);
 
     var info = {'sortmin':'lll', 'sortmax': 'lool'};
