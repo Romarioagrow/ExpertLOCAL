@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
 
 @Entity
 @Data
@@ -16,7 +15,7 @@ import java.util.Set;
 @Table(name = "products")
 public class Product implements Serializable {
     @Id
-    private Long product_id;
+    public Integer product_id;
 
     @Column(name = "category")
     @Enumerated(EnumType.STRING)

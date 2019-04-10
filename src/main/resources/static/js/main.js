@@ -28,21 +28,29 @@ function collectFilters(e) {
     });
 
     var tv_data = {
-        sortmin:sortmin, sortmax: sortmax, brands: brand, country: country,
-        diag_min: diag_min, diag_max: diag_max, resolution: tv_resolution, params: tv_params
+        'sortmin':sortmin, 'sortmax': sortmax, 'brands': brand, 'country': country,
+        'diag_min': diag_min, 'diag_max': diag_max, 'resolution': tv_resolution, 'params': tv_params
     };
-
+    
     console.log(tv_data);
 
+    tv_data = JSON.stringify(tv_data);
+
+    var info = {'sortmin':'lll', 'sortmax': 'lool'};
+    info = JSON.stringify(info);
+
     /// !!!
-    /*$.ajax({
-        url: 'http://localhost:8080/TV',
-        type: 'GET',
-        dataType: 'json',
-        data: tv_data,
-        success: function (products) {
+    $.ajax({
+        url: 'http://localhost:8080/tv',
+        type: 'POST',
+        dataType: 'application/json',
+        data: info,
+        processData: false,
+        headers: {'Content-Type': 'application/json'},
+        success: function (response) {
+            console.log(response);
         }
-    })*/
+    })
 }
 
 
