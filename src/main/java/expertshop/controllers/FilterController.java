@@ -16,21 +16,22 @@ public class FilterController {
 
     @PostMapping("/tv")
     public List<Map<String, String>> test(@RequestBody Map<String, String> params) {
+        ///РАБОТА С ПАРАМЕТРАМИ
         for (Map.Entry entry : params.entrySet()) {
             log.info(entry.getKey() + ", " + entry.getValue());
         }
 
-        //findByType(requiredType)
-        List<Product> products = productRepo.findByType(Type.tv);
+        /// НАПОЛНЕНИЕ ТОВАРОВ findByType(requiredType)
+        List<Product> dbProducts = productRepo.findByType(Type.tv);
         
         List<Map<String, String>> response = new ArrayList<>();
         int i = 0;
-        for (Product product1 : products )
+        for (Product dbProduct : dbProducts )
         {
             Map<String, String> product = new HashMap<>();
-            product.put("Brand", product1.getBrand());
-            product.put("Model", product1.getModel());
-            product.put("Price", String.valueOf(product1.getPrice()));
+            product.put("Brand", dbProduct.getBrand());
+            product.put("Model", dbProduct.getModel());
+            product.put("Price", String.valueOf(dbProduct.getPrice()));
 
             response.add(i, product);
             i++;
@@ -38,6 +39,8 @@ public class FilterController {
         return response;
     }
 }
+
+
     /*List<String[]> productsString = new ArrayList<>();
 
         for (Product product : products) {

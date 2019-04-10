@@ -37,7 +37,7 @@ function collectFilters(e) {
     console.log(tv_data);
     tv_data = JSON.stringify(tv_data);
 
-    var info = {'sortmin':'lll', 'sortmax': 'lool'};
+    var info = {'sortmin':sortmin, 'sortmax': sortmax, 'brand': brand, 'country': country};
     info = JSON.stringify(info);
 
     /// !!!
