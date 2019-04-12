@@ -15,74 +15,17 @@ public class FilterController {
     private final ProductRepo productRepo;
 
     @PostMapping("/tv")
-    public List<Map<String, String>> test(@RequestBody Map<String, String> params) {
+    public List<Product> test(@RequestBody Map<String, String[]> params) {
         ///РАБОТА С ПАРАМЕТРАМИ
-        for (Map.Entry entry : params.entrySet()) {
-            log.info(entry.getKey() + ", " + entry.getValue());
-        }
+        log.info("\nServer received params with args:");
+        params.forEach((param, args) -> {
+            log.info(param + ":" + Arrays.toString(args));
+        });
 
         /// НАПОЛНЕНИЕ ТОВАРОВ findByType(requiredType)
         List<Product> dbProducts = productRepo.findByType(Type.tv);
-        
-        List<Map<String, String>> response = new ArrayList<>();
-        int i = 0;
-        for (Product dbProduct : dbProducts )
-        {
-            Map<String, String> product = new HashMap<>();
-            product.put("Brand", dbProduct.getBrand());
-            product.put("Model", dbProduct.getModel());
-            product.put("Price", String.valueOf(dbProduct.getPrice()));
 
-            response.add(i, product);
-            i++;
-        }
-        return response;
+        return dbProducts;
     }
 }
-
-
-    /*List<String[]> productsString = new ArrayList<>();
-
-        for (Product product : products) {
-            int i = 0;
-            productsString.set(i, new String[]{
-                    product.getBrand(),
-                    product.getModel(),
-                    product.getCategory().toString(),
-                    product.getType().toString()
-            });
-        }*/
-
-        /*ObjectMapper mapper = new ObjectMapper();
-        Collections.singletonList(mapper.writeValueAsString(product))*/
-
-        /*return products_list.stream()
-                .filter(product -> product.getProduct_id() > 0)
-                .collect(Collectors.toMap(Product::getModel, Product::getModel));*/
-
-
-    /*@RequestMapping(value = "/employee/{id}", method = RequestMethod.GET)
-    public Employee getEmployeeById(@PathVariable("id") long id){
-        return employeeService.getEmployeeById(id);
-    }*/
-
-
-    /*@PostMapping("/tv")
-    public void getProductsViaAjax(
-            @RequestBody String [] params)
-    {
-        for (String s : params) {
-            System.out.println(s);
-        }
-
-        JsonParser jsonParser;
-
-        jsonParser.parseList();
-
-        List pp = params.parseList()
-
-        Map pars = params.parseMap(String.valueOf(params));
-
-        System.out.println(lol);
-    }*/
 
