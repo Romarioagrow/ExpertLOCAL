@@ -47,6 +47,9 @@ public class Product implements Serializable {
     public String getResolution() {
         return productParams.getResolution();
     }
+    public String getTvFeatures() {
+        return productParams.getTvFeatures();
+    }
 }
 
 

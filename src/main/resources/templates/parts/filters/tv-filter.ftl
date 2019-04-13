@@ -31,17 +31,6 @@
                     <label class="custom-control-label" for="4K">4K UHD</label>
                 </div>
             </div>
-            <div class="mt-2">
-                <h5>Особенности</h5>
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="tv_params" id="3D" value="3D">
-                    <label class="custom-control-label" for="3D">3D</label>
-                </div>
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="tv_params" id="curved" value="curved">
-                    <label class="custom-control-label" for="curved">Изогнутый экран</label>
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -58,8 +47,16 @@
                         <label class="custom-control-label" for="SmartTV">SmartTV</label>
                     </div>
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" name="tv_params" id="WiFI" value="SmartTV">
+                        <input type="checkbox" class="custom-control-input" name="tv_params" id="WiFI" value="Wi-Fi">
                         <label class="custom-control-label" for="WiFI">Wi-FI</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="tv_params" id="3D" value="3D">
+                        <label class="custom-control-label" for="3D">3D</label>
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="tv_params" id="curved" value="Curved">
+                        <label class="custom-control-label" for="curved">Изогнутый экран</label>
                     </div>
                 </div>
             </div>

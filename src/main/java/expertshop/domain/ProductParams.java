@@ -25,21 +25,19 @@ class ProductParams implements Serializable {
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    /*STRING*/
+    //TV
     @Nullable
     private String diagonal;
     @Nullable
     private String resolution;
     @Nullable
-    private String updateFrequency;
+    private String tvFeatures;
 
-    /*BOOLEAN*/
-    @Nullable
-    private Boolean hasSmartTV;
+    /*private Boolean hasSmartTV;
     @Nullable
     private Boolean hasWifi;
     @Nullable
     private Boolean has3D;
     @Nullable
-    private Boolean curvedScreen;
+    private Boolean curvedScreen;*/
 }

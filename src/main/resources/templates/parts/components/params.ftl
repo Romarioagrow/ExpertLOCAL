@@ -1,7 +1,5 @@
 <#if product.typeCategory??>${product.typeCategory},</#if>
-<#if product.productParams.diagonal??>диагональ ${product.productParams.diagonal},</#if>
-<#if product.productParams.resolution??>${product.productParams.resolution},</#if>
-<#if product.productParams.hasWifi??>Wi-Fi,</#if>
-<#if product.productParams.has3D??>3D,</#if>
-<#if product.productParams.curvedScreen??>изогнутый экран</#if>
+<#if product.diagonal??>диагональ ${product.diagonal},</#if>
+<#if product.resolution??>${product.resolution}</#if>
+<#if product.tvFeatures??>, ${product.tvFeatures}</#if>
 <#---->
