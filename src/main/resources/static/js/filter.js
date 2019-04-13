@@ -5,14 +5,14 @@ $(document).ready(function(){
 function collectFilters(e) {
     e.preventDefault();
 
-    var sortmin = [];
-    var sortmax = [];
-    var brand = [];
-    var country = [];
-    var diag_min =[];
-    var diag_max = [];
-    var tv_resolution =[];
-    var tv_params = [];
+    var sortmin         = [];
+    var sortmax         = [];
+    var brand           = [];
+    var country         = [];
+    var diag_min        = [];
+    var diag_max        = [];
+    var tv_resolution   = [];
+    var tv_params       = [];
 
     /*jQuery.isEmptyObject({});*/
 

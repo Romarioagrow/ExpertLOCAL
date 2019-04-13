@@ -26,9 +26,7 @@ public class TypesController {
     }
 
     @GetMapping("/{req_product}")
-    public String showByTypes(
-            Model model,
-            @PathVariable String req_product
+    public String showByTypes(Model model, @PathVariable String req_product
     ){
         log.info("Type: " + req_product);
 

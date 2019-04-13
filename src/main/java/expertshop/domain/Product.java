@@ -40,6 +40,13 @@ public class Product implements Serializable {
     @OneToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "product_parameters_id")
     private ProductParams productParams;
+
+    public String getDiagonal() {
+        return productParams.getDiagonal();
+    }
+    public String getResolution() {
+        return productParams.getResolution();
+    }
 }
 
 
