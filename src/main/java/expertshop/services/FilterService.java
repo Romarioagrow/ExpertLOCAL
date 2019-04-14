@@ -24,26 +24,28 @@ public class FilterService {
         List<Product> products = productRepo.findByType(Type.tv);
 
         /*if (productIsTV)*/
-        products = filterByPrice(products, params);
-        products = filterByManufacturer(products, params);
-        products = filterByDiagonal(products, params);
-        products = filterByResolution(products, params);
-        products = filterByTvParams(products, params);
+        products = filterByPrice        (products, params);
+        products = filterByManufacturer (products, params);
+
+        products = filterByDiagonal     (products, params);
+        products = filterByResolution   (products, params);
+        products = filterByTvParams     (products, params);
 
         log.info("After filter: " + products.size());
-
         return products;
     }
 
     private List<Product> filterByPrice(List<Product> products, Map<String, String[]> params) {
-        String[] sortmin = params.get("sortmin");
-        String[] sortmax = params.get("sortmax");
-        if (!sortmin[0].isEmpty()) {
+        if (params.get("sortmin") != null )
+        {
+            String[] sortmin = params.get("sortmin");
             products = products.stream()
                     .filter(product -> product.getPrice() >= Integer.parseInt(sortmin[0]))
                     .collect(Collectors.toList());
         }
-        if (!sortmax[0].isEmpty()) {
+        if (params.get("sortmax") != null)
+        {
+            String[] sortmax = params.get("sortmax");
             products = products.stream()
                     .filter(product -> product.getPrice() <= Integer.parseInt(sortmax[0]))
                     .collect(Collectors.toList());
@@ -52,80 +54,112 @@ public class FilterService {
     }
 
     private List<Product> filterByManufacturer(List<Product> products, Map<String, String[]> params) {
-        String[] brand = params.get("brands");
-        String[] country = params.get("country");
-        if (!brand[0].isEmpty() | !country[0].isEmpty()) {
+        if (params.get("brands") != null)
+        {
+            String[] brand = params.get("brands");
             products = products.stream()
-                    .filter(product -> product.getBrand().equals(brand[0]) | product.getCountry().equals(country[0]))
+                    .filter(product -> product.getBrand().equals(brand[0]))
+                    .collect(Collectors.toList());
+        }
+        if (params.get("country") != null)
+        {
+            String[] country = params.get("country");
+            products = products.stream()
+                    .filter(product -> product.getCountry().equals(country[0]))
                     .collect(Collectors.toList());
         }
         return products;
     }
 
     private List<Product> filterByDiagonal(List<Product> products, Map<String, String[]> params) {
-        String[] diag_min = params.get("diag_min");
-        String[] diag_max = params.get("diag_max");
-
-        if (!diag_min[0].isEmpty()) {
+        if (params.get("diag_min") != null)
+        {
+            String[] diag_min = params.get("diag_min");
             products = products.stream()
                     .filter(product -> Integer.parseInt(product.getDiagonal()) >= Integer.parseInt(diag_min[0]))
                     .collect(Collectors.toList());
         }
-        if (!diag_max[0].isEmpty()) {
+
+        if (params.get("diag_max") != null) {
+            String[] diag_max = params.get("diag_max");
             products = products.stream()
                     .filter(product -> Integer.parseInt(product.getDiagonal()) <= Integer.parseInt(diag_max[0]))
                     .collect(Collectors.toList());
         }
+
         return products;
     }
 
     private List<Product> filterByResolution(List<Product> products, Map<String, String[]> params) {
-        String[] resolution = params.get("resolution");
-        log.info("Resol. filters: " + resolution.length);
-        log.info("Checked: " + Arrays.toString(resolution));
+        if (params.get("resolution") != null)
+        {
+            String[] resolution = params.get("resolution");
+            log.info("Resol. filters: " + resolution.length);
+            log.info("Checked: " + Arrays.toString(resolution));
 
-        if (resolution.length == 3) {
-            products = products.stream()
-                    .filter(product -> (product.getResolution().contains(resolution[0])) | (product.getResolution().contains(resolution[1])) | (product.getResolution().contains(resolution[2])))
-                    .collect(Collectors.toList());
-        }
-        if (resolution.length == 2) {
-            products = products.stream()
-                    .filter(product -> (product.getResolution().contains(resolution[0])) | (product.getResolution().contains(resolution[1])))
-                    .collect(Collectors.toList());
-        }
-        if (resolution.length == 1) {
-            products = products.stream()
-                    .filter(product -> (product.getResolution().contains(resolution[0])))
-                    .collect(Collectors.toList());
+            if (resolution.length == 3) {
+                products = products.stream()
+                        .filter(product -> (product.getResolution().contains(resolution[0]))
+                                | (product.getResolution().contains(resolution[1]))
+                                | (product.getResolution().contains(resolution[2])))
+                        .collect(Collectors.toList());
+            }
+            if (resolution.length == 2) {
+                products = products.stream()
+                        .filter(product -> (product.getResolution().contains(resolution[0]))
+                                | (product.getResolution().contains(resolution[1])))
+                        .collect(Collectors.toList());
+            }
+            if (resolution.length == 1) {
+                products = products.stream()
+                        .filter(product -> (product.getResolution().contains(resolution[0])))
+                        .collect(Collectors.toList());
+            }
         }
         return products;
     }
 
     private List<Product> filterByTvParams(List<Product> products, Map<String, String[]> params) {
-        String[] tv_params  = params.get("params");
-        log.info("TvFeatures filters: " + tv_params.length);
-        log.info("Checked: " + Arrays.toString(tv_params));
+        if (params.get("tv_params") != null)
+        {
+            String[] tv_params  = params.get("params");
+            log.info("TvFeatures filters: " + tv_params.length);
+            log.info("Checked: " + Arrays.toString(tv_params));
 
-        if (tv_params.length == 4) {
-            products = products.stream()
-                    .filter(product -> ((product.getTvFeatures() != null) && (product.getTvFeatures().contains(tv_params[0])) | (product.getTvFeatures().contains(tv_params[1])) | (product.getTvFeatures().contains(tv_params[2])) | (product.getTvFeatures().contains(tv_params[3]))))
-                    .collect(Collectors.toList());
-        }
-        if (tv_params.length == 3) {
-            products = products.stream()
-                    .filter(product -> ((product.getTvFeatures() != null) && (product.getTvFeatures().contains(tv_params[0])) | (product.getTvFeatures().contains(tv_params[1])) | (product.getTvFeatures().contains(tv_params[2]))))
-                    .collect(Collectors.toList());
-        }
-        if (tv_params.length == 2) {
-            products = products.stream()
-                    .filter(product -> ((product.getTvFeatures() != null) && (product.getTvFeatures().contains(tv_params[0])) | (product.getTvFeatures().contains(tv_params[1]))))
-                    .collect(Collectors.toList());
-        }
-        if (tv_params.length == 1) {
-            products = products.stream()
-                    .filter(product -> ((product.getTvFeatures() != null) && product.getTvFeatures().contains(tv_params[0])))
-                    .collect(Collectors.toList());
+            if (tv_params.length == 4)
+            {
+                products = products.stream()
+                        .filter(product -> ((product.getTvFeatures() != null)
+                                && (product.getTvFeatures().contains(tv_params[0]))
+                                | (product.getTvFeatures().contains(tv_params[1]))
+                                | (product.getTvFeatures().contains(tv_params[2]))
+                                | (product.getTvFeatures().contains(tv_params[3]))))
+                        .collect(Collectors.toList());
+            }
+            if (tv_params.length == 3)
+            {
+                products = products.stream()
+                        .filter(product -> ((product.getTvFeatures() != null)
+                                && (product.getTvFeatures().contains(tv_params[0]))
+                                | (product.getTvFeatures().contains(tv_params[1]))
+                                | (product.getTvFeatures().contains(tv_params[2]))))
+                        .collect(Collectors.toList());
+            }
+            if (tv_params.length == 2)
+            {
+                products = products.stream()
+                        .filter(product -> ((product.getTvFeatures() != null)
+                                && (product.getTvFeatures().contains(tv_params[0]))
+                                | (product.getTvFeatures().contains(tv_params[1]))))
+                        .collect(Collectors.toList());
+            }
+            if (tv_params.length == 1)
+            {
+                products = products.stream()
+                        .filter(product -> ((product.getTvFeatures() != null)
+                                && product.getTvFeatures().contains(tv_params[0])))
+                        .collect(Collectors.toList());
+            }
         }
         return products;
     }
