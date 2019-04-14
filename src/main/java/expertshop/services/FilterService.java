@@ -22,13 +22,13 @@ public class FilterService {
 
         List<Product> products = productRepo.findByType(Type.valueOf(req_type));
 
-        products = filterByPrice        (products, params);
-        products = filterByManufacturer (products, params);
+        products = filterByPrice(products, params);
+        products = filterByManufacturer(products, params);
 
         if (req_type.equals("tv")) {
-            products = filterByDiagonal     (products, params);
-            products = filterByResolution   (products, params);
-            products = filterByTvParams     (products, params);
+            products = filterByDiagonal(products, params);
+            products = filterByResolution(products, params);
+            products = filterByTvParams(products, params);
         }
 
         log.info("After filter: " + products.size());
@@ -79,7 +79,6 @@ public class FilterService {
                     .filter(product -> Integer.parseInt(product.getDiagonal()) >= Integer.parseInt(diag_min[0]))
                     .collect(Collectors.toList());
         }
-
         if (params.get("diag_max") != null) {
             String[] diag_max = params.get("diag_max");
             products = products.stream()
@@ -166,32 +165,3 @@ public class FilterService {
         params.forEach((param, args) -> log.info(param + ":" + Arrays.toString(args)));
     }
 }
-
-
-/*
-Optional<String> res1 = Optional.ofNullable(resolution[0]);
-Optional<String> res2 = Optional.ofNullable(resolution[1]);
-Optional<String> res3 = Optional.ofNullable(resolution[2]);
-*/
-
-/*List<Product> filterByDiagonal(List<Product> products, Map<String, String[]> params) {
-        String[] diag_min   = params.get("diag_min");
-        String[] diag_max   = params.get("diag_max");
-        //if (!diag_min[0].isEmpty()) {
-        Optional.ofNullable(diag_min[0]).filter();
-                .map(String::toLowerCase);
-     Optional.ofNullable(diag_min[0]).ifPresent(s -> );
-     Optional.ofNullable(diag_min[0]).ifPresent(products = products.stream()
-                .filter(product -> Integer.parseInt(product.getDiagonal()) >= Integer.parseInt(diag_min[0])));
-        products = products.stream()
-                    .filter(Optional.ofNullable(diag_min[0]).ifPresent(product -> Integer.parseInt(product.get()) >= Integer.parseInt(diag_min[0])))
-                    .filter(product -> !diag_max[0].isEmpty() && Integer.parseInt(product.getDiagonal()) <= Integer.parseInt(diag_max[0]))
-                    .collect(Collectors.toList());
-        }
-        if (!diag_max[0].isEmpty()) {
-            products = products.stream()
-                    .filter(product -> Integer.parseInt(product.getDiagonal()) <= Integer.parseInt(diag_max[0]))
-                    .collect(Collectors.toList());
-        }
-        return products;
-    }*/

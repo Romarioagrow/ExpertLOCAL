@@ -5,8 +5,8 @@ $(document).ready(function(){
 function collectFilters(e) {
     e.preventDefault();
 
-    // методы наполнения переменных взависимости от типа товара
-    // function collectTvFilters, collectFridgesFilters и тд
+    /// методы наполнения переменных взависимости от типа товара
+    /// function collectTvFilters, collectFridgesFilters и тд
     var sortmin         = [];
     var sortmax         = [];
     var brand           = [];
@@ -64,9 +64,27 @@ function collectFilters(e) {
         dataType: 'application/json',
         data: tv_data,
         processData: false,
+        async: true,
         headers: {'Content-Type': 'application/json'},
-        success: function (response) {
-            console.log(response);
+        complete: function (products, status, http) {
+
+            /*var data = $.parseJSON(products);
+            alert(data);*/
+
+            $('.products_block').html(products);
+
+            alert("Response: " + products + " , Size: " + products.length + ", Status: " + products.status);
+
+            /*if(status === "success")
+                alert(http.status);
+            $('#products_block').html(products);
+            if(status === "error")
+                alert("Error: " + http.status + ": " + http.statusText);*/
         }
     });
 }
+/*
+/!*$('#products_block').html(jQuery(products).find(url).html());*!/
+$('#test_div').html(products);
+/!*$('#test_div').html(products);*!/
+alert(xhr.status)*/

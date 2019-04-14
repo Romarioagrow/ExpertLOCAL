@@ -26,6 +26,7 @@
         <div class="col marker3">
             <div>
                 <div class="pl-4vw marker2">
+                    <div id="test_div"></div>
                     <#if appliedFilters??>
                         <h5>${currentProduct} ${appliedFilters}</h5>
                     <#else>

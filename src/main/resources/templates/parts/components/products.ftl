@@ -11,10 +11,10 @@
         </label>
     </div>
 </div>
-<div class="flex-container marker2">
+<div class="flex-container marker2" id="prod">
     <#if products??>
     <#list products as product>
-        <div class="card product-card mr-3 mt-3" id="products">
+        <div class="card product-card mr-3 mt-3" id="products_block">
             <img class="card-img-top" src="../img/tv1.jpg" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">
