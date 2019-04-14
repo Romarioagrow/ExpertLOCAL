@@ -13,9 +13,9 @@ import java.util.*;
 public class FilterController {
     private final FilterService filterService;
 
-    @PostMapping("/tv")
-    public List<Product> filterProducts(@RequestBody Map<String, String[]> params) {
-        return filterService.filterProducts(params);
+    @PostMapping("/{req_type}")
+    public List<Product> filterProducts(@RequestBody Map<String, String[]> params, @PathVariable String req_type) {
+        return filterService.filterProducts(params, req_type);
     }
 }
 

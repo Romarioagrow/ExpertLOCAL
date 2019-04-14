@@ -17,19 +17,19 @@ import java.util.stream.Collectors;
 public class FilterService {
     private final ProductRepo productRepo;
 
-    public List<Product> filterProducts(Map<String, String[]> params) {
+    public List<Product> filterProducts(Map<String, String[]> params, String req_type) {
         showReceivedParams(params);
 
-        /*String requiredType = params.requiredType*/
-        List<Product> products = productRepo.findByType(Type.tv);
+        List<Product> products = productRepo.findByType(Type.valueOf(req_type));
 
-        /*if (productIsTV)*/
         products = filterByPrice        (products, params);
         products = filterByManufacturer (products, params);
 
-        products = filterByDiagonal     (products, params);
-        products = filterByResolution   (products, params);
-        products = filterByTvParams     (products, params);
+        if (req_type.equals("tv")) {
+            products = filterByDiagonal     (products, params);
+            products = filterByResolution   (products, params);
+            products = filterByTvParams     (products, params);
+        }
 
         log.info("After filter: " + products.size());
         return products;
@@ -86,7 +86,6 @@ public class FilterService {
                     .filter(product -> Integer.parseInt(product.getDiagonal()) <= Integer.parseInt(diag_max[0]))
                     .collect(Collectors.toList());
         }
-
         return products;
     }
 
@@ -94,8 +93,8 @@ public class FilterService {
         if (params.get("resolution") != null)
         {
             String[] resolution = params.get("resolution");
-            log.info("Resol. filters: " + resolution.length);
-            log.info("Checked: " + Arrays.toString(resolution));
+            log.info("Resol filters: " + resolution.length);
+            log.info("Resol checked: " + Arrays.toString(resolution));
 
             if (resolution.length == 3) {
                 products = products.stream()
@@ -106,8 +105,7 @@ public class FilterService {
             }
             if (resolution.length == 2) {
                 products = products.stream()
-                        .filter(product -> (product.getResolution().contains(resolution[0]))
-                                | (product.getResolution().contains(resolution[1])))
+                        .filter(product -> (product.getResolution().contains(resolution[0])) | (product.getResolution().contains(resolution[1])))
                         .collect(Collectors.toList());
             }
             if (resolution.length == 1) {
@@ -124,16 +122,16 @@ public class FilterService {
         {
             String[] tv_params  = params.get("params");
             log.info("TvFeatures filters: " + tv_params.length);
-            log.info("Checked: " + Arrays.toString(tv_params));
+            log.info("TvFeat checked: " + Arrays.toString(tv_params));
 
             if (tv_params.length == 4)
             {
                 products = products.stream()
                         .filter(product -> ((product.getTvFeatures() != null)
                                 && (product.getTvFeatures().contains(tv_params[0]))
-                                | (product.getTvFeatures().contains(tv_params[1]))
-                                | (product.getTvFeatures().contains(tv_params[2]))
-                                | (product.getTvFeatures().contains(tv_params[3]))))
+                                |  (product.getTvFeatures().contains(tv_params[1]))
+                                |  (product.getTvFeatures().contains(tv_params[2]))
+                                |  (product.getTvFeatures().contains(tv_params[3]))))
                         .collect(Collectors.toList());
             }
             if (tv_params.length == 3)
@@ -141,8 +139,8 @@ public class FilterService {
                 products = products.stream()
                         .filter(product -> ((product.getTvFeatures() != null)
                                 && (product.getTvFeatures().contains(tv_params[0]))
-                                | (product.getTvFeatures().contains(tv_params[1]))
-                                | (product.getTvFeatures().contains(tv_params[2]))))
+                                |  (product.getTvFeatures().contains(tv_params[1]))
+                                |  (product.getTvFeatures().contains(tv_params[2]))))
                         .collect(Collectors.toList());
             }
             if (tv_params.length == 2)
@@ -150,21 +148,20 @@ public class FilterService {
                 products = products.stream()
                         .filter(product -> ((product.getTvFeatures() != null)
                                 && (product.getTvFeatures().contains(tv_params[0]))
-                                | (product.getTvFeatures().contains(tv_params[1]))))
+                                |  (product.getTvFeatures().contains(tv_params[1]))))
                         .collect(Collectors.toList());
             }
             if (tv_params.length == 1)
             {
                 products = products.stream()
-                        .filter(product -> ((product.getTvFeatures() != null)
-                                && product.getTvFeatures().contains(tv_params[0])))
+                        .filter(product -> ((product.getTvFeatures() != null) && product.getTvFeatures().contains(tv_params[0])))
                         .collect(Collectors.toList());
             }
         }
         return products;
     }
 
-    private void showReceivedParams(Map<String, String[]> params) {
+    private void showReceivedParams (Map<String, String[]> params) {
         log.info("\nServer received params with args:");
         params.forEach((param, args) -> log.info(param + ":" + Arrays.toString(args)));
     }

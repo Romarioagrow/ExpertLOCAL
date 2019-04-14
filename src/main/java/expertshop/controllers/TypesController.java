@@ -21,7 +21,6 @@ public class TypesController {
     {
         model.addAttribute("currentProduct", "вся техника");
         model.addAttribute("products", productService.findAll());
-
         return "pages/main";
     }
 
@@ -33,7 +32,6 @@ public class TypesController {
         model.addAttribute(req_product, "type");
         model.addAttribute("currentProduct", req_product);
         model.addAttribute("products", productService.findProducts(Type.valueOf(req_product)));
-
         return "pages/main";
     }
 }
