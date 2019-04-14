@@ -120,7 +120,7 @@ public class FilterService {
     }
 
     private List<Product> filterByTvParams(List<Product> products, Map<String, String[]> params) {
-        if (params.get("tv_params") != null)
+        if (params.get("params") != null)
         {
             String[] tv_params  = params.get("params");
             log.info("TvFeatures filters: " + tv_params.length);
