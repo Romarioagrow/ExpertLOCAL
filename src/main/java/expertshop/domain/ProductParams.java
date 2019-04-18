@@ -32,12 +32,4 @@ class ProductParams implements Serializable {
     private String resolution;
     @Nullable
     private String tvFeatures;
-
-    /*private Boolean hasSmartTV;
-    @Nullable
-    private Boolean hasWifi;
-    @Nullable
-    private Boolean has3D;
-    @Nullable
-    private Boolean curvedScreen;*/
 }

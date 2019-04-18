@@ -57,31 +57,64 @@ function collectFilters(e) {
     var url = document.URL;
     console.log(url);
 
-    /// !!!
     $.ajax({
         url: url,
         type: 'POST',
-        dataType: 'application/json',
+        dataType: 'json',
+        data: tv_data,
+        processData: false,
+        async: true,
+        headers: {'Content-Type': 'application/json'},
+        complete: function (products) {
+            alert(products.responseText);
+            $("#result").append(products.responseText);
+
+            console.log(products);
+            console.log(products.responseText);
+
+            /*alert(products);
+            location.reload(true);*/
+            /*$("#testdiv").empty();
+            $("#lol").html(products);*/
+
+            /*var data = [];
+            data= JSON.stringify(products);
+            alert(data);*/
+
+            /*$("#result1").append(data);*/
+
+            /*console.log(data);*/
+
+            /*data.normalize();
+            alert(data);*/
+        }
+    });
+
+    /*$.ajax({
+        url: url,
+        type: 'POST',
+        dataType: 'json',
         data: tv_data,
         processData: false,
         async: true,
         headers: {'Content-Type': 'application/json'},
         complete: function (products, status, http) {
 
-            /*var data = $.parseJSON(products);
-            alert(data);*/
+            /!*var data = $.parseJSON(products);
+            alert(data);*!/
 
-            $('.products_block').html(products);
+            $('#products_block').html(products);
 
-            alert("Response: " + products + " , Size: " + products.length + ", Status: " + products.status);
+            console.log("Response: " + products + " , Size: " + products.length + ", Status: " + products.status);
+            console.log(products.type);
 
-            /*if(status === "success")
+            /!*if(status === "success")
                 alert(http.status);
             $('#products_block').html(products);
             if(status === "error")
-                alert("Error: " + http.status + ": " + http.statusText);*/
+                alert("Error: " + http.status + ": " + http.statusText);*!/
         }
-    });
+    });*/
 }
 /*
 /!*$('#products_block').html(jQuery(products).find(url).html());*!/

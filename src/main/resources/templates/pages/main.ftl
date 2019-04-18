@@ -19,7 +19,7 @@
             </div>
             <div class="marker2">
                 <form method="get" name="filters" id="filters">
-                    <#include "../parts/filters/all-filters.ftl">
+                    <#include "../parts/filters/filters.ftl">
                 </form>
             </div>
         </div>

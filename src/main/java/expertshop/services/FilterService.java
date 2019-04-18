@@ -2,6 +2,7 @@ package expertshop.services;
 import expertshop.domain.Product;
 import expertshop.domain.categories.Type;
 import expertshop.repos.ProductRepo;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
