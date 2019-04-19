@@ -40,8 +40,7 @@
     display: block;
     color: black;
 }
-/*
-*/
+/**/
 .category-menu {
     width: 180px;
     margin: 0;
@@ -64,16 +63,11 @@
     position: relative;
 }
 .category-menu .product-type-menu {
-    /*width: 350%;*/
-    /*min-height: auto;*/
     position: absolute;
     top: 0;
     left: 180px;
     z-index: 10;
     display: none;
-    /*width: 40vw;*/
-    /*margin: 0;
-    padding: 0;*/
     list-style: none;
     background-color: whitesmoke;
 }
@@ -85,7 +79,6 @@
 .category-menu > li:hover .product-type-menu {
     display: flex;
     flex-wrap: wrap;
-
 }
 .products-list {
     list-style: none;

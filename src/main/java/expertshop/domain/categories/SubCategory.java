@@ -3,7 +3,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public enum SubCategory {
-    multimedia,sputnik,
+    tv, multimedia,sputnik,
 
     kitchen_big,kitchen_builtin,cooking_devices,kitchen_small,kitchen_accessory,
 

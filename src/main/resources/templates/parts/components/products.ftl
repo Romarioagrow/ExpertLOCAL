@@ -1,13 +1,13 @@
-<div class="pl-4vw mt-2 marker2" id="sorting" >
-    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+<div class="pl-4vw mt-2 marker2">
+    <div class="btn-group btn-group-toggle" data-toggle="buttons" id="sorting">
         <label class="btn btn-secondary active">
-            <input type="radio" name="options" id="option1" autocomplete="off" checked> Дешевле
+            <input type="radio" name="sort_options" id="option1" value="lowest" autocomplete="off" checked> Дешевле
         </label>
         <label class="btn btn-secondary">
-            <input type="radio" name="options" id="option2" autocomplete="off"> Дороже
+            <input type="radio" name="sort_options" id="option2" value="highest" autocomplete="off"> Дороже
         </label>
         <label class="btn btn-secondary">
-            <input type="radio" name="options" id="option3" autocomplete="off"> По алфавиту
+            <input type="radio" name="sort_options" id="option3" value="alphabet"  autocomplete="off"> По алфавиту
         </label>
     </div>
 </div>

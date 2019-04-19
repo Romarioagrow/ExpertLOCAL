@@ -15,6 +15,7 @@ import java.io.Serializable;
 @Table(name = "parameters")
 class ProductParams implements Serializable {
     @Id
+    @JsonIgnore
     private Long productID;
 
     @OneToOne(optional = false, mappedBy = "productParams")
@@ -23,6 +24,7 @@ class ProductParams implements Serializable {
 
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
+    @JsonIgnore
     private Type type;
 
     //TV

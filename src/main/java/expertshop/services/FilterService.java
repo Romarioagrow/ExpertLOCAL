@@ -7,9 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Log
@@ -32,8 +30,24 @@ public class FilterService {
             products = filterByTvParams(products, params);
         }
 
+        sortProducts(products, params);
+
         log.info("After filter: " + products.size());
         return products;
+    }
+
+    private void sortProducts(List<Product> products, Map<String, String[]> params) {
+        String[] sortBy = params.get("sortBy");
+        if (sortBy[0].equals("lowest")) {
+            products.sort(Comparator.comparingLong(Product::getPrice));
+        }
+        if (sortBy[0].equals("highest")) {
+            products.sort(Comparator.comparingLong(Product::getPrice));
+            Collections.reverse(products);
+        }
+        if (sortBy[0].equals("alphabet")) {
+            products.sort(Comparator.comparing(Product::getBrand));
+        }
     }
 
     private List<Product> filterByPrice(List<Product> products, Map<String, String[]> params) {

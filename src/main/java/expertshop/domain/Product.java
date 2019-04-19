@@ -38,6 +38,9 @@ public class Product implements Serializable {
     private String country;
     private Integer price;
 
+    @JsonIgnore
+    private String pic;
+
     @OneToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "product_parameters_id")
     private ProductParams productParams;
