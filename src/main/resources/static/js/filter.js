@@ -118,7 +118,7 @@ function collectTvFilters() {
 
 function deleteNullParams(filters) {
     for (var key in filters) {
-        if (filters[key][0] === '') {
+        if (filters[key][0] === '' || filters[key].length === 0) {
             delete filters[key];
         }
     }
