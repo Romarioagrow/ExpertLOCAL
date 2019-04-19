@@ -1,6 +1,6 @@
 <div>
     <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-filter1" aria-expanded="false">
-        <span>Особенности экрана</span>
+        <span>Характеристики экрана</span>
     </button>
     <div class="collapse" id="tv-filter1">
         <div class="card card-body filter-filed">

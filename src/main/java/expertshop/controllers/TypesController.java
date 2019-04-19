@@ -1,4 +1,5 @@
 package expertshop.controllers;
+import expertshop.domain.Product;
 import expertshop.domain.categories.Type;
 import expertshop.services.ProductService;
 
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
 
 @Log
 @Controller
@@ -29,9 +32,11 @@ public class TypesController {
     ){
         log.info("Type: " + req_product);
 
+        List<Product> products = productService.findProducts(Type.valueOf(req_product));
+
         model.addAttribute(req_product, "type");
         model.addAttribute("currentProduct", req_product);
-        model.addAttribute("products", productService.findProducts(Type.valueOf(req_product)));
+        model.addAttribute("products", products);
         return "pages/main";
     }
 }

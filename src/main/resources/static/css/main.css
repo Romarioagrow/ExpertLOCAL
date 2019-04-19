@@ -1,5 +1,5 @@
 body {
-    background-color: #fff;
+    background-color: #fbf4f4;
 }
 
 form input:hover {
@@ -22,4 +22,31 @@ form input:hover {
     min-width: 20vw;
     max-width: 20vw;
     text-align: center;
+}
+
+.text-muted {
+    color: #fbf4f4 !important;
+}
+
+.card-footer {
+    padding: .75rem 1.25rem;
+    background-color: #e52d00;
+    border-top: 1px solid rgba(0,0,0,.125);
+    color: #fbf4f4 !important;
+}
+
+.btn-secondary:hover {
+    color: #fff;
+    background-color: #e52d00;
+    border-color: #e52d00;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.search {
+    background-color: #e52d00 !important;
 }

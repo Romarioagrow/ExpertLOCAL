@@ -1,9 +1,6 @@
 <div>
     <button class="btn btn-secondary btn-block filter-button"
-            type="button"
-            data-toggle="collapse"
-            data-target="#filter1"
-            aria-expanded="false">
+            type="button" data-toggle="collapse" data-target="#filter1" aria-expanded="false">
         <span>Цена</span>
     </button>
     <div class="collapse" id="filter1">
@@ -25,10 +22,7 @@
 </div>
 <div>
     <button class="btn btn-secondary btn-block filter-button"
-            type="button"
-            data-toggle="collapse"
-            data-target="#filter2"
-            aria-expanded="true">
+            type="button" data-toggle="collapse" data-target="#filter2" aria-expanded="true">
         Страна и бренд
     </button>
     <div class="collapse" id="filter2">

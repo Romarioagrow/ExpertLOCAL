@@ -7,11 +7,11 @@
             <div class="form-group">
                 <div>
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="SmartTV">
+                        <input type="checkbox" class="custom-control-input" name="sort_options" id="SmartTV">
                         <label class="custom-control-label" for="SmartTV">Однокамерные</label>
                     </div>
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" id="WiFI">
+                        <input type="checkbox" class="custom-control-input" name="sort_options" id="WiFI">
                         <label class="custom-control-label" for="WiFI">Двухкамерные</label>
                     </div>
                 </div>

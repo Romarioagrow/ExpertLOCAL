@@ -1,6 +1,15 @@
 $(document).ready(function(){
     $('#filter-button').on('click', collectFilters);
 });
+$(document).ready(function(){
+    $('input[name="sort_options"]').on('change', collectFilters);
+});
+$(document).ready(function(){
+    $('input[name="tv_resolution"]').on('change', collectFilters);
+});
+$(document).ready(function(){
+    $('input[name="tv_params"]').on('change', collectFilters);
+});
 
 function collectFilters(e) {
     e.preventDefault();
@@ -28,9 +37,9 @@ function collectFilters(e) {
             console.log("Products:");
             console.log(products);
 
-            var data = [];
-            data= JSON.stringify(products);
-            var response = JSON.parse(data);
+            /*var data = [];
+            data = JSON.stringify(products);*/
+            var response = JSON.parse(JSON.stringify(products));
             console.log("JSON.parse:");
             console.log(response);
 
@@ -63,10 +72,10 @@ function collectFilters(e) {
                     '\n' + response.responseJSON[i].country +
                     '</p>' +
                     '<p class="card-text">' +
-                    '<small class="text-muted">' +
-                    '\nDiagonal: '   + response.responseJSON[i].productParams.diagonal +
-                    '\nResolution: ' + response.responseJSON[i].productParams.resolution +
-                    '\ntvFeatures: ' + response.responseJSON[i].productParams.tvFeatures +
+                    '<small>' +
+                    '\nДиагональ: '   + '<strong>' + response.responseJSON[i].productParams.diagonal + '</strong>' +
+                    '\nРазрешение: ' + '<strong>' + response.responseJSON[i].productParams.resolution + '</strong>' +
+                     '<br>' + '\nОсобенности: ' + '<strong>' + response.responseJSON[i].productParams.tvFeatures + '</strong>' +
                     '</small>' +
                     '</p>' +
                     '</div>' +
@@ -93,9 +102,9 @@ function collectTvFilters() {
     var country         = [($('#country').val())];
     var diag_min        = [($('#diag_min').val())];
     var diag_max        = [($('#diag_max').val())];
+
     var tv_resolution   = [];
     var tv_params       = [];
-
     $(document.getElementsByName('tv_resolution')).each(function() {
         if ($(this).is(':checked')) {
             tv_resolution.push($(this).val());
