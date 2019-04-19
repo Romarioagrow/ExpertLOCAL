@@ -65,59 +65,60 @@ function collectFilters(e) {
         processData: false,
         async: true,
         headers: {'Content-Type': 'application/json'},
-        complete: function (products) {
-            alert(products.responseText);
-            $("#result").append(products.responseText);
-
+        complete: function (products)
+        {
+            console.log("Products:");
             console.log(products);
-            console.log(products.responseText);
 
-            /*alert(products);
-            location.reload(true);*/
-            /*$("#testdiv").empty();
-            $("#lol").html(products);*/
-
-            /*var data = [];
+            var data = [];
             data= JSON.stringify(products);
-            alert(data);*/
+            var response = JSON.parse(data);
+            console.log("JSON.parse:");
+            console.log(response);
 
-            /*$("#result1").append(data);*/
+            console.log("responseJSON:");
+            console.log(response.responseJSON);
+            $("#result").empty();
+            $("#prod").empty();
 
-            /*console.log(data);*/
+            console.log('Total products: ' + response.responseJSON.length);
+            for (var i = 0; i < response.responseJSON.length; i++) {
+                console.log('Product ' + (i+1) +
+                    '\nID: ' + response.responseJSON[i].product_id + ' ' +
+                    '\nBrand: ' + response.responseJSON[i].brand + ' ' +
+                    '\nModel: ' + response.responseJSON[i].model + ' ' +
+                    '\nPrice: ' + response.responseJSON[i].price + ' ' +
+                    '\nDiagonal: ' + response.responseJSON[i].productParams.diagonal + ' ' +
+                    '\nResolution: ' + response.responseJSON[i].productParams.resolution + ' ' +
+                    '\ntvFeatures: ' + response.responseJSON[i].productParams.tvFeatures + '\n'
+                );
 
-            /*data.normalize();
-            alert(data);*/
+                $("#result").append(
+                    '<div class="card product-card mr-3 mt-3">'+
+                        '<img class="card-img-top" src="../img/tv1.jpg" alt="Card image cap">' +
+                        '<div class="card-body">'+
+                            '<h5 class="card-title">'+
+                                '\n' + response.responseJSON[i].brand +
+                                '\n' + response.responseJSON[i].model +
+                            '</h5>' +
+                            '<p class="card-text">' +
+                                '\n' + response.responseJSON[i].country +
+                            '</p>' +
+                            '<p class="card-text">' +
+                                '<small class="text-muted">' +
+                                    '\nDiagonal: ' + response.responseJSON[i].productParams.diagonal +
+                                    '\nResolution: ' + response.responseJSON[i].productParams.resolution +
+                                    '\ntvFeatures: ' + response.responseJSON[i].productParams.tvFeatures +
+                                '</small>' +
+                            '</p>' +
+                        '</div>' +
+                        '<div class="card-footer">' +
+                            '<small class="text-muted">' +
+                                '<strong><i>' + response.responseJSON[i].price + '</i></strong>' +
+                            '</small>' +
+                        '</div>' +
+                    '</div>');
+            }
         }
     });
-
-    /*$.ajax({
-        url: url,
-        type: 'POST',
-        dataType: 'json',
-        data: tv_data,
-        processData: false,
-        async: true,
-        headers: {'Content-Type': 'application/json'},
-        complete: function (products, status, http) {
-
-            /!*var data = $.parseJSON(products);
-            alert(data);*!/
-
-            $('#products_block').html(products);
-
-            console.log("Response: " + products + " , Size: " + products.length + ", Status: " + products.status);
-            console.log(products.type);
-
-            /!*if(status === "success")
-                alert(http.status);
-            $('#products_block').html(products);
-            if(status === "error")
-                alert("Error: " + http.status + ": " + http.statusText);*!/
-        }
-    });*/
 }
-/*
-/!*$('#products_block').html(jQuery(products).find(url).html());*!/
-$('#test_div').html(products);
-/!*$('#test_div').html(products);*!/
-alert(xhr.status)*/

@@ -1,4 +1,5 @@
 package expertshop.domain;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import expertshop.domain.categories.Category;
 import expertshop.domain.categories.SubCategory;
 import expertshop.domain.categories.Type;
@@ -41,12 +42,15 @@ public class Product implements Serializable {
     @JoinColumn(name = "product_parameters_id")
     private ProductParams productParams;
 
+    @JsonIgnore
     public String getDiagonal() {
         return productParams.getDiagonal();
     }
+    @JsonIgnore
     public String getResolution() {
         return productParams.getResolution();
     }
+    @JsonIgnore
     public String getTvFeatures() {
         return productParams.getTvFeatures();
     }
