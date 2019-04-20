@@ -50,3 +50,7 @@ form input:hover {
 .search {
     background-color: #e52d00 !important;
 }
+
+.card {
+    min-height: 20vh;
+}

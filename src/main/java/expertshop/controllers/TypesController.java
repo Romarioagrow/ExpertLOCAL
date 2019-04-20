@@ -32,11 +32,9 @@ public class TypesController {
     ){
         log.info("Type: " + req_product);
 
-        List<Product> products = productService.findProducts(Type.valueOf(req_product));
-
         model.addAttribute(req_product, "type");
         model.addAttribute("currentProduct", req_product);
-        model.addAttribute("products", products);
+        model.addAttribute("products", productService.findProducts(Type.valueOf(req_product)));
         return "pages/main";
     }
 }

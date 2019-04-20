@@ -34,4 +34,8 @@ class ProductParams implements Serializable {
     private String resolution;
     @Nullable
     private String tvFeatures;
+
+    //Stoves
+    @Nullable
+    private String stoveDimensions;
 }

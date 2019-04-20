@@ -1,5 +1,4 @@
 package expertshop.domain.categories;
-import lombok.NoArgsConstructor;
 
 public enum Type {
     //ЭЛЕКТРОНИКА
@@ -7,7 +6,7 @@ public enum Type {
 
     //ТЕХНИКА ДЛЯ КУХНИ
     //Крупная техника
-    fridges,freezers,stoves,ovens,dishwashers,
+    fridges,freezers,stoves,ovens,dishwashers, pic_src,
     //Встраиваемая техника
     builtin_ovens,builtin_stoves,vent,
     //Готовит еду

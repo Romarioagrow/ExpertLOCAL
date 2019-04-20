@@ -38,7 +38,6 @@ public class Product implements Serializable {
     private String country;
     private Integer price;
 
-    @JsonIgnore
     private String pic;
 
     @OneToOne(optional = false, cascade = CascadeType.ALL)
@@ -56,6 +55,10 @@ public class Product implements Serializable {
     @JsonIgnore
     public String getTvFeatures() {
         return productParams.getTvFeatures();
+    }
+    @JsonIgnore
+    public String getStoveDimensions() {
+        return productParams.getStoveDimensions();
     }
 }
 

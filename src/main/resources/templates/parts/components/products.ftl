@@ -20,7 +20,7 @@
     <#if products??>
     <#list products as product>
         <div class="card product-card mr-3 mt-3">
-            <img class="card-img-top" src="/img/tv1.jpg" alt="Card image cap">
+            <#if product.pic??><img class="card-img-top" src=${product.pic} alt="Card image cap"></#if>
             <div class="card-body">
                 <h5 class="card-title">
                     ${product.brand}
@@ -31,9 +31,7 @@
                 </p>
                 <p class="card-text">
                     <small>
-                        Диагональ:<#if product.diagonal??><strong>${product.diagonal}</strong></#if>
-                        Разрешение:<#if product.resolution??><strong>${product.resolution}</strong></#if>
-                        <br>Особенности:<#if product.tvFeatures??><strong>${product.tvFeatures}</strong></#if>
+                        <#include "params.ftl">
                     </small>
                 </p>
             </div>

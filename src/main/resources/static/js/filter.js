@@ -50,7 +50,7 @@ function collectFilters(e) {
 
             console.log('Total products: ' + response.responseJSON.length);
             for (var i = 0; i < response.responseJSON.length; i++) {
-                console.log('Product ' + (i+1) +
+                /*console.log('Product ' + (i+1) +
                     '\nID: '         + response.responseJSON[i].product_id + ' ' +
                     '\nBrand: '      + response.responseJSON[i].brand + ' ' +
                     '\nModel: '      + response.responseJSON[i].model + ' ' +
@@ -58,11 +58,11 @@ function collectFilters(e) {
                     '\nDiagonal: '   + response.responseJSON[i].productParams.diagonal + ' ' +
                     '\nResolution: ' + response.responseJSON[i].productParams.resolution + ' ' +
                     '\ntvFeatures: ' + response.responseJSON[i].productParams.tvFeatures + '\n'
-                );
+                );*/
 
                 $("#result").append(
                     '<div class="card product-card mr-3 mt-3">'+
-                    '<img class="card-img-top" src="../img/tv1.jpg" alt="Card image cap">' +
+                    '<img class="card-img-top" src='+response.responseJSON[i].pic+' alt="Card image cap">' +
                     '<div class="card-body">'+
                     '<h5 class="card-title">'+
                     '\n' + response.responseJSON[i].brand +
@@ -89,7 +89,7 @@ function collectFilters(e) {
         }
     });
 }
-
+/*LED45-65, SmartTV, HDMI x3, USB x2, DVB-T2*/
 function constructFiltersData(url) {
     if (url.includes("tv")) return collectTvFilters();
 }

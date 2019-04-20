@@ -1,5 +1,6 @@
-<#if product.typeCategory??><strong>${product.typeCategory},</strong></#if>
-<#if product.diagonal??>диагональ ${product.diagonal},</#if>
-<#if product.resolution??>${product.resolution}</#if>
-<#if product.tvFeatures??>, ${product.tvFeatures}</#if>
+<#if product.diagonal??>Диагональ:<strong>${product.diagonal}</strong></#if>
+<#if product.resolution??>Разрешение:<strong>${product.resolution}</strong></#if>
+<#if product.tvFeatures??><br>Особенности:<strong>${product.tvFeatures}</strong></#if>
+
+<#if product.stoveDimensions??>Габариты: <strong>${product.stoveDimensions}</strong></#if>
 <#---->
