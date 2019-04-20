@@ -2,13 +2,13 @@ $(document).ready(function(){
     $('#filter-button').on('click', collectFilters);
 });
 $(document).ready(function(){
-    $('input[name="sort_options"]').on('change', collectFilters);
+    $('input[type="radio"]').on('change', collectFilters);
 });
 $(document).ready(function(){
-    $('input[name="tv_resolution"]').on('change', collectFilters);
+    $('input[type="checkbox"]').on('change', collectFilters);
 });
 $(document).ready(function(){
-    $('input[name="tv_params"]').on('change', collectFilters);
+    $('input[type="text"]').on('keyup', collectFilters);
 });
 
 function collectFilters(e) {
@@ -34,75 +34,43 @@ function collectFilters(e) {
         headers: {'Content-Type': 'application/json'},
         complete: function (products)
         {
-            console.log("Products:");
             console.log(products);
 
-            /*var data = [];
-            data = JSON.stringify(products);*/
             var response = JSON.parse(JSON.stringify(products));
-            console.log("JSON.parse:");
-            console.log(response);
 
-            console.log("responseJSON:");
             console.log(response.responseJSON);
-            $("#result").empty();
-            $("#prod").empty();
+
+            $("#products").empty();
 
             console.log('Total products: ' + response.responseJSON.length);
-            for (var i = 0; i < response.responseJSON.length; i++) {
-                /*console.log('Product ' + (i+1) +
-                    '\nID: '         + response.responseJSON[i].product_id + ' ' +
-                    '\nBrand: '      + response.responseJSON[i].brand + ' ' +
-                    '\nModel: '      + response.responseJSON[i].model + ' ' +
-                    '\nPrice: '      + response.responseJSON[i].price + ' ' +
-                    '\nDiagonal: '   + response.responseJSON[i].productParams.diagonal + ' ' +
-                    '\nResolution: ' + response.responseJSON[i].productParams.resolution + ' ' +
-                    '\ntvFeatures: ' + response.responseJSON[i].productParams.tvFeatures + '\n'
-                );*/
 
-                $("#result").append(
-                    '<div class="card product-card mr-3 mt-3">'+
-                    '<img class="card-img-top" src='+response.responseJSON[i].pic+' alt="Card image cap">' +
-                    '<div class="card-body">'+
-                    '<h5 class="card-title">'+
-                    '\n' + response.responseJSON[i].brand +
-                    '\n' + response.responseJSON[i].model +
-                    '</h5>'  +
-                    '<p class="card-text">' +
-                    '\n' + response.responseJSON[i].country +
-                    '</p>' +
-                    '<p class="card-text">' +
-                    '<small>' +
-                    '\nДиагональ: '   + '<strong>' + response.responseJSON[i].productParams.diagonal + '</strong>' +
-                    '\nРазрешение: ' + '<strong>' + response.responseJSON[i].productParams.resolution + '</strong>' +
-                     '<br>' + '\nОсобенности: ' + '<strong>' + response.responseJSON[i].productParams.tvFeatures + '</strong>' +
-                    '</small>' +
-                    '</p>' +
-                    '</div>' +
-                    '<div class="card-footer">' +
-                    '<small class="text-muted">' +
-                    '<strong><i>' + response.responseJSON[i].price + '</i></strong>' +
-                    '</small>' +
-                    '</div>' +
-                    '</div>');
+            for (var i = 0; i < response.responseJSON.length; i++) {
+                let product = response.responseJSON[i];
+                if (url.includes("tv")) displayTV(product);
+                if (url.includes("stoves")) displayStoves(product);
             }
         }
     });
 }
-/*LED45-65, SmartTV, HDMI x3, USB x2, DVB-T2*/
-function constructFiltersData(url) {
-    if (url.includes("tv")) return collectTvFilters();
-}
 
-function collectTvFilters() {
+function constructFiltersData(url) {
     var sortBy          = [($('input[name="sort_options"]:checked').val())];
     var sortmin         = [($('#sortmin').val())];
     var sortmax         = [($('#sortmax').val())];
     var brand           = [($('#brand').val())];
     var country         = [($('#country').val())];
+
+    const data = {
+        'sortBy': sortBy,
+        'sortmin': sortmin, 'sortmax': sortmax,
+        'brands': brand, 'country': country,
+    };
+    if (url.includes("tv")) return collectTvFilters(data);
+    if (url.includes("stoves")) return collectStovesFilters(data);
+}
+function collectTvFilters(data) {
     var diag_min        = [($('#diag_min').val())];
     var diag_max        = [($('#diag_max').val())];
-
     var tv_resolution   = [];
     var tv_params       = [];
     $(document.getElementsByName('tv_resolution')).each(function() {
@@ -115,14 +83,12 @@ function collectTvFilters() {
             tv_params.push($(this).val());
         }
     });
+    data['diag_min'] = diag_min; data['diag_max'] = diag_max;
+    data['resolution'] = tv_resolution; data['params'] = tv_params;
+    return data;
+}
+function collectStovesFilters() {
 
-    return {
-        'sortBy': sortBy,
-        'sortmin': sortmin, 'sortmax': sortmax,
-        'brands': brand, 'country': country,
-        'diag_min': diag_min, 'diag_max': diag_max,
-        'resolution': tv_resolution, 'params': tv_params
-    };
 }
 
 function deleteNullParams(filters) {
@@ -134,4 +100,55 @@ function deleteNullParams(filters) {
     console.log(filters);
 }
 
-
+function displayTV(product) {
+    $("#products").append(
+        '<div class="card product-card mr-3 mt-3">'+
+        '<img class="card-img-top" src='+product.pic+' alt="Card image cap">' +
+        '<div class="card-body">'+
+        '<h5 class="card-title">'+
+        '\n' + product.brand +
+        '\n' + product.model +
+        '</h5>'  +
+        '<p class="card-text">' +
+        '\n' + product.country +
+        '</p>' +
+        '<p class="card-text">' +
+        '<small>' +
+        '\nДиагональ: '   + '<strong>' + product.productParams.diagonal + '</strong>' +
+        '\nРазрешение: ' + '<strong>' + product.productParams.resolution + '</strong>' +
+        '<br>' + '\nОсобенности: ' + '<strong>' + product.productParams.tvFeatures + '</strong>' +
+        '</small>' +
+        '</p>' +
+        '</div>' +
+        '<div class="card-footer">' +
+        '<small class="text-muted">' +
+        '<strong><i>' + product.price + '</i></strong>' +
+        '</small>' +
+        '</div>' +
+        '</div>');
+}
+function displayStoves(product) {
+    $("#products").append(
+        '<div class="card product-card mr-3 mt-3">'+
+        '<img class="card-img-top" src='+product.pic+' alt="Card image cap">' +
+        '<div class="card-body">'+
+        '<h5 class="card-title">'+
+        '\n' + product.brand +
+        '\n' + product.model +
+        '</h5>'  +
+        '<p class="card-text">' +
+        '\n' + product.country +
+        '</p>' +
+        '<p class="card-text">' +
+        '<small>' +
+        '\nГабариты: '   + '<strong>' + product.productParams.stoveDimensions + '</strong>' +
+        '</small>' +
+        '</p>' +
+        '</div>' +
+        '<div class="card-footer">' +
+        '<small class="text-muted">' +
+        '<strong><i>' + product.price + '</i></strong>' +
+        '</small>' +
+        '</div>' +
+        '</div>');
+}

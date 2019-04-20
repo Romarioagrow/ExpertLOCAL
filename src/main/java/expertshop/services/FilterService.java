@@ -30,11 +30,20 @@ public class FilterService {
             products = filterByTvParams(products, params);
         }
 
+        /*if (req_type.equals("stoves")) {
+            products = filterByStoveDimensions(products, params);
+        }*/
+
         sortProducts(products, params);
 
         log.info("After filter: " + products.size());
         return products;
     }
+
+    /*private List<Product> filterByStoveDimensions(List<Product> products, Map<String, String[]> params) {
+        String[] stoveDimensions = params.get("stoveDimensions");
+        return null;
+    }*/
 
     private void sortProducts(List<Product> products, Map<String, String[]> params) {
         String[] sortBy = params.get("sortBy");
