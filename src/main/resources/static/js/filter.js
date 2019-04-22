@@ -18,9 +18,9 @@ function collectFilters(e) {
     console.log(url);
 
     var filters = constructFiltersData(url);
-    console.log(filters);
 
     deleteNullParams(filters);
+    //console.log(filters);
 
     filters = JSON.stringify(filters);
 
@@ -34,19 +34,15 @@ function collectFilters(e) {
         headers: {'Content-Type': 'application/json'},
         complete: function (products)
         {
-            console.log(products);
-
             var response = JSON.parse(JSON.stringify(products));
-
-            console.log(response.responseJSON);
 
             $("#products").empty();
 
-            console.log('Total products: ' + response.responseJSON.length);
+            //console.log('Total products: ' + response.responseJSON.length);
 
             for (var i = 0; i < response.responseJSON.length; i++) {
                 let product = response.responseJSON[i];
-                if (url.includes("tv")) displayTV(product);
+                if (url.includes("tv"))     displayTV(product); //if(product("tv"))
                 if (url.includes("stoves")) displayStoves(product);
             }
         }
@@ -54,50 +50,54 @@ function collectFilters(e) {
 }
 
 function constructFiltersData(url) {
-    var sortBy          = [($('input[name="sort_options"]:checked').val())];
-    var sortmin         = [($('#sortmin').val())];
-    var sortmax         = [($('#sortmax').val())];
-    var brand           = [($('#brand').val())];
-    var country         = [($('#country').val())];
-
     const data = {
-        'sortBy': sortBy,
-        'sortmin': sortmin, 'sortmax': sortmax,
-        'brands': brand, 'country': country,
+        'sortBy'        : {'sortOrder'  : ($('input[name="sort_options"]:checked').val())},
+        'price'         : {'sortmin'    : ($('#sortmin').val()),    'sortmax' : ($('#sortmax').val())},
+        'manufacturer'  : {'brand'      : ($('#brand').val()),      'country' : ($('#country').val())},
     };
     if (url.includes("tv")) return collectTvFilters(data);
-    if (url.includes("stoves")) return collectStovesFilters(data);
+    //if (url.includes("stoves")) return collectStovesFilters(data);
 }
+
 function collectTvFilters(data) {
-    var diag_min        = [($('#diag_min').val())];
-    var diag_max        = [($('#diag_max').val())];
-    var tv_resolution   = [];
-    var tv_params       = [];
-    $(document.getElementsByName('tv_resolution')).each(function() {
+    var tv_resolution = [], tv_params = [];
+    ($(document.getElementsByName('tv_resolution')).each(function() {
         if ($(this).is(':checked')) {
-            tv_resolution.push($(this).val());
+            tv_resolution.push(($(this).val()));
         }
-    });
+    }));
     $(document.getElementsByName('tv_params')).each(function() {
         if ($(this).is(':checked')) {
-            tv_params.push($(this).val());
+            tv_params.push(($(this).val()));
         }
     });
-    data['diag_min'] = diag_min; data['diag_max'] = diag_max;
-    data['resolution'] = tv_resolution; data['params'] = tv_params;
+    data['displayParams'] = {
+        'diag_min'      : ($('#diag_min').val()),
+        'diag_max'      : ($('#diag_max').val()),
+        'tv_resolution' : tv_resolution
+    };
+    data['tvParams'] = {
+        'tv_params' : tv_params
+    };
     return data;
 }
-function collectStovesFilters() {
 
+function collectStovesFilters() {
 }
 
 function deleteNullParams(filters) {
-    for (var key in filters) {
-        if (filters[key][0] === '' || filters[key].length === 0) {
-            delete filters[key];
+    for (var firstKey in filters)
+    {
+        for (var innerKey in filters[firstKey])
+        {
+            if (filters[firstKey][innerKey] === '' || (Array.isArray(filters[firstKey][innerKey]) && filters[firstKey][innerKey].length === 0)) {
+                delete filters[firstKey][innerKey];
+            }
+        }
+        if (Object.getOwnPropertyNames(filters[firstKey]).length === 0) {
+            delete filters[firstKey];
         }
     }
-    console.log(filters);
 }
 
 function displayTV(product) {
@@ -113,7 +113,7 @@ function displayTV(product) {
         '\n' + product.country +
         '</p>' +
         '<p class="card-text">' +
-        '<small>' +
+        '<small>' + //showParams() +
         '\nДиагональ: '   + '<strong>' + product.productParams.diagonal + '</strong>' +
         '\nРазрешение: ' + '<strong>' + product.productParams.resolution + '</strong>' +
         '<br>' + '\nОсобенности: ' + '<strong>' + product.productParams.tvFeatures + '</strong>' +

@@ -16,37 +16,58 @@ import java.util.stream.Collectors;
 public class FilterService {
     private final ProductRepo productRepo;
 
-    public List<Product> filterProducts(Map<String, String[]> params, String req_type) {
+    public List<Product> filterProducts(Map<String, Object> params, String req_type) {
         showReceivedParams(params);
 
         List<Product> products = productRepo.findByType(Type.valueOf(req_type));
 
-        products = filterByPrice(products, params);
+        /*Object smth = extractParamValue(params,"manufacturer", "brand");
+        log.info(smth.toString());*/
+
+        /*List<Object> resol = Collections.singletonList(loool.get("tv_resolution"));//String[]) loool.get("tv_resolution");
+        log.info(String.valueOf(resol));*/
+
+        //log.info();
+        //log.info(Objects.requireNonNull(lol).toString());
+
+        /*products = filterByPrice(products, params);
         products = filterByManufacturer(products, params);
 
-        if (req_type.equals("tv")) {
-            products = filterByDiagonal(products, params);
-            products = filterByResolution(products, params);
+        if (req_type.equals("tv")) { //if(type("tv"))
+            //products = filterByDiagonal(products, params); //if(present("diagonal")) diagonal.lenght != null
+            //products = filterByResolution(products, params);
+
+            products = filterByDisplayParams(products, params);
             products = filterByTvParams(products, params);
         }
 
-        /*if (req_type.equals("stoves")) {
+        if (req_type.equals("stoves")) {
             products = filterByStoveDimensions(products, params);
-        }*/
+        }
 
-        sortProducts(products, params);
+        sortProducts(products, params);*/
 
         log.info("After filter: " + products.size());
         return products;
     }
 
-    /*private List<Product> filterByStoveDimensions(List<Product> products, Map<String, String[]> params) {
-        String[] stoveDimensions = params.get("stoveDimensions");
-        return null;
-    }*/
+    private Object extractParamValue(Map<String, Object> params, String primaryParam, String innerParam) {
+        ///ВКЛЮЧИТЬ ПРОВЕРКУ НА NULL ДЛЯ ОБОИХ STRING
+        Map<String, Object> paramType = (Map<String, Object>) params.get(primaryParam);
+        return paramType.get(innerParam);
+    }
 
-    private void sortProducts(List<Product> products, Map<String, String[]> params) {
-        String[] sortBy = params.get("sortBy");
+    /*private List<Product> filterByDisplayParams(List<Product> products, Map<String, Map<String, String[]>> params) {
+
+    }
+
+    private List<Product> filterByStoveDimensions(List<Product> products, Map<String, Map<String, String[]>> params) {
+        Map<String, String[]> stoveDimensions = params.get("stoveDimensions");
+    }
+
+
+    private void sortProducts(List<Product> products, Map<String, Map<String, String[]>> params) {
+        Map<String, String[]> sortBy = params.get("sortBy");
         if (sortBy[0].equals("lowest")) {
             products.sort(Comparator.comparingLong(Product::getPrice));
         }
@@ -57,9 +78,10 @@ public class FilterService {
         if (sortBy[0].equals("alphabet")) {
             products.sort(Comparator.comparing(Product::getBrand));
         }
-    }
+    }*/
 
-    private List<Product> filterByPrice(List<Product> products, Map<String, String[]> params) {
+    /*
+    private List<Product> filterByPrice(List<Product> products, Map<String, Map<String, String[]>> params) {
         if (params.get("sortmin") != null )
         {
             String[] sortmin = params.get("sortmin");
@@ -77,7 +99,7 @@ public class FilterService {
         return products;
     }
 
-    private List<Product> filterByManufacturer(List<Product> products, Map<String, String[]> params) {
+    private List<Product> filterByManufacturer(List<Product> products, Map<String, Map<String, String[]>> params) {
         if (params.get("brands") != null)
         {
             String[] brand = params.get("brands");
@@ -95,7 +117,7 @@ public class FilterService {
         return products;
     }
 
-    private List<Product> filterByDiagonal(List<Product> products, Map<String, String[]> params) {
+    private List<Product> filterByDiagonal(List<Product> products, Map<String, Map<String, String[]>> params) {
         if (params.get("diag_min") != null)
         {
             String[] diag_min = params.get("diag_min");
@@ -112,7 +134,7 @@ public class FilterService {
         return products;
     }
 
-    private List<Product> filterByResolution(List<Product> products, Map<String, String[]> params) {
+    private List<Product> filterByResolution(List<Product> products, Map<String, Map<String, String[]>> params) {
         if (params.get("resolution") != null)
         {
             String[] resolution = params.get("resolution");
@@ -140,7 +162,7 @@ public class FilterService {
         return products;
     }
 
-    private List<Product> filterByTvParams(List<Product> products, Map<String, String[]> params) {
+    private List<Product> filterByTvParams(List<Product> products, Map<String, Map<String, String[]>> params) {
         if (params.get("params") != null)
         {
             String[] tv_params  = params.get("params");
@@ -182,10 +204,10 @@ public class FilterService {
             }
         }
         return products;
-    }
+    }*/
 
-    private void showReceivedParams (Map<String, String[]> params) {
+    private void showReceivedParams (Map<String, Object> params) {
         log.info("\nServer received params with args:");
-        params.forEach((param, args) -> log.info(param + ":" + Arrays.toString(args)));
+        params.forEach((param, args) -> log.info(param + ":" + Arrays.toString(new Map[]{(Map) args})));
     }
 }
