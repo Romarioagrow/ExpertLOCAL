@@ -21,15 +21,100 @@ public class FilterService {
 
         List<Product> products = productRepo.findByType(Type.valueOf(req_type));
 
+        return filter(params, products);
+    }
 
-        /*final List<UserModel> userOption = userCollection.stream().filter(u -> {
-        boolean isAuthorized = userService.isAuthorized(u);
-        return isAuthorized;
-        }).collect(Collectors.toList());*/
+    private List<Product> filter(Map<String, Object> params, List<Product> products)
+    {
+        log.info("\n");
+        for (Map.Entry<String, Object> paramObject : params.entrySet())
+        {
+            //log.info("RESULT-VAR: " + paramObject.getValue());
+            Map<String, Object> inner = (Map<String, Object>) paramObject.getValue();
+            for (Map.Entry<String, Object> entry : inner.entrySet())
+            {
+                //log.info("KEY:" + entry.getKey() + " VAL: " + entry.getValue());
+                switch (entry.getKey()) {
+                    case "sortmin"  -> products = products.stream().filter(product -> product.getPrice() >= Integer.parseInt((String) entry.getValue())).collect(Collectors.toList());
+                    case "sortmax"  -> products = products.stream().filter(product -> product.getPrice() <= Integer.parseInt((String) entry.getValue())).collect(Collectors.toList());
+                    case "brand"    -> products = products.stream().filter(product -> product.getBrand().equals(entry.getValue())).collect(Collectors.toList());
+                    case "country"  -> products = products.stream().filter(product -> product.getCountry().equals(entry.getValue())).collect(Collectors.toList());
+                    case "tv_resolution" -> {
+                        log.info("tv_resolution filter running: " + entry.getValue().toString());
+
+                    }
+                    case "tv_params" -> {
+                        log.info("tv_params filter running: " + entry.getValue().toString());
+
+                    }
+                }
+            }
+        }
+
+        log.info("After filter: " + products.size());
+        return products;
+    }
 
 
+    private Object extractParamValue(Map<String, Object> params, String primaryParam, String innerParam) {
+        ///ВКЛЮЧИТЬ ПРОВЕРКУ НА NULL ДЛЯ ОБОИХ STRING
+        Map<String, Object> paramType = (Map<String, Object>) params.get(primaryParam);
+        return paramType.get(innerParam);
+    }
 
-        /*products = filterByPrice(products, params);
+    private void showReceivedParams (Map<String, Object> params) {
+        log.info("\nServer received params with args:");
+        params.forEach((param, args) -> log.info(param + ":" + Arrays.toString(new Map[]{(Map) args})));
+    }
+}
+/*private void sortMin(List<Product> products, Map.Entry<String, Object> entry) {
+        log.info("SSSSSSSSSUUUUUUUAAAKKAKAKAK"+(String) entry.getValue());
+        products = products.stream().filter(product -> product.getPrice() >= Integer.parseInt((String) entry.getValue())).collect(Collectors.toList());
+    }*/
+
+    /*private List<Product> filterByPrice(List<Product> products, Map<String, Map<String, String[]>> params) {
+        if (params.get("sortmin") != null )
+        {
+            Map<String, String[]> sortmin = params.get("sortmin");
+            products = products.stream()
+                    .filter(product -> product.getPrice() >= Integer.parseInt(sortmin[0]))
+                    .collect(Collectors.toList());
+        }
+        if (params.get("sortmax") != null)
+        {
+            Map<String, String[]> sortmax = params.get("sortmax");
+            products = products.stream()
+                    .filter(product -> product.getPrice() <= Integer.parseInt(sortmax[0]))
+                    .collect(Collectors.toList());
+        }
+        return products;
+    }*/
+
+        /*for (Map.Entry<String, Object> entry : params.entrySet())
+        {
+
+            System.out.println(entry.getKey() + "/" + entry.getValue());
+        }*/
+
+        /*for (Object item : params) {
+
+        }
+*/
+/*Stream stream*/
+
+
+       /* boolean result = switch(info) {
+            case TRUE -> true;
+            case FALSE -> false;
+            case FILE_NOT_FOUND -> throw new UncheckedIOException(
+                    "This is ridiculous!",
+                    new FileNotFoundException());
+            // as we'll see in "Exhaustiveness", `default` is not necessary
+            default -> throw new IllegalArgumentException("Seriously?!");
+        };*/
+
+/*
+products = filterByPrice(products, params);
         products = filterByManufacturer(products, params);
 
         if (req_type.equals("tv")) { //if(type("tv"))
@@ -42,20 +127,8 @@ public class FilterService {
 
         if (req_type.equals("stoves")) {
             products = filterByStoveDimensions(products, params);
-        }*/
-
-        //sortProducts(products, params);
-
-        log.info("After filter: " + products.size());
-        return products;
-    }
-
-    private Object extractParamValue(Map<String, Object> params, String primaryParam, String innerParam) {
-        ///ВКЛЮЧИТЬ ПРОВЕРКУ НА NULL ДЛЯ ОБОИХ STRING
-        Map<String, Object> paramType = (Map<String, Object>) params.get(primaryParam);
-        return paramType.get(innerParam);
-    }
-
+*/
+//}*/
     /*private List<Product> filterByDisplayParams(List<Product> products, Map<String, Map<String, String[]>> params) {
 
     }
@@ -205,8 +278,4 @@ public class FilterService {
         return products;
     }*/
 
-    private void showReceivedParams (Map<String, Object> params) {
-        log.info("\nServer received params with args:");
-        params.forEach((param, args) -> log.info(param + ":" + Arrays.toString(new Map[]{(Map) args})));
-    }
-}
+
