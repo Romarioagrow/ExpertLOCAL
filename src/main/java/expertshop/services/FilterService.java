@@ -21,14 +21,13 @@ public class FilterService {
 
         List<Product> products = productRepo.findByType(Type.valueOf(req_type));
 
-        /*Object smth = extractParamValue(params,"manufacturer", "brand");
-        log.info(smth.toString());*/
 
-        /*List<Object> resol = Collections.singletonList(loool.get("tv_resolution"));//String[]) loool.get("tv_resolution");
-        log.info(String.valueOf(resol));*/
+        /*final List<UserModel> userOption = userCollection.stream().filter(u -> {
+        boolean isAuthorized = userService.isAuthorized(u);
+        return isAuthorized;
+        }).collect(Collectors.toList());*/
 
-        //log.info();
-        //log.info(Objects.requireNonNull(lol).toString());
+
 
         /*products = filterByPrice(products, params);
         products = filterByManufacturer(products, params);
@@ -43,9 +42,9 @@ public class FilterService {
 
         if (req_type.equals("stoves")) {
             products = filterByStoveDimensions(products, params);
-        }
+        }*/
 
-        sortProducts(products, params);*/
+        //sortProducts(products, params);
 
         log.info("After filter: " + products.size());
         return products;
