@@ -19,15 +19,15 @@
             <div class="mt-2">
                 <h5>Разрешение экрана</h5>
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="tv_resolution" id="720p" value="720">
+                    <input type="checkbox" class="custom-control-input" name="tv_resolution" id="720p" value="720p HD">
                     <label class="custom-control-label" for="720p">720p HD</label>
                 </div>
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="tv_resolution" id="1080p" value="1080">
+                    <input type="checkbox" class="custom-control-input" name="tv_resolution" id="1080p" value="1080p FullHD">
                     <label class="custom-control-label" for="1080p">1080p Full HD</label>
                 </div>
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="tv_resolution" id="4K" value="4K">
+                    <input type="checkbox" class="custom-control-input" name="tv_resolution" id="4K" value="4K UHD">
                     <label class="custom-control-label" for="4K">4K UHD</label>
                 </div>
             </div>
