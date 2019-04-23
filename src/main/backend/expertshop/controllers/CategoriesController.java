@@ -18,15 +18,14 @@ public class CategoriesController {
     private final ProductService productService;
 
     @GetMapping
-    public String categories(Model model) {
+    public String categories(Model model)
+    {
         model.addAttribute("products", productService.findAll());
         return "pages/main";
     }
 
     @GetMapping("{req_category}")
-    public String showByCategories(
-            Model model,
-            @PathVariable String req_category
+    public String showByCategories(Model model, @PathVariable String req_category
     ){
         log.info("Category: " + req_category);
 
