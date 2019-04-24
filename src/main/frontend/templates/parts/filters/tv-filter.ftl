@@ -19,15 +19,15 @@
             <div class="mt-2">
                 <h5>Разрешение экрана</h5>
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="tv_resolution" id="720p" value="720p HD">
+                    <input type="checkbox" class="form-check-input" name="tv_resolution" id="720p" value="720p HD">
                     <label class="custom-control-label" for="720p">720p HD</label>
                 </div>
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="tv_resolution" id="1080p" value="1080p FullHD">
+                    <input type="checkbox" class="form-check-input" name="tv_resolution" id="1080p" value="1080p FullHD">
                     <label class="custom-control-label" for="1080p">1080p Full HD</label>
                 </div>
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="tv_resolution" id="4K" value="4K UHD">
+                    <input type="checkbox" class="form-check-input" name="tv_resolution" id="4K" value="4K UHD">
                     <label class="custom-control-label" for="4K">4K UHD</label>
                 </div>
             </div>
@@ -43,19 +43,19 @@
             <div class="form-group">
                 <div>
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" name="tv_params" id="SmartTV" value="SmartTV">
+                        <input type="checkbox" class="form-check-input" name="tv_params" id="SmartTV" value="SmartTV">
                         <label class="custom-control-label" for="SmartTV">SmartTV</label>
                     </div>
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" name="tv_params" id="WiFI" value="Wi-Fi">
+                        <input type="checkbox" class="form-check-input" name="tv_params" id="WiFI" value="Wi-Fi">
                         <label class="custom-control-label" for="WiFI">Wi-FI</label>
                     </div>
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" name="tv_params" id="3D" value="3D">
+                        <input type="checkbox" class="form-check-input" name="tv_params" id="3D" value="3D">
                         <label class="custom-control-label" for="3D">3D</label>
                     </div>
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="custom-control-input" name="tv_params" id="curved" value="Curved">
+                        <input type="checkbox" class="form-check-input" name="tv_params" id="curved" value="Curved">
                         <label class="custom-control-label" for="curved">Изогнутый экран</label>
                     </div>
                 </div>

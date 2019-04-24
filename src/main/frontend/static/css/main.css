@@ -7,10 +7,10 @@ form input:hover {
 }
 
 .filter-button {
-    margin-top: 1vh;
+    margin-top: 1vh !important;
 }
 .filter-filed {
-    margin-top: 1vh;
+    margin-bottom: 1vh;
 }
 
 .flex-container {
@@ -51,6 +51,20 @@ form input:hover {
     background-color: #e52d00 !important;
 }
 
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+/*.custom-control-label{
+    width: 50% !important;
+    display: inline-block !important;
+}
+
+.custom-control-input {
+    width: 20% !important;
+    display: inline-block !important;
+}*/
 /*
 .card {
     min-height: 20vh;

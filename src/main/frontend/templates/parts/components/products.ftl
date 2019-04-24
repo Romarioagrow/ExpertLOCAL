@@ -1,4 +1,4 @@
-<div class="pl-4vw mt-2 marker2">
+<div class="mt-2 marker2">
     <div class="btn-group btn-group-toggle" data-toggle="buttons" id="sorting">
         <label class="btn btn-secondary active">
             <input type="radio" name="sort_options" id="option1" value="lowest" autocomplete="off" checked> Дешевле

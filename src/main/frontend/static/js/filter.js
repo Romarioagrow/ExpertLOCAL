@@ -10,6 +10,9 @@ $(document).ready(function(){
 $(document).ready(function(){
     $('input[type="text"]')     .on('keyup', collectFilters);
 });
+$(document).ready(function() {
+    $('.mdb-select').materialSelect();
+});
 
 function collectFilters(e) {
     e.preventDefault();
@@ -48,11 +51,22 @@ function collectFilters(e) {
 }
 
 function constructFiltersData(url) {
+    var country = [], brand = [];
+    ($('option[name="country"]').each(function() {
+        if ($(this).is(':checked'))
+            country.push(($(this).val()));
+    }));
+    ($('option[name="brand"]').each(function() {
+        if ($(this).is(':checked'))
+            brand.push(($(this).val()));
+    }));
+
     const data = {
         'sortBy'        : {'sortOrder'  : ($('input[name="sort_options"]:checked').val())},
         'price'         : {'sortmin'    : ($('#sortmin').val()),    'sortmax' : ($('#sortmax').val())},
-        'manufacturer'  : {'brand'      : ($('#brand').val()),      'country' : ($('#country').val())},
+        'manufacturer'  : {'brand'      : brand,      'country' : country},
     };
+
     if (url.includes("tv"))     return collectTvFilters(data);
     if (url.includes("stoves")) return collectStovesFilters(data);
 }

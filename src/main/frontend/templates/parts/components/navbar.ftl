@@ -9,6 +9,20 @@
             <div class="selector">
                 <#include "menu.ftl">
             </div>
+
+            <div class="ml-5">
+                <form class="form-inline">
+                    <i class="fas fa-search" aria-hidden="true"></i>
+                    <input class="form-control form-control-sm ml-3 w-75 main-search" type="text" placeholder="Search" aria-label="Search">
+                </form>
+            </div>
         </ul>
     </div>
 </nav>
+<style>
+    .main-search {
+        min-width: 50vw;
+        min-height: 5vh;
+        margin-left: 4vw;
+    }
+</style>
