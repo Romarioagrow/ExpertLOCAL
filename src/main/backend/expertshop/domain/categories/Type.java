@@ -6,7 +6,7 @@ public enum Type {
 
     //ТЕХНИКА ДЛЯ КУХНИ
     //Крупная техника
-    fridges,freezers,stoves,ovens,dishwashers, pic_src,
+    fridges,freezers,stoves,ovens,dishwashers,
     //Встраиваемая техника
     builtin_ovens,builtin_stoves,vent,
     //Готовит еду
@@ -39,5 +39,8 @@ public enum Type {
     photo,video,radio,mobile_phones,
 
     //SMART ТЕХНИКА
-    smartphones,tablets,smart_headers,bluetooth
+    smartphones,tablets,smart_headers,bluetooth,
+
+    ///
+    pic_src,
 }

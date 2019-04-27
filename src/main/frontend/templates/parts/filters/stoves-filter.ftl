@@ -7,8 +7,8 @@
             <div class="mt-2">
                 <h5>Ширина плиты</h5>
                 <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" name="tv_resolution" id="720p" value="До50см">
-                    <label class="custom-control-label" for="720p">Ширина до 50см</label>
+                    <input type="checkbox" class="custom-control-input" name="stove_width" id="stove_width" value="Ширина до 50см">
+                    <label class="custom-control-label" for="stove_width">Ширина до 50см</label>
                 </div>
             </div>
         </div>

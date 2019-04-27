@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Expert Store</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <#--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="css/mdb.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/main.css">
@@ -19,6 +19,19 @@
             <div class="marker2">
                 <#if currentProduct??><span>Фильтры для ${currentProduct}</span></#if>
             </div>
+        </div>
+        <div class="col marker3">
+            <div class="marker2">
+                <div id="test_div"></div>
+                <#if appliedFilters??>
+                    <h5>${currentProduct} ${appliedFilters}</h5>
+                <#else>
+                    <#if currentProduct??><h5>${currentProduct}</h5></#if></#if>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3 marker1 filters-col">
             <div class="marker2">
                 <form method="get" name="filters" id="filters">
                     <#include "../parts/filters/filters.ftl">
@@ -27,16 +40,7 @@
         </div>
         <div class="col marker3">
             <div>
-                <div class="pl-4vw marker2">
-                    <div id="test_div"></div>
-                    <#if appliedFilters??>
-                        <h5>${currentProduct} ${appliedFilters}</h5>
-                    <#else>
-                        <#if currentProduct??><h5>${currentProduct}</h5></#if></#if>
-                </div>
-                <div>
-                    <#--подкатегории для товаров-->
-                </div>
+
             </div>
             <#include "../parts/components/products.ftl">
         </div>

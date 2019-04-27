@@ -33,11 +33,20 @@
                 </div>
                 <div class="card-footer">
                     <small class="text-muted">
+                        <button type="button" class="btn btn-flat about_product click-left">О товаре</button>
                         <strong><i>${product.price}</i></strong>
+                        <button type="button" class="btn btn-flat about_product click-right">В корзину</button>
                     </small>
                 </div>
             </div>
         </#list>
     </#if>
 </div>
-
+<style>
+    .click-left {
+        margin-left: -35px;
+    }
+    .click-right {
+        margin-right: -35px;
+    }
+</style>

@@ -34,7 +34,7 @@ public class TypesController {
 
         model.addAttribute(req_product, "type");
         model.addAttribute("currentProduct", req_product);
-        model.addAttribute("products", productService.findProducts(Type.valueOf(req_product)));
+        if (!req_product.equals("null")) model.addAttribute("products", productService.findProducts(Type.valueOf(req_product)));
         return "pages/main";
     }
 }
