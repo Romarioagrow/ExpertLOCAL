@@ -1,8 +1,7 @@
 package expertshop.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import expertshop.domain.categories.Category;
-import expertshop.domain.categories.SubCategory;
-import expertshop.domain.categories.Type;
+
+import expertshop.domain.categories.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +15,8 @@ import java.io.Serializable;
 @Table(name = "products")
 public class Product implements Serializable {
     @Id
-    public Integer product_id;
+    @Column(name = "product_id")
+    public Integer productID;
 
     @Column(name = "category")
     @Enumerated(EnumType.STRING)

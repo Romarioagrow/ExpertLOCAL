@@ -1,5 +1,6 @@
 package expertshop.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import expertshop.domain.categories.Type;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "parameters")
-class ProductParams implements Serializable {
+public class ProductParams implements Serializable {
     @Id
     @JsonIgnore
     private Long productID;
@@ -23,9 +24,7 @@ class ProductParams implements Serializable {
     private Product product;
 
     @Column(name = "type")
-    @Enumerated(EnumType.STRING)
-    @JsonIgnore
-    private Type type;
+    private String type;
 
     //TV
     @Nullable

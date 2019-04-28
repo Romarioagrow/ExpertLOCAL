@@ -20,6 +20,7 @@ public class CategoriesController {
     @GetMapping
     public String categories(Model model)
     {
+
         model.addAttribute("products", productService.findAll());
         return "pages/main";
     }
@@ -29,8 +30,7 @@ public class CategoriesController {
     ){
         log.info("Category: " + req_category);
 
-        model.addAttribute(req_category, "category");
-        model.addAttribute("currentProduct", req_category);
+        model.addAttribute("url", "");
         model.addAttribute("products", productService.findProducts(Category.valueOf(req_category)));
 
         return "pages/main";

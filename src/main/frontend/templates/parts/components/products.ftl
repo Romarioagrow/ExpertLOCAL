@@ -16,7 +16,7 @@
     <#if products??>
         <#list products as product>
             <div class="card product-card mr-3 mt-3">
-                <#if product.pic??><img class="card-img-top" src=${product.pic} alt="Card image cap"></#if>
+                <#if product.pic??><img class="card-img-top" src="${product.pic}" alt="Card image cap"></#if>
                 <div class="card-body">
                     <h5 class="card-title">
                         ${product.brand}
@@ -33,7 +33,7 @@
                 </div>
                 <div class="card-footer">
                     <small class="text-muted">
-                        <button type="button" class="btn btn-flat about_product click-left">О товаре</button>
+                        <a class="btn btn-outline-info btn-rounded waves-effect" href="/product/${product.productID?c}" role="button">О товаре</a>
                         <strong><i>${product.price}</i></strong>
                         <button type="button" class="btn btn-flat about_product click-right">В корзину</button>
                     </small>
@@ -43,9 +43,6 @@
     </#if>
 </div>
 <style>
-    .click-left {
-        margin-left: -35px;
-    }
     .click-right {
         margin-right: -35px;
     }

@@ -1,4 +1,5 @@
 package expertshop.services;
+
 import expertshop.domain.Product;
 import expertshop.domain.categories.Type;
 import expertshop.repos.ProductRepo;
@@ -65,17 +66,13 @@ public class FilterService {
         Object sort = extractParamValue(params, "sortBy", "sortOrder");
         switch (sort.toString()) {
             case "lowest"   -> products.sort(Comparator.comparingLong(Product::getPrice));
-            case "highest"  -> {
-                products.sort(Comparator.comparingLong(Product::getPrice));
-                Collections.reverse(products);
-            }
+            case "highest"  -> products.sort(Comparator.comparingLong(Product::getPrice).reversed());
             case "alphabet" -> products.sort(Comparator.comparing(Product::getBrand));
         }
     }
 
     private Object extractParamValue(Map<String, Object> params, String primaryParam, String innerParam) {
         Map<String, Object> paramType = (Map<String, Object>) params.get(primaryParam);
-
         return paramType.get(innerParam);
     }
 

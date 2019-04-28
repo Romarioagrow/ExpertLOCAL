@@ -19,14 +19,11 @@ public class SubCategoriesController {
     private final ProductService productService;
 
     @GetMapping("{req_subcategory}")
-    public String showByCategories(
-            Model model,
-            @PathVariable String req_subcategory
+    public String showByCategories( Model model, @PathVariable String req_subcategory
     ){
         log.info("Subcategory: " + req_subcategory);
 
-        model.addAttribute(req_subcategory, "category");
-        model.addAttribute("currentProduct", req_subcategory);
+        model.addAttribute("url", "");
         model.addAttribute("products", productService.findProducts(SubCategory.valueOf(req_subcategory)));
 
         return "pages/main";

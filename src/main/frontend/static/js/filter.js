@@ -34,7 +34,7 @@ function collectFilters(e) {
         headers: {'Content-Type': 'application/json'},
         complete: function(products)
         {
-            var response = JSON.parse(JSON.stringify(products));
+            const response = JSON.parse(JSON.stringify(products));
 
             $("#products").empty();
             console.log('Received products: ' + response.responseJSON.length);
@@ -63,11 +63,11 @@ function collectFilters(e) {
                         '</div>'                                                                +
                         '<div class="card-footer">'                                             +
                             '<small class="text-muted">'                                        +
-                                '<button type="button" class="btn btn-flat about_product click-left">О товаре</button>'     +
+                                '<a class="btn btn-outline-info btn-rounded waves-effect" role="button" href="/product/'    + product.productID.toString() + '">О товаре</a>'     +
                                 '<strong><i>' + product.price + '</i></strong>'                                             +
                                 '<button type="button" class="btn btn-flat about_product click-right">В корзину</button>'   +
-                            '</small>' +
-                        '</div>' +
+                            '</small>'                                                                                      +
+                        '</div>'                                                                                            +
                     '</div>'
                 );
             }
@@ -88,7 +88,7 @@ function constructFiltersData(url) {
         'manufacturer'  : {'brand'      : brand,      'country' : country},
     };
 
-    if (selected("tv"))     return collectTvFilters(data);
+    if      (selected("tv"))     return collectTvFilters(data);
     else if (selected("stoves")) return collectStovesFilters(data);
 
     function collectTvFilters(data) {

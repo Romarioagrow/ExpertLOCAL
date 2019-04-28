@@ -1,5 +1,5 @@
 package expertshop.controllers;
-import expertshop.domain.Product;
+
 import expertshop.domain.categories.Type;
 import expertshop.services.ProductService;
 
@@ -11,8 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.List;
-
 @Log
 @Controller
 @AllArgsConstructor
@@ -22,7 +20,7 @@ public class TypesController {
     @GetMapping("/")
     public String showAll(Model model)
     {
-        model.addAttribute("currentProduct", "вся техника");
+        model.addAttribute("url", "");
         model.addAttribute("products", productService.findAll());
         return "pages/main";
     }
@@ -32,8 +30,7 @@ public class TypesController {
     ){
         log.info("Type: " + req_product);
 
-        model.addAttribute(req_product, "type");
-        model.addAttribute("currentProduct", req_product);
+        model.addAttribute("url", req_product);
         if (!req_product.equals("null")) model.addAttribute("products", productService.findProducts(Type.valueOf(req_product)));
         return "pages/main";
     }

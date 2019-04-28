@@ -37,7 +37,7 @@
                 </select>
             </div>
             <h5>Бренд</h5>
-            <div class="col-md-12">
+            <div class="col-md-12"> <#--if url?contains("tv")-->
                 <select class="mdb-select colorful-select dropdown-primary md-form" multiple>
                     <option value="" disabled selected>Выберите бренд</option>
                     <option name="brand" value="DOFFLER">DOFFLER</option>
