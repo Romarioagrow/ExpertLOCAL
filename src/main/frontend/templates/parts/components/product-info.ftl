@@ -23,6 +23,12 @@
         <th scope="row">Закругленный экран:</th>
         <td colspan="2"><strong><#if product.productParams.tvFeatures?contains("CurvedScreen")>Да<#else>Нет</#if></strong></td>
     </tr>
+    <#--<#if product.smthParam?contains("smthVal")>
+    <tr>
+        <th scope="row">smthParam</th>
+        <td><strong>smthVal</strong></td>
+    </tr>
+    </#if>-->
 </#if>
 <#if product.type?contains("stoves")>
     <tr>

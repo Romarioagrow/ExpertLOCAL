@@ -7,9 +7,9 @@ $(document).ready(function(){
 $(document).ready(function(){
     $('input[type="checkbox"]') .on('change', collectFilters);
 });
-$(document).ready(function(){
+/*$(document).ready(function(){
     $('input[type="text"]')     .on('keyup', collectFilters);
-});
+});*/
 $(document).ready(function() {
     $('.mdb-select').materialSelect();
 });
@@ -63,7 +63,7 @@ function collectFilters(e) {
                         '</div>'                                                                +
                         '<div class="card-footer">'                                             +
                             '<small class="text-muted">'                                        +
-                                '<a class="btn btn-outline-info btn-rounded waves-effect" role="button" href="/product/'    + product.productID.toString() + '">О товаре</a>'     +
+                                '<a class="btn btn-outline-info btn-rounded waves-effect" role="button" href="/product/'+product.productID.toString()+'">О товаре</a>' +
                                 '<strong><i>' + product.price + '</i></strong>'                                             +
                                 '<button type="button" class="btn btn-flat about_product click-right">В корзину</button>'   +
                             '</small>'                                                                                      +

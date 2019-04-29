@@ -11,6 +11,7 @@ import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Log
 @Service
@@ -32,6 +33,23 @@ public class ProductService {
 
     public List<Product> findAll() {
         return productRepo.findAll();
+    }
+
+    public List<Product> searchProducts(String searchRequest) {
+        List<Product> searchedProducts = productRepo.findAll();
+
+        //searchedProducts.forEach(product -> log.info(product.getBrand() + " " + product.getBrand().startsWith(searchRequest)));
+
+        searchedProducts = searchedProducts.stream()
+                .filter(product -> product.getBrand().startsWith(searchRequest)                                     ||
+                        (product.getBrand().startsWith(searchRequest) & searchRequest.contains(product.getModel())) ||
+                         product.getModel().startsWith(searchRequest)                                                ||
+                        (searchRequest.contains(product.getBrand()) && searchRequest.contains(product.getModel()))  ||
+                        (searchRequest.contains(product.getBrand()) && product.getModel().startsWith(searchRequest)))
+                .collect(Collectors.toList());
+
+        log.info("Products found: " + searchedProducts.size());
+        return searchedProducts;
     }
 }
 

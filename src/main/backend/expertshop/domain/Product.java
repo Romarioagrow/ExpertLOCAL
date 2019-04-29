@@ -45,6 +45,10 @@ public class Product implements Serializable {
     private ProductParams productParams;
 
     @JsonIgnore
+    public String getTypeName() {
+        return productParams.getType();
+    }
+    @JsonIgnore
     public String getDiagonal() {
         return productParams.getDiagonal();
     }

@@ -9,14 +9,14 @@
             <div class="selector">
                 <#include "menu.ftl">
             </div>
-
             <div class="ml-5 search-field">
                 <form class="form-inline">
                     <i class="fas fa-search" aria-hidden="true"></i>
-                    <input class="form-control form-control-sm ml-3 w-75 main-search" type="text" placeholder="Поиск товаров" aria-label="Search">
+                    <input class="form-control form-control-sm ml-3 w-75 main-search" name="main-search" id="main-search" type="text" placeholder="Поиск товаров" aria-label="Search">
+                    <button class="btn btn-elegant btn-rounded btn-sm my-0" id="search-button" type="submit">Search</button>
+                    <div class="flex-container display-result" id="display-result" name="display-result"></div>
                 </form>
             </div>
-
             <div>
                 <a class="btn-floating peach-gradient"><i class="fas fa-leaf"></i></a>
             </div>
@@ -38,5 +38,22 @@
     .selector {
         padding-top: 1vh;
         margin-left: 2vw;
+    }
+
+    .display-result {
+        position: absolute;
+        color: black;
+        width: 50vw;
+        top: 7vh;
+        left: 27.5vw;
+        max-height: 300px;
+        overflow: auto;
+        box-shadow: 0 5px 13px 0 rgba(0,0,0,.2);
+        right: 0;
+        display: none;
+        background-color: white;
+        border: 1px solid #ececec;
+        padding: 15px;
+        z-index: 50;
     }
 </style>
