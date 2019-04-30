@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Data
@@ -33,9 +34,7 @@ public class Product implements Serializable {
     @Column(name = "type_category")
     private String typeCategory;
 
-    private String brand;
-    private String model;
-    private String country;
+    private String brand, model, country;
     private Integer price;
 
     private String pic;

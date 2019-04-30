@@ -1,7 +1,6 @@
 package expertshop.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import expertshop.domain.categories.Type;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +16,7 @@ import java.io.Serializable;
 public class ProductParams implements Serializable {
     @Id
     @JsonIgnore
+    @Column(name = "product_id")
     private Long productID;
 
     @OneToOne(optional = false, mappedBy = "productParams")
@@ -28,11 +28,7 @@ public class ProductParams implements Serializable {
 
     //TV
     @Nullable
-    private String diagonal;
-    @Nullable
-    private String resolution;
-    @Nullable
-    private String tvFeatures;
+    private String diagonal, resolution, tvFeatures;
 
     //Stoves
     @Nullable

@@ -39,7 +39,8 @@ function collectFilters(e) {
             $("#products").empty();
             console.log('Received products: ' + response.responseJSON.length);
 
-            for (var item = 0; item < response.responseJSON.length; item++) { ///ЗАМЕНИТЬ НА =>
+            for (var item in response.responseJSON)
+            {
                 let product = response.responseJSON[item];
                 let display = resolveDisplayType(product);
 

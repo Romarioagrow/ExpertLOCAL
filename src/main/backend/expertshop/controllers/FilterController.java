@@ -25,6 +25,5 @@ public class FilterController {
         log.info("Search request: " + searchRequest);
 
         return productService.searchProducts(searchRequest);
-        //return filterService.filterProducts(params, req_type);
     }
 }

@@ -5,13 +5,15 @@ $(document).ready(function(){
     $('input[name="main-search"]').on('keyup', searchProducts);
 });
 $('body').click(function(evt){
+    /// if элеиентПодСтрелкой.name != search
     document.getElementById("display-result").style.display = "none";
 });
 
 function searchProducts(e) {
     e.preventDefault();
 
-    var searchRequest = ($('#main-search').val());
+    var searchRequest = ($('#main-search').val()).trim().toUpperCase();
+    console.log(searchRequest);
 
     $.ajax({
         url: 'http://localhost:8080/search',
@@ -27,18 +29,16 @@ function searchProducts(e) {
             document.getElementById("display-result").style.display = "block";
             $("#display-result").empty();
 
-            console.log('Received products: ' + response.responseJSON.length);
-            for (var item = 0; item < response.responseJSON.length; item++) { ///ЗАМЕНИТЬ НА =>
-                let product = response.responseJSON[item];
-                $("#display-result").append
-                (
+            console.log('Found products: ' + response.responseJSON.length);
+
+            response.responseJSON.forEach(product => $("#display-result").append
+            (
                 '<div class="one-product" style="margin-top: 3px!important;">'                  +
-                    '<a href="http://localhost:8080/product/'+ product.productID +'" style="font-weight: bold;">'     +
+                    '<a href="http://localhost:8080/product/'+ product.productID +'">'          +
                         product.productParams.type + " " + product.brand + " " + product.model  +
                     '</a>'                                                                      +
                 '</div>'
-                );
-            }
+            ));
         }
     });
 }
