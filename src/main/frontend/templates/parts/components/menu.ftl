@@ -18,7 +18,7 @@
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="/subcategories/multimedia"><strong>Мультимедийные системы</strong></a></li>
+                            <li class="list-head"><a href="/subcats/multimedia"><strong>Мультимедийные системы</strong></a></li>
                             <li><a href="/music_centers">Музыкальные центры</a></li>
                             <li><a href="/home_cinema">Домашние кинотеатры</a></li>
                             <li><a href="/projectors">Проекторы</a></li>
@@ -26,7 +26,7 @@
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="/subcategories/sputnik"><strong>Спутниковая техника</strong></a></li>
+                            <li class="list-head"><a href="/subcats/sputnik"><strong>Спутниковая техника</strong></a></li>
                             <li><a href="/sputnik_receivers">Ресиверы</a></li>
                             <li><a href="/antennas">Антенны</a></li>
                         </ul>
@@ -38,7 +38,7 @@
                 <div class="product-type-menu marker2" style="width: 60vw">
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="/subcategories/kitchen_big"><strong>Крупная техника</strong></a></li>
+                            <li class="list-head"><a href="/subcats/kitchen_big"><strong>Крупная техника</strong></a></li>
                             <li><a href="/fridges">Холодильники</a></li>
                             <li><a href="/freezers">Морозильники</a></li>
                             <li><a href="/stoves">Плиты</a></li>
@@ -48,7 +48,7 @@
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="/subcategories/kitchen_builtin"><strong>Встраиваемая техника</strong></a></li>
+                            <li class="list-head"><a href="/subcats/kitchen_builtin"><strong>Встраиваемая техника</strong></a></li>
                             <li><a href="/builtin_ovens">Встраиваемые духовки</a></li>
                             <li><a href="/builtin_stoves">Встраиваемые плиты</a></li>
                             <li><a href="/vent">Вытяжки</a></li>
@@ -56,7 +56,7 @@
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="/subcategories/cooking_devices"><strong>Техника для приготовления пищи</strong></a></li>
+                            <li class="list-head"><a href="/subcats/cooking_devices"><strong>Техника для приготовления пищи</strong></a></li>
                             <li><a href="/multi_cookers">Мультиварки</a></li>
                             <li><a href="/microwaves">Микроволновки</a></li>
                             <li><a href="/kitchen_combines">Кухонные комбайны</a></li>
@@ -65,7 +65,7 @@
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="/subcategories/kitchen_small"><strong>Маленькая техника</strong></a></li>
+                            <li class="list-head"><a href="/subcats/kitchen_small"><strong>Маленькая техника</strong></a></li>
                             <li><a href="/teapots">Электрочайники</a></li>
                             <li><a href="/toasters">Тостеры</a></li>
                             <li><a href="/blenders">Блендеры</a></li>
@@ -78,7 +78,7 @@
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="/subcategories/kitchen_accessory"><strong>Кухонные аксессуары</strong></a></li>
+                            <li class="list-head"><a href="/subcats/kitchen_accessory"><strong>Кухонные аксессуары</strong></a></li>
                             <li><a href="/#">Фильтры для воды</a></li>
                             <li><a href="/#">Весы</a></li>
                             <li><a href="/#">Посуда </a></li>
@@ -93,14 +93,14 @@
                 <div class="product-type-menu" style="width: 50vw">
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="/subcategories/home_washing"><strong>Для стирки</strong></a></li>
+                            <li class="list-head"><a href="/subcats/home_washing"><strong>Для стирки</strong></a></li>
                             <li><a href="/washing_machines">Стиральные машины</a></li>
                             <li><a href="/drying_machines">Машины для сушки</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="/subcategories/home_cleaning"><strong>Для уборки</strong></a></li>
+                            <li class="list-head"><a href="/subcats/home_cleaning"><strong>Для уборки</strong></a></li>
                             <li><a href="/vacuum_cleaners">Пылесосы и аксессуары</a></li>
                             <li><a href="#">Компактные пылесосы</a></li>
                             <li><a href="#">Роботы-уборщики</a></li>
@@ -108,7 +108,7 @@
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="/subcategories/home_clothes"><strong>Для ухода за одеждой</strong></a></li>
+                            <li class="list-head"><a href="/subcats/home_clothes"><strong>Для ухода за одеждой</strong></a></li>
                             <li><a href="/irons">Утюги и аксессуары</a></li>
                             <li><a href="/ironing_boards">Гладильные доски</a></li>
                             <li><a href="/sewing_machines">Швейные машинки</a></li>
@@ -116,7 +116,7 @@
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="/subcategories/home_accessory"><strong>Аксессуары для дома</strong></a></li>
+                            <li class="list-head"><a href="/subcats/home_accessory"><strong>Аксессуары для дома</strong></a></li>
                         </ul>
                     </div>
                 </div>
@@ -171,7 +171,7 @@
                 <div class="product-type-menu" style="width: 50vw">
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="/subcategories/computers_pc"><strong>ПК и переферия</strong></a></li>
+                            <li class="list-head"><a href="/subcats/computers_pc"><strong>ПК и переферия</strong></a></li>
                             <li><a href="/pc">Готовые системные блоки</a></li>
                             <li><a href="/monitors">Мониторы</a></li>
                             <li><a href="/keyboards">Клавиатуры</a></li>
@@ -194,7 +194,7 @@
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="/subcategories/computers_office"><strong>Офисная техника</strong></a></li>
+                            <li class="list-head"><a href="/subcats/computers_office"><strong>Офисная техника</strong></a></li>
                             <li><a href="/printers">Принтеры</a></li>
                             <li><a href="/scanners">Сканеры</a></li>
                             <li><a href="/projectors">Проекторы</a></li>
@@ -202,7 +202,7 @@
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="/subcategories/computer_parts"><strong>Компьютерные комплектующие</strong></a></li>
+                            <li class="list-head"><a href="/subcats/computer_parts"><strong>Компьютерные комплектующие</strong></a></li>
                             <li><a href="/#">Товар 1</a></li>
                             <li><a href="/#">Товар 2</a></li>
                             <li><a href="/#">Товар 3</a></li>
@@ -211,7 +211,7 @@
 
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="/subcategories/computers_accessories"><strong>Аксессуары</strong></a></li>
+                            <li class="list-head"><a href="/subcats/computers_accessories"><strong>Аксессуары</strong></a></li>
                             <li><a href="/usb_card">USB-карты</a></li>
                             <li><a href="/memory_sticks">Карты памяти</a></li>
                             <li><a href="/headers">Наушники</a></li>

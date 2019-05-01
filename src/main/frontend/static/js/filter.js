@@ -47,7 +47,7 @@ function collectFilters(e) {
                 $("#products").append
                 (
                     '<div class="card product-card mr-3 mt-3">'                                 +
-                        '<img class="card-img-top" src='+product.pic+' alt="Card image cap">'   +
+                        '<img class="card-img-top" src='+product.productParams.pic+' alt="Card image cap">'   +
                         '<div class="card-body">'                                               +
                             '<h5 class="card-title">'                                           +
                                 '\n' + product.brand                                            +
@@ -64,9 +64,9 @@ function collectFilters(e) {
                         '</div>'                                                                +
                         '<div class="card-footer">'                                             +
                             '<small class="text-muted">'                                        +
-                                '<a class="btn btn-outline-info btn-rounded waves-effect" role="button" href="/product/'+product.productID.toString()+'">О товаре</a>' +
+                                '<a class="btn btn-info btn-rounded" style="margin-left:-1vw;" role="button" href="/product/'+product.productID.toString()+'">О товаре</a>' +
                                 '<strong><i>' + product.price + '</i></strong>'                                             +
-                                '<button type="button" class="btn btn-flat about_product click-right">В корзину</button>'   +
+                                '<button type="submit" class="btn btn-success btn-rounded" name="addToOrder" id="addToOrder" value="'+product.productID.toString()+'" style="margin-right: -1vw;">В корзину</button>'   +
                             '</small>'                                                                                      +
                         '</div>'                                                                                            +
                     '</div>'
@@ -75,6 +75,12 @@ function collectFilters(e) {
         }
     });
 }
+
+/*$(document).ready(function(){
+    $('#addToOrder').on('click', addToOrder);
+});*/
+
+
 
 function constructFiltersData(url) {
     var country = [], brand = [];

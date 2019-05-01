@@ -18,7 +18,7 @@
                 </form>
             </div>
             <div>
-                <a class="btn-floating peach-gradient"><i class="fas fa-leaf"></i></a>
+                <a class="btn-floating peach-gradient" href="/order"><i class="fas fa-leaf"></i></a>
             </div>
         </ul>
     </div>

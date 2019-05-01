@@ -31,16 +31,11 @@ public class Product implements Serializable {
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    @Column(name = "type_category")
-    private String typeCategory;
-
     private String brand, model, country;
     private Integer price;
 
-    private String pic;
-
     @OneToOne(optional = false, cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_parameters_id")
+    @JoinColumn(name = "product_id")
     private ProductParams productParams;
 
     @JsonIgnore

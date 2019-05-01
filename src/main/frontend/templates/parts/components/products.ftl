@@ -16,7 +16,7 @@
     <#if products??>
         <#list products as product>
             <div class="card product-card mr-3 mt-3">
-                <#if product.pic??><img class="card-img-top" src="${product.pic}" alt="Card image cap"></#if>
+                <#if product.productParams.pic??><img class="card-img-top" src="${product.productParams.pic}" alt="Card image cap"></#if>
                 <div class="card-body">
                     <h5 class="card-title">
                         ${product.brand}
@@ -33,9 +33,9 @@
                 </div>
                 <div class="card-footer">
                     <small class="text-muted">
-                        <a class="btn btn-outline-info btn-rounded waves-effect" href="/product/${product.productID?c}" role="button">О товаре</a>
+                        <a class="btn btn-info btn-rounded" style="margin-left: -1vw;" href="/product/${product.productID?c}" role="button" >О товаре</a>
                         <strong><i>${product.price}</i></strong>
-                        <button type="button" class="btn btn-flat about_product click-right">В корзину</button>
+                        <button type="submit" class="btn btn-success btn-rounded" name="addToOrder" id="addToOrder" value="${product.productID?c}" style="margin-right: -1vw;">В корзину</button>
                     </small>
                 </div>
             </div>

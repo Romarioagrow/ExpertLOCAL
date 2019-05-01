@@ -21,6 +21,7 @@
     <script src="../lib/mdb.min.js" type="text/javascript"></script>
     <script src="../js/filter.js"></script>
     <script src="../js/search.js"></script>
+    <script src="../js/order.js"></script>
     </body>
     </html>
 </#macro>
