@@ -25,7 +25,6 @@ public class ProductController {
         model.addAttribute("products", productService.findAll());
         return "pages/main";
     }
-
     @GetMapping("/{req_product}")
     public String showByTypes(Model model, @PathVariable String req_product
     ){

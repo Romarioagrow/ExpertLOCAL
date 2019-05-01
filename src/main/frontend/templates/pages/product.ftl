@@ -1,4 +1,4 @@
-<#import "template.ftl" as t>
+<#import "../parts/template.ftl" as t>
 <@t.template>
     <div class="container">
         <div class="row mt-2">
@@ -69,7 +69,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <#include "../parts/components/product-info.ftl">
+                    <#include "../parts/product-info.ftl">
                     </tbody>
                 </table>
             </div>

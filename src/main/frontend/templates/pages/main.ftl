@@ -1,11 +1,9 @@
-<#import "template.ftl" as t>
+<#import "../parts/template.ftl" as t>
 <@t.template>
     <div class="container-fluid">
         <div class="row">
             <div class="col-3 marker1">
-                <div class="marker2">
-                    <#--<#if currentProduct??><span>Фильтры для ${currentProduct}</span></#if>-->
-                </div>
+                <div class="marker2"></div>
             </div>
             <div class="col marker3">
                 <div class="marker2">
@@ -19,14 +17,13 @@
             <div class="col-3 marker1 filters-col">
                 <div class="marker2">
                     <form method="get" name="filters" id="filters">
-                        <#include "../parts/filters/filters.ftl">
+                        <#include "../parts/filters.ftl">
                     </form>
                 </div>
             </div>
             <div class="col marker3">
-                <div>
-                </div>
-                <#include "../parts/components/products.ftl">
+                <div></div>
+                <#include "../parts/products.ftl">
             </div>
         </div>
     </div>
