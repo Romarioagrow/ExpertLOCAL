@@ -16,6 +16,19 @@ import org.springframework.web.bind.annotation.*;
 public class CategoriesController {
     private final ProductService productService;
 
+    @GetMapping("/")
+    public String showAll(Model model) {
+        return "redirect:/hello";
+    }
+
+    @GetMapping("/hello")
+    public String showHelloPage(Model model)
+    {
+        model.addAttribute("url", "");
+        model.addAttribute("products", productService.findAll());
+        return "pages/hello";
+    }
+
     @GetMapping("/categories")
     public String categories(Model model)
     {
@@ -28,7 +41,7 @@ public class CategoriesController {
         log.info("Category: " + req_category);
 
         model.addAttribute("url", req_category);
-        model.addAttribute("products", productService.findProducts(Category.valueOf(req_category)));
+        model.addAttribute("products", productService.findProducts(Category.valueOf(req_category)));/*Слава Украине!*/
         return "pages/main";
     }
 

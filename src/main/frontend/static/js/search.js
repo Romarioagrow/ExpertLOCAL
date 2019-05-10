@@ -4,7 +4,7 @@ $(document).ready(function(){
 $(document).ready(function(){
     $('input[name="main-search"]').on('keyup', searchProducts);
 });
-$('body').click(function(evt){
+$('body').click(function(){
     /// if элеиентПодСтрелкой.name != search
     document.getElementById("display-result").style.display = "none";
 });

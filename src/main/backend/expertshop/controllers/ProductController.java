@@ -18,13 +18,6 @@ public class ProductController {
     private final ProductRepo productRepo;
     private final ProductService productService;
 
-    @GetMapping("/")
-    public String showAll(Model model)
-    {
-        model.addAttribute("url", "");
-        model.addAttribute("products", productService.findAll());
-        return "pages/main";
-    }
     @GetMapping("/{req_product}")
     public String showByTypes(Model model, @PathVariable String req_product
     ){

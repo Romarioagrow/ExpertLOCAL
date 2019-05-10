@@ -28,27 +28,27 @@ public class FilterService {
         for (Map.Entry<String, Object> paramObject : params.entrySet())
         {
             Map<String, Object> inner = (Map<String, Object>) paramObject.getValue();
-            for (Map.Entry<String, Object> entry : inner.entrySet())
+            for (Map.Entry<String, Object> filter : inner.entrySet())
             {
-                switch (entry.getKey()) {
-                    case "sortmin"      -> products = products.stream().filter(product -> product.getPrice() >= Integer.parseInt((String) entry.getValue())).collect(Collectors.toList());
-                    case "sortmax"      -> products = products.stream().filter(product -> product.getPrice() <= Integer.parseInt((String) entry.getValue())).collect(Collectors.toList());
+                switch (filter.getKey()) {
+                    case "sortmin"      -> products = products.stream().filter(product -> product.getPrice() >= Integer.parseInt((String) filter.getValue())).collect(Collectors.toList());
+                    case "sortmax"      -> products = products.stream().filter(product -> product.getPrice() <= Integer.parseInt((String) filter.getValue())).collect(Collectors.toList());
                     case "brand"        -> {
-                        String brands = entry.getValue().toString();
+                        String brands = filter.getValue().toString();
                         products = products.stream().filter(product -> brands.contains(product.getBrand())).collect(Collectors.toList());
                     }
                     case "country"      -> {
-                        String countries = entry.getValue().toString();
+                        String countries = filter.getValue().toString();
                         products = products.stream().filter(product -> countries.contains(product.getCountry())).collect(Collectors.toList());
                     }
-                    case "diag_min"     -> products = products.stream().filter(product -> Integer.parseInt(product.getDiagonal()) >= Integer.parseInt(entry.getValue().toString())).collect(Collectors.toList());
-                    case "diag_max"     -> products = products.stream().filter(product -> Integer.parseInt(product.getDiagonal()) <= Integer.parseInt(entry.getValue().toString())).collect(Collectors.toList());
+                    case "diag_min"     -> products = products.stream().filter(product -> Integer.parseInt(product.getDiagonal()) >= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
+                    case "diag_max"     -> products = products.stream().filter(product -> Integer.parseInt(product.getDiagonal()) <= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
                     case "tv_resolution" -> {
-                        String resolution = entry.getValue().toString();
+                        String resolution = filter.getValue().toString();
                         products = products.stream().filter(product -> resolution.contains(product.getResolution())).collect(Collectors.toList());
                     }
                     case "tv_params" -> {
-                        List<Object> tv_params = new ArrayList<>((Collection<?>) entry.getValue());
+                        List<Object> tv_params = new ArrayList<>((Collection<?>) filter.getValue());
                         for (Object tv_param : tv_params) {
                             products = products.stream().filter(product -> product.getTvFeatures().contains(tv_param.toString())).collect(Collectors.toList());
                         }

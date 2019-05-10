@@ -54,9 +54,6 @@ function collectFilters(e) {
                                 '\n' + product.model                                            +
                             '</h5>'                                                             +
                             '<p class="card-text">'                                             +
-                                '\n' + product.country                                          +
-                            '</p>'                                                              +
-                            '<p class="card-text">'                                             +
                                 '<small>'                                                       +
                                     display                                                     +
                                 '</small>'                                                      +
@@ -65,7 +62,7 @@ function collectFilters(e) {
                         '<div class="card-footer">'                                             +
                             '<small class="text-muted">'                                        +
                                 '<a class="btn btn-info btn-rounded" style="margin-left:-1vw;" role="button" href="/product/'+product.productID.toString()+'">О товаре</a>' +
-                                '<strong><i>' + product.price + '</i></strong>'                                             +
+                                '<strong><i>'+product.price +'</i></strong>'                                             +
                                 '<button type="submit" class="btn btn-success btn-rounded" name="addToOrder" id="addToOrder" value="'+product.productID.toString()+'" style="margin-right: -1vw;">В корзину</button>'   +
                             '</small>'                                                                                      +
                         '</div>'                                                                                            +
@@ -75,12 +72,6 @@ function collectFilters(e) {
         }
     });
 }
-
-/*$(document).ready(function(){
-    $('#addToOrder').on('click', addToOrder);
-});*/
-
-
 
 function constructFiltersData(url) {
     var country = [], brand = [];

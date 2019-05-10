@@ -11,7 +11,6 @@
         </label>
     </div>
 </div>
-
 <div class="flex-container marker2" id="products">
     <#if products??>
         <#list products as product>
@@ -22,9 +21,9 @@
                         ${product.brand}
                         ${product.model}
                     </h5>
-                    <p class="card-text">
+                    <#--<p class="card-text">
                         ${product.country}
-                    </p>
+                    </p>-->
                     <p class="card-text">
                         <small>
                             <#include "params.ftl">
@@ -42,8 +41,4 @@
         </#list>
     </#if>
 </div>
-<style>
-    .click-right {
-        margin-right: -35px;
-    }
-</style>
+

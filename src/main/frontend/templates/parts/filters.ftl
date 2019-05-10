@@ -1,9 +1,10 @@
 <div>
     <button class="btn btn-secondary btn-block filter-button"
-            type="button" data-toggle="collapse" data-target="#filter1" aria-expanded="false"><span>Цена</span>
+            type="button" data-toggle="collapse" data-target="#filter1" aria-expanded="false"><span>Цена и бренд</span>
     </button>
     <div class="collapse" id="filter1">
         <div class="card card-body filter-filed">
+            <h5>Цена</h5>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">От</span>
@@ -16,29 +17,9 @@
                     <span class="input-group-text">До</span>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-<div>
-    <button class="btn btn-secondary btn-block filter-button"
-            type="button" data-toggle="collapse" data-target="#manufacturer-filter" aria-expanded="true">Страна и бренд
-    </button>
-    <div class="collapse" id="manufacturer-filter">
-        <div class="card card-body filter-filed">
-            <h5>Страна</h5>
-            <div class="col-md-12">
-                <select class="mdb-select colorful-select dropdown-primary md-form" multiple>
-                    <option value="" disabled selected>Выберите страну</option>
-                    <option name="country" value="Россия">Россия</option>
-                    <option name="country" value="Япония">Япония</option>
-                    <option name="country" value="Южная Корея">Южная Корея</option>
-                    <option name="country" value="Китай">Китай</option>
-                    <option name="country" value="Тайвань">Тайвань</option>
-                </select>
-            </div>
-            <h5>Бренд</h5>
-            <div class="col-md-12"> <#--if url?contains("tv")-->
-                <select class="mdb-select colorful-select dropdown-primary md-form" multiple>
+            <h5 class="mt-2">Бренд</h5>
+            <div class="col-md-12" style="margin-top: -15px !important;">
+                <select class="mdb-select colorful-select dropdown-primary md-form"  multiple>
                     <#if url?contains("tv")>
                         <option value="" disabled selected>Выберите бренд</option>
                         <option name="brand" value="DOFFLER">DOFFLER</option>
@@ -60,6 +41,7 @@
         </div>
     </div>
 </div>
+
 <#if url?contains("tv")>
     <div>
         <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-filter1" aria-expanded="false">
@@ -68,7 +50,7 @@
         <div class="collapse" id="tv-filter1">
             <div class="card card-body filter-filed">
                 <div>
-                    <h5>Диагональ</h5>
+                    <h5 style="margin-bottom: -15px !important;">Диагональ</h5>
                     <div class="input-group mb-1">
                         <br><input type="text" id="diag_min" name="diag_min" placeholder="Не меньше" class="form-control mt-2" style="width: auto">
                     </div>
@@ -127,6 +109,7 @@
         </div>
     </div>
 </#if>
+
 <#if url?contains("fridges")>
     <div>
         <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-filter2" aria-expanded="false">
@@ -150,6 +133,7 @@
         </div>
     </div>
 </#if>
+
 <#if url?contains("stoves")>
     <div>
         <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-filter1" aria-expanded="false">
