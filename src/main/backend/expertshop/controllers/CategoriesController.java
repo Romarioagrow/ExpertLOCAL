@@ -41,7 +41,7 @@ public class CategoriesController {
         log.info("Category: " + req_category);
 
         model.addAttribute("url", req_category);
-        model.addAttribute("products", productService.findProducts(Category.valueOf(req_category)));/*Слава Украине!*/
+        model.addAttribute("products", productService.findProducts(Category.valueOf(req_category)));
         return "pages/main";
     }
 

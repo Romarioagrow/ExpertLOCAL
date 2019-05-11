@@ -4,7 +4,6 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <!-- Кнопки меню -->
         <ul class="navbar-nav mr-auto">
             <div class="selector">
                 <#include "menu.ftl">
@@ -13,7 +12,7 @@
                 <form class="form-inline">
                     <i class="fas fa-search" aria-hidden="true"></i>
                     <input class="form-control form-control-sm ml-3 w-75 main-search" name="main-search" id="main-search" type="text" placeholder="Поиск товаров" aria-label="Search">
-                    <button class="btn btn-elegant btn-rounded btn-sm my-0" id="search-button" type="submit">Search</button>
+                    <button class="btn btn-elegant btn-rounded btn-sm my-0" id="search-button" type="submit">Искать!</button>
                     <div class="flex-container display-result" id="display-result" name="display-result"></div>
                 </form>
             </div>
@@ -39,7 +38,6 @@
         padding-top: 1vh;
         margin-left: 2vw;
     }
-
     .display-result {
         position: absolute;
         color: black;
