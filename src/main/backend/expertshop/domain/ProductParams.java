@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import expertshop.domain.categories.SubCategory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.Nullable;
 import javax.persistence.*;
@@ -11,11 +12,12 @@ import java.io.Serializable;
 
 @Entity
 @Data
+//@EqualsAndHashCode(exclude="product")
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "parameters")
 public class ProductParams implements Serializable {
-    @OneToOne(optional = false, mappedBy = "productParams")
+    @OneToOne(optional = false, mappedBy = "productParams", fetch = FetchType.EAGER)
     @JsonIgnore
     private Product product;
 

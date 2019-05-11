@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import expertshop.domain.categories.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,6 +13,7 @@ import java.util.Set;
 
 @Entity
 @Data
+@EqualsAndHashCode(exclude="productParams")
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "products")
@@ -35,11 +37,11 @@ public class Product implements Serializable {
     private String brand, model, country;
     private Integer price;
 
-    @OneToOne(optional = false, cascade = CascadeType.ALL)
+    @OneToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private ProductParams productParams;
 
-    @ManyToMany(mappedBy = "orderedProducts")
+    @ManyToMany(mappedBy = "orderedProducts", fetch = FetchType.EAGER)
     private List<Order> orders;
 
     @JsonIgnore

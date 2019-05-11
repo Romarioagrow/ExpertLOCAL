@@ -21,9 +21,6 @@
                         ${product.brand}
                         ${product.model}
                     </h5>
-                    <#--<p class="card-text">
-                        ${product.country}
-                    </p>-->
                     <p class="card-text">
                         <small>
                             <#include "params.ftl">
