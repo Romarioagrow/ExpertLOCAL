@@ -101,16 +101,17 @@ public class ProductService {
         return null;
     }
 
-    public Map<Product, Integer> removeProductFromOrder(String productID)
+    public Map<Integer, Product> removeProductFromOrder(String productID)
     {
         Order order = orderRepo.findBySessionUUID(getSessionID());
 
         order.removeProductFromOrder(Integer.parseInt(productID));
 
         Map<Integer, Integer> productsDB = order.getOrderedProducts();
-        Map<Product, Integer> products = new LinkedHashMap<>();
+        Map<Integer, Product> products = new LinkedHashMap<>();
 
-        productsDB.forEach((product_ID, amount) -> products.put(productRepo.findByProductID(product_ID), amount));
+        //productsDB.forEach((product_ID, amount) -> products.put(productRepo.findByProductID(product_ID), amount));
+        productsDB.forEach((product_ID, amount) -> products.put(amount, productRepo.findByProductID(product_ID)));
 
         //order
         /*Map<Integer, Integer> products = order.getOrderedProducts();
