@@ -36,7 +36,6 @@
                     <#else>
                         <h3 style="margin-top: 4vh">Пока ничего нет...</h3>
                     </#if>
-
                 </div>
             </div>
         </div>

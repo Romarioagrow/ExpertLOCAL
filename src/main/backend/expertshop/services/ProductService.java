@@ -41,8 +41,7 @@ public class ProductService {
         return productRepo.findAll();
     }
 
-    public List<Product> searchProducts(String searchRequest)
-    {
+    public List<Product> searchProducts(String searchRequest) {
         log.info("Search request: " + searchRequest);
         List<Product> searchedProducts = productRepo.findAll().stream()
                 .filter(product -> product.getBrand().concat(" ").concat(product.getModel()).contains(searchRequest))
@@ -83,20 +82,20 @@ public class ProductService {
         {
             Order order = orderRepo.findBySessionUUID(getSessionID());
 
-            Map<Integer, Integer> products = order.getOrderedProducts();
-            Map<Product, Integer> productsToOrder = new LinkedHashMap<>();
+            Map<Integer, Integer> productsDB = order.getOrderedProducts();
+            Map<Product, Integer> products = new LinkedHashMap<>();
 
-            //products.forEach((productID, amount) -> log.info(productID.toString() + " " + amount.toString()));
-            products.forEach((productID, amount) -> productsToOrder.put(productRepo.findByProductID(productID), amount));
+            //productsDB.forEach((productID, amount) -> log.info(productID.toString() + " " + amount.toString()));
+            productsDB.forEach((productID, amount) -> products.put(productRepo.findByProductID(productID), amount));
 
-            //products = products.keySet().stream().map(integer -> products.put(productRepo.findByProductID(integer)))
-            productsToOrder.forEach((product, integer) -> log.info(product.getBrand()+ " " + product.getModel()));
+            //productsDB = productsDB.keySet().stream().map(integer -> productsDB.put(productRepo.findByProductID(integer)))
+            products.forEach((product, integer) -> log.info(product.getBrand()+ " " + product.getModel()));
 
-            //productsToOrder
+            //products
 
-            //productsToOrder.entrySet().stream().sorted(Map.Entry.comparingByValue());
+            //products.entrySet().stream().sorted(Map.Entry.comparingByValue());
 
-            return productsToOrder;
+            return products;
         }
         return null;
     }
@@ -105,14 +104,15 @@ public class ProductService {
     {
         Order order = orderRepo.findBySessionUUID(getSessionID());
 
-        order.removeProductFromOrder(Integer.parseInt(productID));
+        order.removeProductFromOrder(Integer.parseInt(productID));///!!!?
+        orderRepo.save(order);
 
         Map<Integer, Integer> productsDB = order.getOrderedProducts();
         Map<Integer, Product> products = new LinkedHashMap<>();
 
-        //productsDB.forEach((product_ID, amount) -> products.put(productRepo.findByProductID(product_ID), amount));
         productsDB.forEach((product_ID, amount) -> products.put(amount, productRepo.findByProductID(product_ID)));
 
+        //productsDB.forEach((product_ID, amount) -> products.put(productRepo.findByProductID(product_ID), amount));
         //order
         /*Map<Integer, Integer> products = order.getOrderedProducts();
         Map<Product, Integer> productsToOrder = new LinkedHashMap<>();*/
