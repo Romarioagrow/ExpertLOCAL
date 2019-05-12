@@ -27,10 +27,6 @@ function addToOrder(e) {
 function removeFromOrder(e) {
     e.preventDefault();
 
-    String.prototype.replaceAt=function(index, replacement) {
-        return this.substr(0, index) + replacement+ this.substr(index + replacement.length);
-    };
-
     const productID = ($(this).attr("value"));
     console.log(productID);
 

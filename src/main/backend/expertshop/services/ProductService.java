@@ -23,8 +23,6 @@ public class ProductService {
     private final ProductRepo productRepo;
     private final OrderRepo orderRepo;
 
-    //String sessionID = RequestContextHolder.currentRequestAttributes().getSessionId();
-
     public List<Product> findProducts(Category category) {
         return productRepo.findByCategory(category);
     }
@@ -53,11 +51,6 @@ public class ProductService {
 
     public void addProductToOrder(String productID)
     {
-        ///ЕСЛИ НЕТ ТАКОЙ ЗАПИСИ БД ПО ID СЕССИИ/ЮЗЕРА ТО СОЗДАТЬ ЗАПИСЬ В БД ПО ID СЕССИИ/ЮЗЕРА
-        ///ЕСЛИ УЖЕ СУЩЕСТВУЕТ ТО НАЙТИ НУЖНЫЕ ПРОДУКТ ПО ID И ДОБАВИТЬ В БАЗУ
-        /*String sessionID = RequestContextHolder.currentRequestAttributes().getSessionId(); ///GET_SESSION!!!
-        log.info(sessionID);*/
-
         log.info("Received product with ID " + productID);
 
         Order order = orderRepo.findBySessionUUID(getSessionID());
@@ -66,36 +59,29 @@ public class ProductService {
             order = new Order();
             order.setSessionUUID(getSessionID());
         }
-        //Product product = productRepo.findByProductID(Integer.parseInt(productID));
-        order.addProductToOrder(Integer.parseInt(productID), 1);
 
+        order.addProductToOrder(Integer.parseInt(productID), 1);
         orderRepo.save(order);
 
-        //log.info("Product with ID" + productID + " add to order");
+        log.info("Product with ID" + productID + " add to order");
     }
 
     public Map<Product, Integer> showOrderedProducts()
     {
-        //String sessionID = RequestContextHolder.currentRequestAttributes().getSessionId();
-
         if (orderRepo.findBySessionUUID(getSessionID()) != null)
         {
             Order order = orderRepo.findBySessionUUID(getSessionID());
 
+            //Map<Integer, Product> products = collectOrderedProducts();
+            ///В МЕТОД!
             Map<Integer, Integer> productsDB = order.getOrderedProducts();
             Map<Product, Integer> products = new LinkedHashMap<>();
 
-            //productsDB.forEach((productID, amount) -> log.info(productID.toString() + " " + amount.toString()));
             productsDB.forEach((productID, amount) -> products.put(productRepo.findByProductID(productID), amount));
-
-            //productsDB = productsDB.keySet().stream().map(integer -> productsDB.put(productRepo.findByProductID(integer)))
-            products.forEach((product, integer) -> log.info(product.getBrand()+ " " + product.getModel()));
-
-            //products
-
-            //products.entrySet().stream().sorted(Map.Entry.comparingByValue());
+            //products.forEach((product, integer) -> log.info(product.getBrand()+ " " + product.getModel()));
 
             return products;
+            //return collectOrderedProducts();
         }
         return null;
     }
@@ -104,24 +90,18 @@ public class ProductService {
     {
         Order order = orderRepo.findBySessionUUID(getSessionID());
 
-        order.removeProductFromOrder(Integer.parseInt(productID));///!!!?
+        order.removeProductFromOrder(Integer.parseInt(productID));
         orderRepo.save(order);
 
+        //Map<Integer, Product> products = collectOrderedProducts();
+        ///В МЕТОД!
         Map<Integer, Integer> productsDB = order.getOrderedProducts();
         Map<Integer, Product> products = new LinkedHashMap<>();
 
         productsDB.forEach((product_ID, amount) -> products.put(amount, productRepo.findByProductID(product_ID)));
 
-        //productsDB.forEach((product_ID, amount) -> products.put(productRepo.findByProductID(product_ID), amount));
-        //order
-        /*Map<Integer, Integer> products = order.getOrderedProducts();
-        Map<Product, Integer> productsToOrder = new LinkedHashMap<>();*/
-
-        /*products.entrySet().stream()
-                .map(productDB -> productsToOrder.put(productRepo.findByProductID(productDB.getKey()), productDB.getValue()))
-                .
-*/
         return products;
+        //return collectOrderedProducts();
     }
 
     public String getSessionID() {
