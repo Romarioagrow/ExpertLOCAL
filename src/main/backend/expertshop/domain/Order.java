@@ -48,6 +48,10 @@ public class Order implements Serializable {
         }
         else this.orderedProducts.put(productID, amount);
     }
+
+    public void removeProductFromOrder(Integer productID) {
+        orderedProducts.remove(productID);
+    }
 }
 
 /*private OrderList orderedProducts;*/

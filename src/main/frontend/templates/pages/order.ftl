@@ -6,12 +6,38 @@
         </div>
         <div class="row">
             <div class="col">
-                <#if orderedProducts??>
-                    <#list orderedProducts?keys as prop>
-                        ${prop.brand}
-                        ${prop.model}<br>
-                    </#list>
-                </#if>
+                <div class="card-group" id="bucket-products">
+                    <#if orderedProducts??>
+                        <#list orderedProducts as product, amount>
+                            <div class="card mb-4">
+                                <div class="view overlay">
+                                    <img class="card-img-top" src="${product.productParams.pic}" alt="Card image cap">
+                                    <a href="#!">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        ${product.brand}
+                                        ${product.model}
+                                        <div>
+                                            <button type="button" class="btn btn-outline-danger waves-effect">-</button>
+                                            <span class="badge badge-primary badge-pill">${amount}</span>
+                                            <button type="button" class="btn btn-outline-success waves-effect">+</button>
+                                        </div>
+                                    </h4>
+                                    <p class="card-text">
+                                        <strong>${product.productParams.type}</strong>, <strong><i>${product.price}</i></strong>
+                                    </p>
+                                    <button type="button" class="btn btn-primary btn-md" name="remove-product" id="remove-product" value="${product.productID?c}">Удалить</button>
+                                </div>
+                            </div>
+                        </#list>
+                    <#else>
+                        <h3 style="margin-top: 4vh">Пока ничего нет...</h3>
+                    </#if>
+
+                </div>
             </div>
         </div>
     </div>
