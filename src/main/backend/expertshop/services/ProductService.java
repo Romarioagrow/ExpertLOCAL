@@ -60,6 +60,10 @@ public class ProductService {
             order.setSessionUUID(getSessionID());
         }
 
+        /*Product product = productRepo.findByProductID(Integer.parseInt(productID));
+        product.getProductParams().setAmount(1);
+        order.addProductToOrder(orderedProduct);*/
+
         order.addProductToOrder(Integer.parseInt(productID), 1);
         orderRepo.save(order);
 
@@ -86,7 +90,7 @@ public class ProductService {
         return null;
     }
 
-    public Map<Integer, Product> removeProductFromOrder(String productID)
+    public Map<Product, Integer> removeProductFromOrder(String productID)
     {
         Order order = orderRepo.findBySessionUUID(getSessionID());
 
@@ -96,9 +100,9 @@ public class ProductService {
         //Map<Integer, Product> products = collectOrderedProducts();
         ///В МЕТОД!
         Map<Integer, Integer> productsDB = order.getOrderedProducts();
-        Map<Integer, Product> products = new LinkedHashMap<>();
+        Map<Product, Integer> products = new LinkedHashMap<>();
 
-        productsDB.forEach((product_ID, amount) -> products.put(amount, productRepo.findByProductID(product_ID)));
+        productsDB.forEach((product_ID, amount) -> products.put(productRepo.findByProductID(product_ID), amount));
 
         return products;
         //return collectOrderedProducts();

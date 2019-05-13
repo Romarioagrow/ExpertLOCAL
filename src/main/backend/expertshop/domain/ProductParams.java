@@ -33,6 +33,8 @@ public class ProductParams implements Serializable {
     private String typeCategory;
 
     private String pic;
+
+    private Integer amount;
     //TV
     @Nullable
     private String diagonal, resolution, tvFeatures;

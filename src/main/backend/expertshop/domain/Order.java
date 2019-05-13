@@ -44,6 +44,9 @@ public class Order implements Serializable {
     {
         if (this.getOrderedProducts() == null) {
             this.orderedProducts = new LinkedHashMap<>();
+
+            //orderedProducts.add(product);
+
             orderedProducts.put(productID, amount);
         }
         else this.orderedProducts.put(productID, amount);
