@@ -40,9 +40,9 @@ public class Product implements Serializable {
     @JoinColumn(name = "product_id")
     private ProductParams productParams;
 
-    @JsonIgnore
+    /*@JsonIgnore
     @ManyToMany(mappedBy = "orderedProducts", fetch = FetchType.EAGER)
-    private List<Order> orders;
+    private List<Order> orders;*/
 
     @JsonIgnore
     public String getTypeName() {

@@ -61,19 +61,18 @@ public class ProductService {
             order.setSessionUUID(getSessionID());
         }
 
-        /*
         Product product = productRepo.findByProductID(Integer.parseInt(productID));
-        OrderedProduct ordProduct = new OrderedProduct();
-        ordProduct.setProductID(productID);
-        ordProduct.setBrand(product.getBrand());
-        ordProduct.setModel(product.getModel());
-        ordProduct.setType(product.getProductParams().getType());
-        ordProduct.setAmount(1);
-        ordProduct.setTotalPrice(ordProduct.getPrice());
-        order.addProductToOrder(orderedProduct);
-        */
 
-        order.addProductToOrder(Integer.parseInt(productID), 1);
+        OrderedProduct orderedProduct = new OrderedProduct();
+        orderedProduct.setProductID(Integer.parseInt(productID));
+        orderedProduct.setBrand(product.getBrand());
+        orderedProduct.setModel(product.getModel());
+        orderedProduct.setType(product.getProductParams().getType());
+        orderedProduct.setPic(product.getProductParams().getPic());
+        orderedProduct.setAmount(1);
+        orderedProduct.setTotalPrice(product.getPrice());
+
+        order.addProductToOrder(orderedProduct);
         orderRepo.save(order);
 
         log.info("Product with ID" + productID + " add to order");
@@ -81,51 +80,46 @@ public class ProductService {
 
     ///Set<OrderedProduct> ||
     ///Map<OrderedProduct, ProductParams>
-    public Map<Product, Integer> showOrderedProducts()
+    public Set<OrderedProduct> showOrderedProducts()
     {
         if (orderRepo.findBySessionUUID(getSessionID()) != null)
         {
             Order order = orderRepo.findBySessionUUID(getSessionID());
 
+            return order.getOrderedProducts();
+
             //Map<Integer, Product> products = collectOrderedProducts();
             ///В МЕТОД!
-            Map<Integer, Integer> productsDB = order.getOrderedProducts();
-            Map<Product, Integer> products = new LinkedHashMap<>();
+            //Map<Integer, Integer> productsDB = order.getOrderedProducts();
+            //Map<Product, Integer> products = new LinkedHashMap<>();
 
 
             /*СЕРИЛИЗОВАТЬ ОБА ОБЪЕКТА В STRING/JSON И ПОЛОЖИТЬ В MAP*/
             /*ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
             String json = ow.writeValueAsString(object);*/
 
-            /*Set<OrderedProduct> prd1;
+            /*
             Map<OrderedProduct, ProductParams> prd2;
             productsDB.forEach((productID, amount) -> prd2.put(orderedProductRepo.findByProductID(productID), productParamsRepo.findByProductID(productID)));*/
 
-            productsDB.forEach((productID, amount) -> products.put(productRepo.findByProductID(productID), amount));
+            //productsDB.forEach((productID, amount) -> products.put(productRepo.findByProductID(productID), amount));
             //products.forEach((product, integer) -> log.info(product.getBrand()+ " " + product.getModel()));
 
-            return products;
+            //return products;
             //return collectOrderedProducts();
         }
         return null;
     }
 
-    public Map<Product, Integer> removeProductFromOrder(String productID)
+    public Set<OrderedProduct> removeProductFromOrder(String productID)
     {
         Order order = orderRepo.findBySessionUUID(getSessionID());
 
-        order.removeProductFromOrder(Integer.parseInt(productID));
+        order.setOrderedProducts(order.getOrderedProducts().stream()
+                .filter(orderedProduct -> !orderedProduct.getProductID().equals(Integer.parseInt(productID))).collect(Collectors.toSet()));
         orderRepo.save(order);
 
-        //Map<Integer, Product> products = collectOrderedProducts();
-        ///В МЕТОД!
-        Map<Integer, Integer> productsDB = order.getOrderedProducts();
-        Map<Product, Integer> products = new LinkedHashMap<>();
-
-        productsDB.forEach((product_ID, amount) -> products.put(productRepo.findByProductID(product_ID), amount));
-
-        return products;
-        //return collectOrderedProducts();
+        return order.getOrderedProducts();
     }
 
     public String getSessionID() {

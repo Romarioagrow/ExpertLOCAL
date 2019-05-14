@@ -1,10 +1,8 @@
 package expertshop.domain;
-
-import expertshop.repos.ProductRepo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,6 +10,7 @@ import java.util.*;
 
 @Entity
 @Data
+@EqualsAndHashCode(exclude = "orderedProducts")
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "prod_order")
@@ -27,16 +26,11 @@ public class Order implements Serializable {
     @Column(name = "user_id")
     private Integer userID;
 
-    /*!!!!!!!!!*/
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "products_to_order",
-            joinColumns = @JoinColumn(name = "order_id"))
-    @MapKeyJoinColumn(name = "product_id")
-    @Column(name = "count")
-    private Map<Integer, Integer> orderedProducts;
-    /*!!!!!!!!!*/
-    /*@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<OrderedProduct> orderedProducts;*/
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "products_to_order",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "ordered_product"))
+    private Set<OrderedProduct> orderedProducts;
 
     @Column(name = "total_price")
     private Integer totalPrice;
@@ -44,39 +38,15 @@ public class Order implements Serializable {
     @Column(name = "completed")
     private Boolean completed;
 
-    public void addProductToOrder(Integer productID, Integer amount)
-    {
+    public void addProductToOrder(OrderedProduct orderedProduct) {
         if (this.getOrderedProducts() == null) {
-            this.orderedProducts = new LinkedHashMap<>(); ///new HashSet<>();
-
-            //orderedProducts.add(orderedProduct);
-
-            orderedProducts.put(productID, amount);
+            this.orderedProducts = new HashSet<>();
+            orderedProducts.add(orderedProduct);
         }
-        else this.orderedProducts.put(productID, amount);
+        else this.orderedProducts.add(orderedProduct);
     }
 
-    public void removeProductFromOrder(Integer productID) {
-        orderedProducts.remove(productID);
+    public void removeProductFromOrder(OrderedProduct orderedProduct) {
+        orderedProducts.remove(orderedProduct);
     }
 }
-
-/*private OrderList orderedProducts;*/
-
-    /*@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "products_to_order",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private Set<Product> orderedProducts;*/
-   /*
-
-   public void addProductToOrder(Product product)
-    {
-        if (getOrderedProducts() == null) {
-            orderedProducts = new HashSet<>();
-            orderedProducts.add(product);
-        }
-        else orderedProducts.add(product);
-    }*/
-

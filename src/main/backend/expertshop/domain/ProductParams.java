@@ -12,23 +12,22 @@ import java.io.Serializable;
 
 @Entity
 @Data
-//@EqualsAndHashCode(exclude="product")
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "parameters")
 public class ProductParams implements Serializable {
-    @OneToOne(optional = false, mappedBy = "productParams", fetch = FetchType.EAGER)
-    @JsonIgnore
-    private Product product;
-
-    @OneToOne(optional = false, mappedBy = "orderedProductParams", fetch = FetchType.EAGER)
-    @JsonIgnore
-    private Product productToOrder;
-
     @Id
     @JsonIgnore
     @Column(name = "product_id")
     private Integer productID;
+
+    @OneToOne(optional = false, mappedBy = "productParams", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Product product;
+
+    /*@OneToOne(optional = false, mappedBy = "orderedProductParams", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private OrderedProduct productToOrder;*/
 
     @Column(name = "type")
     private String type;

@@ -8,10 +8,10 @@
             <div class="col">
                 <div class="card-group" id="bucket-products">
                     <#if orderedProducts??>
-                        <#list orderedProducts as product, amount>
+                        <#list orderedProducts as product>
                             <div class="card mb-4">
                                 <div class="view overlay">
-                                    <img class="card-img-top" src="${product.productParams.pic}" alt="Card image cap">
+                                    <img class="card-img-top" src="${product.pic}" alt="Card image cap">
                                     <a href="#!">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
@@ -22,14 +22,14 @@
                                         ${product.model}
                                         <div>
                                             <button type="button" class="btn btn-outline-danger waves-effect">-</button>
-                                            <span class="badge badge-primary badge-pill">${amount}</span>
+                                            <span class="badge badge-primary badge-pill">${product.amount}</span>
                                             <button type="button" class="btn btn-outline-success waves-effect">+</button>
                                         </div>
                                     </h4>
                                     <p class="card-text">
-                                        <strong>${product.productParams.type}</strong>, <strong><i>${product.price}</i></strong>
+                                        <strong>${product.type}</strong>, <strong><i>${product.totalPrice}</i></strong>
                                     </p>
-                                    <button type="button" class="btn btn-primary btn-md" name="remove-product" id="remove-product" value="${product.productID?c}">Удалить</button>
+                                    <button type="submit" class="btn btn-primary btn-md" name="remove-product" id="remove-product" value="${product.productID?c}">Удалить</button>
                                 </div>
                             </div>
                         </#list>
