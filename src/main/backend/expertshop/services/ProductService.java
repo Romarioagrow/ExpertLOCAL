@@ -1,6 +1,7 @@
 package expertshop.services;
 
 import expertshop.domain.Order;
+import expertshop.domain.OrderedProduct;
 import expertshop.domain.Product;
 import expertshop.domain.categories.Category;
 import expertshop.domain.categories.SubCategory;
@@ -60,9 +61,17 @@ public class ProductService {
             order.setSessionUUID(getSessionID());
         }
 
-        /*Product product = productRepo.findByProductID(Integer.parseInt(productID));
-        product.getProductParams().setAmount(1);
-        order.addProductToOrder(orderedProduct);*/
+        /*
+        Product product = productRepo.findByProductID(Integer.parseInt(productID));
+        OrderedProduct ordProduct = new OrderedProduct();
+        ordProduct.setProductID(productID);
+        ordProduct.setBrand(product.getBrand());
+        ordProduct.setModel(product.getModel());
+        ordProduct.setType(product.getProductParams().getType());
+        ordProduct.setAmount(1);
+        ordProduct.setTotalPrice(ordProduct.getPrice());
+        order.addProductToOrder(orderedProduct);
+        */
 
         order.addProductToOrder(Integer.parseInt(productID), 1);
         orderRepo.save(order);
@@ -70,6 +79,8 @@ public class ProductService {
         log.info("Product with ID" + productID + " add to order");
     }
 
+    ///Set<OrderedProduct> ||
+    ///Map<OrderedProduct, ProductParams>
     public Map<Product, Integer> showOrderedProducts()
     {
         if (orderRepo.findBySessionUUID(getSessionID()) != null)
@@ -80,6 +91,15 @@ public class ProductService {
             ///В МЕТОД!
             Map<Integer, Integer> productsDB = order.getOrderedProducts();
             Map<Product, Integer> products = new LinkedHashMap<>();
+
+
+            /*СЕРИЛИЗОВАТЬ ОБА ОБЪЕКТА В STRING/JSON И ПОЛОЖИТЬ В MAP*/
+            /*ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+            String json = ow.writeValueAsString(object);*/
+
+            /*Set<OrderedProduct> prd1;
+            Map<OrderedProduct, ProductParams> prd2;
+            productsDB.forEach((productID, amount) -> prd2.put(orderedProductRepo.findByProductID(productID), productParamsRepo.findByProductID(productID)));*/
 
             productsDB.forEach((productID, amount) -> products.put(productRepo.findByProductID(productID), amount));
             //products.forEach((product, integer) -> log.info(product.getBrand()+ " " + product.getModel()));

@@ -27,12 +27,16 @@ public class Order implements Serializable {
     @Column(name = "user_id")
     private Integer userID;
 
+    /*!!!!!!!!!*/
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "products_to_order",
             joinColumns = @JoinColumn(name = "order_id"))
     @MapKeyJoinColumn(name = "product_id")
     @Column(name = "count")
     private Map<Integer, Integer> orderedProducts;
+    /*!!!!!!!!!*/
+    /*@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<OrderedProduct> orderedProducts;*/
 
     @Column(name = "total_price")
     private Integer totalPrice;
@@ -43,9 +47,9 @@ public class Order implements Serializable {
     public void addProductToOrder(Integer productID, Integer amount)
     {
         if (this.getOrderedProducts() == null) {
-            this.orderedProducts = new LinkedHashMap<>();
+            this.orderedProducts = new LinkedHashMap<>(); ///new HashSet<>();
 
-            //orderedProducts.add(product);
+            //orderedProducts.add(orderedProduct);
 
             orderedProducts.put(productID, amount);
         }

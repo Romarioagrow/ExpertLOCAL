@@ -21,6 +21,10 @@ public class ProductParams implements Serializable {
     @JsonIgnore
     private Product product;
 
+    @OneToOne(optional = false, mappedBy = "orderedProductParams", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private Product productToOrder;
+
     @Id
     @JsonIgnore
     @Column(name = "product_id")
