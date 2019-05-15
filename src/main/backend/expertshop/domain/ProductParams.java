@@ -25,10 +25,6 @@ public class ProductParams implements Serializable {
     @JsonIgnore
     private Product product;
 
-    /*@OneToOne(optional = false, mappedBy = "orderedProductParams", fetch = FetchType.EAGER)
-    @JsonIgnore
-    private OrderedProduct productToOrder;*/
-
     @Column(name = "type")
     private String type;
 
@@ -46,3 +42,8 @@ public class ProductParams implements Serializable {
     @Nullable
     private String stoveDimensions;
 }
+
+
+/*@OneToOne(optional = false, mappedBy = "orderedProductParams", fetch = FetchType.EAGER)
+    @JsonIgnore
+    private OrderedProduct productToOrder;*/

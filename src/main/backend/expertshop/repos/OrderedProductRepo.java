@@ -1,7 +1,6 @@
 package expertshop.repos;
 
 import expertshop.domain.OrderedProduct;
-import expertshop.domain.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

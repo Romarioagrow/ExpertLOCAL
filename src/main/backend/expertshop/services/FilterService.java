@@ -19,7 +19,6 @@ public class FilterService {
 
     public List<Product> filterProducts(Map<String, Object> params, String req_type) {
         showReceivedParams(params);
-
         return filter(params, productRepo.findByType(Type.valueOf(req_type)));
     }
 

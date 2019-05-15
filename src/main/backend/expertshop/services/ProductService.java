@@ -67,12 +67,12 @@ public class ProductService {
 
         OrderedProduct orderedProduct = new OrderedProduct();
         orderedProduct.setProductID(Integer.parseInt(productID));
+        orderedProduct.setAmount(1);
         orderedProduct.setBrand(product.getBrand());
         orderedProduct.setModel(product.getModel());
         orderedProduct.setType(product.getProductParams().getType());
         orderedProduct.setPic(product.getProductParams().getPic());
         orderedProduct.setPrice(product.getPrice());
-        orderedProduct.setAmount(1);
         orderedProduct.setTotalPrice(product.getPrice());
 
         order.addProductToOrder(orderedProduct);
@@ -99,22 +99,15 @@ public class ProductService {
 
         order.getOrderedProducts().remove(productToDelete);
         orderRepo.save(order);
+
         orderedProductRepo.delete(productToDelete);
 
-        //log.info("Product deleted: " + productToDelete.getId() + " " + productToDelete.getProductID() + " " +productToDelete.getBrand() + " " + productToDelete.getModel());
         return order.getOrderedProducts();
     }
 
-    public String getSessionID() {
-        return RequestContextHolder.currentRequestAttributes().getSessionId();
-    }
-
-    public OrderedProduct changeAmount(Map<String, String> data) {
-
+    public OrderedProduct changeAmount(Map<String, String> data)
+    {
         OrderedProduct orderedProduct = orderedProductRepo.findByIdAndProductID(Integer.valueOf(data.get("orderedID")), Integer.valueOf(data.get("productID")));
-
-        log.info(orderedProduct.toString());
-        log.info("Before: "+orderedProduct.getAmount().toString());
 
         if (data.get("action").contains("product-less")) {
             if (orderedProduct.getAmount() > 1) orderedProduct.setAmount(orderedProduct.getAmount()-1);
@@ -122,11 +115,13 @@ public class ProductService {
         else orderedProduct.setAmount(orderedProduct.getAmount()+1);
 
         orderedProduct.setTotalPrice(orderedProduct.getPrice()*orderedProduct.getAmount());
-
         orderedProductRepo.save(orderedProduct);
-        log.info("After: "+orderedProduct.getAmount().toString());
 
         return orderedProduct;
+    }
+
+    public String getSessionID() {
+        return RequestContextHolder.currentRequestAttributes().getSessionId();
     }
 }
 

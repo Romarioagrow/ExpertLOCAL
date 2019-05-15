@@ -25,6 +25,12 @@ $(document).ready(function(){
 
 //$('button[type="button"][id="product-more"]').click(changeAmount());
 
+///!!!
+/*$('body').click(function(){
+    /// if элеиентПодСтрелкой.name != search
+    document.getElementById("display-result").style.display = "none";
+});*/
+
 function addToOrder(e) {
     e.preventDefault();
 
@@ -53,8 +59,8 @@ function changeAmount(e) {
         'action'    : ($(this).attr("id"))
     };
 
-    let amountID     = '#amount'+data.orderedID;
-    let totalPriceID = '#total-price'+data.orderedID;
+    let amountID     = '#amount'      + data.orderedID;
+    let totalPriceID = '#total-price' + data.orderedID;
 
     data = JSON.stringify(data);
     console.log(data);
@@ -66,8 +72,8 @@ function changeAmount(e) {
         data: data,
         processData: false,
         headers: {'Content-Type': 'application/json'},
-        complete: function(orderedProduct) {
-
+        complete: function(orderedProduct)
+        {
             $(amountID).empty().append(
                 orderedProduct.responseJSON.amount
             );
