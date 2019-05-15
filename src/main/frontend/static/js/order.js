@@ -16,7 +16,9 @@ $(document).ready(function(){
     $('button[type="button"][id="product-less"]').on('click', changeAmount);
 });
 /*$(document).ajaxComplete(function() {
-    $('button[type="button"][id="product-more-js"]').on('click', changeAmount);
+    $(document).ready(function(){
+        $('button[type="button"][id="product-more"]').on('click', changeAmount);
+    });
 });*/
 
 //$('button[type="button"][id="product-more"]').on('click', changeAmount);

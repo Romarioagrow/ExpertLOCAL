@@ -31,9 +31,11 @@
     </tr>
 </#if>
 
-<#--<#if product.smthParam?contains("smthVal")>
+<#--
+<#if product.smthParam?contains("smthVal")>
     <tr>
         <th scope="row">smthParam</th>
         <td><strong>smthVal</strong></td>
     </tr>
-    </#if>-->
+</#if>
+-->
