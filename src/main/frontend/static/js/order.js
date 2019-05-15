@@ -1,17 +1,17 @@
 $(document).ready(function(){
     $('button[type="submit"][name="addToOrder"]').on('click', addToOrder);
 });
+
 $(document).ready(function(){
     $('button[type="submit"][name="remove-product"]').on('click', removeFromOrder);
 });
-
 $(document).ajaxComplete(function() {
     $('button[type="submit"][name="remove-product"]').on('click', removeFromOrder);
 });
-/*$('button[type="submit"][name="remove-product"]').click(removeFromOrder(e));*/
-/*$(document).ready(function(){
-    $('#remove-product').on('click', removeFromOrder);
-});*/
+
+$(document).ready(function(){
+    $('button[type="button"][id="product-more"]').on('click', changeAmount);
+});
 
 function addToOrder(e) {
     e.preventDefault();
@@ -28,6 +28,34 @@ function addToOrder(e) {
         headers: {'Content-Type': 'application/json'},
         complete: function(products) {
             console.log("Add product with ID " + productID);
+        }
+    });
+}
+
+function changeAmount() {
+
+    var data = {
+        'productID' : ($(this).attr("value")),
+        'orderedID' : ($(this).attr("name")),
+        'action'    : ($(this).attr("id"))
+    };
+
+    let amountID = '#amount'+data.orderedID;
+
+    data = JSON.stringify(data);
+
+    $.ajax({
+        url: 'http://localhost:8080/order',
+        type: 'PUT',
+        dataType: 'json',
+        data: data,
+        processData: false,
+        headers: {'Content-Type': 'application/json'},
+        complete: function(amount) {
+
+            $(amountID).empty().append(
+                '<span class="badge badge-primary badge-pill">'+amount.responseText+'</span>'
+            )
         }
     });
 }
@@ -69,9 +97,9 @@ function removeFromOrder(e) {
                     '<h4 class="card-title">' +
                         product.brand + ' ' + product.model +
                     '<div>' +
-                    '<button type="button" class="btn btn-outline-danger waves-effect" name="product-more" value="'+product.productID+'">-</button>' +
-                    '<span class="badge badge-primary badge-pill">' + product.amount + '</span>' +
-                    '<button type="button" class="btn btn-outline-success waves-effect" name="remove-less" value="'+product.productID+'">+</button>' +
+                    '<button type="button" class="btn btn-outline-danger waves-effect" name="product-less" value="'+product.productID+'">-</button>' +
+                    '<span class="badge badge-primary badge-pill" id="amount">' + product.amount + '</span>' +
+                    '<button type="button" class="btn btn-outline-success waves-effect" name="product-more" value="'+product.productID+'">+</button>' +
                     '</div>' +
                     '</h4>' +
                     '<p class="card-text">' +

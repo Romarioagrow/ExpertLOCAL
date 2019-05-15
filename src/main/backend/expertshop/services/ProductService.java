@@ -7,6 +7,7 @@ import expertshop.domain.categories.Category;
 import expertshop.domain.categories.SubCategory;
 import expertshop.domain.categories.Type;
 import expertshop.repos.OrderRepo;
+import expertshop.repos.OrderedProductRepo;
 import expertshop.repos.ProductRepo;
 
 import lombok.AllArgsConstructor;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class ProductService {
+    private final OrderedProductRepo orderedProductRepo;
     private final ProductRepo productRepo;
     private final OrderRepo orderRepo;
 
@@ -78,35 +80,12 @@ public class ProductService {
         log.info("Product with ID" + productID + " add to order");
     }
 
-    ///Set<OrderedProduct> ||
-    ///Map<OrderedProduct, ProductParams>
     public Set<OrderedProduct> showOrderedProducts()
     {
         if (orderRepo.findBySessionUUID(getSessionID()) != null)
         {
             Order order = orderRepo.findBySessionUUID(getSessionID());
-
             return order.getOrderedProducts();
-
-            //Map<Integer, Product> products = collectOrderedProducts();
-            ///В МЕТОД!
-            //Map<Integer, Integer> productsDB = order.getOrderedProducts();
-            //Map<Product, Integer> products = new LinkedHashMap<>();
-
-
-            /*СЕРИЛИЗОВАТЬ ОБА ОБЪЕКТА В STRING/JSON И ПОЛОЖИТЬ В MAP*/
-            /*ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-            String json = ow.writeValueAsString(object);*/
-
-            /*
-            Map<OrderedProduct, ProductParams> prd2;
-            productsDB.forEach((productID, amount) -> prd2.put(orderedProductRepo.findByProductID(productID), productParamsRepo.findByProductID(productID)));*/
-
-            //productsDB.forEach((productID, amount) -> products.put(productRepo.findByProductID(productID), amount));
-            //products.forEach((product, integer) -> log.info(product.getBrand()+ " " + product.getModel()));
-
-            //return products;
-            //return collectOrderedProducts();
         }
         return null;
     }
@@ -118,12 +97,30 @@ public class ProductService {
         order.setOrderedProducts(order.getOrderedProducts().stream()
                 .filter(orderedProduct -> !orderedProduct.getProductID().equals(Integer.parseInt(productID))).collect(Collectors.toSet()));
         orderRepo.save(order);
+        //orderedProductRepo.delete(orderedProductRepo.findByProductID(Integer.parseInt(productID)));
 
         return order.getOrderedProducts();
     }
 
     public String getSessionID() {
         return RequestContextHolder.currentRequestAttributes().getSessionId();
+    }
+
+    public Integer changeAmount(Map<String, String> data) {
+
+        data.forEach((s, s2) -> log.info(s + " " + s2));
+
+        Integer ID = Integer.valueOf(data.get("orderedID"));
+        Integer productID = Integer.valueOf(data.get("productID"));
+
+        OrderedProduct orderedProduct = orderedProductRepo.findByIdAndProductID(ID, productID);
+        orderedProduct.setAmount(orderedProduct.getAmount()+1);
+        orderedProductRepo.save(orderedProduct);
+
+        //Order order = orderRepo.findBySessionUUID(getSessionID());
+        log.info(orderedProduct.getAmount().toString());
+
+        return orderedProduct.getAmount();
     }
 }
 

@@ -21,9 +21,9 @@
                                         ${product.brand}
                                         ${product.model}
                                         <div>
-                                            <button type="button" class="btn btn-outline-danger waves-effect">-</button>
-                                            <span class="badge badge-primary badge-pill">${product.amount}</span>
-                                            <button type="button" class="btn btn-outline-success waves-effect">+</button>
+                                            <button type="button" class="btn btn-outline-danger waves-effect" id="product-less" name="${product.id?c}" value="${product.productID?c}">-</button>
+                                            <div id="amount${product.id}" name="${product.id}"><span class="badge badge-primary badge-pill">${product.amount}</span></div>
+                                            <button type="button" class="btn btn-outline-success waves-effect" id="product-more" name="${product.id?c}" value="${product.productID?c}">+</button>
                                         </div>
                                     </h4>
                                     <p class="card-text">
