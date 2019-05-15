@@ -5,13 +5,20 @@ $(document).ready(function(){
 $(document).ready(function(){
     $('button[type="submit"][name="remove-product"]').on('click', removeFromOrder);
 });
-$(document).ajaxComplete(function() {
+/*$(document).ajaxComplete(function() {
     $('button[type="submit"][name="remove-product"]').on('click', removeFromOrder);
-});
+});*/
 
 $(document).ready(function(){
     $('button[type="button"][id="product-more"]').on('click', changeAmount);
 });
+/*$(document).ajaxComplete(function() {
+    $('button[type="button"][id="product-more-js"]').on('click', changeAmount);
+});*/
+
+//$('button[type="button"][id="product-more"]').on('click', changeAmount);
+
+//$('button[type="button"][id="product-more"]').click(changeAmount());
 
 function addToOrder(e) {
     e.preventDefault();
@@ -32,7 +39,8 @@ function addToOrder(e) {
     });
 }
 
-function changeAmount() {
+function changeAmount(/*e*/) {
+    //e.preventDefault();
 
     var data = {
         'productID' : ($(this).attr("value")),
@@ -99,13 +107,13 @@ function removeFromOrder(e) {
                     '<div>' +
                     '<button type="button" class="btn btn-outline-danger waves-effect" name="product-less" value="'+product.productID+'">-</button>' +
                     '<span class="badge badge-primary badge-pill" id="amount">' + product.amount + '</span>' +
-                    '<button type="button" class="btn btn-outline-success waves-effect" name="product-more" value="'+product.productID+'">+</button>' +
+                    '<button type="button" class="btn btn-outline-success waves-effect" id="product-more-js" name="'+product.id+'" value="'+product.productID+'">+</button>' +
                     '</div>' +
                     '</h4>' +
                     '<p class="card-text">' +
                     '<strong>'+product.type+'</strong>, <strong><i>' + product.totalPrice + '</i></strong>' +
                     '</p>' +
-                    '<button type="submit" class="btn btn-primary btn-md" name="remove-product" id="remove-product" value="'+product.productID+'">Удалить</button>' +
+                    '<button type="submit" class="btn btn-primary btn-md" name="remove-product" id="remove-product" value="'+product.id+'">Удалить</button>' +
                     '</div>' +
                     '</div>'
                 )

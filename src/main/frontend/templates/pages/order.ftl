@@ -29,7 +29,7 @@
                                     <p class="card-text">
                                         <strong>${product.type}</strong>, <strong><i>${product.totalPrice}</i></strong>
                                     </p>
-                                    <button type="submit" class="btn btn-primary btn-md" name="remove-product" id="remove-product" value="${product.productID?c}">Удалить</button>
+                                    <button type="submit" class="btn btn-primary btn-md" name="remove-product" id="remove-product" value="${product.id?c}">Удалить</button>
                                 </div>
                             </div>
                         </#list>

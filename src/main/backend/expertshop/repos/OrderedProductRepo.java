@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrderedProductRepo extends JpaRepository<OrderedProduct, Integer> {
+    OrderedProduct findByid(Integer id);
+
     OrderedProduct findByProductID(Integer productID);
 
     OrderedProduct findByIdAndProductID(Integer orderedID, Integer productID);

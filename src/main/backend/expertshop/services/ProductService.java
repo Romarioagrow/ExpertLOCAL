@@ -77,6 +77,7 @@ public class ProductService {
         order.addProductToOrder(orderedProduct);
         orderRepo.save(order);
 
+        System.out.println("\n");
         log.info("Product with ID" + productID + " add to order");
     }
 
@@ -90,14 +91,16 @@ public class ProductService {
         return null;
     }
 
-    public Set<OrderedProduct> removeProductFromOrder(String productID)
+    public Set<OrderedProduct> removeProductFromOrder(String id)
     {
         Order order = orderRepo.findBySessionUUID(getSessionID());
+        OrderedProduct productToDelete = orderedProductRepo.findByid(Integer.parseInt(id));
 
-        order.setOrderedProducts(order.getOrderedProducts().stream()
-                .filter(orderedProduct -> !orderedProduct.getProductID().equals(Integer.parseInt(productID))).collect(Collectors.toSet()));
+        order.getOrderedProducts().remove(productToDelete);
         orderRepo.save(order);
-        //orderedProductRepo.delete(orderedProductRepo.findByProductID(Integer.parseInt(productID)));
+        orderedProductRepo.delete(productToDelete);
+
+        log.info("Product deleted: " + productToDelete.getId() + " " + productToDelete.getProductID() + " " +productToDelete.getBrand() + " " + productToDelete.getModel());
 
         return order.getOrderedProducts();
     }
@@ -108,17 +111,21 @@ public class ProductService {
 
     public Integer changeAmount(Map<String, String> data) {
 
-        data.forEach((s, s2) -> log.info(s + " " + s2));
+        //data.forEach((s, s2) -> log.info(s + " " + s2));
 
-        Integer ID = Integer.valueOf(data.get("orderedID"));
-        Integer productID = Integer.valueOf(data.get("productID"));
+        //System.out.println("\n");
+        //Integer ID = Integer.valueOf(data.get("orderedID"));
+        //Integer productID = Integer.valueOf(data.get("productID"));
 
-        OrderedProduct orderedProduct = orderedProductRepo.findByIdAndProductID(ID, productID);
+        OrderedProduct orderedProduct = orderedProductRepo.findByIdAndProductID(Integer.valueOf(data.get("orderedID")), Integer.valueOf(data.get("productID")));
+
+        log.info(orderedProduct.toString());
+        log.info("Before: "+orderedProduct.getAmount().toString());
+
         orderedProduct.setAmount(orderedProduct.getAmount()+1);
         orderedProductRepo.save(orderedProduct);
 
-        //Order order = orderRepo.findBySessionUUID(getSessionID());
-        log.info(orderedProduct.getAmount().toString());
+        log.info("After: "+orderedProduct.getAmount().toString());
 
         return orderedProduct.getAmount();
     }

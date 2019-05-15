@@ -13,7 +13,7 @@ import java.util.*;
 @EqualsAndHashCode(exclude = "orderedProducts")
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "prod_order")
+@Table(name = "ordr")
 public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
