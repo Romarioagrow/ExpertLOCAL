@@ -71,6 +71,7 @@ public class ProductService {
         orderedProduct.setModel(product.getModel());
         orderedProduct.setType(product.getProductParams().getType());
         orderedProduct.setPic(product.getProductParams().getPic());
+        orderedProduct.setPrice(product.getPrice());
         orderedProduct.setAmount(1);
         orderedProduct.setTotalPrice(product.getPrice());
 
@@ -100,8 +101,7 @@ public class ProductService {
         orderRepo.save(order);
         orderedProductRepo.delete(productToDelete);
 
-        log.info("Product deleted: " + productToDelete.getId() + " " + productToDelete.getProductID() + " " +productToDelete.getBrand() + " " + productToDelete.getModel());
-
+        //log.info("Product deleted: " + productToDelete.getId() + " " + productToDelete.getProductID() + " " +productToDelete.getBrand() + " " + productToDelete.getModel());
         return order.getOrderedProducts();
     }
 
@@ -109,25 +109,24 @@ public class ProductService {
         return RequestContextHolder.currentRequestAttributes().getSessionId();
     }
 
-    public Integer changeAmount(Map<String, String> data) {
-
-        //data.forEach((s, s2) -> log.info(s + " " + s2));
-
-        //System.out.println("\n");
-        //Integer ID = Integer.valueOf(data.get("orderedID"));
-        //Integer productID = Integer.valueOf(data.get("productID"));
+    public OrderedProduct changeAmount(Map<String, String> data) {
 
         OrderedProduct orderedProduct = orderedProductRepo.findByIdAndProductID(Integer.valueOf(data.get("orderedID")), Integer.valueOf(data.get("productID")));
 
         log.info(orderedProduct.toString());
         log.info("Before: "+orderedProduct.getAmount().toString());
 
-        orderedProduct.setAmount(orderedProduct.getAmount()+1);
-        orderedProductRepo.save(orderedProduct);
+        if (data.get("action").contains("product-less")) {
+            if (orderedProduct.getAmount() > 1) orderedProduct.setAmount(orderedProduct.getAmount()-1);
+        }
+        else orderedProduct.setAmount(orderedProduct.getAmount()+1);
 
+        orderedProduct.setTotalPrice(orderedProduct.getPrice()*orderedProduct.getAmount());
+
+        orderedProductRepo.save(orderedProduct);
         log.info("After: "+orderedProduct.getAmount().toString());
 
-        return orderedProduct.getAmount();
+        return orderedProduct;
     }
 }
 

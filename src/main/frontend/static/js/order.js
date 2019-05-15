@@ -12,6 +12,9 @@ $(document).ready(function(){
 $(document).ready(function(){
     $('button[type="button"][id="product-more"]').on('click', changeAmount);
 });
+$(document).ready(function(){
+    $('button[type="button"][id="product-less"]').on('click', changeAmount);
+});
 /*$(document).ajaxComplete(function() {
     $('button[type="button"][id="product-more-js"]').on('click', changeAmount);
 });*/
@@ -39,8 +42,8 @@ function addToOrder(e) {
     });
 }
 
-function changeAmount(/*e*/) {
-    //e.preventDefault();
+function changeAmount(e) {
+    e.preventDefault();
 
     var data = {
         'productID' : ($(this).attr("value")),
@@ -48,9 +51,11 @@ function changeAmount(/*e*/) {
         'action'    : ($(this).attr("id"))
     };
 
-    let amountID = '#amount'+data.orderedID;
+    let amountID     = '#amount'+data.orderedID;
+    let totalPriceID = '#total-price'+data.orderedID;
 
     data = JSON.stringify(data);
+    console.log(data);
 
     $.ajax({
         url: 'http://localhost:8080/order',
@@ -59,10 +64,13 @@ function changeAmount(/*e*/) {
         data: data,
         processData: false,
         headers: {'Content-Type': 'application/json'},
-        complete: function(amount) {
+        complete: function(orderedProduct) {
 
             $(amountID).empty().append(
-                '<span class="badge badge-primary badge-pill">'+amount.responseText+'</span>'
+                orderedProduct.responseJSON.amount
+            );
+            $(totalPriceID).empty().append(
+                orderedProduct.responseJSON.totalPrice
             )
         }
     });
@@ -94,7 +102,7 @@ function removeFromOrder(e) {
 
                 $("#bucket-products").append
                 (
-                    '<div class="card mb-4">' +
+                    '<div class="card ordered-card mb-4">' +
                     '<div class="view overlay">' +
                     '<img class="card-img-top" src="'+product.pic+'" alt="Card image cap">' +
                     '<a href="#!">' +
@@ -105,13 +113,13 @@ function removeFromOrder(e) {
                     '<h4 class="card-title">' +
                         product.brand + ' ' + product.model +
                     '<div>' +
-                    '<button type="button" class="btn btn-outline-danger waves-effect" name="product-less" value="'+product.productID+'">-</button>' +
+                    '<button type="button" class="btn btn-outline-danger waves-effect" id="product-less" name="'+product.id+'" value="'+product.productID+'">-</button>' +
                     '<span class="badge badge-primary badge-pill" id="amount">' + product.amount + '</span>' +
-                    '<button type="button" class="btn btn-outline-success waves-effect" id="product-more-js" name="'+product.id+'" value="'+product.productID+'">+</button>' +
+                    '<button type="button" class="btn btn-outline-success waves-effect" id="product-more" name="'+product.id+'" value="'+product.productID+'">+</button>' +
                     '</div>' +
                     '</h4>' +
                     '<p class="card-text">' +
-                    '<strong>'+product.type+'</strong>, <strong><i>' + product.totalPrice + '</i></strong>' +
+                    '<strong>'+product.type+'</strong>, <strong><i>' + product.totalPrice + '₽' + '</i></strong>' +
                     '</p>' +
                     '<button type="submit" class="btn btn-primary btn-md" name="remove-product" id="remove-product" value="'+product.id+'">Удалить</button>' +
                     '</div>' +
