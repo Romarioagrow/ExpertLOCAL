@@ -53,6 +53,14 @@ public class ProductService {
         return searchedProducts;
     }
 
+    public Set<OrderedProduct> showOrderedProducts()
+    {
+        if (orderRepo.findBySessionUUID(getSessionID()) != null) {
+            return orderRepo.findBySessionUUID(getSessionID()).getOrderedProducts();
+        }
+        return null;
+    }
+
     public void addProductToOrder(String productID)
     {
         log.info("Received product with ID " + productID);
@@ -77,30 +85,29 @@ public class ProductService {
         orderedProduct.setTotalPrice(product.getPrice());
 
         order.addProductToOrder(orderedProduct);
+        //updateOrderDetails(order, orderedProduct);
 
-
-        //order.setTotalPrice(order.getTotalPrice() + orderedProduct.getTotalPrice());
-
+        //////
         if (order.getTotalPrice() == null) {
             order.setTotalPrice(orderedProduct.getTotalPrice());
-        } else order.setTotalPrice(order.getTotalPrice() + orderedProduct.getTotalPrice());
-
+            order.setProductsAmount(1);
+            order.setTotalAmount(1);
+        } else {
+            order.setTotalPrice(order.getTotalPrice() + orderedProduct.getTotalPrice());
+            order.setProductsAmount(order.getProductsAmount() + 1);
+            order.setTotalAmount(order.getProductsAmount());
+        }
+        /////
         orderRepo.save(order);
 
         System.out.println("\n");
         log.info("Product with ID" + productID + " add to order");
     }
 
-    public Set<OrderedProduct> showOrderedProducts()
-    {
-        if (orderRepo.findBySessionUUID(getSessionID()) != null)
-        {
-            //Order order = orderRepo.findBySessionUUID(getSessionID());
-            //return order.getOrderedProducts();
-            return orderRepo.findBySessionUUID(getSessionID()).getOrderedProducts();
-        }
-        return null;
-    }
+    /*private void updateOrderDetails(Order order, OrderedProduct orderedProduct) {
+        order.setTotalPrice(orderedProduct.getTotalPrice());
+    }*/
+
 
     public Set<OrderedProduct> removeProductFromOrder(String id)
     {
@@ -108,9 +115,11 @@ public class ProductService {
         OrderedProduct productToDelete = orderedProductRepo.findByid(Integer.parseInt(id));
 
         order.getOrderedProducts().remove(productToDelete);
-        order.setTotalPrice(order.getTotalPrice() - productToDelete.getTotalPrice());
-        orderRepo.save(order);
+        order.setTotalPrice     (order.getTotalPrice() - productToDelete.getTotalPrice());
+        order.setTotalAmount    (order.getTotalAmount() - productToDelete.getAmount());
+        order.setProductsAmount (order.getProductsAmount() - 1);
 
+        orderRepo.save(order);
         orderedProductRepo.delete(productToDelete);
 
         return order.getOrderedProducts();
@@ -118,9 +127,10 @@ public class ProductService {
 
     public OrderedProduct changeAmount(Map<String, String> data)
     {
-        OrderedProduct orderedProduct = orderedProductRepo.findByid(Integer.valueOf(data.get("orderedID")));
 
-        if (data.get("action").contains("product-less") && orderedProduct.getAmount() > 1) {
+        OrderedProduct orderedProduct   = orderedProductRepo.findByid(Integer.valueOf(data.get("orderedID")));
+
+        if (data.get("action").contains("product-less") && orderedProduct.getAmount() >= 1) {
             orderedProduct.setAmount(orderedProduct.getAmount() - 1);
         }
         else orderedProduct.setAmount(orderedProduct.getAmount() + 1);
@@ -129,7 +139,9 @@ public class ProductService {
         orderedProductRepo.save(orderedProduct);
 
         Order order = orderRepo.findBySessionUUID(getSessionID());
-        order.setTotalPrice();
+        order.setTotalPrice(order.getTotalOrderPrice());
+        order.setTotalAmount(order.getTotalProductsAmount());
+        //order.setProductsAmount(order.getOrderedProducts().size());
         orderRepo.save(order);
 
         return orderedProduct;
@@ -139,17 +151,11 @@ public class ProductService {
         return RequestContextHolder.currentRequestAttributes().getSessionId();
     }
 
-    public Order.OrderToShow orderToShow() {
-
+    /*public Order.OrderToShow orderToShow()
+    {
         Order order = orderRepo.findBySessionUUID(getSessionID());
-
-        /*
-        *//*orderToShow.setTotalPrice(order.getTotalPrice());
-        orderToShow.setProductsAmount(order.getOrderedProducts().size());
-        orderToShow.setTotalProducts(order.getTotalProductsAmount());*/
-
         return order.new OrderToShow();
-    }
+    }*/
 }
 
 

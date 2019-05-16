@@ -37,7 +37,7 @@
                         <h3 style="margin-top: 4vh">Пока ничего нет...</h3>
                     </#if>
                 </div>
-                <ul class="list-group">
+                <#--<ul class="list-group">
                     <#if orderedProducts??>
                         <#list orderedProducts as product>
 
@@ -54,16 +54,17 @@
                     <#else>
                         <h3 style="margin-top: 4vh">Пока ничего нет...</h3>
                     </#if>
-                </ul>
+                </ul>-->
 
             </div>
         </div>
-        <#if orderToShow??>
+        <#if order??>
             <div class="row">
                 <div class="col">
-                    <h3 class="mt-2">Заказ на сумму <strong>${orderToShow.showTotalPrice}₽</strong>
-                        <br>Товаров <b>${orderToShow.productsAmount}</b>
-                        <br>Всего единиц <b>${orderToShow.totalProducts}</b>
+                    <h3 class="mt-2">
+                        Заказ на сумму <strong>${order.totalPrice}₽</strong>
+                        <br>Товаров <b>${order.productsAmount}</b>
+                        <br>Всего единиц <b>${order.totalAmount}</b>
                     </h3>
                     <button type="button" class="btn btn-success btn-lg btn-block mt-2">Заказ подтверждаю!</button>
                 </div>

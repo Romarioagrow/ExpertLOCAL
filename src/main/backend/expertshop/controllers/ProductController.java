@@ -1,5 +1,6 @@
 package expertshop.controllers;
 import expertshop.domain.categories.Type;
+import expertshop.repos.OrderRepo;
 import expertshop.repos.ProductRepo;
 import expertshop.services.ProductService;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 @AllArgsConstructor
 public class ProductController {
     private final ProductRepo productRepo;
+    private final OrderRepo orderRepo;
     private final ProductService productService;
 
     @GetMapping("/{req_product}")
@@ -42,7 +44,7 @@ public class ProductController {
     public String order(Model model)
     {
         model.addAttribute("orderedProducts", productService.showOrderedProducts());
-        model.addAttribute("orderToShow", productService.orderToShow());
+        model.addAttribute("order", orderRepo.findBySessionUUID(productService.getSessionID()));
         return "pages/order";
     }
 }

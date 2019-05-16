@@ -34,21 +34,10 @@ public class Order implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "ordered_product"))
     private Set<OrderedProduct> orderedProducts;
 
-    @Column(name = "total_price")
-    private Integer totalPrice;
+    private Integer totalPrice, productsAmount, totalAmount;
 
     @Column(name = "completed")
     private Boolean completed;
-
-    @Data
-    public class OrderToShow {
-        public Integer showTotalPrice, productsAmount, totalProducts;
-        public OrderToShow() {
-            this.showTotalPrice = getTotalPrice();
-            this.productsAmount = getOrderedProducts().size();
-            this.totalProducts  = getTotalProductsAmount();
-        }
-    }
 
     public void addProductToOrder(OrderedProduct orderedProduct) {
         if (this.getOrderedProducts() == null) {
@@ -58,18 +47,24 @@ public class Order implements Serializable {
         else this.orderedProducts.add(orderedProduct);
     }
 
-    public void setTotalPrice() {
-        this.setTotalPrice(0);
-        this.orderedProducts.forEach(orderedProduct -> this.totalPrice += orderedProduct.getTotalPrice());
-        log.info(this.getTotalPrice().toString());
+    public Integer getTotalOrderPrice() {
+        Integer totalPrice = 0;
+        for (OrderedProduct product : orderedProducts) {
+            totalPrice += product.getTotalPrice();
+        }
+
+        log.info("Total price" + getTotalPrice().toString());
+        return totalPrice;
     }
 
     public Integer getTotalProductsAmount() {
-        Integer totalProductsAmount = 0;
-        for (OrderedProduct product : this.orderedProducts){
-            totalProductsAmount += product.getAmount();
+        Integer totalAmount = 0;
+        for (OrderedProduct product : orderedProducts) {
+            totalAmount += product.getAmount();
         }
-        return totalProductsAmount;
+
+        log.info("Total amount" + getTotalPrice().toString());
+        return totalAmount;
     }
 
     public void removeProductFromOrder(OrderedProduct orderedProduct) {
