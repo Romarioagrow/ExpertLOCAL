@@ -6,7 +6,6 @@
         </div>
         <div class="row">
             <div class="col">
-
                 <div class="card-group" id="bucket-products">
                     <#if orderedProducts??>
                         <#list orderedProducts as product>
@@ -38,7 +37,6 @@
                         <h3 style="margin-top: 4vh">Пока ничего нет...</h3>
                     </#if>
                 </div>
-
                 <ul class="list-group">
                     <#if orderedProducts??>
                         <#list orderedProducts as product>
@@ -58,6 +56,107 @@
                     </#if>
                 </ul>
 
+            </div>
+        </div>
+        <#if orderToShow??>
+            <div class="row">
+                <div class="col">
+                    <h3 class="mt-2">Заказ на сумму <strong>${orderToShow.showTotalPrice}₽</strong>
+                        <br>Товаров <b>${orderToShow.productsAmount}</b>
+                        <br>Всего единиц <b>${orderToShow.totalProducts}</b>
+                    </h3>
+                    <button type="button" class="btn btn-success btn-lg btn-block mt-2">Заказ подтверждаю!</button>
+                </div>
+            </div>
+        </#if>
+        <div class="row">
+            <div class="col mt-2 mb-3">
+                <section class="mb-4">
+                    <h3 class="h1-responsive font-weight-bold text-center my-4">Ваши контактные данные</h3>
+                    <div class="row">
+                        <div class="col">
+                            <form id="contact-form" name="contact-form" action="mail.php" method="POST">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="md-form mb-0">
+                                            <input type="text" id="name" name="name" class="form-control">
+                                            <label for="name" class="">Ваше имя</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="md-form mb-0">
+                                            <input type="text" id="family" name="family" class="form-control">
+                                            <label for="family" class="">Ваша фамилия</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="md-form mb-0">
+                                            <input type="text" id="mobile" name="mobile" class="form-control">
+                                            <label for="mobile" class="">Ваш телефон</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="md-form mb-0">
+                                            <input type="email" id="email" name="email" class="form-control">
+                                            <label for="email" class="">Ваш e-mail</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h3 class="h1-responsive font-weight-bold text-center my-4">Способ получения товара</h3>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            <label class="btn btn-secondary active">
+                                                <input type="radio" name="options" id="option1" autocomplete="off" checked>Самовывоз
+                                            </label>
+                                            <label class="btn btn-secondary">
+                                                <input type="radio" name="options" id="option2" autocomplete="off">Доставка
+                                            </label>
+                                        </div>
+                                        <h5 class="mt-2">
+                                            Оплата товара осуществляется в пункте выдачи товара после подверждения заказа
+                                        </h5>
+                                        <form id="contact-form" name="contact-form" action="mail.php" method="POST">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <div class="md-form mb-0">
+                                                        <input type="text" id="city" name="city" class="form-control">
+                                                        <label for="city" class="">город</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="md-form mb-0">
+                                                        <input type="text" id="street" name="street" class="form-control">
+                                                        <label for="street" class="">Улица</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="md-form mb-0">
+                                                        <input type="email" id="house" name="house" class="form-control">
+                                                        <label for="house" class="">Дом</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="md-form mb-0">
+                                                        <input type="email" id="apartment" name="apartment" class="form-control">
+                                                        <label for="apartment" class="">Квартира</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="text-center text-md-left">
+                                    <a class="btn btn-primary mt-2" onclick="document.getElementById('contact-form').submit();">Оформить заказ!</a>
+                                </div>
+                                <div class="status"></div>
+                            </form>
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
     </div>

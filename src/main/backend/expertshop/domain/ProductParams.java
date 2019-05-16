@@ -21,8 +21,8 @@ public class ProductParams implements Serializable {
     @Column(name = "product_id")
     private Integer productID;
 
-    @OneToOne(optional = false, mappedBy = "productParams", fetch = FetchType.EAGER)
     @JsonIgnore
+    @OneToOne(optional = false, mappedBy = "productParams", fetch = FetchType.EAGER)
     private Product product;
 
     @Column(name = "type")
@@ -34,6 +34,7 @@ public class ProductParams implements Serializable {
     private String pic;
 
     private Integer amount;
+
     //TV
     @Nullable
     private String diagonal, resolution, tvFeatures;

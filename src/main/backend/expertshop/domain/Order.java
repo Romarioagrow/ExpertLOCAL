@@ -3,21 +3,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.extern.java.Log;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
-@Entity
+@Log
 @Data
-@EqualsAndHashCode(exclude = "orderedProducts")
+@Entity
+@Table(name = "ordr")
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "ordr")
+@EqualsAndHashCode(exclude = "orderedProducts")
 public class Order implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "order_id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer orderID;
 
     @Column(name = "session_uuid")
@@ -38,6 +40,16 @@ public class Order implements Serializable {
     @Column(name = "completed")
     private Boolean completed;
 
+    @Data
+    public class OrderToShow {
+        public Integer showTotalPrice, productsAmount, totalProducts;
+        public OrderToShow() {
+            this.showTotalPrice = getTotalPrice();
+            this.productsAmount = getOrderedProducts().size();
+            this.totalProducts  = getTotalProductsAmount();
+        }
+    }
+
     public void addProductToOrder(OrderedProduct orderedProduct) {
         if (this.getOrderedProducts() == null) {
             this.orderedProducts = new HashSet<>();
@@ -46,7 +58,22 @@ public class Order implements Serializable {
         else this.orderedProducts.add(orderedProduct);
     }
 
+    public void setTotalPrice() {
+        this.setTotalPrice(0);
+        this.orderedProducts.forEach(orderedProduct -> this.totalPrice += orderedProduct.getTotalPrice());
+        log.info(this.getTotalPrice().toString());
+    }
+
+    public Integer getTotalProductsAmount() {
+        Integer totalProductsAmount = 0;
+        for (OrderedProduct product : this.orderedProducts){
+            totalProductsAmount += product.getAmount();
+        }
+        return totalProductsAmount;
+    }
+
     public void removeProductFromOrder(OrderedProduct orderedProduct) {
         orderedProducts.remove(orderedProduct);
     }
 }
+

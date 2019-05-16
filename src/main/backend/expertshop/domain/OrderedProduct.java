@@ -32,8 +32,8 @@ public class OrderedProduct implements Serializable {
 
     private String brand, model, type, pic;
 
-    @ManyToMany(mappedBy = "orderedProducts")
     @JsonIgnore
+    @ManyToMany(mappedBy = "orderedProducts")
     private Set<Order> orders;
 }
 

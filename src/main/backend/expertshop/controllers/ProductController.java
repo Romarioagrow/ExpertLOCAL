@@ -42,6 +42,7 @@ public class ProductController {
     public String order(Model model)
     {
         model.addAttribute("orderedProducts", productService.showOrderedProducts());
+        model.addAttribute("orderToShow", productService.orderToShow());
         return "pages/order";
     }
 }

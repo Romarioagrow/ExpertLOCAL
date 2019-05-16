@@ -42,13 +42,14 @@ public class ProductService {
         return productRepo.findAll();
     }
 
-    public List<Product> searchProducts(String searchRequest) {
+    public List<Product> searchProducts(String searchRequest)
+    {
         log.info("Search request: " + searchRequest);
         List<Product> searchedProducts = productRepo.findAll().stream()
                 .filter(product -> product.getBrand().concat(" ").concat(product.getModel()).contains(searchRequest))
                 .collect(Collectors.toList());
-
         log.info("Products found: " + searchedProducts.size());
+
         return searchedProducts;
     }
 
@@ -76,6 +77,14 @@ public class ProductService {
         orderedProduct.setTotalPrice(product.getPrice());
 
         order.addProductToOrder(orderedProduct);
+
+
+        //order.setTotalPrice(order.getTotalPrice() + orderedProduct.getTotalPrice());
+
+        if (order.getTotalPrice() == null) {
+            order.setTotalPrice(orderedProduct.getTotalPrice());
+        } else order.setTotalPrice(order.getTotalPrice() + orderedProduct.getTotalPrice());
+
         orderRepo.save(order);
 
         System.out.println("\n");
@@ -86,8 +95,9 @@ public class ProductService {
     {
         if (orderRepo.findBySessionUUID(getSessionID()) != null)
         {
-            Order order = orderRepo.findBySessionUUID(getSessionID());
-            return order.getOrderedProducts();
+            //Order order = orderRepo.findBySessionUUID(getSessionID());
+            //return order.getOrderedProducts();
+            return orderRepo.findBySessionUUID(getSessionID()).getOrderedProducts();
         }
         return null;
     }
@@ -98,6 +108,7 @@ public class ProductService {
         OrderedProduct productToDelete = orderedProductRepo.findByid(Integer.parseInt(id));
 
         order.getOrderedProducts().remove(productToDelete);
+        order.setTotalPrice(order.getTotalPrice() - productToDelete.getTotalPrice());
         orderRepo.save(order);
 
         orderedProductRepo.delete(productToDelete);
@@ -107,21 +118,37 @@ public class ProductService {
 
     public OrderedProduct changeAmount(Map<String, String> data)
     {
-        OrderedProduct orderedProduct = orderedProductRepo.findByIdAndProductID(Integer.valueOf(data.get("orderedID")), Integer.valueOf(data.get("productID")));
+        OrderedProduct orderedProduct = orderedProductRepo.findByid(Integer.valueOf(data.get("orderedID")));
 
-        if (data.get("action").contains("product-less")) {
-            if (orderedProduct.getAmount() > 1) orderedProduct.setAmount(orderedProduct.getAmount()-1);
+        if (data.get("action").contains("product-less") && orderedProduct.getAmount() > 1) {
+            orderedProduct.setAmount(orderedProduct.getAmount() - 1);
         }
-        else orderedProduct.setAmount(orderedProduct.getAmount()+1);
+        else orderedProduct.setAmount(orderedProduct.getAmount() + 1);
 
-        orderedProduct.setTotalPrice(orderedProduct.getPrice()*orderedProduct.getAmount());
+        orderedProduct.setTotalPrice(orderedProduct.getPrice() * orderedProduct.getAmount());
         orderedProductRepo.save(orderedProduct);
+
+        Order order = orderRepo.findBySessionUUID(getSessionID());
+        order.setTotalPrice();
+        orderRepo.save(order);
 
         return orderedProduct;
     }
 
     public String getSessionID() {
         return RequestContextHolder.currentRequestAttributes().getSessionId();
+    }
+
+    public Order.OrderToShow orderToShow() {
+
+        Order order = orderRepo.findBySessionUUID(getSessionID());
+
+        /*
+        *//*orderToShow.setTotalPrice(order.getTotalPrice());
+        orderToShow.setProductsAmount(order.getOrderedProducts().size());
+        orderToShow.setTotalProducts(order.getTotalProductsAmount());*/
+
+        return order.new OrderToShow();
     }
 }
 
