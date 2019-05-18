@@ -63,7 +63,6 @@ function changeAmount(e) {
     let totalPriceID = '#total-price' + data.orderedID;
 
     data = JSON.stringify(data);
-    console.log(data);
 
     $.ajax({
         url: 'http://localhost:8080/order',
@@ -102,7 +101,6 @@ function removeFromOrder(e) {
             const response = JSON.parse(JSON.stringify(products));
 
             $("#bucket-products").empty();
-
             for (var item in response.responseJSON)
             {
                 let product = response.responseJSON[item];
@@ -122,7 +120,7 @@ function removeFromOrder(e) {
                         product.brand + ' ' + product.model +
                     '<div>' +
                     '<button type="button" class="btn btn-outline-danger waves-effect" id="product-less" name="'+product.id+'" value="'+product.productID+'">-</button>' +
-                    '<span class="badge badge-primary badge-pill" id="amount">' + product.amount + '</span>' +
+                    '<span class="badge badge-primary badge-pill" id="amount'+product.id+'">' + product.amount + '</span>' +
                     '<button type="button" class="btn btn-outline-success waves-effect" id="product-more" name="'+product.id+'" value="'+product.productID+'">+</button>' +
                     '</div>' +
                     '</h4>' +
@@ -136,4 +134,51 @@ function removeFromOrder(e) {
             }
         }
     });
+}
+
+function displayOrderDeal() {
+    document.getElementById("order-deal").style.display = "block";
+
+    $([document.documentElement, document.body]).animate({
+        scrollTop: $("#contact-info").offset().top
+    }, 1000);
+
+    /*(document.getElementById("product-less").each(function() {
+        document.getElementById("product-less").disabled = true;
+    }));*/
+
+    /*(document.getElementById("product-less").each(function() {
+        $(this).disabled = true;
+    }));*/
+
+    document.getElementById("product-less").disabled = true;
+    document.getElementById("product-more").disabled = true;
+    document.getElementById("remove-product").disabled = true;
+}
+
+function confirmOrder() {
+    var contacts = {
+        orderID : $('#confirm-order').val(),
+        name    : $('#name').val(),
+        surname : $('#family').val(),
+        mobile  : $('#mobile').val(),
+        email   : $('#email').val(),
+    };
+    console.log(contacts);
+
+    contacts = JSON.stringify(contacts);
+
+    $.ajax({
+        url: 'http://localhost:8080/order/confirm',
+        type: 'POST',
+        dataType: 'json',
+        data: contacts,
+        processData: false,
+        headers: {'Content-Type': 'application/json'},
+        complete: function(order)
+        {
+
+        }
+    });
+
 }

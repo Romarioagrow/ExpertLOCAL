@@ -20,9 +20,9 @@ public class ServiceController {
     private final FilterService filterService;
     private final ProductService productService;
 
-    @PostMapping("/{req_type}")
-    public List<Product> filterProducts(@RequestBody Map<String, Object> params, @PathVariable String req_type) {
-        return filterService.filterProducts(params, req_type);
+    @PostMapping("/{reqType}")
+    public List<Product> filterProducts(@RequestBody Map<String, Object> params, @PathVariable String reqType) {
+        return filterService.filterProducts(params, reqType);
     }
 
     @PostMapping("/search")
@@ -43,5 +43,10 @@ public class ServiceController {
     @PutMapping("/order")
     private OrderedProduct changeAmount(@RequestBody Map<String, String> data) {
         return productService.changeAmount(data);
+    }
+
+    @PostMapping("/order/confirm")
+    private void confirmOrder(@RequestBody Map<String, String> contacts) {
+        productService.confirmOrder(contacts);
     }
 }

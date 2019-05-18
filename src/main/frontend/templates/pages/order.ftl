@@ -4,40 +4,40 @@
         <div class="row">
             <h3 style="margin-top: 4vh">Ваш заказ</h3>
         </div>
-        <div class="row">
+        <div class="row" id="ordered-products">
             <div class="col">
-                <div class="card-group" id="bucket-products">
-                    <#if orderedProducts??>
-                        <#list orderedProducts as product>
-                            <div class="card ordered-card mb-4">
-                                <div class="view overlay">
-                                    <img class="card-img-top" src="${product.pic}" alt="Card image cap">
-                                    <a href="#!">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        ${product.brand}
-                                        ${product.model}
-                                        <div>
-                                            <button type="button" class="btn btn-outline-danger waves-effect" id="product-less" name="${product.id?c}" value="${product.productID?c}">-</button>
-                                            <span  class="badge badge-primary badge-pill" id="amount${product.id}" name="${product.id}">${product.amount}</span>
-                                            <button type="button" class="btn btn-outline-success waves-effect" id="product-more" name="${product.id?c}" value="${product.productID?c}">+</button>
-                                        </div>
-                                    </h4>
-                                    <p class="card-text">
-                                        <strong>${product.type}</strong>, <strong><i id="total-price${product.id}">${product.totalPrice}</i></strong>
-                                    </p>
-                                    <button type="submit" class="btn btn-primary btn-md" name="remove-product" id="remove-product" value="${product.id?c}">Удалить</button>
-                                </div>
-                            </div>
-                        </#list>
-                    <#else>
-                        <h3 style="margin-top: 4vh">Пока ничего нет...</h3>
-                    </#if>
-                </div>
-                <#--<ul class="list-group">
+                <#-- <div class="card-group" id="bucket-products">
+                     <#if orderedProducts??>
+                         <#list orderedProducts as product>
+                             <div class="card ordered-card mb-4">
+                                 <div class="view overlay">
+                                     <img class="card-img-top" src="${product.pic}" alt="Card image cap">
+                                     <a href="#!">
+                                         <div class="mask rgba-white-slight"></div>
+                                     </a>
+                                 </div>
+                                 <div class="card-body">
+                                     <h4 class="card-title">
+                                         ${product.brand}
+                                         ${product.model}
+                                         <div>
+                                             <button type="button" class="btn btn-outline-danger waves-effect" id="product-less" name="${product.id?c}" value="${product.productID?c}">-</button>
+                                             <span  class="badge badge-primary badge-pill" id="amount${product.id}" name="${product.id}">${product.amount}</span>
+                                             <button type="button" class="btn btn-outline-success waves-effect" id="product-more" name="${product.id?c}" value="${product.productID?c}">+</button>
+                                         </div>
+                                     </h4>
+                                     <p class="card-text">
+                                         <strong>${product.type}</strong>, <strong><i id="total-price${product.id}">${product.totalPrice}</i></strong>
+                                     </p>
+                                     <button type="submit" class="btn btn-primary btn-md" name="remove-product" id="remove-product" value="${product.id?c}">Удалить</button>
+                                 </div>
+                             </div>
+                         </#list>
+                     <#else>
+                         <h3 style="margin-top: 4vh">Пока ничего нет...</h3>
+                     </#if>
+                 </div>-->
+                <ul class="list-group">
                     <#if orderedProducts??>
                         <#list orderedProducts as product>
 
@@ -54,7 +54,7 @@
                     <#else>
                         <h3 style="margin-top: 4vh">Пока ничего нет...</h3>
                     </#if>
-                </ul>-->
+                </ul>
 
             </div>
         </div>
@@ -66,14 +66,14 @@
                         <br>Товаров <b>${order.productsAmount}</b>
                         <br>Всего единиц <b>${order.totalAmount}</b>
                     </h3>
-                    <button type="button" class="btn btn-success btn-lg btn-block mt-2">Заказ подтверждаю!</button>
+                    <button type="button" onclick="displayOrderDeal()" id="order-button" class="btn btn-success btn-lg btn-block mt-2">Заказ подтверждаю!</button>
                 </div>
             </div>
         </#if>
-        <div class="row">
+        <div class="row order-deal" id="order-deal">
             <div class="col mt-2 mb-3">
                 <section class="mb-4">
-                    <h3 class="h1-responsive font-weight-bold text-center my-4">Ваши контактные данные</h3>
+                    <h3 class="h1-responsive font-weight-bold text-center my-4" id="contact-info">Ваши контактные данные</h3>
                     <div class="row">
                         <div class="col">
                             <form id="contact-form" name="contact-form" action="mail.php" method="POST">
@@ -116,9 +116,9 @@
                                                 <input type="radio" name="options" id="option2" autocomplete="off">Доставка
                                             </label>
                                         </div>
-                                        <h5 class="mt-2">
+                                        <#--<h5 class="mt-2">
                                             Оплата товара осуществляется в пункте выдачи товара после подверждения заказа
-                                        </h5>
+                                        </h5>-->
                                         <form id="contact-form" name="contact-form" action="mail.php" method="POST">
                                             <div class="row">
                                                 <div class="col">
@@ -149,11 +149,12 @@
                                         </form>
                                     </div>
                                 </div>
-
-                                <div class="text-center text-md-left">
-                                    <a class="btn btn-primary mt-2" onclick="document.getElementById('contact-form').submit();">Оформить заказ!</a>
-                                </div>
-                                <div class="status"></div>
+                                <#if order??>
+                                    <div class="text-center text-md-left">
+                                        <button id="confirm-order" onclick="confirmOrder();" value="${order.orderID}" class="btn btn-primary mt-2">Оформить заказ!</button>
+                                    </div>
+                                    <div class="status"></div>
+                                </#if>
                             </form>
                         </div>
                     </div>
@@ -169,5 +170,8 @@
 
         min-height: 50vh;
         max-height: 80vw;
+    }
+    .order-deal {
+        display: none;
     }
 </style>

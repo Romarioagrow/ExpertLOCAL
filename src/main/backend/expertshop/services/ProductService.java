@@ -25,6 +25,7 @@ public class ProductService {
     private final OrderedProductRepo orderedProductRepo;
     private final ProductRepo productRepo;
     private final OrderRepo orderRepo;
+    private final MailService mailService;
 
     public List<Product> findProducts(Category category) {
         return productRepo.findByCategory(category);
@@ -85,9 +86,7 @@ public class ProductService {
         orderedProduct.setTotalPrice(product.getPrice());
 
         order.addProductToOrder(orderedProduct);
-        //updateOrderDetails(order, orderedProduct);
 
-        //////
         if (order.getTotalPrice() == null) {
             order.setTotalPrice(orderedProduct.getTotalPrice());
             order.setProductsAmount(1);
@@ -95,19 +94,14 @@ public class ProductService {
         } else {
             order.setTotalPrice(order.getTotalPrice() + orderedProduct.getTotalPrice());
             order.setProductsAmount(order.getProductsAmount() + 1);
-            order.setTotalAmount(order.getProductsAmount());
+            order.setTotalAmount(order.getTotalProductsAmount());
         }
-        /////
+
         orderRepo.save(order);
 
         System.out.println("\n");
-        log.info("Product with ID" + productID + " add to order");
+        log.info("Product with ID " + productID + " add to order");
     }
-
-    /*private void updateOrderDetails(Order order, OrderedProduct orderedProduct) {
-        order.setTotalPrice(orderedProduct.getTotalPrice());
-    }*/
-
 
     public Set<OrderedProduct> removeProductFromOrder(String id)
     {
@@ -127,35 +121,58 @@ public class ProductService {
 
     public OrderedProduct changeAmount(Map<String, String> data)
     {
+        OrderedProduct orderedProduct = orderedProductRepo.findByid(Integer.valueOf(data.get("orderedID")));
 
-        OrderedProduct orderedProduct   = orderedProductRepo.findByid(Integer.valueOf(data.get("orderedID")));
-
-        if (data.get("action").contains("product-less") && orderedProduct.getAmount() >= 1) {
-            orderedProduct.setAmount(orderedProduct.getAmount() - 1);
+        if (data.get("action").contains("product-less")) {
+            if (orderedProduct.getAmount() > 1) orderedProduct.setAmount(orderedProduct.getAmount() - 1);
+            else return orderedProduct;
         }
         else orderedProduct.setAmount(orderedProduct.getAmount() + 1);
 
         orderedProduct.setTotalPrice(orderedProduct.getPrice() * orderedProduct.getAmount());
         orderedProductRepo.save(orderedProduct);
 
-        Order order = orderRepo.findBySessionUUID(getSessionID());
+        Order order = orderRepo.findBySessionUUID(getSessionID()); ////F orderService.getOrder() проверят по sessionID или по userID
         order.setTotalPrice(order.getTotalOrderPrice());
         order.setTotalAmount(order.getTotalProductsAmount());
-        //order.setProductsAmount(order.getOrderedProducts().size());
         orderRepo.save(order);
 
         return orderedProduct;
+    }
+
+    public void confirmOrder(Map<String, String> contacts) {
+        Order order = orderRepo.findByOrderID(Integer.parseInt(contacts.get("orderID")));
+        order.setName(contacts.get("name"));
+        order.setSurname(contacts.get("surname"));
+        order.setMobile(contacts.get("mobile"));
+        order.setEmail(contacts.get("email"));
+        orderRepo.save(order);
+
+        Set<OrderedProduct> orderedProducts = order.getOrderedProducts();
+        //ArrayList<String> orderList = new ArrayList<>();
+
+        StringBuilder orderList = new StringBuilder();
+
+        for (OrderedProduct product : orderedProducts) {
+            StringJoiner  item = new StringJoiner (", ");
+            item.add("\n" + product.getType() + " " + product.getBrand() + " " + product.getModel())
+                    .add("кол-во: " + product.getAmount().toString())
+                    .add("итого \u20BD: " + product.getTotalPrice().toString())
+                    .add("id товара: " + product.getProductID().toString());
+
+            orderList.append(item.toString());
+        }
+
+        log.info(orderList.toString());
+        mailService.sendOrderDetail(orderList, order.getOrderID());
+        mailService.sendEmailToCustomer(order, orderList);
     }
 
     public String getSessionID() {
         return RequestContextHolder.currentRequestAttributes().getSessionId();
     }
 
-    /*public Order.OrderToShow orderToShow()
-    {
-        Order order = orderRepo.findBySessionUUID(getSessionID());
-        return order.new OrderToShow();
-    }*/
+
 }
 
 
