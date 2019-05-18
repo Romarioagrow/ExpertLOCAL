@@ -71,13 +71,19 @@ function changeAmount(e) {
         data: data,
         processData: false,
         headers: {'Content-Type': 'application/json'},
-        complete: function(orderedProduct)
+        complete: function(orderAndProduct)
         {
+            orderAndProduct = JSON.parse(JSON.stringify(orderAndProduct));
+            console.log(orderAndProduct);
+
+            let order = orderAndProduct.responseJSON[0];
+            let orderedProduct = orderAndProduct.responseJSON[1];
+
             $(amountID).empty().append(
-                orderedProduct.responseJSON.amount
+                orderedProduct.amount
             );
             $(totalPriceID).empty().append(
-                orderedProduct.responseJSON.totalPrice
+                orderedProduct.totalPrice
             )
         }
     });
@@ -177,7 +183,9 @@ function confirmOrder() {
         headers: {'Content-Type': 'application/json'},
         complete: function(order)
         {
-
+            document.getElementById("order-deal").style.display = "none";
+            document.getElementById("order-button").style.display = "none";
+            document.getElementById("after-confirm").style.display = "block";
         }
     });
 

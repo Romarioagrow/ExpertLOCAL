@@ -6,7 +6,7 @@
         </div>
         <div class="row" id="ordered-products">
             <div class="col">
-                <#-- <div class="card-group" id="bucket-products">
+                 <div class="card-group" id="bucket-products">
                      <#if orderedProducts??>
                          <#list orderedProducts as product>
                              <div class="card ordered-card mb-4">
@@ -36,7 +36,7 @@
                      <#else>
                          <h3 style="margin-top: 4vh">Пока ничего нет...</h3>
                      </#if>
-                 </div>-->
+                 </div>
                 <ul class="list-group">
                     <#if orderedProducts??>
                         <#list orderedProducts as product>
@@ -61,17 +61,17 @@
         <#if order??>
             <div class="row">
                 <div class="col">
-                    <h3 class="mt-2">
+                    <h3 class="mt-2" style="margin-bottom: 3vh">
                         Заказ на сумму <strong>${order.totalPrice}₽</strong>
-                        <br>Товаров <b>${order.productsAmount}</b>
-                        <br>Всего единиц <b>${order.totalAmount}</b>
+                        Товаров <b>${order.productsAmount}</b>
+                        Всего единиц <b>${order.totalAmount}</b>
                     </h3>
-                    <button type="button" onclick="displayOrderDeal()" id="order-button" class="btn btn-success btn-lg btn-block mt-2">Заказ подтверждаю!</button>
+                    <button type="button" onclick="displayOrderDeal()" id="order-button" class="btn btn-success btn-lg btn-block" style="margin-bottom: 5vh">Заказ подтверждаю!</button>
                 </div>
             </div>
         </#if>
         <div class="row order-deal" id="order-deal">
-            <div class="col mt-2 mb-3">
+            <div class="col mb-3" id="order-details">
                 <section class="mb-4">
                     <h3 class="h1-responsive font-weight-bold text-center my-4" id="contact-info">Ваши контактные данные</h3>
                     <div class="row">
@@ -161,6 +161,9 @@
                 </section>
             </div>
         </div>
+        <div class="col after-confirm mt-2" id="after-confirm" style="margin-bottom: 50vh">
+            <h1>Ваш заказ оформлен! В ближайшее время вы получите уведомление о подтверждении заказа.</h1>
+        </div>
     </div>
 </@t.template>
 <style>
@@ -172,6 +175,10 @@
         max-height: 80vw;
     }
     .order-deal {
+        display: none;
+    }
+
+    .after-confirm {
         display: none;
     }
 </style>

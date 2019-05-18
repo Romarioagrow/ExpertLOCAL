@@ -1,4 +1,5 @@
 package expertshop.controllers;
+import expertshop.domain.Order;
 import expertshop.domain.OrderedProduct;
 import expertshop.domain.Product;
 import expertshop.services.FilterService;
@@ -9,9 +10,7 @@ import lombok.extern.java.Log;
 
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Log
 @RestController
@@ -41,7 +40,7 @@ public class ServiceController {
     }
 
     @PutMapping("/order")
-    private OrderedProduct changeAmount(@RequestBody Map<String, String> data) {
+    private Queue<Object> changeAmount(@RequestBody Map<String, String> data) {
         return productService.changeAmount(data);
     }
 

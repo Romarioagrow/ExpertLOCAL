@@ -55,7 +55,7 @@ public class Order implements Serializable {
             totalPrice += product.getTotalPrice();
         }
 
-        log.info("Total price" + getTotalPrice().toString());
+        log.info("Total price: " + getTotalPrice().toString());
         return totalPrice;
     }
 
@@ -66,7 +66,7 @@ public class Order implements Serializable {
             totalAmount += product.getAmount();
         }
 
-        log.info("Total amount" + getTotalPrice().toString());
+        log.info("Total amount: " + getTotalAmount().toString());
         return totalAmount;
     }
 }

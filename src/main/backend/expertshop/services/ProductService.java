@@ -119,13 +119,13 @@ public class ProductService {
         return order.getOrderedProducts();
     }
 
-    public OrderedProduct changeAmount(Map<String, String> data)
+    public Queue<Object> changeAmount(Map<String, String> data)
     {
         OrderedProduct orderedProduct = orderedProductRepo.findByid(Integer.valueOf(data.get("orderedID")));
 
         if (data.get("action").contains("product-less")) {
             if (orderedProduct.getAmount() > 1) orderedProduct.setAmount(orderedProduct.getAmount() - 1);
-            else return orderedProduct;
+            else return null;
         }
         else orderedProduct.setAmount(orderedProduct.getAmount() + 1);
 
@@ -137,7 +137,10 @@ public class ProductService {
         order.setTotalAmount(order.getTotalProductsAmount());
         orderRepo.save(order);
 
-        return orderedProduct;
+        Queue<Object> orderAndProduct = new LinkedList<>();
+        orderAndProduct.add(order);
+        orderAndProduct.add(orderedProduct);
+        return orderAndProduct;
     }
 
     public void confirmOrder(Map<String, String> contacts) {
@@ -152,17 +155,16 @@ public class ProductService {
 
         for (OrderedProduct product : orderedProducts) {
             StringJoiner  item = new StringJoiner (", ");
-            item.add("\n" + product.getType() + " " + product.getBrand() + " " + product.getModel())
+            item    .add("\n" + product.getType() + " " + product.getBrand() + " " + product.getModel())
                     .add("кол-во: " + product.getAmount().toString())
                     .add("итого \u20BD: " + product.getTotalPrice().toString())
                     .add("id товара: " + product.getProductID().toString());
-
             orderList.append(item.toString());
         }
 
         log.info(orderList.toString());
-        mailService.sendOrderDetail(orderList, order.getOrderID());
-        mailService.sendEmailToCustomer(order, orderList);
+        //mailService.sendOrderDetail(orderList, order.getOrderID());
+        //mailService.sendEmailToCustomer(order, orderList);
 
         order.setAccepted(true);
         orderRepo.save(order);
@@ -171,8 +173,6 @@ public class ProductService {
     public String getSessionID() {
         return RequestContextHolder.currentRequestAttributes().getSessionId();
     }
-
-
 }
 
 
