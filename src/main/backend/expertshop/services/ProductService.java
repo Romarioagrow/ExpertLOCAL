@@ -94,7 +94,7 @@ public class ProductService {
         } else {
             order.setTotalPrice(order.getTotalPrice() + orderedProduct.getTotalPrice());
             order.setProductsAmount(order.getProductsAmount() + 1);
-            order.setTotalAmount(order.getTotalProductsAmount());
+            order.setTotalAmount(order.getTotalAmount() + 1);
         }
 
         orderRepo.save(order);
@@ -146,11 +146,8 @@ public class ProductService {
         order.setSurname(contacts.get("surname"));
         order.setMobile(contacts.get("mobile"));
         order.setEmail(contacts.get("email"));
-        orderRepo.save(order);
 
         Set<OrderedProduct> orderedProducts = order.getOrderedProducts();
-        //ArrayList<String> orderList = new ArrayList<>();
-
         StringBuilder orderList = new StringBuilder();
 
         for (OrderedProduct product : orderedProducts) {
@@ -166,6 +163,9 @@ public class ProductService {
         log.info(orderList.toString());
         mailService.sendOrderDetail(orderList, order.getOrderID());
         mailService.sendEmailToCustomer(order, orderList);
+
+        order.setAccepted(true);
+        orderRepo.save(order);
     }
 
     public String getSessionID() {

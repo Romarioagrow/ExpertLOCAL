@@ -34,13 +34,13 @@ public class Order implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "ordered_product"))
     private Set<OrderedProduct> orderedProducts;
 
-    private Boolean  confirmed, completed;
+    private Boolean  accepted, confirmed, completed;
 
     private Integer totalPrice, productsAmount, totalAmount;
     private String name, surname, mobile, email, address;
 
-
-    public void addProductToOrder(OrderedProduct orderedProduct) {
+    public void addProductToOrder(OrderedProduct orderedProduct)
+    {
         if (this.getOrderedProducts() == null) {
             this.orderedProducts = new HashSet<>();
             orderedProducts.add(orderedProduct);
@@ -48,7 +48,8 @@ public class Order implements Serializable {
         else this.orderedProducts.add(orderedProduct);
     }
 
-    public Integer getTotalOrderPrice() {
+    public Integer getTotalOrderPrice()
+    {
         Integer totalPrice = 0;
         for (OrderedProduct product : orderedProducts) {
             totalPrice += product.getTotalPrice();
@@ -58,7 +59,8 @@ public class Order implements Serializable {
         return totalPrice;
     }
 
-    public Integer getTotalProductsAmount() {
+    public Integer getTotalProductsAmount()
+    {
         Integer totalAmount = 0;
         for (OrderedProduct product : orderedProducts) {
             totalAmount += product.getAmount();
@@ -66,10 +68,6 @@ public class Order implements Serializable {
 
         log.info("Total amount" + getTotalPrice().toString());
         return totalAmount;
-    }
-
-    public void removeProductFromOrder(OrderedProduct orderedProduct) {
-        orderedProducts.remove(orderedProduct);
     }
 }
 
