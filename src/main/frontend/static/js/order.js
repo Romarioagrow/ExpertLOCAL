@@ -132,17 +132,17 @@ function removeFromOrder(e) {
                     '<div class="card-body">' +
                     '<h4 class="card-title">' +
                         product.brand + ' ' + product.model +
+                        '<div class="mt-3"><strong>'+product.type+'</strong>, <strong><i>' + product.totalPrice + '₽' + '</i></strong></div>' +
                     '<div>' +
-                    '<button type="button" class="btn btn-outline-danger waves-effect" id="product-less" name="'+product.id+'" value="'+product.productID+'">-</button>' +
-                    '<span class="badge badge-primary badge-pill" id="amount'+product.id+'">' + product.amount + '</span>' +
-                    '<button type="button" class="btn btn-outline-success waves-effect" id="product-more" name="'+product.id+'" value="'+product.productID+'">+</button>' +
                     '</div>' +
                     '</h4>' +
                     '<p class="card-text">' +
-                    '<strong>'+product.type+'</strong>, <strong><i>' + product.totalPrice + '₽' + '</i></strong>' +
+                    '<button type="button" class="btn btn-outline-danger waves-effect" id="product-less" name="'+product.id+'" value="'+product.productID+'">-</button>' +
+                    '<span class="badge badge-primary badge-pill" id="amount'+product.id+'">' + product.amount + '</span>' +
+                    '<button type="button" class="btn btn-outline-success waves-effect" id="product-more" name="'+product.id+'" value="'+product.productID+'">+</button>' +
                     '</p>' +
-                    '<button type="submit" class="btn btn-primary btn-md" name="remove-product" id="remove-product" value="'+product.id+'">Удалить</button>' +
                     '</div>' +
+                    '<button type="submit" class="btn btn-primary btn-md" name="remove-product" id="remove-product" value="'+product.id+'">Удалить</button>' +
                     '</div>'
                 );
 

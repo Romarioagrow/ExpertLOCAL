@@ -6,37 +6,35 @@
         </div>
         <div class="row" id="ordered-products">
             <div class="col">
-                 <div class="card-group" id="bucket-products">
-                     <#if orderedProducts??>
-                         <#list orderedProducts as product>
-                             <div class="card ordered-card mb-4">
-                                 <div class="view overlay">
-                                     <img class="card-img-top" src="${product.pic}" alt="Card image cap">
-                                     <a href="#!">
-                                         <div class="mask rgba-white-slight"></div>
-                                     </a>
-                                 </div>
-                                 <div class="card-body">
-                                     <h4 class="card-title">
-                                         ${product.brand}
-                                         ${product.model}
-                                         <div>
-                                             <button type="button" class="btn btn-outline-danger waves-effect" id="product-less" name="${product.id?c}" value="${product.productID?c}">-</button>
-                                             <span  class="badge badge-primary badge-pill" id="amount${product.id}" name="${product.id}">${product.amount}</span>
-                                             <button type="button" class="btn btn-outline-success waves-effect" id="product-more" name="${product.id?c}" value="${product.productID?c}">+</button>
-                                         </div>
-                                     </h4>
-                                     <p class="card-text">
-                                         <strong>${product.type}</strong>, <strong><i id="total-price${product.id}">${product.totalPrice}₽</i></strong>
-                                     </p>
-                                     <button type="submit" class="btn btn-primary btn-md" name="remove-product" id="remove-product" value="${product.id?c}">Удалить</button>
-                                 </div>
-                             </div>
-                         </#list>
-                     <#else>
-                         <h3 style="margin-top: 4vh">Пока ничего нет...</h3>
-                     </#if>
-                 </div>
+                <div class="card-group" id="bucket-products">
+                    <#if orderedProducts??>
+                        <#list orderedProducts as product>
+                            <div class="card ordered-card mb-4">
+                                <div class="view overlay">
+                                    <img class="card-img-top" src="${product.pic}" alt="Card image cap">
+                                    <a href="#!">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        ${product.brand}
+                                        ${product.model}
+                                        <div class="mt-3">${product.type}, <strong><i id="total-price${product.id}">${product.totalPrice}₽</i></strong></div>
+                                    </h4>
+                                    <p class="card-text">
+                                        <button type="button" class="btn btn-outline-danger waves-effect" id="product-less" name="${product.id?c}" value="${product.productID?c}">-</button>
+                                        <span  class="badge badge-primary badge-pill" id="amount${product.id}" name="${product.id}">${product.amount}</span>
+                                        <button type="button" class="btn btn-outline-success waves-effect" id="product-more" name="${product.id?c}" value="${product.productID?c}">+</button>
+                                    </p>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-md" name="remove-product" id="remove-product" value="${product.id?c}">Удалить</button>
+                            </div>
+                        </#list>
+                    <#else>
+                        <h3 style="margin-top: 4vh">Пока ничего нет...</h3>
+                    </#if>
+                </div>
                 <ul class="list-group">
                     <#if orderedProducts??>
                         <#list orderedProducts as product>
