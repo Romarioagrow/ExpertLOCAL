@@ -83,7 +83,16 @@ function changeAmount(e) {
                 orderedProduct.amount
             );
             $(totalPriceID).empty().append(
-                orderedProduct.totalPrice
+                (orderedProduct.totalPrice).toLocaleString('ru')+'₽'
+            );
+            $('#order-price').empty().append(
+                (order.totalPrice).toLocaleString('ru')+'₽'
+            );
+            $('#order-products').empty().append(
+                order.productsAmount
+            );
+            $('#order-amount').empty().append(
+                order.totalAmount
             )
         }
     });
@@ -102,15 +111,14 @@ function removeFromOrder(e) {
         data: productID,
         processData: false,
         headers: {'Content-Type': 'application/json'},
-        complete: function(products)
+        complete: function(orderResponse)
         {
-            const response = JSON.parse(JSON.stringify(products));
+            const order = JSON.parse(JSON.stringify(orderResponse)).responseJSON;
 
             $("#bucket-products").empty();
-            for (var item in response.responseJSON)
+            for (var item in order.orderedProducts)
             {
-                let product = response.responseJSON[item];
-                console.log(product);
+                let product = order.orderedProducts[item];
 
                 $("#bucket-products").append
                 (
@@ -136,6 +144,16 @@ function removeFromOrder(e) {
                     '<button type="submit" class="btn btn-primary btn-md" name="remove-product" id="remove-product" value="'+product.id+'">Удалить</button>' +
                     '</div>' +
                     '</div>'
+                );
+
+                $('#order-price').empty().append(
+                    (order.totalPrice).toLocaleString('ru')+'₽'
+                );
+                $('#order-products').empty().append(
+                    order.productsAmount
+                );
+                $('#order-amount').empty().append(
+                    order.totalAmount
                 )
             }
         }

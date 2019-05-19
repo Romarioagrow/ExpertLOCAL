@@ -27,7 +27,7 @@
                                          </div>
                                      </h4>
                                      <p class="card-text">
-                                         <strong>${product.type}</strong>, <strong><i id="total-price${product.id}">${product.totalPrice}</i></strong>
+                                         <strong>${product.type}</strong>, <strong><i id="total-price${product.id}">${product.totalPrice}₽</i></strong>
                                      </p>
                                      <button type="submit" class="btn btn-primary btn-md" name="remove-product" id="remove-product" value="${product.id?c}">Удалить</button>
                                  </div>
@@ -62,9 +62,9 @@
             <div class="row">
                 <div class="col">
                     <h3 class="mt-2" style="margin-bottom: 3vh">
-                        Заказ на сумму <strong>${order.totalPrice}₽</strong>
-                        Товаров <b>${order.productsAmount}</b>
-                        Всего единиц <b>${order.totalAmount}</b>
+                        Заказ на сумму <strong id="order-price">${order.totalPrice}₽</strong>
+                        Товаров <b id="order-products">${order.productsAmount}</b>
+                        Всего единиц <b id="order-amount">${order.totalAmount}</b>
                     </h3>
                     <button type="button" onclick="displayOrderDeal()" id="order-button" class="btn btn-success btn-lg btn-block" style="margin-bottom: 5vh">Заказ подтверждаю!</button>
                 </div>

@@ -103,20 +103,20 @@ public class ProductService {
         log.info("Product with ID " + productID + " add to order");
     }
 
-    public Set<OrderedProduct> removeProductFromOrder(String id)
+    public Order removeProductFromOrder(String id)
     {
         Order order = orderRepo.findBySessionUUID(getSessionID());
-        OrderedProduct productToDelete = orderedProductRepo.findByid(Integer.parseInt(id));
+        OrderedProduct orderedProduct = orderedProductRepo.findByid(Integer.parseInt(id));
 
-        order.getOrderedProducts().remove(productToDelete);
-        order.setTotalPrice     (order.getTotalPrice() - productToDelete.getTotalPrice());
-        order.setTotalAmount    (order.getTotalAmount() - productToDelete.getAmount());
+        order.getOrderedProducts().remove(orderedProduct);
+        order.setTotalPrice     (order.getTotalPrice() - orderedProduct.getTotalPrice());
+        order.setTotalAmount    (order.getTotalAmount() - orderedProduct.getAmount());
         order.setProductsAmount (order.getProductsAmount() - 1);
 
         orderRepo.save(order);
-        orderedProductRepo.delete(productToDelete);
+        orderedProductRepo.delete(orderedProduct);
 
-        return order.getOrderedProducts();
+        return order;
     }
 
     public Queue<Object> changeAmount(Map<String, String> data)
@@ -137,9 +137,19 @@ public class ProductService {
         order.setTotalAmount(order.getTotalProductsAmount());
         orderRepo.save(order);
 
+        return packageOrderAndProduct(order, orderedProduct);
+    }
+
+    private Queue<Object> packageOrderAndProduct(Order order, OrderedProduct orderedProduct) {
         Queue<Object> orderAndProduct = new LinkedList<>();
         orderAndProduct.add(order);
         orderAndProduct.add(orderedProduct);
+        return orderAndProduct;
+    }
+    private Queue<Object> packageOrderAndProduct(Order order, Set<OrderedProduct> orderedProducts) {
+        Queue<Object> orderAndProduct = new LinkedList<>();
+        orderAndProduct.add(order);
+        orderAndProduct.add(orderedProducts);
         return orderAndProduct;
     }
 

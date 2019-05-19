@@ -35,7 +35,7 @@ public class ServiceController {
     }
 
     @DeleteMapping("/order")
-    private Set<OrderedProduct> removeProductFromOrder(@RequestBody String productID) {
+    private Order removeProductFromOrder(@RequestBody String productID) {
         return productService.removeProductFromOrder(productID);
     }
 
