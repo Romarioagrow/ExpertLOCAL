@@ -63,7 +63,7 @@ function collectFilters(e) {
                             '<small class="text-muted">'                                        +
                                 '<a class="btn btn-info btn-rounded" style="margin-left:-1vw;" role="button" href="/product/'+product.productID.toString()+'">О товаре</a>' +
                                 '<strong><i>'+product.price +'</i></strong>'                                             +
-                                '<button type="submit" onclick="removeFromOrder()" class="btn btn-success btn-rounded" fullName="addToOrder" id="addToOrder" value="'+product.productID.toString()+'" style="margin-right: -1vw;">В корзину</button>'   +
+                                '<button type="submit" onclick="removeFromOrder()" class="btn btn-success btn-rounded" name="addToOrder" id="addToOrder" value="'+product.productID.toString()+'" style="margin-right: -1vw;">В корзину</button>'   +
                             '</small>'                                                                                      +
                         '</div>'                                                                                            +
                     '</div>'
@@ -76,12 +76,12 @@ function collectFilters(e) {
 function constructFiltersData(url) {
     var country = [], brand = [];
     ($('option:checked').each(function() {
-        if ($(this).is('[fullName="country"]')) country.push(($(this).val()));
-        if ($(this).is('[fullName="brand"]'))   brand.push(($(this).val()));
+        if ($(this).is(['name="country"'])) country.push(($(this).val()));
+        if ($(this).is(['name="brand"']))   brand.push(($(this).val()));
     }));
 
     const data = {
-        'sortBy'        : {'sortOrder'  : ($('input[fullName="sort_options"]:checked').val())},
+        'sortBy'        : {'sortOrder'  : ($('input[name="sort_options"]:checked').val())},
         'price'         : {'sortmin'    : ($('#sortmin').val()),    'sortmax' : ($('#sortmax').val())},
         'manufacturer'  : {'brand'      : brand,      'country' : country},
     };

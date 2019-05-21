@@ -32,12 +32,6 @@ public class CategoriesController {
         return "redirect:/hello";
     }
 
-    /*@GetMapping("/login")
-    public String loginPage(Model model)
-    {
-        return "pages/login";
-    }*/
-
     @GetMapping("/hello")
     public String showHelloPage(Model model)
     {

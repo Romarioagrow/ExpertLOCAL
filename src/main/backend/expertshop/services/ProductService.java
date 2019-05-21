@@ -166,8 +166,8 @@ public class ProductService {
         }
 
         log.info(orderList.toString());
-        //mailService.sendOrderDetail(orderList, order.getOrderID());
-        //mailService.sendEmailToCustomer(order, orderList);
+        mailService.sendOrderDetail(orderList, order.getOrderID());
+        mailService.sendEmailToCustomer(order, orderList);
 
         order.setAccepted(true);
         orderRepo.save(order);

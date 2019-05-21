@@ -1,9 +1,9 @@
 $(document).ready(function(){
-    $('button[type="submit"][fullName="addToOrder"]').on('click', addToOrder);
+    $('button[type="submit"][name="addToOrder"]').on('click', addToOrder);
 });
 
 $(document).ready(function(){
-    $('button[type="submit"][fullName="remove-product"]').on('click', removeFromOrder);
+    $('button[type="submit"][name="remove-product"]').on('click', removeFromOrder);
 });
 /*$(document).ajaxComplete(function() {
     $('button[type="submit"][fullName="remove-product"]').on('click', removeFromOrder);

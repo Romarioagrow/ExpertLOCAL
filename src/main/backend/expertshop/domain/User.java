@@ -1,5 +1,6 @@
 package expertshop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import java.time.LocalDateTime;
 public class User {
     @Id
     private String userID;
+    @JsonIgnore
     private String password;
     private String fullName;
     private String surname;
