@@ -2,10 +2,10 @@ $(document).ready(function(){
     $('#search-button')           .on('click', searchProducts);
 });
 $(document).ready(function(){
-    $('input[name="main-search"]').on('keyup', searchProducts);
+    $('input[fullName="main-search"]').on('keyup', searchProducts);
 });
 $('body').click(function(){
-    /// if элеиентПодСтрелкой.name != search
+    /// if элеиентПодСтрелкой.fullName != search
     document.getElementById("display-result").style.display = "none";
 });
 

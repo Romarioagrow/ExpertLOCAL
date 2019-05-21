@@ -8,9 +8,9 @@
                 <div class="product-type-menu marker2" style="width: 45vw">
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="/tv"><strong>Телевизоры</strong></a></li>
-                            <li><a href="/tv">4K</a></li>
-                            <li><a href="/tv">FullHD</a></li>
+                            <li class="list-head"><a href="/products/tv"><strong>Телевизоры</strong></a></li>
+                            <li><a href="/products/tv">4K</a></li>
+                            <li><a href="/products/tv">FullHD</a></li>
                             <li><a href="/tv">SmartTV</a></li>
                             <li><a href="/tv">Гибкий экран</a></li>
                             <li><a href="/tv">DVBT2</a></li>

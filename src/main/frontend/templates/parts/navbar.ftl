@@ -12,17 +12,31 @@
                 <form class="form-inline">
                     <i class="fas fa-search" aria-hidden="true"></i>
                     <input class="form-control form-control-sm ml-3 w-75 main-search" name="main-search" id="main-search" type="text" placeholder="Поиск товаров" aria-label="Search">
-                    <button class="btn btn-elegant btn-rounded btn-sm my-0" id="search-button" type="submit">Искать!</button>
+                    <button class="btn btn-flat" style="padding-right: 1.14rem;padding-left: 1.14rem;" id="search-button" type="submit">Искать!</button>
+                    <#--<button class="btn btn-elegant btn-rounded btn-sm my-0" id="search-button" type="submit">Искать!</button>-->
                     <div class="flex-container display-result" id="display-result" name="display-result"></div>
                 </form>
             </div>
             <div>
-                <a class="btn-floating peach-gradient" href="/order"><i class="fas fa-leaf"></i></a>
+                <#if order??>
+                    <a href="/order" class="mt-4 mb-3"><h5 style="color: black !important;">Товаров:  <span class="badge badge-primary">${order.productsAmount}</span></h5></a>
+                <#else>
+                    <a href="/order" class="mt-4 mb-3"><h5 style="color: black !important;">Закзаз пуст<span class="badge badge-primary"></span></h5></a>
+                </#if>
             </div>
+            <div class="chip chip-md" style="margin-left: 1rem;margin-top: 1rem;">
+                <a href="/user/login"><img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-10.jpg" alt="Contact Person">Регистрация</a>
+            </div>
+
         </ul>
     </div>
 </nav>
+
+
 <style>
+    .badge-primary {
+        background-color: #e52d00 !important;
+    }
     .main-search {
         min-width: 50vw;
         min-height: 5vh;

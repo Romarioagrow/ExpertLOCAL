@@ -37,13 +37,13 @@ public class OrderedProduct implements Serializable {
     private Set<Order> orders;
 }
 
-//@Column(name = "product_id")
+//@Column(fullName = "product_id")
 //@OneToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 
     /*@OneToOne(optional = false, mappedBy = "orderedProduct", fetch = FetchType.EAGER)
     @JsonIgnore
     private Product productID;*/
     /*@OneToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(fullName = "product_id")
     private Product product;*/
 

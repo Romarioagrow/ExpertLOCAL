@@ -139,17 +139,10 @@ public class ProductService {
 
         return packageOrderAndProduct(order, orderedProduct);
     }
-
     private Queue<Object> packageOrderAndProduct(Order order, OrderedProduct orderedProduct) {
         Queue<Object> orderAndProduct = new LinkedList<>();
         orderAndProduct.add(order);
         orderAndProduct.add(orderedProduct);
-        return orderAndProduct;
-    }
-    private Queue<Object> packageOrderAndProduct(Order order, Set<OrderedProduct> orderedProducts) {
-        Queue<Object> orderAndProduct = new LinkedList<>();
-        orderAndProduct.add(order);
-        orderAndProduct.add(orderedProducts);
         return orderAndProduct;
     }
 

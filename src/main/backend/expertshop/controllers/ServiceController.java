@@ -2,12 +2,15 @@ package expertshop.controllers;
 import expertshop.domain.Order;
 import expertshop.domain.OrderedProduct;
 import expertshop.domain.Product;
+import expertshop.domain.User;
 import expertshop.services.FilterService;
 import expertshop.services.ProductService;
 
+import expertshop.services.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -18,8 +21,23 @@ import java.util.*;
 public class ServiceController {
     private final FilterService filterService;
     private final ProductService productService;
+    private final UserService userService;
 
-    @PostMapping("/{reqType}")
+    @PostMapping("/user/registration")
+    public String addUser(@RequestBody Map<String, String> userDetails, User user, Model model)
+    {
+        log.info("Registration controller");
+        if (!userService.addUser(user, userDetails))
+        {
+            log.info("return");
+            model.addAttribute("message", userDetails.get("email"));
+            return "fail";
+        }
+        log.info("Registration OK");
+        return "success";
+    }
+
+    @PostMapping("/products/{reqType}")
     public List<Product> filterProducts(@RequestBody Map<String, Object> params, @PathVariable String reqType) {
         return filterService.filterProducts(params, reqType);
     }
