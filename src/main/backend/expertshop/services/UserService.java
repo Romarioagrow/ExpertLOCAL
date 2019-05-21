@@ -29,6 +29,8 @@ public class UserService implements UserDetailsService {
 
     public boolean addUser(User user, Map<String, String> userDetails) {
         String regEmail = userDetails.get("email");
+        if (regEmail.isEmpty())
+            return false;
         log.info("Registration email " + regEmail);
 
         if (userRepo.findByEmail(regEmail) != null) {
