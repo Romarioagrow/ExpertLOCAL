@@ -93,8 +93,8 @@ function constructFiltersData(url) {
         var tv_resolution = [], tv_params = [];
         ($('input:checked').each(function()
         {
-            if      ($(this).is('[fullName="tv_resolution"]'))  tv_resolution.push(($(this).val()));
-            else if ($(this).is('[fullName="tv_params"]'))      tv_params.push(($(this).val()));
+            if      ($(this).is('[name="tv_resolution"]'))  tv_resolution.push(($(this).val()));
+            else if ($(this).is('[name="tv_params"]'))      tv_params.push(($(this).val()));
         }));
         data.displayParams  = {'diag_min' : ($('#diag_min').val()), 'diag_max' : ($('#diag_max').val()), 'tv_resolution' : tv_resolution};
         data.tvParams       = {'tv_params' : tv_params};

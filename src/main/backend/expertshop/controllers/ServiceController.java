@@ -23,7 +23,7 @@ public class ServiceController {
     private final ProductService productService;
     private final UserService userService;
 
-    @PostMapping("/user/registration")
+    /*@PostMapping("/user/registration")
     public String addUser(@RequestBody Map<String, String> userDetails, User user, Model model)
     {
         log.info("Registration controller");
@@ -35,7 +35,7 @@ public class ServiceController {
         }
         log.info("Registration OK");
         return "success";
-    }
+    }*/
 
     @PostMapping("/products/{reqType}")
     public List<Product> filterProducts(@RequestBody Map<String, Object> params, @PathVariable String reqType) {

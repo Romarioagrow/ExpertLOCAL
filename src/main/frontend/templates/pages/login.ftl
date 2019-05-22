@@ -4,10 +4,10 @@
         <div class="container">
             <div class="row">
                 <div class="col">
-                    <form class="text-center border border-light p-5">
+                    <form action="/user/login" method="post" class="text-center border border-light p-5">
                         <p class="h4 mb-4">Вход в личный кабинет</p>
-                        <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail">
-                        <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password">
+                        <input type="email" id="username" name="username" class="form-control mb-4" placeholder="E-mail">
+                        <input type="password" id="password" name="password" class="form-control mb-4" placeholder="Password">
                         <div class="d-flex justify-content-around">
                             <div>
                                 <a href="">Забыли пароль?</a>

@@ -1,6 +1,6 @@
-$(document).ready(function(){
+/*$(document).ready(function(){
     $('button[type="submit"][id="submitRegistration"]').on('click', collectUserDetails);
-});
+});*/
 
 function collectUserDetails(e) {
     e.preventDefault();

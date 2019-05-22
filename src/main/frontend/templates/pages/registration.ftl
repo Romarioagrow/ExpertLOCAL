@@ -7,7 +7,7 @@
                     <div id="registration-error">
                     </div>
 
-                    <form name="registration" id="registrationForm" class="text-center border border-light p-5">
+                    <form action="/user/registration" method="post" name="registration" id="registrationForm" class="text-center border border-light p-5">
                         <p class="h4 mb-4">Регистрация</p>
                         <div class="form-row mb-4">
                             <div class="col">
@@ -19,7 +19,7 @@
                         </div>
                         <div class="form-row mb-4">
                             <div class="col">
-                                <input type="password" id="registerPassword" class="form-control" placeholder="Ваш пароль" aria-describedby="registerPassword">
+                                <input type="password" id="password" name="password" class="form-control" placeholder="Ваш пароль" aria-describedby="registerPassword">
 
                             </div>
                             <div class="col">
@@ -27,7 +27,7 @@
 
                             </div>
                         </div>
-                        <input type="email" id="registerEmail" class="form-control mb-4" placeholder="E-mail">
+                        <input type="email" id="username" name="username" class="form-control mb-4" placeholder="E-mail">
                         <input type="text" id="registerMobile" class="form-control" placeholder="Ваш мобильный телефон" aria-describedby="registerMobile">
                         <button id="submitRegistration" class="btn btn-info my-4 btn-block" type="submit">Зарегестрироваться!</button>
                         <p>Регистрация через социальные сети</p>
