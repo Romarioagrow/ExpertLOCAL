@@ -24,7 +24,7 @@
                                     </h4>
                                     <p class="card-text">
                                         <button type="button" class="btn btn-outline-danger waves-effect" id="product-less" name="${product.id?c}" value="${product.productID?c}">-</button>
-                                        <span  class="badge badge-primary badge-pill" id="amount${product.id}" name="${product.id}">${product.amount}</span>
+                                        <span  class="badge badge-primary badge-pill" id="amount${product.id?c}" name="${product.id}">${product.amount}</span>
                                         <button type="button" class="btn btn-outline-success waves-effect" id="product-more" name="${product.id?c}" value="${product.productID?c}">+</button>
                                     </p>
                                 </div>
@@ -35,7 +35,7 @@
                         <h3 style="margin-top: 4vh">Пока ничего нет...</h3>
                     </#if>
                 </div>
-                <ul class="list-group">
+                <#--<ul class="list-group">
                     <#if orderedProducts??>
                         <#list orderedProducts as product>
 
@@ -48,7 +48,7 @@
                                 <strong><i id="total-price${product.id}">${product.totalPrice} ₽</i></strong>
                                 <button type="submit" class="btn btn-primary btn-md" name="remove-product" id="remove-product" value="${product.id?c}">Удалить</button>
                             </li>
-                            <#--<div class="list-group-item d-flex justify-content-between align-items-center &lt;#&ndash;container&ndash;&gt;">
+                            &lt;#&ndash;<div class="list-group-item d-flex justify-content-between align-items-center &lt;#&ndash;container&ndash;&gt;">
                                 <div class="row">
                                     <div class="col-6">
                                         <img class="ordered-product-img-line" src="${product.pic}" height="50" width="80"  alt="Card image cap">
@@ -64,12 +64,12 @@
                                         <button type="submit" class="btn btn-primary btn-md" fullName="remove-product" id="remove-product" value="${product.id?c}">Удалить</button>
                                     </div>
                                 </div>
-                            </div>-->
+                            </div>&ndash;&gt;
                         </#list>
                     <#else>
                         <h3 style="margin-top: 4vh">Пока ничего нет...</h3>
                     </#if>
-                </ul>
+                </ul>-->
 
             </div>
         </div>

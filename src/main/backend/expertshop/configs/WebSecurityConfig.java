@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .mvcMatchers("/","/hello","/user").authenticated()
+                    .mvcMatchers(/*"/","/hello",*/"/user").authenticated()
                     .anyRequest().permitAll()
                 .and()
                     .formLogin()
@@ -49,8 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .csrf().disable();
     }
-
-
+    
     /*@Bean
     public PrincipalExtractor principalExtractor(UserRepo userRepo) {
         return map -> {

@@ -42,21 +42,18 @@ public class CategoriesController {
     }
 
     @GetMapping("/categories")
-    public String categories(Model model)
-    {
-        model.addAttribute("order", orderService.getCurrentOrder());
-        model.addAttribute("products", productService.findAll());
-        return "pages/main";
+    public String categories(Model model) {
+        return "redirect:/hello";
     }
-    @GetMapping("/categories/{req_category}")
-    public String showByCategories(Model model, @PathVariable String req_category
+    @GetMapping("/categories/{category}")
+    public String showByCategories(Model model, @PathVariable String category
     ){
-        log.info("Category: " + req_category);
+        log.info("Category: " + category);
 
-        model.addAttribute("url", req_category);
+        model.addAttribute("url", category);
         model.addAttribute("order", orderService.getCurrentOrder());
-        model.addAttribute("products", productService.findProducts(Category.valueOf(req_category)));
-        return "pages/main";
+        model.addAttribute("products", productService.findProducts(Category.valueOf(category)));
+        return "pages/categories";
     }
 
     @GetMapping("/subcats")
