@@ -18,19 +18,11 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
-    /*@PostMapping("/registration")
-    public String addUser(@RequestBody Map<String, String> userDetails, User user, Model model)
-    {
-        log.info("Registration controller");
-        if (!userService.userRegistration(user, userDetails))
-        {
-            log.info("return");
-            model.addAttribute("message", userDetails.get("email"));
-            return "pages/login";
-        }
-        log.info("Registration OK");
-        return "pages/order";
-    }*/
+
+    @GetMapping("/registration")
+    public String registrationPage() {
+        return "pages/registration";
+    }
 
     @PostMapping("/registration")
     public String addUser(User user, Map<String, Object> model)
@@ -46,19 +38,11 @@ public class UserController {
 
     @GetMapping("/login")
     public String loginPage() {
-        log.info("Login page");
         return "pages/login";
-    }
-
-    @GetMapping("/registration")
-    public String registrationPage() {
-        log.info("Registration page");
-        return "pages/registration";
     }
 
     @GetMapping("/cabinet")
     public String userCabinet() {
-        log.info("userCabinet page");
         return "pages/cabinet";
     }
 }

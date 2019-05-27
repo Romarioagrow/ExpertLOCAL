@@ -1,7 +1,6 @@
 package expertshop.configs;
 import expertshop.services.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -35,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .mvcMatchers(/*"/","/hello",*/"/user").authenticated()
+                    .mvcMatchers("/","/hello","/user").authenticated()
                     .anyRequest().permitAll()
                 .and()
                     .formLogin()
