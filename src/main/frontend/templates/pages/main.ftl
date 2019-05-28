@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row mb-3">
             <div class="col-3 marker1 filters-col">
                 <div class="marker2">
                     <form method="get" name="filters" id="filters">

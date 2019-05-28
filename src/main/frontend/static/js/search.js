@@ -34,7 +34,7 @@ function searchProducts(e) {
             response.responseJSON.forEach(product => $("#display-result").append
             (
                 '<div class="one-product" style="margin-top: 3px!important;">'                  +
-                    '<a href="http://localhost:8080/product/'+ product.productID +'">'          +
+                    '<a href="http://localhost:8080/products/info/'+ product.productID +'">'          +
                         product.productParams.type + " " + product.brand + " " + product.model  +
                     '</a>'                                                                      +
                 '</div>'

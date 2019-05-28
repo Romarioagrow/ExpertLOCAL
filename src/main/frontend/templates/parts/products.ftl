@@ -11,7 +11,7 @@
         </label>
     </div>
 </div>
-<div class="flex-container marker2" id="products">
+<div class="card-group marker2" id="products">
     <#if products??>
         <#list products as product>
             <div class="card product-card mr-3 mt-3">
@@ -29,9 +29,9 @@
                 </div>
                 <div class="card-footer">
                     <small class="text-muted">
-                        <a class="btn btn-info btn-rounded" style="margin-left: -1vw;" href="/product/${product.productID?c}" role="button" >О товаре</a>
-                        <strong><i>${product.price}</i></strong>
-                        <button type="submit" class="btn btn-success btn-rounded" name="addToOrder" id="addToOrder" value="${product.productID?c}" style="margin-right: -1vw;">В корзину</button>
+                        <a class="btn btn-info btn-blue-grey" style="margin-left: -1vw;" href="/products/info/${product.productID?c}" role="button" >О товаре</a>
+                        <strong><i>${product.price}₽</i></strong>
+                        <button type="submit" class="btn btn-success btn-mdb-color" name="addToOrder" id="addToOrder" value="${product.productID?c}" style="margin-right: -1vw;">В корзину</button>
                     </small>
                 </div>
             </div>

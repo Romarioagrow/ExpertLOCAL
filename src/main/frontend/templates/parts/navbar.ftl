@@ -28,13 +28,13 @@
 
             <#if !isUser>
                 <div class="chip chip-md" style="margin-left: 1rem;margin-top: 1rem;">
-                    <a href="/user/login"><img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-10.jpg" alt="Contact Person">Регистрация</a>
+                    <a href="/user/login">Регистрация</a>
                 </div>
             </#if>
 
             <#if isUser>
                 <div class="chip chip-md" style="margin-left: 1rem;margin-top: 1rem;">
-                    <a href="/user/cabinet"><img src="" alt="">Личный кабинет</a>
+                    <a href="/user/cabinet">Личный кабинет</a>
                 </div>
 
                 <#--<li class="nav-item active">

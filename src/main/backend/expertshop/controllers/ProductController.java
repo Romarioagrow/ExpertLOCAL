@@ -34,7 +34,7 @@ public class ProductController {
         return "pages/main";
     }
 
-    @GetMapping("/show/{product_id}")
+    @GetMapping("/info/{product_id}")
     public String showProduct(Model model, @PathVariable String product_id)
     {
         String url = productRepo.findByProductID(Integer.parseInt(product_id)).getType().toString();

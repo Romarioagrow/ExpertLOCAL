@@ -61,9 +61,9 @@ function collectFilters(e) {
                         '</div>'                                                                +
                         '<div class="card-footer">'                                             +
                             '<small class="text-muted">'                                        +
-                                '<a class="btn btn-info btn-rounded" style="margin-left:-1vw;" role="button" href="/product/'+product.productID.toString()+'">О товаре</a>' +
-                                '<strong><i>'+product.price +'</i></strong>'                                             +
-                                '<button type="submit" onclick="removeFromOrder()" class="btn btn-success btn-rounded" name="addToOrder" id="addToOrder" value="'+product.productID.toString()+'" style="margin-right: -1vw;">В корзину</button>'   +
+                                '<a class="btn btn-info btn-blue-grey" style="margin-left:-1vw;" role="button" href="/product/'+product.productID.toString()+'">О товаре</a>' +
+                                '<strong><i>'+product.price +'₽</i></strong>'                                             +
+                                '<button type="submit" onclick="removeFromOrder()" class="btn btn-success btn-mdb-color" name="addToOrder" id="addToOrder" value="'+product.productID.toString()+'" style="margin-right: -1vw;">В корзину</button>'   +
                             '</small>'                                                                                      +
                         '</div>'                                                                                            +
                     '</div>'

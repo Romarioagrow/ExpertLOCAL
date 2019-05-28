@@ -4,7 +4,7 @@
         <div class="row mt-2">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/${url}">${product.productParams.type}</a></li>
+                    <li class="breadcrumb-item"><a href="/products/${url}">${product.productParams.type}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">${product.brand} ${product.model}</li>
                 </ol>
             </nav>
