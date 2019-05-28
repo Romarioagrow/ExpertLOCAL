@@ -30,7 +30,7 @@ public class ProductController {
 
         model.addAttribute("url", req_product);
         model.addAttribute("order", orderService.getCurrentOrder());
-        /*if (!req_product.equals("null")) */model.addAttribute("products", productService.findProducts(Type.valueOf(req_product)));
+        model.addAttribute("products", productService.findProducts(Type.valueOf(req_product)));
         return "pages/main";
     }
 

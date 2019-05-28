@@ -19,14 +19,6 @@ public class CategoriesController {
     private final ProductService productService;
     private final OrderService orderService;
 
-    @GetMapping("/order")
-    public String order(Model model)
-    {
-        model.addAttribute("order", orderService.getCurrentOrder());
-        model.addAttribute("orderedProducts", productService.showOrderedProducts());
-        return "pages/order";
-    }
-
     @GetMapping("/")
     public String showAll(Model model) {
         return "redirect:/hello";
@@ -45,6 +37,12 @@ public class CategoriesController {
     public String categories(Model model) {
         return "redirect:/hello";
     }
+
+    @GetMapping("/subcats")
+    public String subCategories( Model model) {
+        return "redirect:/hello";
+    }
+
     @GetMapping("/categories/{category}")
     public String showByCategories(Model model, @PathVariable String category
     ){
@@ -56,13 +54,6 @@ public class CategoriesController {
         return "pages/categories";
     }
 
-    @GetMapping("/subcats")
-    public String subCategories( Model model)
-    {
-        model.addAttribute("products", productService.findAll());
-        model.addAttribute("order", orderService.getCurrentOrder());
-        return "pages/main";
-    }
     @GetMapping("/subcats/{req_subcategory}")
     public String showSubCategories( Model model, @PathVariable String req_subcategory)
     {
@@ -72,6 +63,14 @@ public class CategoriesController {
         model.addAttribute("order", orderService.getCurrentOrder()/*orderRepo.findBySessionUUID(productService.getSessionID())*/);
         model.addAttribute("products", productService.findProducts(SubCategory.valueOf(req_subcategory)));
         return "pages/main";
+    }
+
+    @GetMapping("/order")
+    public String order(Model model)
+    {
+        model.addAttribute("order", orderService.getCurrentOrder());
+        model.addAttribute("orderedProducts", productService.showOrderedProducts());
+        return "pages/order";
     }
 }
 

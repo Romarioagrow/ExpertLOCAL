@@ -18,15 +18,16 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
-    private long userID;
-    @JsonIgnore
-    private String password;
+    private Long userID;
+
     private String username;
 
-    private String fullName;
-    private String mobile;
+    @JsonIgnore
+    private String password;
 
-    private String userPic;
+    private String firstName, lastName, mobile, userPic;
+    //private String mobile;
+
     private LocalDateTime registrationDate;
     //private LocalDateTime lastVisit;
     private boolean isActive;
@@ -36,6 +37,9 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
+    public String getFirstName() {
+        return firstName;
+    }
     @Override
     public String getUsername() {
         return username;
@@ -59,5 +63,12 @@ public class User implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
+    }
+
+    public boolean isAdmin() {
+        return roles.contains(Role.ADMIN);
+    }
+    public boolean isUser() {
+        return roles.contains(Role.USER);
     }
 }

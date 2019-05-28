@@ -2,7 +2,6 @@ package expertshop.services;
 
 import expertshop.domain.Order;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,10 +11,8 @@ import org.springframework.stereotype.Service;
 
 @Log
 @Service
-@NoArgsConstructor
 //@AllArgsConstructor
 public class MailService {
-    //private final JavaMailSender mailSender;
     @Autowired
     private JavaMailSender mailSender;
 

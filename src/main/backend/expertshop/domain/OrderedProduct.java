@@ -35,6 +35,17 @@ public class OrderedProduct implements Serializable {
     @JsonIgnore
     @ManyToMany(mappedBy = "orderedProducts")
     private Set<Order> orders;
+
+    public void constructOrderedProduct(Product product, String productID) {
+        this.setProductID (Integer.parseInt(productID));
+        this.setAmount    (1);
+        this.setBrand     (product.getBrand());
+        this.setModel     (product.getModel());
+        this.setType      (product.getProductParams().getType());
+        this.setPic       (product.getProductParams().getPic());
+        this.setPrice     (product.getPrice());
+        this.setTotalPrice(product.getPrice());
+    }
 }
 
 //@Column(fullName = "product_id")

@@ -1,3 +1,5 @@
+<#include "security.ftl">
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light mark1">
     <a class="navbar-brand" href="/"><img src="../img/logo.png" width="220" height="60" alt=""></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,9 +26,22 @@
                     <a href="/order" class="mt-4 mb-3"><h5 style="color: black !important;">Закзаз пуст<span class="badge badge-primary"></span></h5></a>
                 </#if>
             </div>
-            <div class="chip chip-md" style="margin-left: 1rem;margin-top: 1rem;">
-                <a href="/user/login"><img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-10.jpg" alt="Contact Person">Регистрация</a>
-            </div>
+
+            <#if !isUser>
+                <div class="chip chip-md" style="margin-left: 1rem;margin-top: 1rem;">
+                    <a href="/user/login"><img src="https://mdbootstrap.com/img/Photos/Avatars/avatar-10.jpg" alt="Contact Person">Регистрация</a>
+                </div>
+            </#if>
+
+            <#if isUser>
+                <div class="chip chip-md" style="margin-left: 1rem;margin-top: 1rem;">
+                    <a href="/user/cabinet"><img src="" alt="">Личный кабинет</a>
+                </div>
+
+                <#--<li class="nav-item active">
+                    <a class="nav-link" href="/user/cabinet">Личный кабинет</a>
+                </li>-->
+            </#if>
 
         </ul>
     </div>

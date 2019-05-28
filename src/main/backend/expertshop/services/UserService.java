@@ -21,14 +21,14 @@ public class UserService implements UserDetailsService {
     private final UserRepo userRepo;
     //private final PasswordEncoder passwordEncoder;
 
-    public boolean addUser(User user)
+    public boolean registerUser(User user)
     {
         if (userRepo.findByUsername(user.getUsername()) != null) {
             return false;
         }
 
         user.setActive(true);
-        user.setRoles(Collections.singleton(Role.ADMIN));
+        user.setRoles(Collections.singleton(Role.USER));
         user.setRegistrationDate(LocalDateTime.now());
 
         userRepo.save(user);

@@ -3,6 +3,7 @@ package expertshop.services;
 import expertshop.domain.Order;
 import expertshop.domain.OrderedProduct;
 import expertshop.domain.Product;
+import expertshop.domain.User;
 import expertshop.domain.categories.Category;
 import expertshop.domain.categories.SubCategory;
 import expertshop.domain.categories.Type;
@@ -25,7 +26,6 @@ public class ProductService {
     private final OrderedProductRepo orderedProductRepo;
     private final ProductRepo productRepo;
     private final OrderRepo orderRepo;
-    private final MailService mailService;
 
     public List<Product> findProducts(Category category) {
         return productRepo.findByCategory(category);
@@ -62,56 +62,72 @@ public class ProductService {
         return null;
     }
 
-    public void addProductToOrder(String productID)
+    public void addProductToOrder(String productID, User user)
     {
-        log.info("Received product with ID " + productID);
-
-        Order order = orderRepo.findBySessionUUID(getSessionID());
-        if (order == null)
-        {
-            order = new Order();
-            order.setSessionUUID(getSessionID());
-        }
+        Order order;
 
         Product product = productRepo.findByProductID(Integer.parseInt(productID));
-
         OrderedProduct orderedProduct = new OrderedProduct();
-        orderedProduct.setProductID(Integer.parseInt(productID));
-        orderedProduct.setAmount(1);
-        orderedProduct.setBrand(product.getBrand());
-        orderedProduct.setModel(product.getModel());
-        orderedProduct.setType(product.getProductParams().getType());
-        orderedProduct.setPic(product.getProductParams().getPic());
-        orderedProduct.setPrice(product.getPrice());
-        orderedProduct.setTotalPrice(product.getPrice());
 
-        order.addProductToOrder(orderedProduct);
+        if (user == null)
+        {
+            order = orderRepo.findBySessionUUID(getSessionID());
 
-        if (order.getTotalPrice() == null) {
-            order.setTotalPrice(orderedProduct.getTotalPrice());
-            order.setProductsAmount(1);
-            order.setTotalAmount(1);
-        } else {
-            order.setTotalPrice(order.getTotalPrice() + orderedProduct.getTotalPrice());
-            order.setProductsAmount(order.getProductsAmount() + 1);
-            order.setTotalAmount(order.getTotalAmount() + 1);
+            if (order == null)
+            {
+                order = new Order();
+                order.setSessionUUID(getSessionID());
+            }
+
+            orderedProduct.constructOrderedProduct(product, productID);
+            order.addProductToOrder(orderedProduct);
+
+            setOrderStats(order, orderedProduct.getTotalPrice());
+            orderRepo.save(order);
         }
+        else
+        {
+            order = orderRepo.findByUserID(user.getUserID());
 
-        orderRepo.save(order);
+            if (order == null || order.isAccepted())
+            {
+                order = new Order();
+                order.setUserID(user.getUserID());
+            }
+
+            orderedProduct.constructOrderedProduct(product, productID);
+            order.addProductToOrder(orderedProduct);
+
+            setOrderStats(order, orderedProduct.getTotalPrice());
+            orderRepo.save(order);
+        }
 
         System.out.println("\n");
         log.info("Product with ID " + productID + " add to order");
     }
+    private void setOrderStats(Order order, Integer productTotalPrice)
+    {
+        if (order.getTotalPrice() == null)
+        {
+            order.setTotalPrice     (productTotalPrice);
+            order.setProductsAmount (1);
+            order.setTotalAmount    (1);
+        } else {
+            order.setTotalPrice     (order.getTotalPrice()      + productTotalPrice);
+            order.setProductsAmount (order.getProductsAmount()  + 1);
+            order.setTotalAmount    (order.getTotalAmount()     + 1);
+        }
+    }
 
     public Order removeProductFromOrder(String id)
     {
-        Order order = orderRepo.findBySessionUUID(getSessionID());
+        Order order = orderRepo.findBySessionUUID(getSessionID()); /// orderService.getOrder() проверят по sessionID или по userID
         OrderedProduct orderedProduct = orderedProductRepo.findByid(Integer.parseInt(id));
 
         order.getOrderedProducts().remove(orderedProduct);
-        order.setTotalPrice     (order.getTotalPrice() - orderedProduct.getTotalPrice());
-        order.setTotalAmount    (order.getTotalAmount() - orderedProduct.getAmount());
-        order.setProductsAmount (order.getProductsAmount() - 1);
+        order.setTotalPrice     (order.getTotalPrice()      - orderedProduct.getTotalPrice());
+        order.setTotalAmount    (order.getTotalAmount()     - orderedProduct.getAmount());
+        order.setProductsAmount (order.getProductsAmount()  - 1);
 
         orderRepo.save(order);
         orderedProductRepo.delete(orderedProduct);
@@ -146,32 +162,6 @@ public class ProductService {
         return orderAndProduct;
     }
 
-    public void confirmOrder(Map<String, String> contacts) {
-        Order order = orderRepo.findByOrderID(Integer.parseInt(contacts.get("orderID")));
-        order.setName(contacts.get("name"));
-        order.setSurname(contacts.get("surname"));
-        order.setMobile(contacts.get("mobile"));
-        order.setEmail(contacts.get("email"));
-
-        Set<OrderedProduct> orderedProducts = order.getOrderedProducts();
-        StringBuilder orderList = new StringBuilder();
-
-        for (OrderedProduct product : orderedProducts) {
-            StringJoiner  item = new StringJoiner (", ");
-            item    .add("\n" + product.getType() + " " + product.getBrand() + " " + product.getModel())
-                    .add("кол-во: " + product.getAmount().toString())
-                    .add("итого \u20BD: " + product.getTotalPrice().toString())
-                    .add("id товара: " + product.getProductID().toString());
-            orderList.append(item.toString());
-        }
-
-        log.info(orderList.toString());
-        mailService.sendOrderDetail(orderList, order.getOrderID());
-        mailService.sendEmailToCustomer(order, orderList);
-
-        order.setAccepted(true);
-        orderRepo.save(order);
-    }
 
     public String getSessionID() {
         return RequestContextHolder.currentRequestAttributes().getSessionId();

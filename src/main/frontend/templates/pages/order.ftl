@@ -1,4 +1,6 @@
 <#import "../parts/template.ftl" as t>
+<#include "../parts/security.ftl">
+
 <@t.template>
     <div class="container">
         <div class="row">
@@ -92,34 +94,69 @@
                     <div class="row">
                         <div class="col">
                             <form id="contact-form" name="contact-form" action="mail.php" method="POST">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="md-form mb-0">
-                                            <input type="text" id="name" name="name" class="form-control">
-                                            <label for="name" class="">Ваше имя</label>
+
+                                <#if !isUser>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="md-form mb-0">
+                                                <input type="text" id="name" name="name" class="form-control">
+                                                <label for="name" class="">Ваше имя</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="md-form mb-0">
+                                                <input type="text" id="family" name="family" class="form-control">
+                                                <label for="family" class="">Ваша фамилия</label>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="md-form mb-0">
-                                            <input type="text" id="family" name="family" class="form-control">
-                                            <label for="family" class="">Ваша фамилия</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="md-form mb-0">
+                                                <input type="text" id="mobile" name="mobile" class="form-control">
+                                                <label for="mobile" class="">Ваш телефон</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="md-form mb-0">
+                                                <input type="email" id="email" name="email" class="form-control">
+                                                <label for="email" class="">Ваш e-mail</label>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="md-form mb-0">
-                                            <input type="text" id="mobile" name="mobile" class="form-control">
-                                            <label for="mobile" class="">Ваш телефон</label>
+                                </#if>
+
+                                <#if isUser>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="md-form mb-0">
+                                                <input type="text" id="name" name="name" class="form-control" value="${firstName}">
+                                                <label for="name" class="">Ваше имя</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="md-form mb-0">
+                                                <input type="text" id="family" name="family" class="form-control" value="${lastName}">
+                                                <label for="family" class="">Ваша фамилия</label>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="md-form mb-0">
-                                            <input type="email" id="email" name="email" class="form-control">
-                                            <label for="email" class="">Ваш e-mail</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="md-form mb-0">
+                                                <input type="text" id="mobile" name="mobile" class="form-control" value="${mobile}">
+                                                <label for="mobile" class="">Ваш телефон</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="md-form mb-0">
+                                                <input type="email" id="email" name="email" class="form-control" value="${email}">
+                                                <label for="email" class="">Ваш e-mail</label>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </#if>
+
                                 <h3 class="h1-responsive font-weight-bold text-center my-4">Способ получения товара</h3>
                                 <div class="row">
                                     <div class="col-md-12">

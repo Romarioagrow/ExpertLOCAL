@@ -26,7 +26,7 @@ public class Order implements Serializable {
     private String sessionUUID;
 
     @Column(name = "user_id")
-    private Integer userID;
+    private Long userID;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "products_to_order",
@@ -34,10 +34,15 @@ public class Order implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "ordered_product"))
     private Set<OrderedProduct> orderedProducts;
 
-    private Boolean  accepted, confirmed, completed;
+    private boolean accepted = false;
+    private Boolean confirmed, completed;
 
     private Integer totalPrice, productsAmount, totalAmount;
     private String name, surname, mobile, email, address;
+
+    public Boolean isAccepted() {
+        return accepted;
+    }
 
     public void addProductToOrder(OrderedProduct orderedProduct)
     {

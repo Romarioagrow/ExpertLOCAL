@@ -8,4 +8,6 @@ public interface OrderRepo extends JpaRepository<Order, Integer> {
     Order findBySessionUUID(String sessionID);
 
     Order findByOrderID(Integer orderID);
+
+    Order findByUserID(Long userID);
 }

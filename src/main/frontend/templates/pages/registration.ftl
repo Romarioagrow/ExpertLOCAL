@@ -10,10 +10,10 @@
                         <p class="h4 mb-4">Регистрация</p>
                         <div class="form-row mb-4">
                             <div class="col">
-                                <input type="text" id="fullName" name="fullName" class="form-control" placeholder="Имя">
+                                <input type="text" id="firstName" name="firstName" class="form-control" placeholder="Имя">
                             </div>
                             <div class="col">
-                                <input type="text" id="registerLastName" name="registerLastName" class="form-control" placeholder="Фамилия">
+                                <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Фамилия">
                             </div>
                         </div>
                         <div class="form-row mb-4">
