@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import java.util.Map;
-import java.util.Set;
 import java.util.StringJoiner;
 
 @Log
@@ -23,25 +22,53 @@ public class OrderService {
         return orderRepo.findBySessionUUID(RequestContextHolder.currentRequestAttributes().getSessionId());
     }
 
+    public Order getUserOrder(Long userID) {
+        return orderRepo.findByUserIDAndAcceptedFalse(userID);
+    }
+
     public void confirmOrder(Map<String, String> contacts, User user) {
-        log.info(user.getUsername());
+        Order order;
 
-        if (user.getUsername() == null) {
+        if (user == null) {
+            order = getCurrentOrder();
 
+            order.setName   (contacts.get("name"));
+            order.setSurname(contacts.get("surname"));
+            order.setMobile (contacts.get("mobile"));
+            order.setEmail  (contacts.get("email"));
+
+            acceptOrder(order);
         }
+        else
+        {
+            order = orderRepo.findByUserIDAndAcceptedFalse(user.getUserID());
 
-        /*Order order = orderRepo.findByOrderID(Integer.parseInt(contacts.get("orderID")));
+            order.setName   (user.getFirstName());
+            order.setSurname(user.getLastName());
+            order.setMobile (user.getMobile());
+            order.setEmail  (user.getUsername());
 
+            acceptOrder(order, user);
+        }
+    }
 
-        order.setName   (contacts.get("name"));
-        order.setSurname(contacts.get("surname"));
-        order.setMobile (contacts.get("mobile"));
-        order.setEmail  (contacts.get("email"));
+    private void acceptOrder(Order order, User user) {
+        sendProductsList(order);
 
-        Set<OrderedProduct> orderedProducts = order.getOrderedProducts();
+        Order newOrder = new Order();
+        newOrder.setUserID(user.getUserID());
+        newOrder.setProductsAmount(0);
+        orderRepo.save(newOrder);
+    }
+
+    private void acceptOrder(Order order) {
+        sendProductsList(order);
+    }
+
+    private void sendProductsList(Order order) {
         StringBuilder orderList = new StringBuilder();
 
-        for (OrderedProduct product : orderedProducts) {
+        for (OrderedProduct product : order.getOrderedProducts()) {
             StringJoiner item = new StringJoiner (", ");
             item    .add("\n" + product.getType() + " " + product.getBrand() + " " + product.getModel())
                     .add("кол-во: " + product.getAmount().toString())
@@ -55,6 +82,6 @@ public class OrderService {
         mailService.sendEmailToCustomer(order, orderList);
 
         order.setAccepted(true);
-        orderRepo.save(order);*/
+        orderRepo.save(order);
     }
 }

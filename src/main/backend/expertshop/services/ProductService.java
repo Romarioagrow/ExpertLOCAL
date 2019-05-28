@@ -46,6 +46,7 @@ public class ProductService {
     public List<Product> searchProducts(String searchRequest)
     {
         log.info("Search request: " + searchRequest);
+
         List<Product> searchedProducts = productRepo.findAll().stream()
                 .filter(product -> product.getBrand().concat(" ").concat(product.getModel()).contains(searchRequest))
                 .collect(Collectors.toList());
@@ -54,9 +55,13 @@ public class ProductService {
         return searchedProducts;
     }
 
-    public Set<OrderedProduct> showOrderedProducts()
+    public Set<OrderedProduct> showOrderedProducts(User user)
     {
-        if (orderRepo.findBySessionUUID(getSessionID()) != null) {
+        if (user != null) {
+            Set<OrderedProduct> orderedProducts = orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()).getOrderedProducts();
+            if (orderedProducts != null) return orderedProducts;
+        }
+        else if (orderRepo.findBySessionUUID(getSessionID()) != null) {
             return orderRepo.findBySessionUUID(getSessionID()).getOrderedProducts();
         }
         return null;
@@ -65,7 +70,6 @@ public class ProductService {
     public void addProductToOrder(String productID, User user)
     {
         Order order;
-
         Product product = productRepo.findByProductID(Integer.parseInt(productID));
         OrderedProduct orderedProduct = new OrderedProduct();
 
@@ -87,7 +91,7 @@ public class ProductService {
         }
         else
         {
-            order = orderRepo.findByUserID(user.getUserID());
+            order = orderRepo.findByUserIDAndAcceptedFalse(user.getUserID());
 
             if (order == null || order.isAccepted())
             {
@@ -161,7 +165,6 @@ public class ProductService {
         orderAndProduct.add(orderedProduct);
         return orderAndProduct;
     }
-
 
     public String getSessionID() {
         return RequestContextHolder.currentRequestAttributes().getSessionId();

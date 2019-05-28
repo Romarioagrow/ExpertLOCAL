@@ -1,5 +1,5 @@
 <div class="btn-group">
-    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <button type="button" class="btn btn-gplus dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Товары
     </button>
     <div class="dropdown-menu">

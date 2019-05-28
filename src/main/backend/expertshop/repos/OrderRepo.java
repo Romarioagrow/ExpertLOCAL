@@ -10,4 +10,6 @@ public interface OrderRepo extends JpaRepository<Order, Integer> {
     Order findByOrderID(Integer orderID);
 
     Order findByUserID(Long userID);
+
+    Order findByUserIDAndAcceptedFalse(Long userID);
 }

@@ -13,9 +13,8 @@
             <div class="ml-5 search-field">
                 <form class="form-inline">
                     <i class="fas fa-search" aria-hidden="true"></i>
-                    <input class="form-control form-control-sm ml-3 w-75 main-search" name="main-search" id="main-search" type="text" placeholder="Поиск товаров" aria-label="Search">
+                    <input class="form-control form-control-sm ml-3 main-search" <#--style="width: 50rem !important;"--> name="main-search" id="main-search" type="text" placeholder="Поиск товаров" aria-label="Search">
                     <button class="btn btn-flat" style="padding-right: 1.14rem;padding-left: 1.14rem;" id="search-button" type="submit">Искать!</button>
-                    <#--<button class="btn btn-elegant btn-rounded btn-sm my-0" id="search-button" type="submit">Искать!</button>-->
                     <div class="flex-container display-result" id="display-result" name="display-result"></div>
                 </form>
             </div>
@@ -53,9 +52,10 @@
         background-color: #e52d00 !important;
     }
     .main-search {
-        min-width: 50vw;
-        min-height: 5vh;
-        margin-left: 4vw;
+        /*min-width: 50vw;*/
+        width: 50rem !important;
+        min-height: 3rem;
+        //margin-left: 4vw;
     }
     .peach-gradient {
         margin-left: 2vw;
@@ -70,7 +70,7 @@
     .display-result {
         position: absolute;
         color: black;
-        width: 50vw;
+        width: 50rem !important;;
         top: 7vh;
         left: 27.5vw;
         max-height: 300px;

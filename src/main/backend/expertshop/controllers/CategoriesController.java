@@ -1,4 +1,6 @@
 package expertshop.controllers;
+import expertshop.domain.Order;
+import expertshop.domain.User;
 import expertshop.domain.categories.Category;
 import expertshop.domain.categories.SubCategory;
 import expertshop.repos.OrderRepo;
@@ -8,6 +10,7 @@ import expertshop.services.ProductService;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -66,10 +69,15 @@ public class CategoriesController {
     }
 
     @GetMapping("/order")
-    public String order(Model model)
+    public String order(Model model, @AuthenticationPrincipal User user)
     {
-        model.addAttribute("order", orderService.getCurrentOrder());
-        model.addAttribute("orderedProducts", productService.showOrderedProducts());
+        Order order;
+
+        if (user != null) order = orderService.getUserOrder(user.getUserID());
+        else order = orderService.getCurrentOrder();
+
+        model.addAttribute("order", order);
+        model.addAttribute("orderedProducts", productService.showOrderedProducts(user));
         return "pages/order";
     }
 }
