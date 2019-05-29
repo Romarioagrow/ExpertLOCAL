@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.StringJoiner;
 
 @Log
@@ -48,24 +49,24 @@ public class OrderService {
             order.setMobile (user.getMobile());
             order.setEmail  (user.getUsername());
 
-            acceptOrder(order, user.getUserID());
+            acceptOrder(order);
         }
     }
 
-    private void acceptOrder(Order order, Long userID) {
-        sendProductsList(order);
+    /*private void acceptOrder(Order order, Long userID) {
+        acceptOrder(order);
 
-        /*Order newOrder = new Order();
+        *//*Order newOrder = new Order();
         newOrder.setUserID(userID);
         newOrder.setProductsAmount(0);
-        orderRepo.save(newOrder);*/
+        orderRepo.save(newOrder);*//*
     }
 
     private void acceptOrder(Order order) {
-        sendProductsList(order);
-    }
+        acceptOrder(order);
+    }*/
 
-    private void sendProductsList(Order order) {
+    private void acceptOrder(Order order) {
         StringBuilder orderList = new StringBuilder();
 
         for (OrderedProduct product : order.getOrderedProducts()) {
@@ -83,5 +84,9 @@ public class OrderService {
 
         order.setAccepted(true);
         orderRepo.save(order);
+    }
+
+    public Set<Order> showUserOrders(Long userID) {
+        return orderRepo.findOrdersByUserID(userID);
     }
 }

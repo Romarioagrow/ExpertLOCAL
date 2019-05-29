@@ -30,7 +30,7 @@
                                         <button type="button" class="btn btn-outline-success waves-effect" id="product-more" name="${product.id?c}" value="${product.productID?c}">+</button>
                                     </p>
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-md" name="remove-product" id="remove-product" value="${product.id?c}">Удалить</button>
+                                <button type="submit" class="btn btn-danger btn-md" name="remove-product" id="remove-product" value="${product.id?c}">Удалить</button>
                             </div>
                         </#list>
                     <#else>
