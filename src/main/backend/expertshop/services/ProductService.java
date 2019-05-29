@@ -55,17 +55,32 @@ public class ProductService {
         return searchedProducts;
     }
 
+    public boolean checkUserOrder(User user) {
+        return orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()) != null;
+    }
+
     public Set<OrderedProduct> showOrderedProducts(User user)
     {
         if (user != null) {
-            Set<OrderedProduct> orderedProducts = orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()).getOrderedProducts();
-            if (orderedProducts != null) return orderedProducts;
+            if (checkUserOrder(user))
+                return orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()).getOrderedProducts();
+            else return new HashSet<>();
         }
         else if (orderRepo.findBySessionUUID(getSessionID()) != null) {
             return orderRepo.findBySessionUUID(getSessionID()).getOrderedProducts();
         }
         return null;
     }
+    /*public Object*//*Optional<Set<OrderedProduct>>*//**//*Set<OrderedProduct>*//* showOrderedProducts(User user)
+    {
+        if (user != null) {
+            return Optional.ofNullable(orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()).getOrderedProducts());*//*orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()).getOrderedProducts();*//*
+        }
+        else if (orderRepo.findBySessionUUID(getSessionID()) != null) {
+            return orderRepo.findBySessionUUID(getSessionID()).getOrderedProducts();
+        }
+        return null;
+    }*/
 
     public void addProductToOrder(String productID, User user)
     {
@@ -93,8 +108,9 @@ public class ProductService {
         {
             order = orderRepo.findByUserIDAndAcceptedFalse(user.getUserID());
 
-            if (order == null || order.isAccepted())
+            if (order == null /*|| order.isAccepted()*/)
             {
+                log.info("NO ORDER, NEW ONE!");
                 order = new Order();
                 order.setUserID(user.getUserID());
             }
@@ -159,7 +175,8 @@ public class ProductService {
 
         return packageOrderAndProduct(order, orderedProduct);
     }
-    private Queue<Object> packageOrderAndProduct(Order order, OrderedProduct orderedProduct) {
+    private Queue<Object> packageOrderAndProduct(Order order, OrderedProduct orderedProduct)
+    {
         Queue<Object> orderAndProduct = new LinkedList<>();
         orderAndProduct.add(order);
         orderAndProduct.add(orderedProduct);

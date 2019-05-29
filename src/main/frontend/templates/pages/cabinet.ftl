@@ -8,8 +8,6 @@
                 <h1>${firstName}, добро пожаловать в личный кабинет!</h1>
             </div>
             <div class="col">
-                <#--<button type="button" class="btn btn-elegant">Elegant</button>-->
-
                 <a type="button" class="btn btn-elegant" href="/user/logout">Выйти</a>
             </div>
         </div>

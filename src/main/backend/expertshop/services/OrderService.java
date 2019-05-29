@@ -48,17 +48,17 @@ public class OrderService {
             order.setMobile (user.getMobile());
             order.setEmail  (user.getUsername());
 
-            acceptOrder(order, user);
+            acceptOrder(order, user.getUserID());
         }
     }
 
-    private void acceptOrder(Order order, User user) {
+    private void acceptOrder(Order order, Long userID) {
         sendProductsList(order);
 
-        Order newOrder = new Order();
-        newOrder.setUserID(user.getUserID());
+        /*Order newOrder = new Order();
+        newOrder.setUserID(userID);
         newOrder.setProductsAmount(0);
-        orderRepo.save(newOrder);
+        orderRepo.save(newOrder);*/
     }
 
     private void acceptOrder(Order order) {
@@ -78,8 +78,8 @@ public class OrderService {
         }
 
         log.info(orderList.toString());
-        mailService.sendOrderDetail(orderList, order.getOrderID());
-        mailService.sendEmailToCustomer(order, orderList);
+        mailService.sendOrderDetail(orderList, order/*order.getOrderID()*/);
+        ///mailService.sendEmailToCustomer(order, orderList);
 
         order.setAccepted(true);
         orderRepo.save(order);

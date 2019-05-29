@@ -34,10 +34,14 @@ public class Order implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "ordered_product"))
     private Set<OrderedProduct> orderedProducts;
 
-    private boolean accepted = false;
-    private Boolean confirmed, completed;
+    private Boolean accepted        = false;
+    private Boolean confirmed       = false;
+    private Boolean completed       = false;
 
-    private Integer totalPrice, productsAmount, totalAmount;
+    private Integer totalPrice      = 0;
+    private Integer productsAmount  = 0;
+    private Integer totalAmount     = 0;
+
     private String name, surname, mobile, email, address;
 
     public Boolean isAccepted() {

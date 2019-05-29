@@ -9,7 +9,7 @@
         <div class="row" id="ordered-products">
             <div class="col">
                 <div class="card-group" id="bucket-products">
-                    <#if orderedProducts??>
+                    <#if orderedProducts?has_content>
                         <#list orderedProducts as product>
                             <div class="card ordered-card mb-4">
                                 <div class="view overlay">
@@ -34,7 +34,8 @@
                             </div>
                         </#list>
                     <#else>
-                        <h3 style="margin-top: 4vh">Пока ничего нет...</h3>
+                        <h3 style="margin-top: 4vh">Товаров пока нет </h3>
+                        <a type="button" href="/" class="btn blue-gradient btn-lg btn-block">Вернуться за покупками</a>
                     </#if>
                 </div>
                 <#--<ul class="list-group">
