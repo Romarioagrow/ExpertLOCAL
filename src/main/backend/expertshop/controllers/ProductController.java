@@ -1,6 +1,5 @@
 package expertshop.controllers;
 import expertshop.domain.categories.Type;
-import expertshop.repos.OrderRepo;
 import expertshop.repos.ProductRepo;
 import expertshop.services.OrderService;
 import expertshop.services.ProductService;
@@ -29,7 +28,7 @@ public class ProductController {
         log.info("Type: " + req_product);
 
         model.addAttribute("url", req_product);
-        model.addAttribute("order", orderService.getCurrentOrder());
+        model.addAttribute("order", orderService.getSessionOrder());
         model.addAttribute("products", productService.findProducts(Type.valueOf(req_product)));
         return "pages/main";
     }
@@ -40,7 +39,7 @@ public class ProductController {
         String url = productRepo.findByProductID(Integer.parseInt(product_id)).getType().toString();
 
         model.addAttribute("url", url);
-        model.addAttribute("order", orderService.getCurrentOrder());
+        model.addAttribute("order", orderService.getSessionOrder());
         model.addAttribute("product", productRepo.findByProductID(Integer.parseInt(product_id)));
         return "pages/product";
     }

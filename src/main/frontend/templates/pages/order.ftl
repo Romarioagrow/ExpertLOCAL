@@ -202,7 +202,7 @@
                                         </form>
                                     </div>
                                 </div>
-                                <#if order??>
+                                <#if order?has_content>
                                     <div class="text-center text-md-left">
                                         <button id="confirm-order" onclick="confirmOrder();" value="${order.orderID}" class="btn btn-primary mt-2">Оформить заказ!</button>
                                     </div>

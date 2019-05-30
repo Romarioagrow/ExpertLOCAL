@@ -19,8 +19,15 @@ public class OrderService {
     private final OrderRepo orderRepo;
     private final MailService mailService;
 
-    public Order getCurrentOrder() {
-        return orderRepo.findBySessionUUID(RequestContextHolder.currentRequestAttributes().getSessionId());
+    public Order getSessionOrder() {
+        Order sessionOrder = orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID()); /*orderRepo.findBySessionUUID(getSessionID());*/
+
+        return (sessionOrder != null && sessionOrder.isAccepted()) ? null : sessionOrder;
+
+        /*if (sessionOrder.isAccepted()) return new Order();
+        else return sessionOrder;*/
+
+        //return orderRepo.findBySessionUUID(RequestContextHolder.currentRequestAttributes().getSessionId());
     }
 
     public Order getUserOrder(Long userID) {
@@ -31,7 +38,7 @@ public class OrderService {
         Order order;
 
         if (user == null) {
-            order = getCurrentOrder();
+            order = getSessionOrder();
 
             order.setName   (contacts.get("name"));
             order.setSurname(contacts.get("surname"));
@@ -52,19 +59,6 @@ public class OrderService {
             acceptOrder(order);
         }
     }
-
-    /*private void acceptOrder(Order order, Long userID) {
-        acceptOrder(order);
-
-        *//*Order newOrder = new Order();
-        newOrder.setUserID(userID);
-        newOrder.setProductsAmount(0);
-        orderRepo.save(newOrder);*//*
-    }
-
-    private void acceptOrder(Order order) {
-        acceptOrder(order);
-    }*/
 
     private void acceptOrder(Order order) {
         StringBuilder orderList = new StringBuilder();
@@ -88,5 +82,9 @@ public class OrderService {
 
     public Set<Order> showUserOrders(Long userID) {
         return orderRepo.findOrdersByUserID(userID);
+    }
+
+    public String getSessionID() {
+        return RequestContextHolder.currentRequestAttributes().getSessionId();
     }
 }

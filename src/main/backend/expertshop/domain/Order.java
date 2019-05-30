@@ -7,6 +7,7 @@ import lombok.extern.java.Log;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Log
@@ -43,6 +44,8 @@ public class Order implements Serializable {
     private Integer totalAmount     = 0;
 
     private String name, surname, mobile, email, address;
+
+    private LocalDateTime open_date = LocalDateTime.now();
 
     public Boolean isAccepted() {
         return accepted;

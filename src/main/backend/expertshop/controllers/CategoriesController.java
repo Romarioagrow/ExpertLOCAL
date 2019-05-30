@@ -3,7 +3,6 @@ import expertshop.domain.Order;
 import expertshop.domain.User;
 import expertshop.domain.categories.Category;
 import expertshop.domain.categories.SubCategory;
-import expertshop.repos.OrderRepo;
 import expertshop.services.OrderService;
 import expertshop.services.ProductService;
 
@@ -23,15 +22,10 @@ public class CategoriesController {
     private final OrderService orderService;
 
     @GetMapping("/")
-    public String showAll(Model model) {
-        return "redirect:/hello";
-    }
-
-    @GetMapping("/hello")
-    public String showHelloPage(Model model)
-    {
+    public String showAll(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("url", "");
-        model.addAttribute("order", orderService.getCurrentOrder());
+        model.addAttribute("order", order(user));
+        //model.addAttribute("order", orderService.getSessionOrder());
         model.addAttribute("products", productService.findAll());
         return "pages/hello";
     }
@@ -47,23 +41,23 @@ public class CategoriesController {
     }
 
     @GetMapping("/categories/{category}")
-    public String showByCategories(Model model, @PathVariable String category
-    ){
+    public String showByCategories(Model model, @PathVariable String category, @AuthenticationPrincipal User user)
+    {
         log.info("Category: " + category);
 
         model.addAttribute("url", category);
-        model.addAttribute("order", orderService.getCurrentOrder());
+        model.addAttribute("order", order(user));
         model.addAttribute("products", productService.findProducts(Category.valueOf(category)));
         return "pages/categories";
     }
 
     @GetMapping("/subcats/{req_subcategory}")
-    public String showSubCategories( Model model, @PathVariable String req_subcategory)
+    public String showSubCategories( Model model, @PathVariable String req_subcategory, @AuthenticationPrincipal User user)
     {
         log.info("Category: " + req_subcategory);
 
         model.addAttribute("url", req_subcategory);
-        model.addAttribute("order", orderService.getCurrentOrder()/*orderRepo.findBySessionUUID(productService.getSessionID())*/);
+        model.addAttribute("order", order(user));
         model.addAttribute("products", productService.findProducts(SubCategory.valueOf(req_subcategory)));
         return "pages/main";
     }
@@ -71,14 +65,16 @@ public class CategoriesController {
     @GetMapping("/order")
     public String order(Model model, @AuthenticationPrincipal User user)
     {
-        Order order;
-
-        if (user != null) order = orderService.getUserOrder(user.getUserID());
-        else order = orderService.getCurrentOrder();
+        Order order = order(user);
 
         model.addAttribute("order", order);
         model.addAttribute("orderedProducts", productService.showOrderedProducts(user));
         return "pages/order";
+    }
+
+    private Order order(User user) {
+        if (user != null) return orderService.getUserOrder(user.getUserID());
+        else return orderService.getSessionOrder();
     }
 }
 

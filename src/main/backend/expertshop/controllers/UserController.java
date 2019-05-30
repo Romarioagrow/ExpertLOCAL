@@ -1,5 +1,4 @@
 package expertshop.controllers;
-import expertshop.domain.Order;
 import expertshop.domain.User;
 import expertshop.services.OrderService;
 import expertshop.services.UserService;
@@ -13,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
-import java.util.Set;
 
 @Log
 @Controller
@@ -25,7 +23,7 @@ public class UserController {
 
     @GetMapping("/registration")
     public String registrationPage(Model model) {
-        model.addAttribute("order", orderService.getCurrentOrder());
+        model.addAttribute("order", orderService.getSessionOrder());
         return "pages/registration";
     }
 
@@ -43,13 +41,13 @@ public class UserController {
 
     @GetMapping("/login")
     public String loginPage(Model model) {
-        model.addAttribute("order", orderService.getCurrentOrder());
+        model.addAttribute("order", orderService.getSessionOrder());
         return "pages/login";
     }
 
     @GetMapping("/cabinet")
     public String userCabinet(Model model, @AuthenticationPrincipal User user) {
-        model.addAttribute("order", orderService.getCurrentOrder());
+        model.addAttribute("order", orderService.getSessionOrder());
 
         //Set<Order> orders = orderService.showUserOrders(user.getUserID());
         model.addAttribute("orders", orderService.showUserOrders(user.getUserID()));

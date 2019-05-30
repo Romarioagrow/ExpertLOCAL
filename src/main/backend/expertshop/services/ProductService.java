@@ -59,28 +59,20 @@ public class ProductService {
         return orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()) != null;
     }
 
+    private boolean checkSessionOrder() {
+        return orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID()) != null;
+    }
+
     public Set<OrderedProduct> showOrderedProducts(User user)
     {
-        if (user != null) {
-            if (checkUserOrder(user))
-                return orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()).getOrderedProducts();
-            else return new HashSet<>();
+        if (user != null && checkUserOrder(user)) {
+            return orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()).getOrderedProducts();
         }
-        else if (orderRepo.findBySessionUUID(getSessionID()) != null) {
-            return orderRepo.findBySessionUUID(getSessionID()).getOrderedProducts();
+        else if (checkSessionOrder()) {
+            return orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID()).getOrderedProducts();
         }
-        return null;
+        else return new HashSet<>();
     }
-    /*public Object*//*Optional<Set<OrderedProduct>>*//**//*Set<OrderedProduct>*//* showOrderedProducts(User user)
-    {
-        if (user != null) {
-            return Optional.ofNullable(orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()).getOrderedProducts());*//*orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()).getOrderedProducts();*//*
-        }
-        else if (orderRepo.findBySessionUUID(getSessionID()) != null) {
-            return orderRepo.findBySessionUUID(getSessionID()).getOrderedProducts();
-        }
-        return null;
-    }*/
 
     public void addProductToOrder(String productID, User user)
     {
@@ -90,9 +82,9 @@ public class ProductService {
 
         if (user == null)
         {
-            order = orderRepo.findBySessionUUID(getSessionID());
+            order = orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID());
 
-            if (order == null)
+            if (!checkSessionOrder())
             {
                 order = new Order();
                 order.setSessionUUID(getSessionID());
@@ -108,7 +100,7 @@ public class ProductService {
         {
             order = orderRepo.findByUserIDAndAcceptedFalse(user.getUserID());
 
-            if (order == null /*|| order.isAccepted()*/)
+            if (order == null)
             {
                 log.info("NO ORDER, NEW ONE!");
                 order = new Order();
@@ -124,19 +116,6 @@ public class ProductService {
 
         System.out.println("\n");
         log.info("Product with ID " + productID + " add to order");
-    }
-    private void setOrderStats(Order order, Integer productTotalPrice)
-    {
-        if (order.getTotalPrice() == null)
-        {
-            order.setTotalPrice     (productTotalPrice);
-            order.setProductsAmount (1);
-            order.setTotalAmount    (1);
-        } else {
-            order.setTotalPrice     (order.getTotalPrice()      + productTotalPrice);
-            order.setProductsAmount (order.getProductsAmount()  + 1);
-            order.setTotalAmount    (order.getTotalAmount()     + 1);
-        }
     }
 
     public Order removeProductFromOrder(String id)
@@ -168,13 +147,28 @@ public class ProductService {
         orderedProduct.setTotalPrice(orderedProduct.getPrice() * orderedProduct.getAmount());
         orderedProductRepo.save(orderedProduct);
 
-        Order order = orderRepo.findBySessionUUID(getSessionID()); ////F orderService.getOrder() проверят по sessionID или по userID
+        Order order = orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID()); ////F orderService.getOrder() проверят по sessionID или по userID
         order.setTotalPrice(order.getTotalOrderPrice());
         order.setTotalAmount(order.getTotalProductsAmount());
         orderRepo.save(order);
 
         return packageOrderAndProduct(order, orderedProduct);
     }
+
+    private void setOrderStats(Order order, Integer productTotalPrice)
+    {
+        if (order.getTotalPrice() == null)
+        {
+            order.setTotalPrice     (productTotalPrice);
+            order.setProductsAmount (1);
+            order.setTotalAmount    (1);
+        } else {
+            order.setTotalPrice     (order.getTotalPrice()      + productTotalPrice);
+            order.setProductsAmount (order.getProductsAmount()  + 1);
+            order.setTotalAmount    (order.getTotalAmount()     + 1);
+        }
+    }
+
     private Queue<Object> packageOrderAndProduct(Order order, OrderedProduct orderedProduct)
     {
         Queue<Object> orderAndProduct = new LinkedList<>();
