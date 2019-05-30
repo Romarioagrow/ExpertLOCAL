@@ -68,7 +68,7 @@ public class CategoriesController {
         Order order = order(user);
 
         model.addAttribute("order", order);
-        model.addAttribute("orderedProducts", productService.showOrderedProducts(user));
+        model.addAttribute("orderedProducts", orderService.showOrderedProducts(user));
         return "pages/order";
     }
 

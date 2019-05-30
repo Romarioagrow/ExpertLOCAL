@@ -48,6 +48,22 @@ public class OrderedProduct implements Serializable {
     }
 }
 
+    /*public OrderedProduct constructOrderedProduct(Product product, String productID) {
+        OrderedProduct orderedProduct = new OrderedProduct();
+
+        orderedProduct.setProductID (Integer.parseInt(productID));
+        orderedProduct.setAmount    (1);
+        orderedProduct.setBrand     (product.getBrand());
+        orderedProduct.setModel     (product.getModel());
+        orderedProduct.setType      (product.getProductParams().getType());
+        orderedProduct.setPic       (product.getProductParams().getPic());
+        orderedProduct.setPrice     (product.getPrice());
+        orderedProduct.setTotalPrice(product.getPrice());
+
+        return orderedProduct;
+    }*/
+
+
 //@Column(fullName = "product_id")
 //@OneToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 

@@ -1,16 +1,17 @@
 package expertshop.services;
 import expertshop.domain.Order;
 import expertshop.domain.OrderedProduct;
+import expertshop.domain.Product;
 import expertshop.domain.User;
 import expertshop.repos.OrderRepo;
+import expertshop.repos.OrderedProductRepo;
+import expertshop.repos.ProductRepo;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.StringJoiner;
+import java.util.*;
 
 @Log
 @Service
@@ -19,25 +20,155 @@ public class OrderService {
     private final OrderRepo orderRepo;
     private final MailService mailService;
 
+    private final ProductRepo productRepo;
+    private final OrderedProductRepo orderedProductRepo;
+
+    public boolean checkUserOrder(User user) {
+        return orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()) != null;
+    }
+
+    private boolean checkSessionOrder() {
+        return orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID()) != null;
+    }
+
     public Order getSessionOrder() {
-        Order sessionOrder = orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID()); /*orderRepo.findBySessionUUID(getSessionID());*/
-
+        Order sessionOrder = orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID());
         return (sessionOrder != null && sessionOrder.isAccepted()) ? null : sessionOrder;
-
-        /*if (sessionOrder.isAccepted()) return new Order();
-        else return sessionOrder;*/
-
-        //return orderRepo.findBySessionUUID(RequestContextHolder.currentRequestAttributes().getSessionId());
     }
 
     public Order getUserOrder(Long userID) {
         return orderRepo.findByUserIDAndAcceptedFalse(userID);
     }
 
-    public void confirmOrder(Map<String, String> contacts, User user) {
+    private Order resolveOrder(User user) {
+        if (user != null) return getUserOrder(user.getUserID());
+        else return getSessionOrder();
+    }
+
+    public Set<OrderedProduct> showOrderedProducts(User user)
+    {
+        if (user != null && checkUserOrder(user)) {
+            return orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()).getOrderedProducts();
+        }
+        else if (checkSessionOrder()) {
+            return orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID()).getOrderedProducts();
+        }
+        else return new HashSet<>();
+    }
+
+    public void addProductToOrder(String productID, User user)
+    {
+        Order order;
+        Product product = productRepo.findByProductID(Integer.parseInt(productID));
+        OrderedProduct orderedProduct = new OrderedProduct();
+
+        if (user == null)
+        {
+            order = orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID());
+
+            if (!checkSessionOrder())
+            {
+                order = new Order();
+                order.setSessionUUID(getSessionID());
+            }
+
+            orderedProduct.constructOrderedProduct(product, productID);
+            order.addProductToOrder(orderedProduct);
+
+            setOrderStats(order, orderedProduct.getTotalPrice());
+            orderRepo.save(order);
+        }
+        else
+        {
+            order = orderRepo.findByUserIDAndAcceptedFalse(user.getUserID());
+
+            if (order == null)
+            {
+                log.info("NO ORDER, NEW ONE!");
+                order = new Order();
+                order.setUserID(user.getUserID());
+            }
+
+            orderedProduct.constructOrderedProduct(product, productID);
+            order.addProductToOrder(orderedProduct);
+
+            setOrderStats(order, orderedProduct.getTotalPrice());
+            orderRepo.save(order);
+        }
+
+        System.out.println("\n");
+        log.info("Product with ID " + productID + " add to order");
+    }
+
+    public Order removeProductFromOrder(User user, String id)
+    {
+        OrderedProduct orderedProduct = orderedProductRepo.findByid(Integer.parseInt(id));
+
+        Order order = resolveOrder(user);
+
+        order.getOrderedProducts().remove(orderedProduct);
+        order.setTotalPrice     (order.getTotalPrice()      - orderedProduct.getTotalPrice());
+        order.setTotalAmount    (order.getTotalAmount()     - orderedProduct.getAmount());
+        order.setProductsAmount (order.getProductsAmount()  - 1);
+
+        orderRepo.save(order);
+        orderedProductRepo.delete(orderedProduct);
+
+        return order;
+    }
+
+    public Queue<Object> changeAmount(User user, Map<String, String> data)
+    {
+        OrderedProduct orderedProduct = orderedProductRepo.findByid(Integer.valueOf(data.get("orderedID")));
+
+        if (data.get("action").contains("product-less")) {
+            if (orderedProduct.getAmount() > 1) orderedProduct.setAmount(orderedProduct.getAmount() - 1);
+            else return null;
+        }
+        else orderedProduct.setAmount(orderedProduct.getAmount() + 1);
+
+        orderedProduct.setTotalPrice(orderedProduct.getPrice() * orderedProduct.getAmount());
+        orderedProductRepo.save(orderedProduct);
+
+        Order order = resolveOrder(user);
+
+        order.setTotalPrice(order.getTotalOrderPrice());
+        order.setTotalAmount(order.getTotalProductsAmount());
+        orderRepo.save(order);
+
+        return packageOrderAndProduct(order, orderedProduct);
+    }
+
+    private void setOrderStats(Order order, Integer productTotalPrice)
+    {
+        if (order.getTotalPrice() == null)
+        {
+            order.setTotalPrice     (productTotalPrice);
+            order.setProductsAmount (1);
+            order.setTotalAmount    (1);
+        }
+        else
+        {
+            order.setTotalPrice     (order.getTotalPrice()      + productTotalPrice);
+            order.setProductsAmount (order.getProductsAmount()  + 1);
+            order.setTotalAmount    (order.getTotalAmount()     + 1);
+        }
+    }
+
+    private Queue<Object> packageOrderAndProduct(Order order, OrderedProduct orderedProduct)
+    {
+        Queue<Object> orderAndProduct = new LinkedList<>();
+        orderAndProduct.add(order);
+        orderAndProduct.add(orderedProduct);
+        return orderAndProduct;
+    }
+
+    public void confirmOrder(Map<String, String> contacts, User user)
+    {
         Order order;
 
-        if (user == null) {
+        if (user == null)
+        {
             order = getSessionOrder();
 
             order.setName   (contacts.get("name"));
@@ -60,10 +191,12 @@ public class OrderService {
         }
     }
 
-    private void acceptOrder(Order order) {
+    private void acceptOrder(Order order)
+    {
         StringBuilder orderList = new StringBuilder();
 
-        for (OrderedProduct product : order.getOrderedProducts()) {
+        for (OrderedProduct product : order.getOrderedProducts())
+        {
             StringJoiner item = new StringJoiner (", ");
             item    .add("\n" + product.getType() + " " + product.getBrand() + " " + product.getModel())
                     .add("кол-во: " + product.getAmount().toString())

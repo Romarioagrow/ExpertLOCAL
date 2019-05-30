@@ -33,20 +33,20 @@ public class ServiceController {
     }
 
     @PostMapping("/order")
-    private void addProductToOrder(@RequestBody String productID, @AuthenticationPrincipal User user) {
-        productService.addProductToOrder(productID, user);
+    private void addProductToOrder(@AuthenticationPrincipal User user, @RequestBody String productID) {
+        orderService.addProductToOrder(productID, user);
     }
     @DeleteMapping("/order")
-    private Order removeProductFromOrder(@RequestBody String productID) {
-        return productService.removeProductFromOrder(productID);
+    private Order removeProductFromOrder(@AuthenticationPrincipal User user, @RequestBody String productID) {
+        return orderService.removeProductFromOrder(user, productID);
     }
     @PutMapping("/order")
-    private Queue<Object> changeAmount(@RequestBody Map<String, String> data) {
-        return productService.changeAmount(data);
+    private Queue<Object> changeAmount(@AuthenticationPrincipal User user, @RequestBody Map<String, String> data) {
+        return orderService.changeAmount(user, data);
     }
 
     @PostMapping("/order/confirm")
-    private void confirmOrder(@RequestBody Map<String, String> contacts, @AuthenticationPrincipal User user) {
+    private void confirmOrder(@AuthenticationPrincipal User user, @RequestBody Map<String, String> contacts) {
         orderService.confirmOrder(contacts, user);
     }
 }
