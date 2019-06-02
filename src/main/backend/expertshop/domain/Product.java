@@ -6,8 +6,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
-import java.util.Set;
 
 @Entity
 @Data
@@ -39,10 +37,6 @@ public class Product implements Serializable {
     @OneToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private ProductParams productParams;
-
-    /*@JsonIgnore
-    @ManyToMany(mappedBy = "orderedProducts", fetch = FetchType.EAGER)
-    private List<Order> orders;*/
 
     @JsonIgnore
     public String getTypeName() {

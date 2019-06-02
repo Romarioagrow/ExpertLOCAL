@@ -3,6 +3,7 @@ import expertshop.domain.Order;
 import expertshop.domain.User;
 import expertshop.domain.categories.Category;
 import expertshop.domain.categories.SubCategory;
+import expertshop.repos.ProductRepo;
 import expertshop.services.OrderService;
 import expertshop.services.ProductService;
 
@@ -25,7 +26,6 @@ public class CategoriesController {
     public String showAll(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("url", "");
         model.addAttribute("order", order(user));
-        //model.addAttribute("order", orderService.getSessionOrder());
         model.addAttribute("products", productService.findAll());
         return "pages/hello";
     }
@@ -65,16 +65,25 @@ public class CategoriesController {
     @GetMapping("/order")
     public String order(Model model, @AuthenticationPrincipal User user)
     {
-        Order order = order(user);
-
-        model.addAttribute("order", order);
+        model.addAttribute("order", order(user));
         model.addAttribute("orderedProducts", orderService.showOrderedProducts(user));
         return "pages/order";
     }
 
+    private final ProductRepo productRepo;
+    @GetMapping("/info/{productID}")
+    public String showProduct(Model model, @PathVariable String productID)
+    {
+        String url = productRepo.findByProductID(Integer.parseInt(productID)).getType().toString();
+
+        model.addAttribute("url", url);
+        model.addAttribute("order", orderService.getSessionOrder());
+        model.addAttribute("product", productRepo.findByProductID(Integer.parseInt(productID)));
+        return "pages/product";
+    }
+
     private Order order(User user) {
-        if (user != null) return orderService.getUserOrder(user.getUserID());
-        else return orderService.getSessionOrder();
+        return user != null ? orderService.getUserOrder(user.getUserID()) : orderService.getSessionOrder();
     }
 }
 

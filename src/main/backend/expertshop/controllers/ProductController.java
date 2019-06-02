@@ -22,25 +22,36 @@ public class ProductController {
     private final OrderService orderService;
     private final ProductService productService;
 
-    @GetMapping("/{req_product}")
-    public String showByTypes(Model model, @PathVariable String req_product
+    @GetMapping("/{reqProduct}")
+    public String showByTypes(Model model, @PathVariable String reqProduct
     ){
-        log.info("Type: " + req_product);
+        log.info("Type: " + reqProduct);
 
-        model.addAttribute("url", req_product);
+        model.addAttribute("url", reqProduct);
         model.addAttribute("order", orderService.getSessionOrder());
-        model.addAttribute("products", productService.findProducts(Type.valueOf(req_product)));
+        model.addAttribute("products", productService.findProducts(Type.valueOf(reqProduct)));
         return "pages/main";
     }
 
-    @GetMapping("/info/{product_id}")
-    public String showProduct(Model model, @PathVariable String product_id)
+    /*@GetMapping("/info/{productID}")
+    public String showProduct(Model model, @PathVariable String productID)
     {
-        String url = productRepo.findByProductID(Integer.parseInt(product_id)).getType().toString();
+        String url = productRepo.findByProductID(Integer.parseInt(productID)).getType().toString();
 
         model.addAttribute("url", url);
         model.addAttribute("order", orderService.getSessionOrder());
-        model.addAttribute("product", productRepo.findByProductID(Integer.parseInt(product_id)));
+        model.addAttribute("product", productRepo.findByProductID(Integer.parseInt(productID)));
         return "pages/product";
-    }
+    }*/
+
+    /*@GetMapping("/{productID}/info")
+    public String showProduct(Model model, @PathVariable String productID)
+    {
+        String url = productRepo.findByProductID(Integer.parseInt(productID)).getType().toString();
+
+        model.addAttribute("url", url);
+        model.addAttribute("order", orderService.getSessionOrder());
+        model.addAttribute("product", productRepo.findByProductID(Integer.parseInt(productID)));
+        return "pages/product";
+    }*/
 }

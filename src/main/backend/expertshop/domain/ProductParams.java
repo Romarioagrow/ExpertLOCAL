@@ -35,16 +35,11 @@ public class ProductParams implements Serializable {
 
     private Integer amount;
 
-    //TV
+    /*TV*/
     @Nullable
     private String diagonal, resolution, tvFeatures;
 
-    //Stoves
+    /*Stoves*/
     @Nullable
     private String stoveDimensions;
 }
-
-
-/*@OneToOne(optional = false, mappedBy = "orderedProductParams", fetch = FetchType.EAGER)
-    @JsonIgnore
-    private OrderedProduct productToOrder;*/

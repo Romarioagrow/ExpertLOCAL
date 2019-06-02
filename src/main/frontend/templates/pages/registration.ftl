@@ -29,26 +29,9 @@
                         <button id="submitRegistration" class="btn btn-info my-4 btn-block" type="submit">Зарегестрироваться!</button>
                     </form>
                     <p>Регистрация через социальные сети</p>
-
                     <button type="button" class="btn btn-gplus"><i class="fab pr-1"></i> Google </button>
-
                     <button type="button" class="btn btn-so"><i class="fab pr-1"></i>Yandex</button>
-
                     <button type="button" class="btn btn-li"><i class="fab pr-1"></i>Mail.ru</button>
-
-                    <#--<a type="button" class="light-blue-text mx-2">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a type="button" class="light-blue-text mx-2">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a type="button" class="light-blue-text mx-2">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a type="button" class="light-blue-text mx-2">
-                        <i class="fab fa-github"></i>
-                    </a>-->
-
                 </div>
             </div>
         </div>

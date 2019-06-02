@@ -24,7 +24,7 @@ public class MailService {
         mail.setSubject("Заказ №"+order.getOrderID());
         mail.setText(orderList.toString());
 
-        mailSender.send(mail);
+        ///mailSender.send(mail);
         log.info("Order №" + order.getOrderID() + " from " + order.getEmail() + " is accepted and send.");
     }
 
@@ -45,7 +45,7 @@ public class MailService {
         mail.setSubject("Ваш заказ №"+order.getOrderID());
         mail.setText(message);
 
-        mailSender.send(mail);
+        ///mailSender.send(mail);
         log.info("Message sent to " + order.getEmail());
     }
 }

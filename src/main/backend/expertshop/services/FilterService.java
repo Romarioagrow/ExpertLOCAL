@@ -30,8 +30,8 @@ public class FilterService {
             for (Map.Entry<String, Object> filter : inner.entrySet())
             {
                 switch (filter.getKey()) {
-                    case "sortmin"      -> products = products.stream().filter(product -> product.getPrice() >= Integer.parseInt((String) filter.getValue())).collect(Collectors.toList());
-                    case "sortmax"      -> products = products.stream().filter(product -> product.getPrice() <= Integer.parseInt((String) filter.getValue())).collect(Collectors.toList());
+                    case "sortmin"      -> products = products.stream().filter(product -> product.getPrice() >= Integer.parseInt(/*(String)*/ filter.getValue().toString())).collect(Collectors.toList());
+                    case "sortmax"      -> products = products.stream().filter(product -> product.getPrice() <= Integer.parseInt(/*(String)*/ filter.getValue().toString())).collect(Collectors.toList());
                     case "brand"        -> {
                         String brands = filter.getValue().toString();
                         products = products.stream().filter(product -> brands.contains(product.getBrand())).collect(Collectors.toList());
@@ -61,7 +61,8 @@ public class FilterService {
         return products;
     }
 
-    private void sortProducts(List<Product> products, Map<String, Object> params) {
+    private void sortProducts(List<Product> products, Map<String, Object> params)
+    {
         Object sort = extractParamValue(params, "sortBy", "sortOrder");
         switch (sort.toString()) {
             case "lowest"   -> products.sort(Comparator.comparingLong(Product::getPrice));

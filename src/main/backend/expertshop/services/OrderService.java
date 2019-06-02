@@ -3,6 +3,7 @@ import expertshop.domain.Order;
 import expertshop.domain.OrderedProduct;
 import expertshop.domain.Product;
 import expertshop.domain.User;
+import expertshop.domain.dto.OrderContacts;
 import expertshop.repos.OrderRepo;
 import expertshop.repos.OrderedProductRepo;
 import expertshop.repos.ProductRepo;
@@ -17,9 +18,9 @@ import java.util.*;
 @Service
 @AllArgsConstructor
 public class OrderService {
-    private final OrderRepo orderRepo;
     private final MailService mailService;
 
+    private final OrderRepo orderRepo;
     private final ProductRepo productRepo;
     private final OrderedProductRepo orderedProductRepo;
 
@@ -41,8 +42,9 @@ public class OrderService {
     }
 
     private Order resolveOrder(User user) {
-        if (user != null) return getUserOrder(user.getUserID());
-        else return getSessionOrder();
+        return user != null ? getUserOrder(user.getUserID()) : getSessionOrder();
+        /*if (user != null) return getUserOrder(user.getUserID());
+        else return getSessionOrder();*/
     }
 
     public Set<OrderedProduct> showOrderedProducts(User user)
@@ -163,7 +165,7 @@ public class OrderService {
         return orderAndProduct;
     }
 
-    public void confirmOrder(Map<String, String> contacts, User user)
+    public void confirmOrder(OrderContacts orderContacts, User user)
     {
         Order order;
 
@@ -171,10 +173,10 @@ public class OrderService {
         {
             order = getSessionOrder();
 
-            order.setName   (contacts.get("name"));
-            order.setSurname(contacts.get("surname"));
-            order.setMobile (contacts.get("mobile"));
-            order.setEmail  (contacts.get("email"));
+            order.setName   (orderContacts.getEmail());
+            order.setSurname(orderContacts.getSurname());
+            order.setMobile (orderContacts.getMobile());
+            order.setEmail  (orderContacts.getEmail());
 
             acceptOrder(order);
         }
@@ -206,8 +208,8 @@ public class OrderService {
         }
 
         log.info(orderList.toString());
-        mailService.sendOrderDetail(orderList, order/*order.getOrderID()*/);
-        ///mailService.sendEmailToCustomer(order, orderList);
+        mailService.sendOrderDetail(orderList, order);
+        mailService.sendEmailToCustomer(order, orderList);
 
         order.setAccepted(true);
         orderRepo.save(order);

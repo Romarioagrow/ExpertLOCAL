@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -31,8 +32,8 @@ public class Order implements Serializable {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "products_to_order",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "ordered_product"))
+            joinColumns         = @JoinColumn(name = "order_id"),
+            inverseJoinColumns  = @JoinColumn(name = "ordered_product"))
     private Set<OrderedProduct> orderedProducts;
 
     private Boolean accepted        = false;
@@ -43,16 +44,28 @@ public class Order implements Serializable {
     private Integer productsAmount  = 0;
     private Integer totalAmount     = 0;
 
-    private String name, surname, mobile, email, address;
+    //@NotBlank(message = "Имя is mandatory")
+    private String name;
 
-    private LocalDateTime open_date = LocalDateTime.now();
+    //@NotBlank(message = "Фамилия is mandatory")
+    private String surname;
+
+    //@NotBlank(message = "Телефон is mandatory")
+    private String mobile;
+
+    //@NotBlank(message = "Email is mandatory")
+    private String email;
+
+    private String address;
+
+    @Column(name = "open_date")
+    private LocalDateTime orderOpenDate = LocalDateTime.now();
 
     public Boolean isAccepted() {
         return accepted;
     }
 
-    public void addProductToOrder(OrderedProduct orderedProduct)
-    {
+    public void addProductToOrder(OrderedProduct orderedProduct) {
         if (this.getOrderedProducts() == null) {
             this.orderedProducts = new HashSet<>();
             orderedProducts.add(orderedProduct);
@@ -60,24 +73,20 @@ public class Order implements Serializable {
         else this.orderedProducts.add(orderedProduct);
     }
 
-    public Integer getTotalOrderPrice()
-    {
+    public Integer getTotalOrderPrice() {
         Integer totalPrice = 0;
         for (OrderedProduct product : orderedProducts) {
             totalPrice += product.getTotalPrice();
         }
-
         log.info("Total price: " + getTotalPrice().toString());
         return totalPrice;
     }
 
-    public Integer getTotalProductsAmount()
-    {
+    public Integer getTotalProductsAmount() {
         Integer totalAmount = 0;
         for (OrderedProduct product : orderedProducts) {
             totalAmount += product.getAmount();
         }
-
         log.info("Total amount: " + getTotalAmount().toString());
         return totalAmount;
     }

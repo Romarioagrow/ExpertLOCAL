@@ -7,13 +7,13 @@ import java.util.Set;
 
 @Repository
 public interface OrderRepo extends JpaRepository<Order, Integer> {
-    Order findBySessionUUID(String sessionID);
+    Set<Order> findBySessionUUID(String sessionID);
+
+    Set<Order> findOrdersByUserID(Long userID);
 
     Order findBySessionUUIDAndAcceptedFalse(String sessionID);
 
     Order findByOrderID(Integer orderID);
-
-    Set<Order> findOrdersByUserID(Long userID);
 
     Order findByUserIDAndAcceptedFalse(Long userID);
 }

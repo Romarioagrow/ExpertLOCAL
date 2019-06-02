@@ -29,12 +29,15 @@
                 </ul>
                 <div class="tab-content card pt-5" id="myTabContentJust">
                     <div class="tab-pane fade show active" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
-                        <#if orders??>
+                        <#if orders?has_content>
                             <#list orders as order>
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     Номер заказа: ${order.orderID?c} | Итого ₽: ${order.totalPrice} | Всего наименований:${order.productsAmount} | Всего едениц: ${order.totalAmount}
                                 </li>
                             </#list>
+                        <#else>
+                            <h3>Заказов пока нет</h3>
+                            <a type="button" href="/" class="btn blue-gradient btn-lg btn-block">Сделать заказ</a>
                         </#if>
                     </div>
                     <div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">

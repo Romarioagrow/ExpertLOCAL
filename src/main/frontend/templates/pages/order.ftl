@@ -94,9 +94,9 @@
                     <h3 class="h1-responsive font-weight-bold text-center my-4" id="contact-info">Ваши контактные данные</h3>
                     <div class="row">
                         <div class="col">
-                            <form id="contact-form" name="contact-form" action="mail.php" method="POST">
-
-                                <#if !isUser>
+                            <div id="results"></div>
+                            <#if !isUser>
+                                <form id="contact-session" name="contact-form" <#--action="/order/confirm"--> method="POST">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="md-form mb-0">
@@ -106,7 +106,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="md-form mb-0">
-                                                <input type="text" id="family" name="family" class="form-control">
+                                                <input type="text" id="surname" name="surname" class="form-control">
                                                 <label for="family" class="">Ваша фамилия</label>
                                             </div>
                                         </div>
@@ -125,9 +125,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                </#if>
+                                </form>
 
-                                <#if isUser>
+                            <#--<#else>&lt;#&ndash;<#if isUser>&ndash;&gt;
+                                <form id="contact-user" name="contact-form" action="mail.php" method="POST">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="md-form mb-0">
@@ -137,7 +138,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="md-form mb-0">
-                                                <input type="text" id="family" name="family" class="form-control" value="${lastName}">
+                                                <input type="text" id="surname" name="surname" class="form-control" value="${lastName}">
                                                 <label for="family" class="">Ваша фамилия</label>
                                             </div>
                                         </div>
@@ -156,67 +157,68 @@
                                             </div>
                                         </div>
                                     </div>
-                                </#if>
-
-                                <h3 class="h1-responsive font-weight-bold text-center my-4">Способ получения товара</h3>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                            <label class="btn btn-secondary active">
-                                                <input type="radio" name="options" id="option1" autocomplete="off" checked>Самовывоз
-                                            </label>
-                                            <label class="btn btn-secondary">
-                                                <input type="radio" name="options" id="option2" autocomplete="off">Доставка
-                                            </label>
-                                        </div>
-                                        <#--<h5 class="mt-2">
-                                            Оплата товара осуществляется в пункте выдачи товара после подверждения заказа
-                                        </h5>-->
-                                        <form id="contact-form" name="contact-form" action="mail.php" method="POST">
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="md-form mb-0">
-                                                        <input type="text" id="city" name="city" class="form-control">
-                                                        <label for="city" class="">город</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="md-form mb-0">
-                                                        <input type="text" id="street" name="street" class="form-control">
-                                                        <label for="street" class="">Улица</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="md-form mb-0">
-                                                        <input type="email" id="house" name="house" class="form-control">
-                                                        <label for="house" class="">Дом</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col">
-                                                    <div class="md-form mb-0">
-                                                        <input type="email" id="apartment" name="apartment" class="form-control">
-                                                        <label for="apartment" class="">Квартира</label>
-                                                    </div>
+                                </form>-->
+                            </#if>
+                            <#--<h3 class="h1-responsive font-weight-bold text-center my-4">Способ получения товара</h3>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                        <label class="btn btn-secondary active">
+                                            <input type="radio" name="options" id="option1" autocomplete="off" checked>Самовывоз
+                                        </label>
+                                        <label class="btn btn-secondary">
+                                            <input type="radio" name="options" id="option2" autocomplete="off">Доставка
+                                        </label>
+                                    </div>
+                                    &lt;#&ndash;<h5 class="mt-2">
+                                        Оплата товара осуществляется в пункте выдачи товара после подверждения заказа
+                                    </h5>&ndash;&gt;
+                                    <form id="contact-form" name="contact-form" action="mail.php" method="POST">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="md-form mb-0">
+                                                    <input type="text" id="city" name="city" class="form-control">
+                                                    <label for="city" class="">город</label>
                                                 </div>
                                             </div>
-                                        </form>
-                                    </div>
+                                            <div class="col">
+                                                <div class="md-form mb-0">
+                                                    <input type="text" id="street" name="street" class="form-control">
+                                                    <label for="street" class="">Улица</label>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="md-form mb-0">
+                                                    <input type="email" id="house" name="house" class="form-control">
+                                                    <label for="house" class="">Дом</label>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="md-form mb-0">
+                                                    <input type="email" id="apartment" name="apartment" class="form-control">
+                                                    <label for="apartment" class="">Квартира</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
-                                <#if order?has_content>
-                                    <div class="text-center text-md-left">
-                                        <button id="confirm-order" onclick="confirmOrder();" value="${order.orderID}" class="btn btn-primary mt-2">Оформить заказ!</button>
-                                    </div>
-                                    <div class="status"></div>
-                                </#if>
-                            </form>
+                            </div>-->
+                            <#if order?has_content>
+                                <div class="text-center text-md-left">
+                                    <button id="confirm-order" <#--onclick="confirmOrder();"--> value="${order.orderID}" class="btn btn-primary mt-2">Оформить заказ!</button>
+                                </div>
+                                <div class="status"></div>
+                            </#if>
+
                         </div>
                     </div>
                 </section>
             </div>
         </div>
-        <div class="col after-confirm mt-2" id="after-confirm" style="margin-bottom: 50vh">
+
+        <#--<div class="col after-confirm mt-2" id="after-confirm" style="margin-bottom: 50vh">
             <h1>Ваш заказ оформлен! В ближайшее время вы получите уведомление о подтверждении заказа.</h1>
-        </div>
+        </div>-->
     </div>
 </@t.template>
 <style>

@@ -19,7 +19,6 @@ import java.util.*;
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
     private final UserRepo userRepo;
-    //private final PasswordEncoder passwordEncoder;
 
     public boolean registerUser(User user)
     {

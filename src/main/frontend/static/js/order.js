@@ -180,19 +180,77 @@ function displayOrderDeal() {
     document.getElementById("remove-product").disabled = true;
 }
 
-function confirmOrder() {
+
+$( document ).ready(function() {
+    $("#confirm-order").click(
+        function(){
+            acceptOrder($('#contact-session'));
+        }
+    );
+});
+
+function acceptOrder() {
     var contacts = {
+        orderID : $('#confirm-order').val(),
+        name    : $('#name').val(),
+        surname : $('#surname').val(),
+        mobile  : $('#mobile').val(),
+        email   : $('#email').val(),
+    };
+
+    contacts = JSON.stringify(contacts);
+
+    $.ajax({
+        url:     "http://localhost:8080/order/confirm",
+        type:     "POST",
+        data: contacts,
+        headers: {'Content-Type': 'application/json'},
+        success: function(response) {
+            //document.getElementById("order-deal").style.display = "none";
+            //document.getElementById("order-button").style.display = "none";
+            $('#results').html(response);
+        },
+        error: function(response) {
+            $('#results').html('Ошибка. Данные не отправлены.');
+        }
+    });
+}
+
+
+
+/*
+function confirmOrder() {
+    /!*var contacts = {
         orderID : $('#confirm-order').val(),
         name    : $('#fullName').val(),
         surname : $('#family').val(),
         mobile  : $('#mobile').val(),
         email   : $('#email').val(),
     };
-    console.log(contacts);
+    console.log(contacts);*!/
 
-    contacts = JSON.stringify(contacts);
+    //contacts = JSON.stringify(contacts);
+
+    var orderDetails   = $('#session-contacts').serialize();
+
+    console.log(orderDetails);
 
     $.ajax({
+        type: 'POST',
+        url: 'http://localhost:8080/order/confirm',
+        data: orderDetails,
+        dataType: 'json',
+        headers: {'Content-Type': 'application/json'},
+
+        success: function(data) {
+            $('#results').html(data);
+        },
+        error:  function(xhr, str){
+            alert('Возникла ошибка: ' + xhr.responseCode);
+        }
+    });
+
+    /!*$.ajax({
         url: 'http://localhost:8080/order/confirm',
         type: 'POST',
         dataType: 'json',
@@ -205,5 +263,5 @@ function confirmOrder() {
             document.getElementById("order-button").style.display = "none";
             document.getElementById("after-confirm").style.display = "block";
         }
-    });
-}
+    });*!/
+}*/
