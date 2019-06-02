@@ -2,7 +2,7 @@
     $('button[type="submit"][id="submitRegistration"]').on('click', collectUserDetails);
 });*/
 
-function collectUserDetails(e) {
+/*function collectUserDetails(e) {
     e.preventDefault();
 
     let fullName = $('#registerName').val() + ' ' + $('#registerLastName').val();
@@ -36,4 +36,4 @@ function collectUserDetails(e) {
             );
         }
     });
-}
+}*/

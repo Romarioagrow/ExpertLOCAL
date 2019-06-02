@@ -59,7 +59,7 @@ public class ServiceController {
     {
         if (validResult.hasErrors())
         {
-            validResult.getFieldErrors().forEach(fieldError -> log.info(fieldError.getField() + ": " + fieldError.getCode() + "; " + fieldError.getDefaultMessage()));
+            Map<String, String> validErrors = ControllerService.getValidErrors(validResult);
             return "Result valid " + validResult.getErrorCount();
         }
 

@@ -96,7 +96,7 @@
                         <div class="col">
                             <div id="results"></div>
                             <#if !isUser>
-                                <form id="contact-session" name="contact-form" <#--action="/order/confirm"--> method="POST">
+                                <form id="contact-session" name="contact-form" method="POST">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="md-form mb-0">
@@ -127,7 +127,7 @@
                                     </div>
                                 </form>
 
-                            <#--<#else>&lt;#&ndash;<#if isUser>&ndash;&gt;
+                            <#else>
                                 <form id="contact-user" name="contact-form" action="mail.php" method="POST">
                                     <div class="row">
                                         <div class="col-md-6">
@@ -157,7 +157,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </form>-->
+                                </form>
                             </#if>
                             <#--<h3 class="h1-responsive font-weight-bold text-center my-4">Способ получения товара</h3>
                             <div class="row">
@@ -205,20 +205,14 @@
                             </div>-->
                             <#if order?has_content>
                                 <div class="text-center text-md-left">
-                                    <button id="confirm-order" <#--onclick="confirmOrder();"--> value="${order.orderID}" class="btn btn-primary mt-2">Оформить заказ!</button>
+                                    <button id="confirm-order" value="${order.orderID}" class="btn btn-primary mt-2">Оформить заказ!</button>
                                 </div>
-                                <div class="status"></div>
                             </#if>
-
                         </div>
                     </div>
                 </section>
             </div>
         </div>
-
-        <#--<div class="col after-confirm mt-2" id="after-confirm" style="margin-bottom: 50vh">
-            <h1>Ваш заказ оформлен! В ближайшее время вы получите уведомление о подтверждении заказа.</h1>
-        </div>-->
     </div>
 </@t.template>
 <style>
@@ -230,10 +224,6 @@
         max-height: 80vw;
     }
     .order-deal {
-        display: none;
-    }
-
-    .after-confirm {
         display: none;
     }
 </style>

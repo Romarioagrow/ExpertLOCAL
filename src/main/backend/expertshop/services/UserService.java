@@ -6,9 +6,11 @@ import expertshop.repos.UserRepo;
 import lombok.AllArgsConstructor;
 
 import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,7 +20,13 @@ import java.util.*;
 @Service
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
-    private final UserRepo userRepo;
+    /*private final UserRepo userRepo;
+    private final PasswordEncoder passwordEncoder;*/
+    @Autowired
+    private UserRepo userRepo;
+
+    @Autowired
+    private  PasswordEncoder passwordEncoder;
 
     public boolean registerUser(User user)
     {
@@ -26,11 +34,14 @@ public class UserService implements UserDetailsService {
             return false;
         }
 
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         user.setRegistrationDate(LocalDateTime.now());
 
         userRepo.save(user);
+
+        log.info("User " + user.getUsername() + " successfully registered!");
         return true;
     }
 

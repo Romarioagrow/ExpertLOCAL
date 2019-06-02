@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Set;
@@ -20,13 +21,24 @@ public class User implements UserDetails {
     @Column(name = "user_id")
     private Long userID;
 
+    @NotBlank(message = "Введите e-mail!")
     private String username;
 
     @JsonIgnore
+    @NotBlank(message = "Введите пароль!")
     private String password;
 
-    private String firstName, lastName, mobile, userPic;
-    //private String mobile;
+    @NotBlank(message = "Введите имя!")
+    private String firstName;
+
+    @NotBlank(message = "Введите фамилию!")
+    private String lastName;
+
+    @NotBlank(message = "Введите номер телефона!")
+    private String mobile;
+
+    @Column(name = "pic")
+    private String userPic;
 
     private LocalDateTime registrationDate;
     //private LocalDateTime lastVisit;

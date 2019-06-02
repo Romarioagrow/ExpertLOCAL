@@ -10,6 +10,7 @@ import expertshop.repos.ProductRepo;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import java.util.*;
@@ -43,8 +44,6 @@ public class OrderService {
 
     private Order resolveOrder(User user) {
         return user != null ? getUserOrder(user.getUserID()) : getSessionOrder();
-        /*if (user != null) return getUserOrder(user.getUserID());
-        else return getSessionOrder();*/
     }
 
     public Set<OrderedProduct> showOrderedProducts(User user)
