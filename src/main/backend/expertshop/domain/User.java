@@ -41,7 +41,7 @@ public class User implements UserDetails {
     private String userPic;
 
     private LocalDateTime registrationDate;
-    //private LocalDateTime lastVisit;
+
     private boolean isActive;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
