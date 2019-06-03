@@ -84,15 +84,29 @@
                         Товаров <b id="order-products">${order.productsAmount}</b>
                         Всего единиц <b id="order-amount">${order.totalAmount}</b>
                     </h3>
-                    <button type="button" onclick="displayOrderDeal()" id="order-button" class="btn btn-success btn-lg btn-block" style="margin-bottom: 5vh">Заказ подтверждаю!</button>
+                    <button onclick="displayOrderDeal()" id="order-button" type="button" class="btn btn-success btn-lg btn-block" style="margin-bottom: 5vh">Заказ подтверждаю!</button>
+                    <button onclick="editOrder()" id="edit-order" value="${order.orderID}" class="btn btn-indigo btn-lg btn-block mt-2" style="display: none">Изменить заказ!</button>
                 </div>
             </div>
         </#if>
+
         <div class="row">
             <div class="col">
                 <div id="orderSuccess"></div>
+                <div></div>
             </div>
         </div>
+        <div class="row">
+            <div class="col">
+                <a href="/" id="new-order-button" type="button" class="btn btn-deep-purple btn-lg btn-block" style="margin-bottom: 5vh; display: none;">Новый заказ</a>
+            </div>
+            <#if isUser>
+                <div class="col">
+                    <a href="/user/cabinet" id="my-order-button" type="button" class="btn btn-elegant btn-lg btn-block" style="margin-bottom: 5vh; display: none;">Мои заказы</a>
+                </div>
+            </#if>
+        </div>
+
         <div class="row order-deal" id="order-deal">
             <div class="col mb-3" id="order-details">
                 <section class="mb-4">
@@ -234,16 +248,16 @@
 
     form label {
         display: inline-block;
-        //width: 100px;
+    //width: 100px;
     }
 
     form div {
-        //margin-bottom: 10px;
+    //margin-bottom: 10px;
     }
 
     .error {
         color: red;
-        //margin-left: 5px;
+    //margin-left: 5px;
     }
 
     label.error {

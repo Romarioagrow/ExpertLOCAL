@@ -99,6 +99,14 @@ function addToOrder(e) {
     const productID = $(this).attr("value");
     console.log(productID);
 
+    var buttonID = 'addToOrder'+productID;
+    var removeButtonID = 'removeToOrder'+productID;
+
+    //console.log(buttonID);
+
+    document.getElementById(buttonID).disabled = true;
+    //document.getElementById(removeButtonID).style.display = "block";
+
     $.ajax({
         url: 'http://localhost:8080/order',
         type: 'POST',
@@ -108,6 +116,8 @@ function addToOrder(e) {
         headers: {'Content-Type': 'application/json'},
         complete: function(products) {
             console.log("Add product with ID " + productID);
+            //$(this).style.display = "none";
+            /*document.getElementById(buttonID).style.display = "none";*/
         }
     });
 }
@@ -218,8 +228,26 @@ function removeFromOrder() {
     });
 }
 
+function editOrder() {
+    document.getElementById("order-deal").style.display = "none";
+    document.getElementById("edit-order").style.display = "none";
+    document.getElementById("order-button").style.display = "block";
+
+    $("button[id='product-less']").each(function() {
+        this.disabled = false;
+    });
+    $("button[id='product-more']").each(function() {
+        this.disabled = false;
+    });
+    $("button[id='remove-product']").each(function() {
+        this.disabled = false;
+    });
+}
+
 function displayOrderDeal() {
     document.getElementById("order-deal").style.display = "block";
+    document.getElementById("order-button").style.display = "none";
+    document.getElementById("edit-order").style.display = "block";
 
     $([document.documentElement, document.body]).animate({
         scrollTop: $("#contact-info").offset().top
@@ -304,7 +332,11 @@ function acceptOrder() {
                 console.log("Order accepted");
 
                 document.getElementById("order-deal").style.display = "none";
-                document.getElementById("order-button").style.display = "none";
+                document.getElementById("edit-order").style.display = "none";
+
+                document.getElementById("new-order-button").style.display = "block";
+                document.getElementById("my-order-button").style.display = "block";
+
                 $('#orderSuccess').html('<h3>Заказ подтвержден</h3>'+'');
             }
             else $('#orderSuccess').html('<h3>Данные не верны!</h3>'+'');
