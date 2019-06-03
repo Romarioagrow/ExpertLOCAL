@@ -145,7 +145,6 @@
                                         </div>
                                     </div>
                                 </form>
-
                             <#else>
                                 <form id="contact-user" name="contact-form" action="mail.php" method="POST" required>
                                     <div class="row">
@@ -178,21 +177,109 @@
                                     </div>
                                 </form>
                             </#if>
-                            <#--<h3 class="h1-responsive font-weight-bold text-center my-4">Способ получения товара</h3>
+
+                           <#-- <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-primary form-check-label active">
+                                    <input class="form-check-input" type="radio" name="options" id="delivery-button" autocomplete="off" checked>
+                                    Доставка курьером
+                                </label>
+                                <label class="btn btn-primary form-check-label">
+                                    <input class="form-check-input" type="radio" name="options" id="self-delivery-button" autocomplete="off">
+                                    Самовывоз со склада
+                                </label>
+                            </div>-->
+
+                            <h3 class="h1-responsive font-weight-bold text-center my-4">Способ получения товара</h3>
                             <div class="row">
                                 <div class="col-md-12">
-                                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+
+
+                                    <ul class="nav nav-tabs nav-justified md-tabs indigo" style="background-color: #3f51b5 !important;" id="myTabJust" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
+                                               aria-selected="true">Самовывоз со склада</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
+                                               aria-selected="false">Доставка курьером</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content <#--card--> <#--pt-5-->" id="myTabContentJust">
+                                        <div class="tab-pane fade show active" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
+                                            <h3>Заберите ваш заказ со склада по адресу: город Чебаркуль, Ленина 32</h3>
+                                        </div>
+                                        <div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
+                                            <h3>Ваш адрес для доставки:</h3>
+                                            <form id="self-delivery-block" name="contact-form" action="mail.php" method="POST">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="md-form">
+                                                            <input type="text" id="city" name="city" class="form-control">
+                                                            <label for="city" class="">город</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="md-form">
+                                                            <input type="text" id="street" name="street" class="form-control">
+                                                            <label for="street" class="">Улица</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="md-form">
+                                                            <input type="email" id="house" name="house" class="form-control">
+                                                            <label for="house" class="">Дом</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col">
+                                                        <div class="md-form">
+                                                            <input type="email" id="apartment" name="apartment" class="form-control">
+                                                            <label for="apartment" class="">Квартира</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+
+
+                                    <#--<ul class="nav nav-tabs nav-justified md-tabs indigo" style="background-color: #e52d00 !important;" id="myTabJust" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
+                                               aria-selected="true">
+                                                Заберите ваш заказ по адресу!
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
+                                               aria-selected="false">
+                                                Мой профиль
+                                            </a>
+                                        </li>
+                                    </ul>-->
+
+                                    <#--<div class="btn-group btn-group-toggle" data-toggle="buttons">
                                         <label class="btn btn-secondary active">
-                                            <input type="radio" name="options" id="option1" autocomplete="off" checked>Самовывоз
+                                            <input type="radio" id="delivery-button" name="options" autocomplete="off" checked>Самовывоз со склада
                                         </label>
                                         <label class="btn btn-secondary">
-                                            <input type="radio" name="options" id="option2" autocomplete="off">Доставка
+                                            <input type="radio" id="self-delivery-button" name="options" autocomplete="off"> Доставка курьером
                                         </label>
-                                    </div>
-                                    &lt;#&ndash;<h5 class="mt-2">
+                                    </div>-->
+
+                                    <#--<div class="btn-group" data-toggle="buttons">
+                                        <label class="btn btn-primary form-check-label active">
+                                            <input class="form-check-input" type="radio" name="options" id="delivery-button" autocomplete="off" checked>
+                                            Доставка курьером
+                                        </label>
+                                        <label class="btn btn-primary form-check-label">
+                                            <input class="form-check-input" type="radio" name="options" id="self-delivery-button" autocomplete="off">
+                                            Самовывоз со склада
+                                        </label>
+                                    </div>-->
+                                    <#--<h5 class="mt-2">
                                         Оплата товара осуществляется в пункте выдачи товара после подверждения заказа
-                                    </h5>&ndash;&gt;
-                                    <form id="contact-form" name="contact-form" action="mail.php" method="POST">
+                                    </h5>-->
+                                    <#--<form id="self-delivery-block" name="contact-form" action="mail.php" method="POST">
                                         <div class="row">
                                             <div class="col">
                                                 <div class="md-form mb-0">
@@ -219,9 +306,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </form>-->
                                 </div>
-                            </div>-->
+                            </div>
+
+
+
                             <#if order?has_content>
                                 <div class="text-center text-md-left">
                                     <button id="confirm-order" value="${order.orderID}" class="btn btn-primary btn-lg btn-block mt-2" style="background-color: #e52d00 !important;">Оформить заказ!</button>

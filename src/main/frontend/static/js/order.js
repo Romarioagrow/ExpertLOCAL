@@ -288,7 +288,6 @@ function acceptOrder() {
     if (hasValidErrors(name, surname, mobile, email)) {
         if (name.length < 1) {
             $('#name').after('<span class="error">Введите имя</span>');
-
         }
         if (surname.length < 1) {
             $('#surname').after('<span class="error">Введите фамилию</span>');
@@ -339,10 +338,31 @@ function acceptOrder() {
 
                 $('#orderSuccess').html('<h3>Заказ подтвержден</h3>'+'');
             }
-            else $('#orderSuccess').html('<h3>Данные не верны!</h3>'+'');
+            else
+            {
+                $('#orderSuccess').html('<h3>Данные не верны!</h3>'+'');
+            }
+
         },
         error: function(response) {
             $('#results').html('Ошибка. Данные не отправлены.');
         }
     });
 }
+
+$(document).ready(function(){
+    $('input[type="radio"][id="delivery-button"]').on('change', function () {
+        document.getElementById("delivery-block").style.display = "block";
+        document.getElementById("self-delivery-block").style.display = "none";
+    });
+});
+
+$(document).ready(function(){
+    $('input[type="radio"][id="self-delivery-button"]').on('change', function () {
+        document.getElementById("delivery-block").style.display = "none";
+        document.getElementById("self-delivery-block").style.display = "block";
+    });
+});
+
+
+
