@@ -13,7 +13,7 @@
             <div class="ml-5 search-field">
                 <form class="form-inline">
                     <i class="fas fa-search" aria-hidden="true"></i>
-                    <input class="form-control form-control-sm ml-3 main-search" <#--style="width: 50rem !important;"--> name="main-search" id="main-search" type="text" placeholder="Поиск товаров" aria-label="Search">
+                    <input class="form-control form-control-sm ml-3 main-search" name="main-search" id="main-search" type="text" placeholder="Поиск товаров" aria-label="Search">
                     <button class="btn btn-flat" style="padding-right: 1.14rem;padding-left: 1.14rem;" id="search-button" type="submit">Искать!</button>
                     <div class="flex-container display-result" id="display-result" name="display-result"></div>
                 </form>
@@ -25,23 +25,15 @@
                     <a href="/order" class="mt-4 mb-3"><h5 style="color: black !important;">Закзаз пуст<span class="badge badge-primary"></span></h5></a>
                 </#if>
             </div>
-
             <#if !isUser>
                 <div class="chip chip-md" style="margin-left: 1rem;margin-top: 1rem;">
                     <a href="/user/login">Регистрация</a>
                 </div>
-            </#if>
-
-            <#if isUser>
+            <#else>
                 <div class="chip chip-md" style="margin-left: 1rem;margin-top: 1rem;">
                     <a href="/user/cabinet">Личный кабинет</a>
                 </div>
-
-                <#--<li class="nav-item active">
-                    <a class="nav-link" href="/user/cabinet">Личный кабинет</a>
-                </li>-->
             </#if>
-
         </ul>
     </div>
 </nav>
@@ -55,7 +47,7 @@
         /*min-width: 50vw;*/
         width: 50rem !important;
         min-height: 3rem;
-        //margin-left: 4vw;
+        margin-left: 4vw;
     }
     .peach-gradient {
         margin-left: 2vw;

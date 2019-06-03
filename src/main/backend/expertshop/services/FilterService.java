@@ -19,19 +19,19 @@ public class FilterService {
 
     public List<Product> filterProducts(Map<String, Object> params, String req_type) {
         showReceivedParams(params);
-        return filter(params, productRepo.findByType(Type.valueOf(req_type)));
+        return filter(params, productRepo.findByType(Type.valueOf(req_type))); ///
     }
 
     private List<Product> filter(Map<String, Object> params, List<Product> products)
-    {
+    {   ///
         for (Map.Entry<String, Object> paramObject : params.entrySet())
         {
             Map<String, Object> inner = (Map<String, Object>) paramObject.getValue();
             for (Map.Entry<String, Object> filter : inner.entrySet())
             {
                 switch (filter.getKey()) {
-                    case "sortmin"      -> products = products.stream().filter(product -> product.getPrice() >= Integer.parseInt(/*(String)*/ filter.getValue().toString())).collect(Collectors.toList());
-                    case "sortmax"      -> products = products.stream().filter(product -> product.getPrice() <= Integer.parseInt(/*(String)*/ filter.getValue().toString())).collect(Collectors.toList());
+                    case "sortmin"      -> products = products.stream().filter(product -> product.getPrice() >= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
+                    case "sortmax"      -> products = products.stream().filter(product -> product.getPrice() <= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
                     case "brand"        -> {
                         String brands = filter.getValue().toString();
                         products = products.stream().filter(product -> brands.contains(product.getBrand())).collect(Collectors.toList());

@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Set;
@@ -28,9 +29,11 @@ public class User implements UserDetails {
     @NotBlank(message = "Введите пароль!")
     private String password;
 
+    @Size(min=3, message = "Минимум 3 символа")
     @NotBlank(message = "Введите имя!")
     private String firstName;
 
+    @Size(min=3, message = "Минимум 3 символа")
     @NotBlank(message = "Введите фамилию!")
     private String lastName;
 

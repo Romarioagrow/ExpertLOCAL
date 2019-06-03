@@ -7,10 +7,11 @@ import expertshop.domain.dto.OrderContacts;
 import expertshop.repos.OrderRepo;
 import expertshop.repos.OrderedProductRepo;
 import expertshop.repos.ProductRepo;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
+
 import org.springframework.stereotype.Service;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import java.util.*;
@@ -20,7 +21,6 @@ import java.util.*;
 @AllArgsConstructor
 public class OrderService {
     private final MailService mailService;
-
     private final OrderRepo orderRepo;
     private final ProductRepo productRepo;
     private final OrderedProductRepo orderedProductRepo;
@@ -33,7 +33,7 @@ public class OrderService {
         return orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID()) != null;
     }
 
-    public Order getSessionOrder() {
+    public Order getSessionOrder() { ///
         Order sessionOrder = orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID());
         return (sessionOrder != null && sessionOrder.isAccepted()) ? null : sessionOrder;
     }
@@ -106,15 +106,14 @@ public class OrderService {
         OrderedProduct orderedProduct = orderedProductRepo.findByid(Integer.parseInt(id));
 
         Order order = resolveOrder(user);
-
         order.getOrderedProducts().remove(orderedProduct);
+
         order.setTotalPrice     (order.getTotalPrice()      - orderedProduct.getTotalPrice());
         order.setTotalAmount    (order.getTotalAmount()     - orderedProduct.getAmount());
         order.setProductsAmount (order.getProductsAmount()  - 1);
 
         orderRepo.save(order);
         orderedProductRepo.delete(orderedProduct);
-
         return order;
     }
 
@@ -132,11 +131,10 @@ public class OrderService {
         orderedProductRepo.save(orderedProduct);
 
         Order order = resolveOrder(user);
-
         order.setTotalPrice(order.getTotalOrderPrice());
         order.setTotalAmount(order.getTotalProductsAmount());
-        orderRepo.save(order);
 
+        orderRepo.save(order);
         return packageOrderAndProduct(order, orderedProduct);
     }
 

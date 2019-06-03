@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class CategoriesController {
     private final ProductService productService;
     private final OrderService orderService;
+    private final ProductRepo productRepo;
 
     @GetMapping("/")
     public String showAll(Model model, @AuthenticationPrincipal User user) {
@@ -70,7 +71,7 @@ public class CategoriesController {
         return "pages/order";
     }
 
-    private final ProductRepo productRepo;
+
     @GetMapping("/info/{productID}")
     public String showProduct(Model model, @PathVariable String productID)
     {

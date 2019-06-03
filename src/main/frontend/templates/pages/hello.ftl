@@ -5,7 +5,7 @@
             <div class="col">
                 <h3><a href="/categories/electronics">Электроника</a></h3>
                 <ul>
-                    <li><a href="/tv"><strong>Телевизоры</strong></a></li>
+                    <li><a href="/products/tv"><strong>Телевизоры</strong></a></li>
                     <li><a href="/subcats/multimedia"><strong>Мультимедийные системы</strong></a></li>
                     <li><a href="/subcats/sputnik"><strong>Спутниковая техника</strong></a></li>
                 </ul>

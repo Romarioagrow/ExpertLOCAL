@@ -22,9 +22,9 @@
                                     <h4 class="card-title">
                                         ${product.brand}
                                         ${product.model}
-                                        <div class="mt-3">${product.type}, <strong><i id="total-price${product.id}">${product.totalPrice}₽</i></strong></div>
+                                        <div class="mt-3">${product.type}, <strong><i id="total-price${product.id?c}">${product.totalPrice}₽</i></strong></div>
                                     </h4>
-                                    <p class="card-text">
+                                    <p class="card-text" id="cart-text-buttons" name="cart-text-buttons">
                                         <button type="button" class="btn btn-outline-danger waves-effect" id="product-less" name="${product.id?c}" value="${product.productID?c}">-</button>
                                         <span  class="badge badge-primary badge-pill" id="amount${product.id?c}" name="${product.id}">${product.amount}</span>
                                         <button type="button" class="btn btn-outline-success waves-effect" id="product-more" name="${product.id?c}" value="${product.productID?c}">+</button>
@@ -88,6 +88,11 @@
                 </div>
             </div>
         </#if>
+        <div class="row">
+            <div class="col">
+                <div id="orderSuccess"></div>
+            </div>
+        </div>
         <div class="row order-deal" id="order-deal">
             <div class="col mb-3" id="order-details">
                 <section class="mb-4">
@@ -100,13 +105,13 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="md-form mb-0">
-                                                <input type="text" id="name" name="name" class="form-control">
+                                                <input type="text" id="name" name="name" class="form-control" required>
                                                 <label for="name" class="">Ваше имя</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="md-form mb-0">
-                                                <input type="text" id="surname" name="surname" class="form-control">
+                                                <input type="text" id="surname" name="surname" class="form-control" required>
                                                 <label for="family" class="">Ваша фамилия</label>
                                             </div>
                                         </div>
@@ -114,13 +119,13 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="md-form mb-0">
-                                                <input type="text" id="mobile" name="mobile" class="form-control">
+                                                <input type="text" id="mobile" name="mobile" class="form-control" required>
                                                 <label for="mobile" class="">Ваш телефон</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="md-form mb-0">
-                                                <input type="email" id="email" name="email" class="form-control">
+                                                <input type="email" id="email" name="email" class="form-control" required>
                                                 <label for="email" class="">Ваш e-mail</label>
                                             </div>
                                         </div>
@@ -128,17 +133,17 @@
                                 </form>
 
                             <#else>
-                                <form id="contact-user" name="contact-form" action="mail.php" method="POST">
+                                <form id="contact-user" name="contact-form" action="mail.php" method="POST" required>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="md-form mb-0">
-                                                <input type="text" id="name" name="name" class="form-control" value="${firstName}">
+                                                <input type="text" id="name" name="name" class="form-control" value="${firstName}" required>
                                                 <label for="name" class="">Ваше имя</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="md-form mb-0">
-                                                <input type="text" id="surname" name="surname" class="form-control" value="${lastName}">
+                                                <input type="text" id="surname" name="surname" class="form-control" value="${lastName}" required>
                                                 <label for="family" class="">Ваша фамилия</label>
                                             </div>
                                         </div>
@@ -146,13 +151,13 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="md-form mb-0">
-                                                <input type="text" id="mobile" name="mobile" class="form-control" value="${mobile}">
+                                                <input type="text" id="mobile" name="mobile" class="form-control" value="${mobile}" required>
                                                 <label for="mobile" class="">Ваш телефон</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="md-form mb-0">
-                                                <input type="email" id="email" name="email" class="form-control" value="${email}">
+                                                <input type="email" id="email" name="email" class="form-control" value="${email}" required>
                                                 <label for="email" class="">Ваш e-mail</label>
                                             </div>
                                         </div>
@@ -205,7 +210,7 @@
                             </div>-->
                             <#if order?has_content>
                                 <div class="text-center text-md-left">
-                                    <button id="confirm-order" value="${order.orderID}" class="btn btn-primary mt-2">Оформить заказ!</button>
+                                    <button id="confirm-order" value="${order.orderID}" class="btn btn-primary btn-lg btn-block mt-2" style="background-color: #e52d00 !important;">Оформить заказ!</button>
                                 </div>
                             </#if>
                         </div>
@@ -225,5 +230,23 @@
     }
     .order-deal {
         display: none;
+    }
+
+    form label {
+        display: inline-block;
+        //width: 100px;
+    }
+
+    form div {
+        //margin-bottom: 10px;
+    }
+
+    .error {
+        color: red;
+        //margin-left: 5px;
+    }
+
+    label.error {
+        display: inline;
     }
 </style>

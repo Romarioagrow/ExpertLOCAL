@@ -54,16 +54,17 @@ public class ServiceController {
     }
 
     @PostMapping("/order/confirm")
-    private String confirmOrder
+    private Set<String> confirmOrder
             (@AuthenticationPrincipal User user, @Valid @RequestBody OrderContacts contacts, BindingResult validResult)
     {
         if (validResult.hasErrors())
         {
-            Map<String, String> validErrors = ControllerService.getValidErrors(validResult);
-            return "Result valid " + validResult.getErrorCount();
+            return ControllerService.getValidErrorsSet(validResult);
         }
-
-        orderService.confirmOrder(contacts, user);
-        return "accepted";
+        else
+        {
+            orderService.confirmOrder(contacts, user);
+            return null;
+        }
     }
 }

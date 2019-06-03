@@ -4,6 +4,16 @@
         <div class="container">
             <div class="row">
                 <div class="col">
+                    <#if wrongNameOrPass??>
+                        <div class="row">
+                            <div class="col">
+                                <div class="alert alert-danger" role="alert">
+                                    Неверное имя или пароль!
+                                </div>
+                            </div>
+                        </div>
+                    </#if>
+
                     <form action="/user/login" method="post" class="text-center border border-light p-5">
                         <p class="h4 mb-4">Вход в личный кабинет</p>
                         <input type="email" id="username" name="username" class="form-control mb-4" placeholder="E-mail">

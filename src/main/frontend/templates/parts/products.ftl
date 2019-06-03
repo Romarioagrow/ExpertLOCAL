@@ -29,7 +29,7 @@
                 </div>
                 <div class="card-footer">
                     <small class="text-muted">
-                        <a class="btn btn-info btn-blue-grey" style="margin-left: -1vw;" href="/products/info/${product.productID?c}" role="button" >О товаре</a>
+                        <a class="btn btn-info btn-blue-grey" style="margin-left: -1vw;" href="/info/${product.productID?c}" role="button" >О товаре</a>
                         <strong><i>${product.price}₽</i></strong>
                         <button type="submit" class="btn btn-success btn-mdb-color" name="addToOrder" id="addToOrder" value="${product.productID?c}" style="margin-right: -1vw;">В корзину</button>
                     </small>

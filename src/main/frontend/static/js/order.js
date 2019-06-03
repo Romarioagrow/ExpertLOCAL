@@ -1,13 +1,64 @@
 $(document).ready(function(){
     $('button[type="submit"][name="addToOrder"]').on('click', addToOrder);
 });
+$(document).ready(function(){
+    $('button[id="toBucket"]').on('click', addToOrder);
+});
+
+$(document).ready(function(){
+    $('button[type="button"][id="product-more"]').on('click', changeAmount);
+});
+$(document).ready(function(){
+    $('button[type="button"][id="product-less"]').on('click', changeAmount);
+});
 
 $(document).ready(function(){
     $('button[type="submit"][name="remove-product"]').on('click', removeFromOrder);
 });
-/*$(document).ajaxComplete(function() {
-    $('button[type="submit"][fullName="remove-product"]').on('click', removeFromOrder);
+
+/*document.getElementById("product-less")*/
+
+/*$(document).ready(function(){
+
+    $('button[type="submit"][id="remove-product"]').on('click', removeFromOrder);
+
+    $(document).ajaxComplete(function() {
+        $("#remove-product").click(
+            function(){
+                removeFromOrder();
+            }
+        );
+    });
+});
+
+$(document).ajaxComplete(function() {
+    $("#remove-product").click(
+        function(){
+            removeFromOrder();
+        }
+    );
+});
+
+$(document).ajaxComplete(function() {
+    $('button[type="button"][id="product-more"]').click(
+        function(){
+            changeAmount();
+        }
+    );
 });*/
+
+/*$(document).ready(function() {
+    $("#remove-product").click(
+        function(){
+            removeFromOrder();
+        }
+    );
+});*/
+
+/*
+$(document).ajaxComplete(function() {
+    $('button[type="submit"][fullName="remove-product"]').on('click', removeFromOrder);
+});
 
 $(document).ready(function(){
     $('button[type="button"][id="product-more"]').on('click', changeAmount);
@@ -31,10 +82,21 @@ $(document).ready(function(){
     document.getElementById("display-result").style.display = "none";
 });*/
 
+/*$(document).ready(function(){
+    $('button[type="button"]').on('click', changeAmount); ///ОБЪЕДЕНИТЬ ДЛЯ ВСЕХ INPUT
+});*/
+/*$(document).ready(function(){
+    $('button[type="submit"][id="product-less"]').on('click', changeAmount);
+});
+$(document).ready(function(){
+    $('button[type="submit"][id="product-more"]').on('click', changeAmount);
+});*/
+
+
 function addToOrder(e) {
     e.preventDefault();
 
-    const productID = ($(this).attr("value"));
+    const productID = $(this).attr("value");
     console.log(productID);
 
     $.ajax({
@@ -98,18 +160,14 @@ function changeAmount(e) {
     });
 }
 
-function removeFromOrder(e) {
-    e.preventDefault();
-
+function removeFromOrder() {
     const productID = ($(this).attr("value"));
     console.log(productID);
 
     $.ajax({
         url: 'http://localhost:8080/order',
         type: 'DELETE',
-        dataType: 'json',
         data: productID,
-        processData: false,
         headers: {'Content-Type': 'application/json'},
         complete: function(orderResponse)
         {
@@ -131,18 +189,18 @@ function removeFromOrder(e) {
                     '</div>' +
                     '<div class="card-body">' +
                     '<h4 class="card-title">' +
-                        product.brand + ' ' + product.model +
-                        '<div class="mt-3">'+product.type+', <strong><i>' + product.totalPrice + '₽' + '</i></strong></div>' +
+                    product.brand + ' ' + product.model +
+                    '<div class="mt-3">'+product.type+', <strong><i>' + product.totalPrice + '₽' + '</i></strong></div>' +
                     '<div>' +
                     '</div>' +
                     '</h4>' +
                     '<p class="card-text">' +
-                    '<button type="button" class="btn btn-outline-danger waves-effect" id="product-less" fullName="'+product.id+'" value="'+product.productID+'">-</button>' +
+                    '<button type="button" name="product-less" class="btn btn-outline-danger waves-effect" id="product-less"  value="'+product.productID+'">-</button>' +
                     '<span class="badge badge-primary badge-pill" id="amount'+product.id+'">' + product.amount + '</span>' +
-                    '<button type="button" class="btn btn-outline-success waves-effect" id="product-more" fullName="'+product.id+'" value="'+product.productID+'">+</button>' +
+                    '<button type="button" name="product-more" class="btn btn-outline-success waves-effect" id="product-more"  value="'+product.productID+'">+</button>' +
                     '</p>' +
                     '</div>' +
-                    '<button type="submit" class="btn btn-primary btn-md" fullName="remove-product" id="remove-product" value="'+product.id+'">Удалить</button>' +
+                    '<button type="submit" name="remove-product" class="btn btn-primary btn-md"  id="remove-product" value="'+product.id+'">Удалить</button>' +
                     '</div>'
                 );
 
@@ -167,35 +225,67 @@ function displayOrderDeal() {
         scrollTop: $("#contact-info").offset().top
     }, 1000);
 
-    /*(document.getElementById("product-less").each(function() {
-        document.getElementById("product-less").disabled = true;
-    }));*/
-
-    /*(document.getElementById("product-less").each(function() {
-        $(this).disabled = true;
-    }));*/
-
-    document.getElementById("product-less").disabled = true;
-    document.getElementById("product-more").disabled = true;
-    document.getElementById("remove-product").disabled = true;
+    ///
+    $("button[id='product-less']").each(function() {
+        this.disabled = true;
+    });
+    $("button[id='product-more']").each(function() {
+        this.disabled = true;
+    });
+    $("button[id='remove-product']").each(function() {
+        this.disabled = true;
+    });
 }
 
-
-$( document ).ready(function() {
+$(document).ready(function() {
     $("#confirm-order").click(
         function(){
-            acceptOrder($('#contact-session'));
+            acceptOrder();
         }
     );
 });
 
 function acceptOrder() {
+    var name = $('#name').val();
+    var surname = $('#surname').val();
+    var mobile = $('#mobile').val();
+    var email = $('#email').val();
+
+    $(".error").remove();
+
+    function hasValidErrors(name, surname, mobile, email) {
+        return name.length === 0 || surname.length === 0 || mobile.length === 0 || email.length === 0;
+    }
+
+    if (hasValidErrors(name, surname, mobile, email)) {
+        if (name.length < 1) {
+            $('#name').after('<span class="error">Введите имя</span>');
+
+        }
+        if (surname.length < 1) {
+            $('#surname').after('<span class="error">Введите фамилию</span>');
+        }
+        if (email.length < 1) {
+            $('#email').after('<span class="error">Введите e-mail</span>');
+        } else {
+            var regEx = /^[A-Z0-9][A-Z0-9._%+-]{0,63}@(?:[A-Z0-9-]{1,63}.){1,125}[A-Z]{2,63}$/;
+            var validEmail = regEx.test(email);
+            if (!validEmail) {
+                $('#email').after('<span class="error">Введите корректный e-mail</span>');
+            }
+        }
+        if (mobile.length < 8) {
+            $('#mobile').after('<span class="error">Введите номер в формате +7-999-666-14-88</span>');
+        }
+        return;
+    }
+
     var contacts = {
         orderID : $('#confirm-order').val(),
-        name    : $('#name').val(),
-        surname : $('#surname').val(),
-        mobile  : $('#mobile').val(),
-        email   : $('#email').val(),
+        name    : name,
+        surname : surname,
+        mobile  : mobile,
+        email   : email,
     };
 
     contacts = JSON.stringify(contacts);
@@ -205,10 +295,19 @@ function acceptOrder() {
         type:     "POST",
         data: contacts,
         headers: {'Content-Type': 'application/json'},
-        success: function(response) {
-            //document.getElementById("order-deal").style.display = "none";
-            //document.getElementById("order-button").style.display = "none";
-            $('#results').html(response);
+        success: function(response)
+        {
+            console.log(response);
+
+            if (response.length === 0)
+            {
+                console.log("Order accepted");
+
+                document.getElementById("order-deal").style.display = "none";
+                document.getElementById("order-button").style.display = "none";
+                $('#orderSuccess').html('<h3>Заказ подтвержден</h3>'+'');
+            }
+            else $('#orderSuccess').html('<h3>Данные не верны!</h3>'+'');
         },
         error: function(response) {
             $('#results').html('Ошибка. Данные не отправлены.');
