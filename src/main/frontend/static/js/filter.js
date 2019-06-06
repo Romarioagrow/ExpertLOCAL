@@ -47,7 +47,7 @@ function collectFilters(e) {
                 $("#products").append
                 (
                     '<div class="card product-card mr-3 mt-3">'                                 +
-                        '<img class="card-img-top" src='+product.productParams.pic+' alt="Card image cap">'   +
+                        '<img class="card-img-top" src='+product.pic+' alt="Card image cap">'   +
                         '<div class="card-body">'                                               +
                             '<h5 class="card-title">'                                           +
                                 '\n' + product.brand                                            +

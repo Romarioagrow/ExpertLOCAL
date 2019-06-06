@@ -8,7 +8,11 @@
         </div>
         <div class="row" id="ordered-products">
             <div class="col">
-                <div class="card-group" id="bucket-products">
+
+                <button type="button" class="btn btn-light" name="cards-layout-inp">Cards</button>
+                <button type="button" class="btn btn-light" name="rows-layout-inp">Rows</button>
+
+                <div class="card-group" id="bucket-products" name="cards-layout">
                     <#if orderedProducts?has_content>
                         <#list orderedProducts as product>
                             <div class="card ordered-card mb-4">
@@ -25,9 +29,9 @@
                                         <div class="mt-3">${product.type}, <strong><i id="total-price${product.id?c}">${product.totalPrice}₽</i></strong></div>
                                     </h4>
                                     <p class="card-text" id="cart-text-buttons" name="cart-text-buttons">
-                                        <button type="button" onclick="changeAmount(this)" class="btn btn-outline-danger waves-effect" id="${product.id?c}" name="product-less" value="${product.productID?c}">-</button>
+                                        <button type="button" onclick="changeAmount(this)" id="${product.id?c}" name="product-less" value="${product.productID?c}" class="btn btn-outline-danger waves-effect">-</button>
                                         <span  class="badge badge-primary badge-pill" id="amount${product.id?c}" name="${product.id}">${product.amount}</span>
-                                        <button type="button" onclick="changeAmount(this)" class="btn btn-outline-success waves-effect" id="${product.id?c}" name="product-more" value="${product.productID?c}">+</button>
+                                        <button type="button" onclick="changeAmount(this)" id="${product.id?c}" name="product-more" value="${product.productID?c}" class="btn btn-outline-success waves-effect">+</button>
                                     </p>
                                 </div>
                                 <button type="submit" onclick="removeFromOrder(this)" class="btn btn-danger btn-md" name="remove-product" id="remove-product" value="${product.id?c}">Удалить</button>
@@ -38,41 +42,28 @@
                         <a type="button" href="/" class="btn blue-gradient btn-lg btn-block">Вернуться за покупками</a>
                     </#if>
                 </div>
-                <#--<ul class="list-group">
+
+                <ul class="list-group" id="bucket-products-rows" name="rows-layout" style="display: none">
                     <#if orderedProducts??>
                         <#list orderedProducts as product>
-
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <img class="ordered-product-img-line" src="${product.pic}" height="50" width="80"  alt="Card image cap">
                                 <strong>${product.type}</strong> ${product.brand} ${product.model}
-                                <button type="button" class="btn btn-outline-danger waves-effect" id="product-less" name="${product.id?c}" value="${product.productID?c}">-</button>
-                                <div id="amount${product.id}" name="${product.id}"><span class="badge badge-primary badge-pill">${product.amount}</span></div>
-                                <button type="button" class="btn btn-outline-success waves-effect" id="product-more" name="${product.id?c}" value="${product.productID?c}">+</button>
+
+                                <button type="button" class="btn btn-outline-danger waves-effect" onclick="changeAmount(this)" id="${product.id?c}" name="product-less" value="${product.productID?c}">-</button>
+                                <div id="amount${product.id?c}" name="${product.id}"><span class="badge badge-primary badge-pill">${product.amount}</span></div>
+                                <button type="button" class="btn btn-outline-success waves-effect" onclick="changeAmount(this)" id="${product.id?c}" name="product-more" value="${product.productID?c}">+</button>
+
                                 <strong><i id="total-price${product.id}">${product.totalPrice} ₽</i></strong>
-                                <button type="submit" class="btn btn-primary btn-md" name="remove-product" id="remove-product" value="${product.id?c}">Удалить</button>
+
+                                <button type="submit" onclick="removeFromOrder(this)" class="btn btn-danger btn-md" name="remove-product" id="remove-product" value="${product.id?c}">Удалить</button>
                             </li>
-                            &lt;#&ndash;<div class="list-group-item d-flex justify-content-between align-items-center &lt;#&ndash;container&ndash;&gt;">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <img class="ordered-product-img-line" src="${product.pic}" height="50" width="80"  alt="Card image cap">
-                                        <strong>${product.type}</strong> ${product.brand} ${product.model}
-                                    </div>
-                                    <div class="col">
-                                        <button type="button" class="btn btn-outline-danger waves-effect" id="product-less" fullName="${product.id?c}" value="${product.productID?c}">-</button>
-                                        <div id="amount${product.id}" fullName="${product.id}"><span class="badge badge-primary badge-pill">${product.amount}</span></div>
-                                        <button type="button" class="btn btn-outline-success waves-effect" id="product-more" fullName="${product.id?c}" value="${product.productID?c}">+</button>
-                                    </div>
-                                    <div class="col">
-                                        <strong><i id="total-price${product.id}">${product.totalPrice} ₽</i></strong>
-                                        <button type="submit" class="btn btn-primary btn-md" fullName="remove-product" id="remove-product" value="${product.id?c}">Удалить</button>
-                                    </div>
-                                </div>
-                            </div>&ndash;&gt;
                         </#list>
                     <#else>
                         <h3 style="margin-top: 4vh">Пока ничего нет...</h3>
+                        <a type="button" href="/" class="btn blue-gradient btn-lg btn-block">Вернуться за покупками</a>
                     </#if>
-                </ul>-->
+                </ul>
 
             </div>
         </div>

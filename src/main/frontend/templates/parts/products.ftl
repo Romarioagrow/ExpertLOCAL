@@ -15,7 +15,7 @@
     <#if products??>
         <#list products as product>
             <div class="card product-card mr-3 mt-3">
-                <#if product.productParams.pic??><img class="card-img-top" src="${product.productParams.pic}" alt="Card image cap"></#if>
+                <#if product.productParams.pic??><img class="card-img-top" src="${product.pic}" alt="Card image cap"></#if>
                 <div class="card-body">
                     <h5 class="card-title">
                         ${product.brand}

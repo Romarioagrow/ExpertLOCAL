@@ -1,17 +1,26 @@
 $(document).ready(function(){
     $('button[type="submit"][name="addToOrder"]').on('click', addToOrder);
 });
-$(document).ready(function(){
-    $('button[id="toBucket"]').on('click', addToOrder);
-});
 
-/*$(document).ready(function(){
-    $('button[type="button"][id="product-more"]').on('click', changeAmount);
+$(document).ready(function(){
+    $('button[name="cards-layout-inp"]').on('click', showCardsLayout);
 });
 $(document).ready(function(){
-    $('button[type="button"][id="product-less"]').on('click', changeAmount);
-});*/
+    $('button[name="rows-layout-inp"]').on('click', showRowsLayout);
+});
 
+
+function showCardsLayout() {
+    console.log('cards');
+    document.getElementById("bucket-products").style.display 	= "flex";
+    document.getElementById("bucket-products-rows").style.display 	    = "none";
+}
+
+function showRowsLayout() {
+    console.log('rows');
+    document.getElementById("bucket-products").style.display 	= "none";
+    document.getElementById("bucket-products-rows").style.display 	    = "block";
+}
 
 function addToOrder(e) {
     e.preventDefault();
@@ -21,7 +30,6 @@ function addToOrder(e) {
 
     var buttonID = 'addToOrder'+productID;
     //var removeButtonID = 'removeToOrder'+productID;
-
     //console.log(buttonID);
 
     document.getElementById(buttonID).disabled = true;
@@ -91,8 +99,6 @@ function changeAmount(product) {
 function removeFromOrder(button) {
     const productID = button.value;
 
-    console.log(productID);
-
     $.ajax({
         url: 'http://localhost:8080/order',
         type: 'DELETE',
@@ -125,7 +131,7 @@ function removeFromOrder(button) {
                     '</h4>' +
                     '<p class="card-text">' +
                     '<button type="button" onclick="changeAmount(this)" id="'+product.id+'" name="product-less" value="'+product.productID+'" class="btn btn-outline-danger waves-effect">-</button>' +
-                    '<span class="badge badge-primary badge-pill" id="amount'+product.id+'">'+product.amount+'</span>' +
+                    '<span class="badge badge-primary badge-pill" id="amount'+product.id+'">'+(product.amount).toLocaleString('ru')+'</span>' +
                     '<button type="button" onclick="changeAmount(this)" id="'+product.id+'" name="product-more" value="'+product.productID+'" class="btn btn-outline-success waves-effect">+</button>' +
                     '</p>' +
                     '</div>' +

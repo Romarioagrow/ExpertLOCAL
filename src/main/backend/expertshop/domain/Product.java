@@ -32,7 +32,9 @@ public class Product implements Serializable {
     private Type type;
 
     private String brand, model, country;
-    
+
+    private String pic;
+
     private Integer price;
 
     @OneToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
