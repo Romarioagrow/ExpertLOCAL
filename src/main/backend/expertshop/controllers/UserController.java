@@ -27,7 +27,8 @@ public class UserController {
     private final OrderService orderService;
 
     @GetMapping("/registration")
-    public String registrationPage(Model model) {
+    public String registrationPage(Model model) 
+    {
         model.addAttribute("order", orderService.getSessionOrder());
         return "pages/registration";
     }
@@ -57,13 +58,15 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String loginPage(Model model) {
+    public String loginPage(Model model) 
+    {
         model.addAttribute("order", orderService.getSessionOrder());
         return "pages/login";
     }
 
     @GetMapping("/cabinet")
-    public String userCabinet(Model model, @AuthenticationPrincipal User user) {
+    public String userCabinet(Model model, @AuthenticationPrincipal User user) 
+    {
         model.addAttribute("order", orderService.getSessionOrder());
         model.addAttribute("orders", orderService.showUserOrders(user.getUserID()));
         return "pages/cabinet";

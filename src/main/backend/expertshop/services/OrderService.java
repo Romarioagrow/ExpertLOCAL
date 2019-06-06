@@ -25,24 +25,29 @@ public class OrderService {
     private final ProductRepo productRepo;
     private final OrderedProductRepo orderedProductRepo;
 
-    public boolean checkUserOrder(User user) {
+    public boolean checkUserOrder(User user)
+    {
         return orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()) != null;
     }
 
-    private boolean checkSessionOrder() {
+    private boolean checkSessionOrder() 
+    {
         return orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID()) != null;
     }
 
-    public Order getSessionOrder() { ///
+    public Order getSessionOrder() 
+    { ///
         Order sessionOrder = orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID());
         return (sessionOrder != null && sessionOrder.isAccepted()) ? null : sessionOrder;
     }
 
-    public Order getUserOrder(Long userID) {
+    public Order getUserOrder(Long userID) 
+    {
         return orderRepo.findByUserIDAndAcceptedFalse(userID);
     }
 
-    private Order resolveOrder(User user) {
+    private Order resolveOrder(User user)
+    {
         return user != null ? getUserOrder(user.getUserID()) : getSessionOrder();
     }
 
@@ -60,8 +65,8 @@ public class OrderService {
     public void addProductToOrder(String productID, User user)
     {
         Order order;
-        Product product = productRepo.findByProductID(Integer.parseInt(productID));
-        OrderedProduct orderedProduct = new OrderedProduct();
+        Product product = productRepo.findByProductID(Integer.parseInt(productID));///
+        OrderedProduct orderedProduct = new OrderedProduct(); ///new OrderedProduct(productID);
 
         if (user == null)
         {
@@ -72,8 +77,8 @@ public class OrderService {
                 order = new Order();
                 order.setSessionUUID(getSessionID());
             }
-
-            orderedProduct.constructOrderedProduct(product, productID);
+            ///
+            orderedProduct.constructOrderedProduct(product, productID);///
             order.addProductToOrder(orderedProduct);
 
             setOrderStats(order, orderedProduct.getTotalPrice());
@@ -89,8 +94,8 @@ public class OrderService {
                 order = new Order();
                 order.setUserID(user.getUserID());
             }
-
-            orderedProduct.constructOrderedProduct(product, productID);
+            ///
+            orderedProduct.constructOrderedProduct(product, productID); ///
             order.addProductToOrder(orderedProduct);
 
             setOrderStats(order, orderedProduct.getTotalPrice());
@@ -113,6 +118,7 @@ public class OrderService {
         order.setProductsAmount (order.getProductsAmount()  - 1);
 
         orderRepo.save(order);
+        ///
         orderedProductRepo.delete(orderedProduct);
         return order;
     }

@@ -7,8 +7,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
 @Data
+@Entity
 @EqualsAndHashCode(exclude="productParams")
 @ToString(exclude="productParams" )
 @NoArgsConstructor
@@ -32,6 +32,7 @@ public class Product implements Serializable {
     private Type type;
 
     private String brand, model, country;
+    
     private Integer price;
 
     @OneToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)

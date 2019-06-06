@@ -5,91 +5,11 @@ $(document).ready(function(){
     $('button[id="toBucket"]').on('click', addToOrder);
 });
 
-$(document).ready(function(){
+/*$(document).ready(function(){
     $('button[type="button"][id="product-more"]').on('click', changeAmount);
 });
 $(document).ready(function(){
     $('button[type="button"][id="product-less"]').on('click', changeAmount);
-});
-
-$(document).ready(function(){
-    $('button[type="submit"][name="remove-product"]').on('click', removeFromOrder);
-});
-
-/*document.getElementById("product-less")*/
-
-/*$(document).ready(function(){
-
-    $('button[type="submit"][id="remove-product"]').on('click', removeFromOrder);
-
-    $(document).ajaxComplete(function() {
-        $("#remove-product").click(
-            function(){
-                removeFromOrder();
-            }
-        );
-    });
-});
-
-$(document).ajaxComplete(function() {
-    $("#remove-product").click(
-        function(){
-            removeFromOrder();
-        }
-    );
-});
-
-$(document).ajaxComplete(function() {
-    $('button[type="button"][id="product-more"]').click(
-        function(){
-            changeAmount();
-        }
-    );
-});*/
-
-/*$(document).ready(function() {
-    $("#remove-product").click(
-        function(){
-            removeFromOrder();
-        }
-    );
-});*/
-
-/*
-$(document).ajaxComplete(function() {
-    $('button[type="submit"][fullName="remove-product"]').on('click', removeFromOrder);
-});
-
-$(document).ready(function(){
-    $('button[type="button"][id="product-more"]').on('click', changeAmount);
-});
-$(document).ready(function(){
-    $('button[type="button"][id="product-less"]').on('click', changeAmount);
-});
-/*$(document).ajaxComplete(function() {
-    $(document).ready(function(){
-        $('button[type="button"][id="product-more"]').on('click', changeAmount);
-    });
-});*/
-
-//$('button[type="button"][id="product-more"]').on('click', changeAmount);
-
-//$('button[type="button"][id="product-more"]').click(changeAmount());
-
-///!!!
-/*$('body').click(function(){
-    /// if элеиентПодСтрелкой.fullName != search
-    document.getElementById("display-result").style.display = "none";
-});*/
-
-/*$(document).ready(function(){
-    $('button[type="button"]').on('click', changeAmount); ///ОБЪЕДЕНИТЬ ДЛЯ ВСЕХ INPUT
-});*/
-/*$(document).ready(function(){
-    $('button[type="submit"][id="product-less"]').on('click', changeAmount);
-});
-$(document).ready(function(){
-    $('button[type="submit"][id="product-more"]').on('click', changeAmount);
 });*/
 
 
@@ -100,7 +20,7 @@ function addToOrder(e) {
     console.log(productID);
 
     var buttonID = 'addToOrder'+productID;
-    var removeButtonID = 'removeToOrder'+productID;
+    //var removeButtonID = 'removeToOrder'+productID;
 
     //console.log(buttonID);
 
@@ -114,7 +34,8 @@ function addToOrder(e) {
         data: productID,
         processData: false,
         headers: {'Content-Type': 'application/json'},
-        complete: function(products) {
+        complete: function(products)
+        {
             console.log("Add product with ID " + productID);
             //$(this).style.display = "none";
             /*document.getElementById(buttonID).style.display = "none";*/
@@ -122,13 +43,11 @@ function addToOrder(e) {
     });
 }
 
-function changeAmount(e) {
-    e.preventDefault();
-
+function changeAmount(product) {
     var data = {
-        'productID' : ($(this).attr("value")),
-        'orderedID' : ($(this).attr("name")),
-        'action'    : ($(this).attr("id"))
+        productID : product.value,
+        orderedID : product.id,
+        action    : product.name
     };
 
     let amountID     = '#amount'      + data.orderedID;
@@ -146,7 +65,6 @@ function changeAmount(e) {
         complete: function(orderAndProduct)
         {
             orderAndProduct = JSON.parse(JSON.stringify(orderAndProduct));
-            console.log(orderAndProduct);
 
             let order = orderAndProduct.responseJSON[0];
             let orderedProduct = orderAndProduct.responseJSON[1];
@@ -170,8 +88,9 @@ function changeAmount(e) {
     });
 }
 
-function removeFromOrder() {
-    const productID = ($(this).attr("value"));
+function removeFromOrder(button) {
+    const productID = button.value;
+
     console.log(productID);
 
     $.ajax({
@@ -200,17 +119,17 @@ function removeFromOrder() {
                     '<div class="card-body">' +
                     '<h4 class="card-title">' +
                     product.brand + ' ' + product.model +
-                    '<div class="mt-3">'+product.type+', <strong><i>' + product.totalPrice + '₽' + '</i></strong></div>' +
+                    '<div class="mt-3">'+product.type+', <strong><i id="total-price'+product.id+'">' + product.totalPrice + '₽' + '</i></strong></div>' +
                     '<div>' +
                     '</div>' +
                     '</h4>' +
                     '<p class="card-text">' +
-                    '<button type="button" name="product-less" class="btn btn-outline-danger waves-effect" id="product-less"  value="'+product.productID+'">-</button>' +
-                    '<span class="badge badge-primary badge-pill" id="amount'+product.id+'">' + product.amount + '</span>' +
-                    '<button type="button" name="product-more" class="btn btn-outline-success waves-effect" id="product-more"  value="'+product.productID+'">+</button>' +
+                    '<button type="button" onclick="changeAmount(this)" id="'+product.id+'" name="product-less" value="'+product.productID+'" class="btn btn-outline-danger waves-effect">-</button>' +
+                    '<span class="badge badge-primary badge-pill" id="amount'+product.id+'">'+product.amount+'</span>' +
+                    '<button type="button" onclick="changeAmount(this)" id="'+product.id+'" name="product-more" value="'+product.productID+'" class="btn btn-outline-success waves-effect">+</button>' +
                     '</p>' +
                     '</div>' +
-                    '<button type="submit" name="remove-product" class="btn btn-primary btn-md"  id="remove-product" value="'+product.id+'">Удалить</button>' +
+                    '<button type="submit" onclick="removeFromOrder(this)" name="remove-product" class="btn btn-danger btn-md"  id="remove-product" value="'+product.id+'">Удалить</button>' +
                     '</div>'
                 );
 
@@ -228,36 +147,20 @@ function removeFromOrder() {
     });
 }
 
-function editOrder() {
-    document.getElementById("order-deal").style.display = "none";
-    document.getElementById("edit-order").style.display = "none";
-    document.getElementById("order-button").style.display = "block";
-
-    $("button[id='product-less']").each(function() {
-        this.disabled = false;
-    });
-    $("button[id='product-more']").each(function() {
-        this.disabled = false;
-    });
-    $("button[id='remove-product']").each(function() {
-        this.disabled = false;
-    });
-}
-
 function displayOrderDeal() {
-    document.getElementById("order-deal").style.display = "block";
-    document.getElementById("order-button").style.display = "none";
-    document.getElementById("edit-order").style.display = "block";
+    document.getElementById("order-deal").style.display 	= "block";
+    document.getElementById("order-button").style.display 	= "none";
+    document.getElementById("edit-order").style.display 	= "block";
 
     $([document.documentElement, document.body]).animate({
         scrollTop: $("#contact-info").offset().top
     }, 1000);
 
     ///
-    $("button[id='product-less']").each(function() {
+    $("button[name='product-less']").each(function() {
         this.disabled = true;
     });
-    $("button[id='product-more']").each(function() {
+    $("button[name='product-more']").each(function() {
         this.disabled = true;
     });
     $("button[id='remove-product']").each(function() {
@@ -265,6 +168,21 @@ function displayOrderDeal() {
     });
 }
 
+function editOrder() {
+    document.getElementById("order-deal").style.display 	= "none";
+    document.getElementById("edit-order").style.display 	= "none";
+    document.getElementById("order-button").style.display 	= "block";
+
+    $("button[name='product-less']").each(function() {
+        this.disabled = false;
+    });
+    $("button[name='product-more']").each(function() {
+        this.disabled = false;
+    });
+    $("button[id='remove-product']").each(function() {
+        this.disabled = false;
+    });
+}
 $(document).ready(function() {
     $("#confirm-order").click(
         function(){
@@ -274,10 +192,10 @@ $(document).ready(function() {
 });
 
 function acceptOrder() {
-    var name = $('#name').val();
+    var name 	= $('#name').val();
     var surname = $('#surname').val();
-    var mobile = $('#mobile').val();
-    var email = $('#email').val();
+    var mobile 	= $('#mobile').val();
+    var email 	= $('#email').val();
 
     $(".error").remove();
 
@@ -350,14 +268,14 @@ function acceptOrder() {
     });
 }
 
-$(document).ready(function(){
+$(document).ready(function() {
     $('input[type="radio"][id="delivery-button"]').on('change', function () {
         document.getElementById("delivery-block").style.display = "block";
         document.getElementById("self-delivery-block").style.display = "none";
     });
 });
 
-$(document).ready(function(){
+$(document).ready(function() {
     $('input[type="radio"][id="self-delivery-button"]').on('change', function () {
         document.getElementById("delivery-block").style.display = "none";
         document.getElementById("self-delivery-block").style.display = "block";

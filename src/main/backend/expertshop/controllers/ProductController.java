@@ -32,26 +32,5 @@ public class ProductController {
         model.addAttribute("products", productService.findProducts(Type.valueOf(reqProduct)));
         return "pages/main";
     }
-
-    /*@GetMapping("/info/{productID}")
-    public String showProduct(Model model, @PathVariable String productID)
-    {
-        String url = productRepo.findByProductID(Integer.parseInt(productID)).getType().toString();
-
-        model.addAttribute("url", url);
-        model.addAttribute("order", orderService.getSessionOrder());
-        model.addAttribute("product", productRepo.findByProductID(Integer.parseInt(productID)));
-        return "pages/product";
-    }*/
-
-    /*@GetMapping("/{productID}/info")
-    public String showProduct(Model model, @PathVariable String productID)
-    {
-        String url = productRepo.findByProductID(Integer.parseInt(productID)).getType().toString();
-
-        model.addAttribute("url", url);
-        model.addAttribute("order", orderService.getSessionOrder());
-        model.addAttribute("product", productRepo.findByProductID(Integer.parseInt(productID)));
-        return "pages/product";
-    }*/
 }
+

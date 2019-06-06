@@ -13,7 +13,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "ordered_product")
-public class OrderedProduct implements Serializable {
+public class OrderedProduct implements Serializable {//////////////extend Product
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -36,7 +36,7 @@ public class OrderedProduct implements Serializable {
     @ManyToMany(mappedBy = "orderedProducts")
     private Set<Order> orders;
 
-    public void constructOrderedProduct(Product product, String productID) {
+    public void constructOrderedProduct(Product product, String productID) {/// constructor
         this.setProductID (Integer.parseInt(productID));
         this.setAmount    (1);
         this.setBrand     (product.getBrand());

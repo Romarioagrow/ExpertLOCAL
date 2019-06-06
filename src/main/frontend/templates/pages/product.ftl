@@ -54,7 +54,7 @@
             <div class="col price">
                 <h2><strong>${product.price} ₽</strong></h2>
                 <button type="button" class="btn btn-success waves-effect waves-light">Купить!</button>
-                <button type="button" id="toBucket" class="btn btn-info waves-effect waves-light">В корзину</button>
+                <button type="submit" name="addToOrder" id="addToOrder${product.productID?c}" value="${product.productID?c}" class="btn btn-info waves-effect waves-light">В корзину</button>
             </div>
         </div>
         <hr>
