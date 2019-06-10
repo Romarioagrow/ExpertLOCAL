@@ -25,13 +25,11 @@ public class OrderService {
     private final ProductRepo productRepo;
     private final OrderedProductRepo orderedProductRepo;
 
-    public boolean checkUserOrder(User user)
-    {
+    public boolean checkUserOrder(User user) {
         return orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()) != null;
     }
 
-    private boolean checkSessionOrder() 
-    {
+    private boolean checkSessionOrder() {
         return orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID()) != null;
     }
 
@@ -41,13 +39,13 @@ public class OrderService {
         return (sessionOrder != null && sessionOrder.isAccepted()) ? null : sessionOrder;
     }
 
-    public Order getUserOrder(Long userID) 
-    {
+    ///
+    public Order getUserOrder(Long userID) {
         return orderRepo.findByUserIDAndAcceptedFalse(userID);
     }
 
-    private Order resolveOrder(User user)
-    {
+    ///
+    private Order resolveOrder(User user) {
         return user != null ? getUserOrder(user.getUserID()) : getSessionOrder();
     }
 
@@ -62,7 +60,7 @@ public class OrderService {
         else return new HashSet<>();
     }
 
-    public void addProductToOrder(String productID, User user)
+    public Integer addProductToOrder(String productID, User user)
     {
         Order order;
         Product product = productRepo.findByProductID(Integer.parseInt(productID));///
@@ -104,6 +102,8 @@ public class OrderService {
 
         System.out.println("\n");
         log.info("Product with ID " + productID + " add to order");
+
+        return order.getProductsAmount();
     }
 
     public Order removeProductFromOrder(User user, String id)

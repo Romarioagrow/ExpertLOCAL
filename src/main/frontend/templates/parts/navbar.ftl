@@ -20,7 +20,7 @@
             </div>
             <div>
                 <#if order??>
-                    <a href="/order" class="mt-4 mb-3"><h5 style="color: black !important;">Товаров:  <span class="badge badge-primary">${order.productsAmount}</span></h5></a>
+                    <a id="productAmount-Order" href="/order" class="mt-4 mb-3"><h5 style="color: black !important;">Товаров:  <span class="badge badge-primary">${order.productsAmount}</span></h5></a>
                 <#else>
                     <a href="/order" class="mt-4 mb-3"><h5 style="color: black !important;">Закзаз пуст<span class="badge badge-primary"></span></h5></a>
                 </#if>

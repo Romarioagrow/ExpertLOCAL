@@ -26,16 +26,12 @@ form input:hover {
 .text-muted {
     color: #212529 !important;
 }
-/*.text-muted {
-    color: #fbf4f4 !important;
-}*/
+
 .btn-gplus.dropdown-toggle:focus, .btn-gplus.dropdown-toggle:hover {
     background-color: #e52d00 !important;
 }
 
 .card-footer {
-    padding: .75rem 1.25rem;
-    /*background-color: #e52d00;*/
     background-color: #fff;
     border-top: 1px solid rgba(0,0,0,.125);
     color: #fbf4f4 !important;

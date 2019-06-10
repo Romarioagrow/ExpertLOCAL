@@ -38,9 +38,9 @@ public class ServiceController {
     }
 
     @PostMapping("/order")
-    private void addProductToOrder
+    private Integer addProductToOrder
             (@AuthenticationPrincipal User user, @RequestBody String productID) {
-        orderService.addProductToOrder(productID, user);
+        return orderService.addProductToOrder(productID, user);
     }
     @DeleteMapping("/order")
     private Order removeProductFromOrder
@@ -57,8 +57,7 @@ public class ServiceController {
     private Set<String> confirmOrder
             (@AuthenticationPrincipal User user, @Valid @RequestBody OrderContacts contacts, BindingResult validResult)
     {
-        if (validResult.hasErrors())
-        {
+        if (validResult.hasErrors()) {
             return ControllerService.getValidErrorsSet(validResult);
         }
         else

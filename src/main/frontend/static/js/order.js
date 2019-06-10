@@ -12,14 +12,14 @@ $(document).ready(function(){
 
 function showCardsLayout() {
     console.log('cards');
-    document.getElementById("bucket-products").style.display 	= "flex";
-    document.getElementById("bucket-products-rows").style.display 	    = "none";
+    document.getElementById("bucket-products").style.display      = "flex";
+    document.getElementById("bucket-products-rows").style.display = "none";
 }
 
 function showRowsLayout() {
     console.log('rows');
-    document.getElementById("bucket-products").style.display 	= "none";
-    document.getElementById("bucket-products-rows").style.display 	    = "block";
+    document.getElementById("bucket-products").style.display 	    = "none";
+    document.getElementById("bucket-products-rows").style.display 	= "block";
 }
 
 function addToOrder(e) {
@@ -28,13 +28,6 @@ function addToOrder(e) {
     const productID = $(this).attr("value");
     console.log(productID);
 
-    var buttonID = 'addToOrder'+productID;
-    //var removeButtonID = 'removeToOrder'+productID;
-    //console.log(buttonID);
-
-    document.getElementById(buttonID).disabled = true;
-    //document.getElementById(removeButtonID).style.display = "block";
-
     $.ajax({
         url: 'http://localhost:8080/order',
         type: 'POST',
@@ -42,11 +35,19 @@ function addToOrder(e) {
         data: productID,
         processData: false,
         headers: {'Content-Type': 'application/json'},
-        complete: function(products)
+        complete: function(productsAmount)
         {
+            console.log(productsAmount.responseText);
             console.log("Add product with ID " + productID);
-            //$(this).style.display = "none";
-            /*document.getElementById(buttonID).style.display = "none";*/
+            var buttonID = '#addToOrderDiv'+productID;
+
+            $(buttonID).empty().append(
+                '<a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button>'
+            );
+
+            $("#productAmount-Order").empty().append(
+            '<a id="productAmount-Order" href="/order" class="mt-4 mb-3"><h5 style="color: black !important;">Товаров:  <span class="badge badge-primary">'+productsAmount.responseText+'</span></h5></a>'
+            )
         }
     });
 }
@@ -147,7 +148,10 @@ function removeFromOrder(button) {
                 );
                 $('#order-amount').empty().append(
                     order.totalAmount
-                )
+                );
+                $('#productAmount-Order').empty().append(
+                    '<a id="productAmount-Order" href="/order" class="mt-4 mb-3"><h5 style="color: black !important;">Товаров:  <span class="badge badge-primary">'+order.productsAmount+'</span></h5></a>'
+                );
             }
         }
     });
@@ -266,7 +270,6 @@ function acceptOrder() {
             {
                 $('#orderSuccess').html('<h3>Данные не верны!</h3>'+'');
             }
-
         },
         error: function(response) {
             $('#results').html('Ошибка. Данные не отправлены.');

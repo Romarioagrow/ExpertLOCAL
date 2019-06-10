@@ -28,7 +28,7 @@ public class CategoriesController {
         model.addAttribute("url", "");
         model.addAttribute("order", order(user));
         model.addAttribute("products", productService.findAll());
-        return "pages/hello";
+        return "pages/catalog";
     }
 
     @GetMapping("/categories")
@@ -60,7 +60,7 @@ public class CategoriesController {
         model.addAttribute("url", req_subcategory);
         model.addAttribute("order", order(user));
         model.addAttribute("products", productService.findProducts(SubCategory.valueOf(req_subcategory)));
-        return "pages/main";
+        return "pages/products";
     }
 
     @GetMapping("/order")
