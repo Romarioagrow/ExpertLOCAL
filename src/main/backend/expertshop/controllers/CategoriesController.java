@@ -31,16 +31,6 @@ public class CategoriesController {
         return "pages/catalog";
     }
 
-    @GetMapping("/categories")
-    public String categories(Model model) {
-        return "redirect:/hello";
-    }
-
-    @GetMapping("/subcats")
-    public String subCategories( Model model) {
-        return "redirect:/hello";
-    }
-
     @GetMapping("/categories/{category}")
     public String showByCategories(Model model, @PathVariable String category, @AuthenticationPrincipal User user)
     {
@@ -71,16 +61,29 @@ public class CategoriesController {
         return "pages/order";
     }
 
-
     @GetMapping("/info/{productID}")
-    public String showProduct(Model model, @PathVariable String productID)
+    public String showProduct(Model model, @PathVariable String productID, @AuthenticationPrincipal User user)
     {
-        String url = productRepo.findByProductID(Integer.parseInt(productID)).getType().toString();
+        //String url = getCurrentURL(productID);//productRepo.findByProductID(Integer.parseInt(productID)).getType().toString();
 
-        model.addAttribute("url", url);
-        model.addAttribute("order", orderService.getSessionOrder());
+        model.addAttribute("url", getCurrentURL(productID));
+        model.addAttribute("order", order(user));
         model.addAttribute("product", productRepo.findByProductID(Integer.parseInt(productID)));
         return "pages/product";
+    }
+
+    @GetMapping("/categories")
+    public String categories(Model model) {
+        return "redirect:/hello";
+    }
+
+    @GetMapping("/subcats")
+    public String subCategories( Model model) {
+        return "redirect:/hello";
+    }
+
+    String getCurrentURL(String productID) {
+        return productRepo.findByProductID(Integer.parseInt(productID)).getType().toString();
     }
 
     private Order order(User user) {

@@ -59,15 +59,23 @@
                                     <small class="text-muted">
                                         <strong><i>${product.price}₽</i></strong>
                                     </small>
-
-                                    <#--<#if productIsOrdered??>-->
+                                    <#if orderedProductsID??>
+                                        <#if orderedProductsID?seq_contains('${product.productID?c}')>
+                                            <br><a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
+                                        <#else>
+                                            <div id="addToOrderDiv${product.productID?c}">
+                                                <button type="submit" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID?c}" value="${product.productID?c}">
+                                                    В корзину
+                                                </button>
+                                            </div>
+                                        </#if>
+                                    <#else>
                                         <div id="addToOrderDiv${product.productID?c}">
                                             <button type="submit" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID?c}" value="${product.productID?c}">
                                                 В корзину
                                             </button>
                                         </div>
-                                    <#--</#if>-->
-
+                                    </#if>
                                 </div>
                             </div>
                         </#list>

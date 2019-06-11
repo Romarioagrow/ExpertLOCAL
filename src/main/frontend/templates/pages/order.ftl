@@ -8,10 +8,10 @@
         </div>
         <div class="row" id="ordered-products">
             <div class="col">
-
-                <button type="button" class="btn btn-light" name="cards-layout-inp">Cards</button>
-                <button type="button" class="btn btn-light" name="rows-layout-inp">Rows</button>
-
+                <#if orderedProducts?has_content>
+                    <button type="button" class="btn btn-light" name="cards-layout-inp">Cards</button>
+                    <button type="button" class="btn btn-light" name="rows-layout-inp">Rows</button>
+                </#if>
                 <div class="card-group" id="bucket-products" name="cards-layout">
                     <#if orderedProducts?has_content>
                         <#list orderedProducts as product>
@@ -101,7 +101,7 @@
         <div class="row order-deal" id="order-deal">
             <div class="col mb-3" id="order-details">
                 <section class="mb-4">
-                    <h3 class="h1-responsive font-weight-bold text-center my-4" id="contact-info">Ваши контактные данные</h3>
+                    <h4 class="h4-responsive font-weight-bold text-center my-4" id="contact-info">Ваши контактные данные</h4>
                     <div class="row">
                         <div class="col">
                             <div id="results"></div>
@@ -169,7 +169,7 @@
                                 </form>
                             </#if>
 
-                            <h3 class="h1-responsive font-weight-bold text-center my-4">Способ получения товара</h3>
+                            <h4 class="h4-responsive font-weight-bold text-center my-4">Способ получения товара</h4>
 
                             <ul class="nav md-pills pills-secondary">
                                 <li class="nav-item">
@@ -181,7 +181,7 @@
                             </ul>
                             <div class="tab-content pt-0">
                                 <div class="tab-pane fade in show active" id="panel11" role="tabpanel">
-                                    <br><h3>Заберите ваш заказ со склада по адресу: город Чебаркуль, Ленина 32</h3>
+                                    <br><h5>Заберите ваш заказ со склада по адресу: город Чебаркуль, Ленина 32</h5>
                                 </div>
                                 <div class="tab-pane fade" id="panel12" role="tabpanel">
                                     <br>

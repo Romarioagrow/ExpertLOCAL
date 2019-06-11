@@ -1,4 +1,5 @@
 package expertshop.controllers;
+import expertshop.domain.Order;
 import expertshop.domain.User;
 import expertshop.domain.categories.Type;
 import expertshop.repos.OrderRepo;
@@ -16,17 +17,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Map;
-
-import static expertshop.controllers.ControllerService.getSessionID;
 
 @Log
 @Controller
 @AllArgsConstructor
 @RequestMapping("/products")
 public class ProductController {
-    private final ProductRepo productRepo;
-    private final OrderRepo orderRepo;
     private final OrderService orderService;
     private final ProductService productService;
 
@@ -36,18 +32,15 @@ public class ProductController {
         log.info("Type: " + requiredProduct);
 
         model.addAttribute("url", requiredProduct);
-        model.addAttribute("order", orderService.getSessionOrder());
+        model.addAttribute("order", order(user)/*orderService.getSessionOrder()*/);
         model.addAttribute("products", productService.findProducts(Type.valueOf(requiredProduct)));
 
-        /*if ((user != null && (orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()) != null)) || orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID()) != null)
-        {
-            log.info("Getting ordered ID");
-
-            Map<String, String> orderedProductsID = ControllerService.getOrderedProductsID(user);
-            model.mergeAttributes(orderedProductsID);
-        }*/
-
+        productService.getOrderedID(user, model);
         return "pages/products";
+    }
+
+    Order order(User user) {
+        return user != null ? orderService.getUserOrder(user.getUserID()) : orderService.getSessionOrder();
     }
 }
 

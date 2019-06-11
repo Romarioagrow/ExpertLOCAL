@@ -18,16 +18,24 @@
                     <div class="flex-container display-result" id="display-result" name="display-result"></div>
                 </form>
             </div>
-            <div>
-                <#if order??>
-                    <a id="productAmount-Order" href="/order" class="mt-4 mb-3"><h5 style="color: black !important;">Товаров:  <span class="badge badge-primary">${order.productsAmount}</span></h5></a>
+
+            <div id="productsAmount-Div">
+                <#if order?has_content>
+                    <a id="productAmount-Order" href="/order" class="mt-4 mb-3">
+                        <h5 style="color: black !important;">Товаров:
+                            <span class="badge badge-primary">
+                            ${order.productsAmount}
+                        </span>
+                        </h5>
+                    </a>
                 <#else>
-                    <a href="/order" class="mt-4 mb-3"><h5 style="color: black !important;">Закзаз пуст<span class="badge badge-primary"></span></h5></a>
+                    <a href="/order"><h5 style="color: black !important; margin-top: 1.5rem!important;">Закзаз пуст<span class="badge badge-primary"></span></h5></a>
                 </#if>
             </div>
+
             <#if !isUser>
                 <div class="chip chip-md" style="margin-left: 1rem;margin-top: 1rem;">
-                    <a href="/user/login">Регистрация</a>
+                    <a href="/user/login">Войти</a>
                 </div>
             <#else>
                 <div class="chip chip-md" style="margin-left: 1rem;margin-top: 1rem;">
@@ -44,13 +52,9 @@
         background-color: #e52d00 !important;
     }
     .main-search {
-        /*min-width: 50vw;*/
         width: 50rem !important;
         min-height: 3rem;
         margin-left: 4vw;
-    }
-    .peach-gradient {
-        margin-left: 2vw;
     }
     .search-field {
         padding-top: 1vh;

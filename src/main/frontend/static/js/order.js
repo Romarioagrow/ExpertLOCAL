@@ -45,8 +45,10 @@ function addToOrder(e) {
                 '<a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button>'
             );
 
-            $("#productAmount-Order").empty().append(
-            '<a id="productAmount-Order" href="/order" class="mt-4 mb-3"><h5 style="color: black !important;">Товаров:  <span class="badge badge-primary">'+productsAmount.responseText+'</span></h5></a>'
+            //document.getElementById("productAmount-Order").style.display = "block";
+
+            $("#productsAmount-Div/*productsAmount-Div*/").empty().append(
+            '<a id="productAmount-Order" href="/order"><h5 style="color: black !important; margin-top: 1.5rem!important;">Товаров:  <span class="badge badge-primary">'+productsAmount.responseText+'</span></h5></a>'
             )
         }
     });
