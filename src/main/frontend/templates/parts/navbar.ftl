@@ -18,7 +18,6 @@
                     <div class="flex-container display-result" id="display-result" name="display-result"></div>
                 </form>
             </div>
-
             <div id="productsAmount-Div">
                 <#if order?has_content>
                     <a id="productAmount-Order" href="/order" class="mt-4 mb-3">
@@ -32,7 +31,6 @@
                     <a href="/order"><h5 style="color: black !important; margin-top: 1.5rem!important;">Закзаз пуст<span class="badge badge-primary"></span></h5></a>
                 </#if>
             </div>
-
             <#if !isUser>
                 <div class="chip chip-md" style="margin-left: 1rem;margin-top: 1rem;">
                     <a href="/user/login">Войти</a>
@@ -45,8 +43,6 @@
         </ul>
     </div>
 </nav>
-
-
 <style>
     .badge-primary {
         background-color: #e52d00 !important;

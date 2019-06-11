@@ -1,7 +1,11 @@
 package expertshop.services;
 
+import expertshop.domain.Order;
+import expertshop.domain.OrderedProduct;
 import expertshop.domain.Product;
+import expertshop.domain.User;
 import expertshop.domain.categories.Type;
+import expertshop.repos.OrderRepo;
 import expertshop.repos.ProductRepo;
 
 import lombok.AllArgsConstructor;
@@ -11,19 +15,21 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static expertshop.controllers.ControllerService.getSessionID;
+
 @Log
 @Service
 @AllArgsConstructor
 public class FilterService {
     private final ProductRepo productRepo;
+    private final OrderRepo orderRepo;
 
-    public List<Product> filterProducts(Map<String, Object> params, String req_type) {
+    public /*List<Product>*/Queue<Object> filterProducts(Map<String, Object> params, String req_type, User user)
+    {
         showReceivedParams(params);
-        return filter(params, productRepo.findByType(Type.valueOf(req_type))); ///
-    }
 
-    private List<Product> filter(Map<String, Object> params, List<Product> products)
-    {   ///
+        List<Product> products = productRepo.findByType(Type.valueOf(req_type));
+
         for (Map.Entry<String, Object> paramObject : params.entrySet())
         {
             Map<String, Object> inner = (Map<String, Object>) paramObject.getValue();
@@ -58,8 +64,49 @@ public class FilterService {
         sortProducts(products, params);
         log.info("After filter: " + products.size());
 
-        return products;
+        return packageProductsAndOrderedID(products, user/*, orderedProduct*/);
+        //return filter(params, productRepo.findByType(Type.valueOf(req_type)), user); ///
     }
+
+    /*private *//*List<Product>*//*Queue<Object> filter(Map<String, Object> params, List<Product> products, User user)
+    {   ///
+        *//*for (Map.Entry<String, Object> paramObject : params.entrySet())
+        {
+            Map<String, Object> inner = (Map<String, Object>) paramObject.getValue();
+            for (Map.Entry<String, Object> filter : inner.entrySet())
+            {
+                switch (filter.getKey()) {
+                    case "sortmin"      -> products = products.stream().filter(product -> product.getPrice() >= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
+                    case "sortmax"      -> products = products.stream().filter(product -> product.getPrice() <= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
+                    case "brand"        -> {
+                        String brands = filter.getValue().toString();
+                        products = products.stream().filter(product -> brands.contains(product.getBrand())).collect(Collectors.toList());
+                    }
+                    case "country"      -> {
+                        String countries = filter.getValue().toString();
+                        products = products.stream().filter(product -> countries.contains(product.getCountry())).collect(Collectors.toList());
+                    }
+                    case "diag_min"     -> products = products.stream().filter(product -> Integer.parseInt(product.getDiagonal()) >= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
+                    case "diag_max"     -> products = products.stream().filter(product -> Integer.parseInt(product.getDiagonal()) <= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
+                    case "tv_resolution" -> {
+                        String resolution = filter.getValue().toString();
+                        products = products.stream().filter(product -> resolution.contains(product.getResolution())).collect(Collectors.toList());
+                    }
+                    case "tv_params" -> {
+                        List<Object> tv_params = new ArrayList<>((Collection<?>) filter.getValue());
+                        for (Object tv_param : tv_params) {
+                            products = products.stream().filter(product -> product.getTvFeatures().contains(tv_param.toString())).collect(Collectors.toList());
+                        }
+                    }
+                }
+            }
+        }
+        sortProducts(products, params);
+        log.info("After filter: " + products.size());
+
+        return packageProductsAndOrderedID(products, user*//**//*, orderedProduct*//**//*);*//*
+        //return products;
+    }*/
 
     private void sortProducts(List<Product> products, Map<String, Object> params)
     {
@@ -69,6 +116,38 @@ public class FilterService {
             case "highest"  -> products.sort(Comparator.comparingLong(Product::getPrice).reversed());
             case "alphabet" -> products.sort(Comparator.comparing(Product::getBrand));
         }
+    }
+
+    private Queue<Object> packageProductsAndOrderedID(List<Product> products, User user) {
+        Queue<Object> productsAndOrder = new LinkedList<>();
+        productsAndOrder.add(products);
+        productsAndOrder.add(getOrderedID(user));
+        return productsAndOrder;
+    }
+
+    public Set<String> getOrderedID(User user)
+    {
+        if (user != null && orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()) != null)
+        {
+            Order order = orderRepo.findByUserIDAndAcceptedFalse(user.getUserID());
+            return collectID(order);
+        }
+        else if (orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID()) != null)
+        {
+            Order order = orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID());
+            return collectID(order);
+        }
+        else return new HashSet<>();//log.info("order empty");
+    }
+
+    Set<String> collectID(Order order) {
+        Set<String> orderedProductsID = new HashSet<>();
+
+        for (OrderedProduct product : order.getOrderedProducts())
+            orderedProductsID.add(product.getProductID().toString());
+
+        return orderedProductsID;
+        //model.addAttribute("orderedProductsID", orderedProductsID);
     }
 
     private Object extractParamValue(Map<String, Object> params, String primaryParam, String innerParam) {

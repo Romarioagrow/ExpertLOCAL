@@ -26,9 +26,9 @@ public class ServiceController {
     private final OrderService orderService;
 
     @PostMapping("/products/{reqType}")
-    public List<Product> filterProducts
-            (@RequestBody Map<String, Object> params, @PathVariable String reqType) {
-        return filterService.filterProducts(params, reqType);
+    public /*List<Product>*/Queue<Object> filterProducts
+            (@RequestBody Map<String, Object> params, @PathVariable String reqType, @AuthenticationPrincipal User user) {
+        return filterService.filterProducts(params, reqType, user);
     }
 
     @PostMapping("/search")

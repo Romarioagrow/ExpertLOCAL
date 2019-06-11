@@ -32,45 +32,59 @@ function collectFilters(e) {
         data: filters,
         processData: false,
         headers: {'Content-Type': 'application/json'},
-        complete: function(products)
+        complete: function(productsAndOrderedID)
         {
-            const response = JSON.parse(JSON.stringify(products));
+            const response  = JSON.parse(JSON.stringify(productsAndOrderedID));
+            console.log(response);
+
+            const products  = response.responseJSON[0];
+            const orderedID = response.responseJSON[1];
 
             $("#products").empty();
-            console.log('Received products: ' + response.responseJSON.length);
 
-            for (var item in response.responseJSON)
+            for (var item in products)
             {
-                let product = response.responseJSON[item];
-                let display = resolveDisplayType(product);
+                let product = products[item];
+                let displayParams = resolveDisplayType(product);
+                let orderButton = resolveOrderButton(product, orderedID);
 
-                $("#products").append
-                (
-                    '<div class="card product-card mr-3 mt-3">'                                 +
-                        '<img class="card-img-top" src='+product.pic+' alt="Card image cap">'   +
-                        '<div class="card-body">'                                               +
-                            '<h5 class="card-title">'                                           +
-                                '\n' + product.brand                                            +
-                                '\n' + product.model                                            +
-                            '</h5>'                                                             +
-                            '<p class="card-text">'                                             +
-                                '<small>'                                                       +
-                                    display                                                     +
-                                '</small>'                                                      +
-                            '</p>'                                                              +
-                        '</div>'                                                                +
-                        '<div class="card-footer">'                                             +
-                            '<small class="text-muted">'                                        +
-                                '<a class="btn btn-info btn-blue-grey" style="margin-left:-1vw;" role="button" href="/info/'+product.productID.toString()+'">О товаре</a>' +
-                                '<strong><i>'+product.price +'₽</i></strong>'                                             +
-                                '<button type="submit" class="btn btn-success btn-mdb-color" name="addToOrder" id="addToOrder" value="'+product.productID.toString()+'" style="margin-right: -1vw;">В корзину</button>'   +
-                            '</small>'                                                                                      +
-                        '</div>'                                                                                            +
-                    '</div>'
-                );
+                var productCard = constructProductCard(product, displayParams, orderButton);
+
+                $("#products").append(productCard);
             }
         }
     });
+}
+
+function constructProductCard(product, displayParams, orderButton) {
+    return '<div class="card product-card mr-3 mt-3">' +
+        '<img class="card-img-top" src="' + product.pic + '" alt="Card image cap">' +
+        '<div class="card-body" style="margin-bottom: 0 !important;">' +
+        '<h5 class="card-title">' +
+        '<a class="btn btn-outline-mdb-color btn-rounded waves-effect" href="/info/' + product.productID.toString() + '" role="button" >' +
+        '<strong>' + product.brand + product.model + '</strong>' +
+        '</a>' +
+        '</h5>' +
+        '<p class="card-text"><small>' + displayParams + '</small></p>' +
+        '</div>' +
+        '<div class="card-footer">' +
+        '<small class="text-muted">' +
+        '<strong><i>' + product.price + '₽</i></strong>' +
+        '</small>' +
+        orderButton +
+        '</div>' +
+        '</div>';
+}
+
+function resolveOrderButton(product, productsID) {
+    if (productsID.includes(product.productID.toString())) {
+        return '<br><a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>';
+    }
+    else return '<div id="addToOrderDiv${product.productID?c}">'+
+        '<button type="submit" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID?c}" value="${product.productID?c}">'+
+        'В корзину'+
+        '</button>'+
+        '</div>';
 }
 
 function constructFiltersData(url) {

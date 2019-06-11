@@ -45,8 +45,6 @@ function addToOrder(e) {
                 '<a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button>'
             );
 
-            //document.getElementById("productAmount-Order").style.display = "block";
-
             $("#productsAmount-Div/*productsAmount-Div*/").empty().append(
             '<a id="productAmount-Order" href="/order"><h5 style="color: black !important; margin-top: 1.5rem!important;">Товаров:  <span class="badge badge-primary">'+productsAmount.responseText+'</span></h5></a>'
             )

@@ -32,7 +32,7 @@ public class ProductController {
         log.info("Type: " + requiredProduct);
 
         model.addAttribute("url", requiredProduct);
-        model.addAttribute("order", order(user)/*orderService.getSessionOrder()*/);
+        model.addAttribute("order", order(user));
         model.addAttribute("products", productService.findProducts(Type.valueOf(requiredProduct)));
 
         productService.getOrderedID(user, model);

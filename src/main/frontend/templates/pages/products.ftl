@@ -39,36 +39,30 @@
                     <#if products??>
                         <#list products as product>
                             <div class="card product-card mr-3 mt-3">
-                                <#if product.productParams.pic??><img class="card-img-top" src="${product.pic}" alt="Card image cap"></#if>
-                                <div class="card-body">
-                                    <h5 class="card-title">
-                                        <a class="btn btn-outline-mdb-color btn-rounded waves-effect" href="/info/${product.productID?c}" role="button" >
-                                            <strong>
-                                                ${product.brand}
-                                                ${product.model}
-                                            </strong>
-                                        </a>
-                                    </h5>
-                                    <p class="card-text">
-                                        <small>
-                                            <#include "../parts/params.ftl">
-                                        </small>
-                                    </p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">
-                                        <strong><i>${product.price}₽</i></strong>
+                            <#if product.productParams.pic??><img class="card-img-top" src="${product.pic}" alt="Card image cap"></#if>
+                            <div class="card-body" style="margin-bottom: 0 !important;">
+                                <h5 class="card-title">
+                                    <a class="btn btn-outline-mdb-color btn-rounded waves-effect" href="/info/${product.productID?c}" role="button" >
+                                        <strong>
+                                            ${product.brand}
+                                            ${product.model}
+                                        </strong>
+                                    </a>
+                                </h5>
+                                <p class="card-text">
+                                    <small>
+                                        <#include "../parts/params.ftl">
                                     </small>
-                                    <#if orderedProductsID??>
-                                        <#if orderedProductsID?seq_contains('${product.productID?c}')>
-                                            <br><a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
-                                        <#else>
-                                            <div id="addToOrderDiv${product.productID?c}">
-                                                <button type="submit" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID?c}" value="${product.productID?c}">
-                                                    В корзину
-                                                </button>
-                                            </div>
-                                        </#if>
+                                </p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">
+                                    <strong><i>${product.price}₽</i></strong>
+                                </small>
+
+                                <#if orderedProductsID??>
+                                    <#if orderedProductsID?seq_contains('${product.productID?c}')>
+                                        <br><a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
                                     <#else>
                                         <div id="addToOrderDiv${product.productID?c}">
                                             <button type="submit" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID?c}" value="${product.productID?c}">
@@ -76,8 +70,16 @@
                                             </button>
                                         </div>
                                     </#if>
-                                </div>
+                                <#else>
+                                    <div id="addToOrderDiv${product.productID?c}">
+                                        <button type="submit" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID?c}" value="${product.productID?c}">
+                                            В корзину
+                                        </button>
+                                    </div>
+                                </#if>
+
                             </div>
+                        </div>
                         </#list>
                     </#if>
                 </div>
