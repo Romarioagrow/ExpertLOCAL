@@ -30,7 +30,6 @@ function addToOrder(button) {
         headers: {'Content-Type': 'application/json'},
         complete: function(productsAmount)
         {
-            //console.log(productsAmount.responseText);
             console.log("Add product with ID " + productID);
             var buttonID = '#addToOrderDiv'+productID;
 

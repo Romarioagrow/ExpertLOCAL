@@ -67,6 +67,8 @@ public class CategoriesController {
         model.addAttribute("url", getCurrentURL(productID));
         model.addAttribute("order", order(user));
         model.addAttribute("product", productRepo.findByProductID(Integer.parseInt(productID)));
+
+        productService.getOrderedID(user, model);
         return "pages/product";
     }
 

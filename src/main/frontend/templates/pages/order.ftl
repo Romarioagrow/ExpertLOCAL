@@ -26,8 +26,7 @@
                                 </div>
                                 <div class="card-body">
                                     <h4 class="card-title">
-                                        ${product.brand}
-                                        ${product.model}
+                                        <a href="http://localhost:8080/info/${product.productID?c}">${product.brand} ${product.model}</a>
                                         <div class="mt-3">${product.type}, <strong><i id="total-price${product.id?c}">${product.totalPrice}₽</i></strong></div>
                                     </h4>
                                     <p class="card-text" id="cart-text-buttons" name="cart-text-buttons">

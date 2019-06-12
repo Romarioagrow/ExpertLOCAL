@@ -54,7 +54,23 @@
             <div class="col price">
                 <h2><strong>${product.price} ₽</strong></h2>
                 <button type="button" class="btn btn-success waves-effect waves-light">Купить!</button>
-                <button type="submit" name="addToOrder" id="addToOrder${product.productID?c}" value="${product.productID?c}" class="btn btn-info waves-effect waves-light">В корзину</button>
+                <#if orderedProductsID??>
+                    <#if orderedProductsID?seq_contains('${product.productID?c}')>
+                        <br><a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
+                    <#else>
+                        <div id="addToOrderDiv${product.productID?c}">
+                            <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID?c}" value="${product.productID?c}">
+                                В корзину
+                            </button>
+                        </div>
+                    </#if>
+                <#else>
+                    <div id="addToOrderDiv${product.productID?c}">
+                        <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID?c}" value="${product.productID?c}">
+                            В корзину
+                        </button>
+                    </div>
+                </#if>
             </div>
         </div>
         <hr>
