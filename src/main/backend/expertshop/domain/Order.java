@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -44,18 +43,10 @@ public class Order implements Serializable {
     private Integer productsAmount  = 0;
     private Integer totalAmount     = 0;
 
-    //@NotBlank(message = "Имя is mandatory")
     private String name;
-
-    //@NotBlank(message = "Фамилия is mandatory")
     private String surname;
-
-    //@NotBlank(message = "Телефон is mandatory")
     private String mobile;
-
-    //@NotBlank(message = "Email is mandatory")
     private String email;
-
     private String address;
 
     @Column(name = "open_date")

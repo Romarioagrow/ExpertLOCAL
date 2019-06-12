@@ -1,14 +1,9 @@
 $(document).ready(function(){
-    $('button[type="submit"][name="addToOrder"]').on('click', addToOrder);
-});
-
-$(document).ready(function(){
     $('button[name="cards-layout-inp"]').on('click', showCardsLayout);
 });
 $(document).ready(function(){
     $('button[name="rows-layout-inp"]').on('click', showRowsLayout);
 });
-
 
 function showCardsLayout() {
     console.log('cards');
@@ -22,10 +17,8 @@ function showRowsLayout() {
     document.getElementById("bucket-products-rows").style.display 	= "block";
 }
 
-function addToOrder(e) {
-    e.preventDefault();
-
-    const productID = $(this).attr("value");
+function addToOrder(button) {
+    const productID = button.value;
     console.log(productID);
 
     $.ajax({
@@ -37,7 +30,7 @@ function addToOrder(e) {
         headers: {'Content-Type': 'application/json'},
         complete: function(productsAmount)
         {
-            console.log(productsAmount.responseText);
+            //console.log(productsAmount.responseText);
             console.log("Add product with ID " + productID);
             var buttonID = '#addToOrderDiv'+productID;
 
@@ -45,7 +38,7 @@ function addToOrder(e) {
                 '<a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button>'
             );
 
-            $("#productsAmount-Div/*productsAmount-Div*/").empty().append(
+            $("#productsAmount-Div").empty().append(
             '<a id="productAmount-Order" href="/order"><h5 style="color: black !important; margin-top: 1.5rem!important;">Товаров:  <span class="badge badge-primary">'+productsAmount.responseText+'</span></h5></a>'
             )
         }
@@ -139,19 +132,30 @@ function removeFromOrder(button) {
                     '<button type="submit" onclick="removeFromOrder(this)" name="remove-product" class="btn btn-danger btn-md"  id="remove-product" value="'+product.id+'">Удалить</button>' +
                     '</div>'
                 );
+            }
+            
+            $('#order-price').empty().append(
+                (order.totalPrice).toLocaleString('ru')+'₽'
+            );
+            $('#order-products').empty().append(
+                order.productsAmount
+            );
+            $('#order-amount').empty().append(
+                order.totalAmount
+            );
+            $('#productAmount-Order').empty().append(
+                '<a id="productAmount-Order" href="/order" class="mt-4 mb-3"><h5 style="color: black !important;">Товаров:  <span class="badge badge-primary">'+order.productsAmount+'</span></h5></a>'
+            );
+            
+            if (order.productsAmount === 0)
+            {
+                document.getElementById("order-deal-form").style.display   = "none";
+                document.getElementById("order-layout").style.display   = "none";
 
-                $('#order-price').empty().append(
-                    (order.totalPrice).toLocaleString('ru')+'₽'
-                );
-                $('#order-products').empty().append(
-                    order.productsAmount
-                );
-                $('#order-amount').empty().append(
-                    order.totalAmount
-                );
-                $('#productAmount-Order').empty().append(
-                    '<a id="productAmount-Order" href="/order" class="mt-4 mb-3"><h5 style="color: black !important;">Товаров:  <span class="badge badge-primary">'+order.productsAmount+'</span></h5></a>'
-                );
+                $('#bucket-products').empty().append(
+                '<h3 style="margin-top: 4vh">Товаров пока нет </h3>'+
+                '<a type="button" href="/" class="btn blue-gradient btn-lg btn-block">Вернуться за покупками</a>'
+                )
             }
         }
     });

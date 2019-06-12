@@ -60,8 +60,7 @@ public class ServiceController {
         if (validResult.hasErrors()) {
             return ControllerService.getValidErrorsSet(validResult);
         }
-        else
-        {
+        else {
             orderService.confirmOrder(contacts, user);
             return null;
         }

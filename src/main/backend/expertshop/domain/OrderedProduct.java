@@ -42,7 +42,7 @@ public class OrderedProduct implements Serializable {//////////////extend Produc
         this.setBrand     (product.getBrand());
         this.setModel     (product.getModel());
         this.setType      (product.getProductParams().getType());
-        this.setPic       (product.getProductParams().getPic());
+        this.setPic       (product.getPic());
         this.setPrice     (product.getPrice());
         this.setTotalPrice(product.getPrice());
     }

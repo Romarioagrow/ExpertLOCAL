@@ -64,8 +64,6 @@ public class CategoriesController {
     @GetMapping("/info/{productID}")
     public String showProduct(Model model, @PathVariable String productID, @AuthenticationPrincipal User user)
     {
-        //String url = getCurrentURL(productID);//productRepo.findByProductID(Integer.parseInt(productID)).getType().toString();
-
         model.addAttribute("url", getCurrentURL(productID));
         model.addAttribute("order", order(user));
         model.addAttribute("product", productRepo.findByProductID(Integer.parseInt(productID)));

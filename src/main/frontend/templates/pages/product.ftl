@@ -16,17 +16,17 @@
         </div>
         <div class="row">
             <div class="col-7">
-                <#if product.productParams.pic??>
+                <#if product.pic??>
                     <div id="carousel-thumb" class="carousel slide carousel-fade carousel-thumbnails" data-ride="carousel">
                         <div class="carousel-inner" role="listbox">
                             <div class="carousel-item active">
-                                <img class="d-block w-100" src="${product.productParams.pic}" alt="First slide">
+                                <img class="d-block w-100" src="${product.pic}" alt="First slide">
                             </div>
                             <div class="carousel-item">
-                                <img class="d-block w-100" src="${product.productParams.pic}" alt="Second slide">
+                                <img class="d-block w-100" src="${product.pic}" alt="Second slide">
                             </div>
                             <div class="carousel-item">
-                                <img class="d-block w-100" src="${product.productParams.pic}" alt="Third slide">
+                                <img class="d-block w-100" src="${product.pic}" alt="Third slide">
                             </div>
                             <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -39,13 +39,13 @@
                         </a>
                         <ol class="carousel-indicators">
                             <li data-target="#carousel-thumb" data-slide-to="0" class="active">
-                                <img class="d-block w-100" src="${product.productParams.pic}">
+                                <img class="d-block w-100" src="${product.pic}">
                             </li>
                             <li data-target="#carousel-thumb" data-slide-to="1">
-                                <img class="d-block w-100" src="${product.productParams.pic}">
+                                <img class="d-block w-100" src="${product.pic}">
                             </li>
                             <li data-target="#carousel-thumb" data-slide-to="2">
-                                <img class="d-block w-100" src="${product.productParams.pic}">
+                                <img class="d-block w-100" src="${product.pic}">
                             </li>
                         </ol>
                     </div>

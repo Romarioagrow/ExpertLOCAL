@@ -20,8 +20,6 @@ import java.util.*;
 @Service
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
-    /*private final UserRepo userRepo;
-    private final PasswordEncoder passwordEncoder;*/
     @Autowired
     private UserRepo userRepo;
 

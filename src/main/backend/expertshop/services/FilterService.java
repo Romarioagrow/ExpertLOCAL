@@ -24,7 +24,7 @@ public class FilterService {
     private final ProductRepo productRepo;
     private final OrderRepo orderRepo;
 
-    public /*List<Product>*/Queue<Object> filterProducts(Map<String, Object> params, String req_type, User user)
+    public Queue<Object> filterProducts(Map<String, Object> params, String req_type, User user)
     {
         showReceivedParams(params);
 
@@ -64,49 +64,8 @@ public class FilterService {
         sortProducts(products, params);
         log.info("After filter: " + products.size());
 
-        return packageProductsAndOrderedID(products, user/*, orderedProduct*/);
-        //return filter(params, productRepo.findByType(Type.valueOf(req_type)), user); ///
+        return packageProductsAndOrderedID(products, user);
     }
-
-    /*private *//*List<Product>*//*Queue<Object> filter(Map<String, Object> params, List<Product> products, User user)
-    {   ///
-        *//*for (Map.Entry<String, Object> paramObject : params.entrySet())
-        {
-            Map<String, Object> inner = (Map<String, Object>) paramObject.getValue();
-            for (Map.Entry<String, Object> filter : inner.entrySet())
-            {
-                switch (filter.getKey()) {
-                    case "sortmin"      -> products = products.stream().filter(product -> product.getPrice() >= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
-                    case "sortmax"      -> products = products.stream().filter(product -> product.getPrice() <= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
-                    case "brand"        -> {
-                        String brands = filter.getValue().toString();
-                        products = products.stream().filter(product -> brands.contains(product.getBrand())).collect(Collectors.toList());
-                    }
-                    case "country"      -> {
-                        String countries = filter.getValue().toString();
-                        products = products.stream().filter(product -> countries.contains(product.getCountry())).collect(Collectors.toList());
-                    }
-                    case "diag_min"     -> products = products.stream().filter(product -> Integer.parseInt(product.getDiagonal()) >= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
-                    case "diag_max"     -> products = products.stream().filter(product -> Integer.parseInt(product.getDiagonal()) <= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
-                    case "tv_resolution" -> {
-                        String resolution = filter.getValue().toString();
-                        products = products.stream().filter(product -> resolution.contains(product.getResolution())).collect(Collectors.toList());
-                    }
-                    case "tv_params" -> {
-                        List<Object> tv_params = new ArrayList<>((Collection<?>) filter.getValue());
-                        for (Object tv_param : tv_params) {
-                            products = products.stream().filter(product -> product.getTvFeatures().contains(tv_param.toString())).collect(Collectors.toList());
-                        }
-                    }
-                }
-            }
-        }
-        sortProducts(products, params);
-        log.info("After filter: " + products.size());
-
-        return packageProductsAndOrderedID(products, user*//**//*, orderedProduct*//**//*);*//*
-        //return products;
-    }*/
 
     private void sortProducts(List<Product> products, Map<String, Object> params)
     {
@@ -137,7 +96,7 @@ public class FilterService {
             Order order = orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID());
             return collectID(order);
         }
-        else return new HashSet<>();//log.info("order empty");
+        else return new HashSet<>();
     }
 
     Set<String> collectID(Order order) {
@@ -147,7 +106,6 @@ public class FilterService {
             orderedProductsID.add(product.getProductID().toString());
 
         return orderedProductsID;
-        //model.addAttribute("orderedProductsID", orderedProductsID);
     }
 
     private Object extractParamValue(Map<String, Object> params, String primaryParam, String innerParam) {

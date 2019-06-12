@@ -9,8 +9,10 @@
         <div class="row" id="ordered-products">
             <div class="col">
                 <#if orderedProducts?has_content>
-                    <button type="button" class="btn btn-light" name="cards-layout-inp">Cards</button>
-                    <button type="button" class="btn btn-light" name="rows-layout-inp">Rows</button>
+                    <div id="order-layout">
+                        <button type="button" class="btn btn-light" name="cards-layout-inp">Cards</button>
+                        <button type="button" class="btn btn-light" name="rows-layout-inp">Rows</button>
+                    </div>
                 </#if>
                 <div class="card-group" id="bucket-products" name="cards-layout">
                     <#if orderedProducts?has_content>
@@ -42,7 +44,6 @@
                         <a type="button" href="/" class="btn blue-gradient btn-lg btn-block">Вернуться за покупками</a>
                     </#if>
                 </div>
-
                 <ul class="list-group" id="bucket-products-rows" name="rows-layout" style="display: none">
                     <#if orderedProducts??>
                         <#list orderedProducts as product>
@@ -64,21 +65,22 @@
                         <a type="button" href="/" class="btn blue-gradient btn-lg btn-block">Вернуться за покупками</a>
                     </#if>
                 </ul>
-
             </div>
         </div>
         <#if order??>
-            <div class="row">
-                <div class="col">
-                    <h3 class="mt-2" style="margin-bottom: 3vh">
-                        Заказ на сумму <strong id="order-price">${order.totalPrice}₽</strong>
-                        Товаров <b id="order-products">${order.productsAmount}</b>
-                        Всего единиц <b id="order-amount">${order.totalAmount}</b>
-                    </h3>
-                    <button onclick="displayOrderDeal()" id="order-button" type="button" class="btn btn-success btn-lg btn-block" style="margin-bottom: 5vh">Заказ подтверждаю!</button>
-                    <button onclick="editOrder()" id="edit-order" value="${order.orderID}" class="btn btn-indigo btn-lg btn-block mt-2" style="display: none">Изменить заказ!</button>
+            <#if order.totalAmount != 0>
+                <div class="row">
+                    <div class="col" id="order-deal-form">
+                        <h3 class="mt-2" style="margin-bottom: 3vh">
+                            Заказ на сумму <strong id="order-price">${order.totalPrice}₽</strong>
+                            Товаров <b id="order-products">${order.productsAmount}</b>
+                            Всего единиц <b id="order-amount">${order.totalAmount}</b>
+                        </h3>
+                        <button onclick="displayOrderDeal()" id="order-button" type="button" class="btn btn-success btn-lg btn-block" style="margin-bottom: 5vh">Заказ подтверждаю!</button>
+                        <button onclick="editOrder()" id="edit-order" value="${order.orderID}" class="btn btn-indigo btn-lg btn-block mt-2" style="display: none">Изменить заказ!</button>
+                    </div>
                 </div>
-            </div>
+            </#if>
         </#if>
 
         <div class="row">

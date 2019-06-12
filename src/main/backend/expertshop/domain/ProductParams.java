@@ -1,12 +1,12 @@
 package expertshop.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import expertshop.domain.categories.SubCategory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
 import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -31,7 +31,7 @@ public class ProductParams implements Serializable {
     @Column(name = "type_category")
     private String typeCategory;
 
-    private String pic;
+    //private String pic;
 
     private Integer amount;
 
