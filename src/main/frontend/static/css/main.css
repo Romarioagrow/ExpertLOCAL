@@ -1,5 +1,7 @@
 body {
+    /*background-color: #fff;*/
     background-color: #fbf4f4;
+    color: #222222;
 }
 
 form input:hover {
@@ -19,8 +21,8 @@ form input:hover {
     justify-content: center;
 }
 .product-card {
-    min-width: 20vw;
-    max-width: 20vw;
+    min-width: 15vw;
+    max-width: 15vw;
     text-align: center;
 }
 .text-muted {

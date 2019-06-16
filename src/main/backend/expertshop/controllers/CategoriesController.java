@@ -14,6 +14,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Log
 @Controller
@@ -23,11 +26,23 @@ public class CategoriesController {
     private final OrderService orderService;
     private final ProductRepo productRepo;
 
+    @GetMapping("/supplier")
+    public String supplier(Model model, @AuthenticationPrincipal User user) {
+        return "pages/supplier";
+    }
+    @PostMapping("/supplier")
+    public String loadCSV (@RequestParam("file") MultipartFile file, Model model, @AuthenticationPrincipal User user) throws IOException {
+        log.info(file.getOriginalFilename());
+
+        productService.processFile(file);
+        return "pages/supplier";
+    }
+
     @GetMapping("/")
     public String showAll(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("url", "");
         model.addAttribute("order", order(user));
-        model.addAttribute("products", productService.findAll());
+        //model.addAttribute("products", productService.findAll());
         return "pages/catalog";
     }
 
@@ -38,7 +53,7 @@ public class CategoriesController {
 
         model.addAttribute("url", category);
         model.addAttribute("order", order(user));
-        model.addAttribute("products", productService.findProducts(Category.valueOf(category)));
+        /*model.addAttribute("products", productService.findProducts(Category.valueOf(category)));*/
         return "pages/categories";
     }
 
@@ -49,7 +64,7 @@ public class CategoriesController {
 
         model.addAttribute("url", req_subcategory);
         model.addAttribute("order", order(user));
-        model.addAttribute("products", productService.findProducts(SubCategory.valueOf(req_subcategory)));
+        /*model.addAttribute("products", productService.findProducts(SubCategory.valueOf(req_subcategory)));*/
         return "pages/products";
     }
 
@@ -66,7 +81,7 @@ public class CategoriesController {
     {
         model.addAttribute("url", getCurrentURL(productID));
         model.addAttribute("order", order(user));
-        model.addAttribute("product", productRepo.findByProductID(Integer.parseInt(productID)));
+        /*model.addAttribute("product", productRepo.findByProductID(Integer.parseInt(productID)));*/
 
         productService.getOrderedID(user, model);
         return "pages/product";
@@ -83,7 +98,7 @@ public class CategoriesController {
     }
 
     String getCurrentURL(String productID) {
-        return productRepo.findByProductID(Integer.parseInt(productID)).getType().toString();
+        return productRepo.findByProductID(productID).getType().toString();
     }
 
     private Order order(User user) {

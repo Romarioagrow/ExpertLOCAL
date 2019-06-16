@@ -19,16 +19,16 @@
                     <div class="product-type-list marker2">
                         <ul class="products-list">
                             <li class="list-head"><a href="/subcats/multimedia"><strong>Мультимедийные системы</strong></a></li>
-                            <li><a href="/music_centers">Музыкальные центры</a></li>
-                            <li><a href="/home_cinema">Домашние кинотеатры</a></li>
-                            <li><a href="/projectors">Проекторы</a></li>
+                            <li><a href="/products/music_centers">Музыкальные центры</a></li>
+                            <li><a href="/products/home_cinema">Домашние кинотеатры</a></li>
+                            <li><a href="/products/projectors">Проекторы</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
                             <li class="list-head"><a href="/subcats/sputnik"><strong>Спутниковая техника</strong></a></li>
-                            <li><a href="/sputnik_receivers">Ресиверы</a></li>
-                            <li><a href="/antennas">Антенны</a></li>
+                            <li><a href="/products/sputnik_receivers">Ресиверы</a></li>
+                            <li><a href="/products/antennas">Антенны</a></li>
                         </ul>
                     </div>
                 </div>
@@ -39,40 +39,40 @@
                     <div class="product-type-list marker2">
                         <ul class="products-list">
                             <li class="list-head"><a href="/subcats/kitchen_big"><strong>Крупная техника</strong></a></li>
-                            <li><a href="/fridges">Холодильники</a></li>
-                            <li><a href="/freezers">Морозильники</a></li>
-                            <li><a href="/stoves">Плиты</a></li>
-                            <li><a href="/ovens">Духовки</a></li>
-                            <li><a href="/dishwashers">Посудомоечные машины</a></li>
+                            <li><a href="/products/fridges">Холодильники</a></li>
+                            <li><a href="/products/freezers">Морозильники</a></li>
+                            <li><a href="/products/stoves">Плиты</a></li>
+                            <li><a href="/products/ovens">Духовки</a></li>
+                            <li><a href="/products/dishwashers">Посудомоечные машины</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
                             <li class="list-head"><a href="/subcats/kitchen_builtin"><strong>Встраиваемая техника</strong></a></li>
-                            <li><a href="/builtin_ovens">Встраиваемые духовки</a></li>
-                            <li><a href="/builtin_stoves">Встраиваемые плиты</a></li>
-                            <li><a href="/vent">Вытяжки</a></li>
+                            <li><a href="/products/builtin_ovens">Встраиваемые духовки</a></li>
+                            <li><a href="/products/builtin_stoves">Встраиваемые плиты</a></li>
+                            <li><a href="/products/vent">Вытяжки</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
                             <li class="list-head"><a href="/subcats/cooking_devices"><strong>Техника для приготовления пищи</strong></a></li>
-                            <li><a href="/multi_cookers">Мультиварки</a></li>
-                            <li><a href="/microwaves">Микроволновки</a></li>
-                            <li><a href="/kitchen_combines">Кухонные комбайны</a></li>
-                            <li><a href="/waffles_breakfast">Вафельницы, йогуртницы и шашлычницы</a></li>
+                            <li><a href="/products/multi_cookers">Мультиварки</a></li>
+                            <li><a href="/products/microwaves">Микроволновки</a></li>
+                            <li><a href="/products/kitchen_combines">Кухонные комбайны</a></li>
+                            <li><a href="/products/waffles_breakfast">Вафельницы, йогуртницы и шашлычницы</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
                             <li class="list-head"><a href="/subcats/kitchen_small"><strong>Маленькая техника</strong></a></li>
-                            <li><a href="/teapots">Электрочайники</a></li>
-                            <li><a href="/toasters">Тостеры</a></li>
-                            <li><a href="/blenders">Блендеры</a></li>
-                            <li><a href="/meat_grinders">Мясорубки</a></li>
-                            <li><a href="/mixers">Миксеры</a></li>
-                            <li><a href="/juicers">Соковыжималки</a></li>
-                            <li><a href="/waffles">Вафельницы и йогуртницы</a></li>
+                            <li><a href="/products/teapots">Электрочайники</a></li>
+                            <li><a href="/products/toasters">Тостеры</a></li>
+                            <li><a href="/products/blenders">Блендеры</a></li>
+                            <li><a href="/products/meat_grinders">Мясорубки</a></li>
+                            <li><a href="/products/mixers">Миксеры</a></li>
+                            <li><a href="/products/juicers">Соковыжималки</a></li>
+                            <li><a href="/products/waffles">Вафельницы и йогуртницы</a></li>
                             <li><a href="/coffee_makers">Кофеварки</a></li>
                         </ul>
                     </div>
@@ -109,9 +109,9 @@
                     <div class="product-type-list marker2">
                         <ul class="products-list">
                             <li class="list-head"><a href="/subcats/home_clothes"><strong>Для ухода за одеждой</strong></a></li>
-                            <li><a href="/irons">Утюги и аксессуары</a></li>
-                            <li><a href="/ironing_boards">Гладильные доски</a></li>
-                            <li><a href="/sewing_machines">Швейные машинки</a></li>
+                            <li><a href="/products/irons">Утюги и аксессуары</a></li>
+                            <li><a href="/products/ironing_boards">Гладильные доски</a></li>
+                            <li><a href="/products/sewing_machines">Швейные машинки</a></li>
                         </ul>
                     </div>
                     <div class="product-type-list marker2">

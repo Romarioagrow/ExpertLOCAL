@@ -64,12 +64,12 @@ public class Order implements Serializable {
         else this.orderedProducts.add(orderedProduct);
     }
 
-    public Integer getTotalOrderPrice() {
+    /*public Integer getTotalOrderPrice() {
         Integer totalPrice = 0;
         for (OrderedProduct product : orderedProducts) {
             totalPrice += product.getTotalPrice();
         }
-        log.info("Total price: " + getTotalPrice().toString());
+        log.info("Total finalPrice: " + getTotalPrice().toString());
         return totalPrice;
     }
 
@@ -80,6 +80,6 @@ public class Order implements Serializable {
         }
         log.info("Total amount: " + getTotalAmount().toString());
         return totalAmount;
-    }
+    }*/
 }
 

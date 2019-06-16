@@ -80,8 +80,8 @@ function resolveOrderButton(product, productsID) {
     if (productsID.includes(product.productID.toString())) {
         return '<br><a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>';
     }
-    else return '<div id="addToOrderDiv'+product.productID.toString()+'">'+
-        '<button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder'+product.productID+'" value="'+product.productID+'">'+
+    else return '<div orderedID="addToOrderDiv'+product.productID.toString()+'">'+
+        '<button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" orderedID="addToOrder'+product.productID+'" value="'+product.productID+'">'+
         'В корзину'+
         '</button>'+
         '</div>';

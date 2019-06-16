@@ -28,7 +28,7 @@ public class FilterService {
     {
         showReceivedParams(params);
 
-        List<Product> products = productRepo.findByType(Type.valueOf(req_type));
+        List<Product> products = productRepo.findByType(req_type);
 
         for (Map.Entry<String, Object> paramObject : params.entrySet())
         {
@@ -36,8 +36,8 @@ public class FilterService {
             for (Map.Entry<String, Object> filter : inner.entrySet())
             {
                 switch (filter.getKey()) {
-                    case "sortmin"      -> products = products.stream().filter(product -> product.getPrice() >= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
-                    case "sortmax"      -> products = products.stream().filter(product -> product.getPrice() <= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
+                    /*case "sortmin"      -> products = products.stream().filter(product -> product.getFinalPrice() >= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
+                    case "sortmax"      -> products = products.stream().filter(product -> product.getFinalPrice() <= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
                     case "brand"        -> {
                         String brands = filter.getValue().toString();
                         products = products.stream().filter(product -> brands.contains(product.getBrand())).collect(Collectors.toList());
@@ -57,7 +57,7 @@ public class FilterService {
                         for (Object tv_param : tv_params) {
                             products = products.stream().filter(product -> product.getTvFeatures().contains(tv_param.toString())).collect(Collectors.toList());
                         }
-                    }
+                    }*/
                 }
             }
         }
@@ -71,9 +71,9 @@ public class FilterService {
     {
         Object sort = extractParamValue(params, "sortBy", "sortOrder");
         switch (sort.toString()) {
-            case "lowest"   -> products.sort(Comparator.comparingLong(Product::getPrice));
-            case "highest"  -> products.sort(Comparator.comparingLong(Product::getPrice).reversed());
-            case "alphabet" -> products.sort(Comparator.comparing(Product::getBrand));
+            /*case "lowest"   -> products.sort(Comparator.comparingLong(Product::getFinalPrice));
+            case "highest"  -> products.sort(Comparator.comparingLong(Product::getFinalPrice).reversed());
+            case "alphabet" -> products.sort(Comparator.comparing(Product::getBrand));*/
         }
     }
 

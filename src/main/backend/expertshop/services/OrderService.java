@@ -63,7 +63,7 @@ public class OrderService {
     public Integer addProductToOrder(String productID, User user)
     {
         Order order;
-        Product product = productRepo.findByProductID(Integer.parseInt(productID));///
+        Product product = productRepo.findByProductID(productID);///
         OrderedProduct orderedProduct = new OrderedProduct(); ///new OrderedProduct(productID);
 
         if (user == null)
@@ -79,8 +79,8 @@ public class OrderService {
             orderedProduct.constructOrderedProduct(product, productID);///
             order.addProductToOrder(orderedProduct);
 
-            setOrderStats(order, orderedProduct.getTotalPrice());
-            orderRepo.save(order);
+            /*setOrderStats(order, orderedProduct.getTotalPrice());
+            orderRepo.save(order);*/
         }
         else
         {
@@ -96,8 +96,8 @@ public class OrderService {
             orderedProduct.constructOrderedProduct(product, productID); ///
             order.addProductToOrder(orderedProduct);
 
-            setOrderStats(order, orderedProduct.getTotalPrice());
-            orderRepo.save(order);
+            /*setOrderStats(order, orderedProduct.getTotalPrice());
+            orderRepo.save(order);*/
         }
 
         System.out.println("\n");
@@ -106,16 +106,16 @@ public class OrderService {
         return order.getProductsAmount();
     }
 
-    public Order removeProductFromOrder(User user, String id)
+    public Order removeProductFromOrder(User user, String orderedID)
     {
-        OrderedProduct orderedProduct = orderedProductRepo.findByid(Integer.parseInt(id));
+        OrderedProduct orderedProduct = orderedProductRepo.findByOrderedID(orderedID);
 
         Order order = resolveOrder(user);
         order.getOrderedProducts().remove(orderedProduct);
 
-        order.setTotalPrice     (order.getTotalPrice()      - orderedProduct.getTotalPrice());
+        /*order.setTotalPrice     (order.getTotalPrice()      - orderedProduct.getTotalPrice());
         order.setTotalAmount    (order.getTotalAmount()     - orderedProduct.getAmount());
-        order.setProductsAmount (order.getProductsAmount()  - 1);
+        order.setProductsAmount (order.getProductsAmount()  - 1);*/
 
         orderRepo.save(order);
         ///
@@ -125,7 +125,7 @@ public class OrderService {
 
     public Queue<Object> changeAmount(User user, Map<String, String> data)
     {
-        OrderedProduct orderedProduct = orderedProductRepo.findByid(Integer.valueOf(data.get("orderedID")));
+        /*OrderedProduct orderedProduct = orderedProductRepo.findByid(Integer.valueOf(data.get("orderedID")));
 
         if (data.get("action").contains("product-less")) {
             if (orderedProduct.getAmount() > 1) orderedProduct.setAmount(orderedProduct.getAmount() - 1);
@@ -133,15 +133,16 @@ public class OrderService {
         }
         else orderedProduct.setAmount(orderedProduct.getAmount() + 1);
 
-        orderedProduct.setTotalPrice(orderedProduct.getPrice() * orderedProduct.getAmount());
+        orderedProduct.setTotalPrice(orderedProduct.getFinalPrice() * orderedProduct.getAmount());
         orderedProductRepo.save(orderedProduct);
 
         Order order = resolveOrder(user);
         order.setTotalPrice(order.getTotalOrderPrice());
         order.setTotalAmount(order.getTotalProductsAmount());
 
-        orderRepo.save(order);
-        return packageOrderAndProduct(order, orderedProduct);
+        orderRepo.save(order);*//*
+        return packageOrderAndProduct(order, orderedProduct);*/
+        return null;
     }
 
     private void setOrderStats(Order order, Integer productTotalPrice)
@@ -200,15 +201,15 @@ public class OrderService {
     {
         StringBuilder orderList = new StringBuilder();
 
-        for (OrderedProduct product : order.getOrderedProducts())
+        /*for (OrderedProduct product : order.getOrderedProducts())
         {
             StringJoiner item = new StringJoiner (", ");
             item    .add("\n" + product.getType() + " " + product.getBrand() + " " + product.getModel())
                     .add("кол-во: " + product.getAmount().toString())
                     .add("итого \u20BD: " + product.getTotalPrice().toString())
-                    .add("id товара: " + product.getProductID().toString());
+                    .add("orderedID товара: " + product.getProductID().toString());
             orderList.append(item.toString());
-        }
+        }*/
 
         log.info(orderList.toString());
         mailService.sendOrderDetail(orderList, order);

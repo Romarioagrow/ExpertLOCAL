@@ -1,9 +1,6 @@
 package expertshop.controllers;
 import expertshop.domain.Order;
 import expertshop.domain.User;
-import expertshop.domain.categories.Type;
-import expertshop.repos.OrderRepo;
-import expertshop.repos.ProductRepo;
 import expertshop.services.OrderService;
 import expertshop.services.ProductService;
 
@@ -26,14 +23,17 @@ public class ProductController {
     private final OrderService orderService;
     private final ProductService productService;
 
-    @GetMapping("/{requiredProduct}")
-    public String showByTypes(@PathVariable String requiredProduct, @AuthenticationPrincipal User user, Model model)
+    @GetMapping("{category}/{requiredProduct}")
+    public String showByTypes(@PathVariable String category, @PathVariable String requiredProduct, @AuthenticationPrincipal User user, Model model)
     {
-        log.info("Type: " + requiredProduct);
+        String request = requiredProduct.replaceAll("_", " ");
 
-        model.addAttribute("url", requiredProduct);
+        log.info("Category: " + category);
+        log.info("Type: " + request);
+
+        model.addAttribute("url", request);
         model.addAttribute("order", order(user));
-        model.addAttribute("products", productService.findProducts(Type.valueOf(requiredProduct)));
+        model.addAttribute("products", productService.findProducts(request));
 
         productService.getOrderedID(user, model);
         return "pages/products";

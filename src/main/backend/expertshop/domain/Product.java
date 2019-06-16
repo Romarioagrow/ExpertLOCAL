@@ -9,34 +9,44 @@ import java.io.Serializable;
 
 @Data
 @Entity
-@EqualsAndHashCode(exclude="productParams")
-@ToString(exclude="productParams" )
+/*@Inheritance(strategy = InheritanceType.SINGLE_TABLE)*/
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "products")
+@Table(name = "product")
+/*@SuppressWarnings("PMD")*/
 public class Product implements Serializable {
     @Id
     @Column(name = "product_id")
-    public Integer productID;
+    public String productID;
 
     @Column(name = "category")
-    @Enumerated(EnumType.STRING)
-    private Category category;
+    private String category;
 
     @Column(name = "subcategory")
-    @Enumerated(EnumType.STRING)
-    private SubCategory subCategory;
+    private String subCategory;
 
-    @Column(name = "type")
-    @Enumerated(EnumType.STRING)
-    private Type type;
+    @Column(name = "product_group")
+    private String productGroup;
 
-    private String brand, model, country;
+    private String type;
 
-    private String pic;
+    private String supplier;
 
-    private Integer price;
+    @Column(length = 25000)
+    private String name;
 
+    private String brand, pic, finalPrice;
+
+    @Column(name = "price")
+    private String price;
+
+    @Column(length = 25000)
+    private String annotation;
+
+    private String amount;
+
+
+    /*
     @OneToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private ProductParams productParams;
@@ -60,7 +70,7 @@ public class Product implements Serializable {
     @JsonIgnore
     public String getStoveDimensions() {
         return productParams.getStoveDimensions();
-    }
+    }*/
 }
 
 

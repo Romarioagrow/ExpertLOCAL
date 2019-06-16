@@ -38,7 +38,7 @@ function addToOrder(button) {
             );
 
             $("#productsAmount-Div").empty().append(
-            '<a id="productAmount-Order" href="/order"><h5 style="color: black !important; margin-top: 1.5rem!important;">Товаров:  <span class="badge badge-primary">'+productsAmount.responseText+'</span></h5></a>'
+            '<a orderedID="productAmount-Order" href="/order"><h5 style="color: black !important; margin-top: 1.5rem!important;">Товаров:  <span class="badge badge-primary">'+productsAmount.responseText+'</span></h5></a>'
             )
         }
     });
@@ -52,7 +52,7 @@ function changeAmount(product) {
     };
 
     let amountID     = '#amount'      + data.orderedID;
-    let totalPriceID = '#total-price' + data.orderedID;
+    let totalPriceID = '#total-finalPrice' + data.orderedID;
 
     data = JSON.stringify(data);
 
@@ -76,7 +76,7 @@ function changeAmount(product) {
             $(totalPriceID).empty().append(
                 (orderedProduct.totalPrice).toLocaleString('ru')+'₽'
             );
-            $('#order-price').empty().append(
+            $('#order-finalPrice').empty().append(
                 (order.totalPrice).toLocaleString('ru')+'₽'
             );
             $('#order-products').empty().append(
@@ -118,22 +118,22 @@ function removeFromOrder(button) {
                     '<div class="card-body">' +
                     '<h4 class="card-title">' +
                     product.brand + ' ' + product.model +
-                    '<div class="mt-3">'+product.type+', <strong><i id="total-price'+product.id+'">' + product.totalPrice + '₽' + '</i></strong></div>' +
+                    '<div class="mt-3">'+product.type+', <strong><i orderedID="total-finalPrice'+product.id+'">' + product.totalPrice + '₽' + '</i></strong></div>' +
                     '<div>' +
                     '</div>' +
                     '</h4>' +
                     '<p class="card-text">' +
-                    '<button type="button" onclick="changeAmount(this)" id="'+product.id+'" name="product-less" value="'+product.productID+'" class="btn btn-outline-danger waves-effect">-</button>' +
-                    '<span class="badge badge-primary badge-pill" id="amount'+product.id+'">'+(product.amount).toLocaleString('ru')+'</span>' +
-                    '<button type="button" onclick="changeAmount(this)" id="'+product.id+'" name="product-more" value="'+product.productID+'" class="btn btn-outline-success waves-effect">+</button>' +
+                    '<button type="button" onclick="changeAmount(this)" orderedID="'+product.id+'" name="product-less" value="'+product.productID+'" class="btn btn-outline-danger waves-effect">-</button>' +
+                    '<span class="badge badge-primary badge-pill" orderedID="amount'+product.id+'">'+(product.amount).toLocaleString('ru')+'</span>' +
+                    '<button type="button" onclick="changeAmount(this)" orderedID="'+product.id+'" name="product-more" value="'+product.productID+'" class="btn btn-outline-success waves-effect">+</button>' +
                     '</p>' +
                     '</div>' +
-                    '<button type="submit" onclick="removeFromOrder(this)" name="remove-product" class="btn btn-danger btn-md"  id="remove-product" value="'+product.id+'">Удалить</button>' +
+                    '<button type="submit" onclick="removeFromOrder(this)" name="remove-product" class="btn btn-danger btn-md"  orderedID="remove-product" value="'+product.id+'">Удалить</button>' +
                     '</div>'
                 );
             }
             
-            $('#order-price').empty().append(
+            $('#order-finalPrice').empty().append(
                 (order.totalPrice).toLocaleString('ru')+'₽'
             );
             $('#order-products').empty().append(
@@ -143,7 +143,7 @@ function removeFromOrder(button) {
                 order.totalAmount
             );
             $('#productAmount-Order').empty().append(
-                '<a id="productAmount-Order" href="/order" class="mt-4 mb-3"><h5 style="color: black !important;">Товаров:  <span class="badge badge-primary">'+order.productsAmount+'</span></h5></a>'
+                '<a orderedID="productAmount-Order" href="/order" class="mt-4 mb-3"><h5 style="color: black !important;">Товаров:  <span class="badge badge-primary">'+order.productsAmount+'</span></h5></a>'
             );
             
             if (order.productsAmount === 0)
@@ -176,7 +176,7 @@ function displayOrderDeal() {
     $("button[name='product-more']").each(function() {
         this.disabled = true;
     });
-    $("button[id='remove-product']").each(function() {
+    $("button[orderedID='remove-product']").each(function() {
         this.disabled = true;
     });
 }
@@ -192,7 +192,7 @@ function editOrder() {
     $("button[name='product-more']").each(function() {
         this.disabled = false;
     });
-    $("button[id='remove-product']").each(function() {
+    $("button[orderedID='remove-product']").each(function() {
         this.disabled = false;
     });
 }
@@ -281,14 +281,14 @@ function acceptOrder() {
 }
 
 $(document).ready(function() {
-    $('input[type="radio"][id="delivery-button"]').on('change', function () {
+    $('input[type="radio"][orderedID="delivery-button"]').on('change', function () {
         document.getElementById("delivery-block").style.display = "block";
         document.getElementById("self-delivery-block").style.display = "none";
     });
 });
 
 $(document).ready(function() {
-    $('input[type="radio"][id="self-delivery-button"]').on('change', function () {
+    $('input[type="radio"][orderedID="self-delivery-button"]').on('change', function () {
         document.getElementById("delivery-block").style.display = "none";
         document.getElementById("self-delivery-block").style.display = "block";
     });

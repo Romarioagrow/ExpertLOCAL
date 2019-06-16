@@ -5,17 +5,31 @@ import expertshop.domain.categories.SubCategory;
 import expertshop.domain.categories.Type;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface ProductRepo extends JpaRepository<Product, Long> {
-    List<Product> findByCategory(Category category);
+    List<Product> findByCategory(String category);
 
-    List<Product> findBySubCategory(SubCategory subCategory);
+    List<Product> findBySubCategory(String subCategory);
 
-    List<Product> findByType(Type type);
+    List<Product> findByType(String type);
 
-    Product findByProductID(Integer ID);
+    Product findByProductID(String ID);
+
+    List<Product> findBySubCategoryContains(String productRequest);
+
+    List<Product> findByNameContains(String name);
+
+    List<Product> findBySubCategoryContainsOrProductGroupContains(String subCategory, String ProductGroup);
+
+    List<Product> findByProductGroupContains(String productRequest);
+
+    Set<Product> findByProductGroupContainingIgnoreCase(String productRequest);
+
+    Set<Product> findByTypeContainingIgnoreCase(String productRequest);
 }

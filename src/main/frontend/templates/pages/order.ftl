@@ -26,16 +26,16 @@
                                 </div>
                                 <div class="card-body">
                                     <h4 class="card-title">
-                                        <a href="http://localhost:8080/info/${product.productID?c}">${product.brand} ${product.model}</a>
-                                        <div class="mt-3">${product.type}, <strong><i id="total-price${product.id?c}">${product.totalPrice}₽</i></strong></div>
+                                        <a href="http://localhost:8080/info/${product.productID}">${product.brand} ${product.model}</a>
+                                        <div class="mt-3">${product.type}, <strong><i id="total-price${product.getOrderedID?c}">${product.totalPrice}₽</i></strong></div>
                                     </h4>
                                     <p class="card-text" id="cart-text-buttons" name="cart-text-buttons">
-                                        <button type="button" onclick="changeAmount(this)" id="${product.id?c}" name="product-less" value="${product.productID?c}" class="btn btn-outline-danger waves-effect">-</button>
-                                        <span  class="badge badge-primary badge-pill" id="amount${product.id?c}" name="${product.id}">${product.amount}</span>
-                                        <button type="button" onclick="changeAmount(this)" id="${product.id?c}" name="product-more" value="${product.productID?c}" class="btn btn-outline-success waves-effect">+</button>
+                                        <button type="button" onclick="changeAmount(this)" id="${product.getOrderedID?c}" name="product-less" value="${product.productID}" class="btn btn-outline-danger waves-effect">-</button>
+                                        <span class="badge badge-primary badge-pill" id="amount${product.getOrderedID?c}" name="${product.getOrderedID}">${product.amount}</span>
+                                        <button type="button" onclick="changeAmount(this)" id="${product.getOrderedID?c}" name="product-more" value="${product.productID}" class="btn btn-outline-success waves-effect">+</button>
                                     </p>
                                 </div>
-                                <button type="submit" onclick="removeFromOrder(this)" class="btn btn-danger btn-md" name="remove-product" id="remove-product" value="${product.id?c}">Удалить</button>
+                                <button type="submit" onclick="removeFromOrder(this)" class="btn btn-danger btn-md" name="remove-product" id="remove-product" value="${product.getOrderedID?c}">Удалить</button>
                             </div>
                         </#list>
                     <#else>
@@ -50,13 +50,13 @@
                                 <img class="ordered-product-img-line" src="${product.pic}" height="50" width="80"  alt="Card image cap">
                                 <strong>${product.type}</strong> ${product.brand} ${product.model}
 
-                                <button type="button" class="btn btn-outline-danger waves-effect" onclick="changeAmount(this)" id="${product.id?c}" name="product-less" value="${product.productID?c}">-</button>
-                                <div id="amount${product.id?c}" name="${product.id}"><span class="badge badge-primary badge-pill">${product.amount}</span></div>
-                                <button type="button" class="btn btn-outline-success waves-effect" onclick="changeAmount(this)" id="${product.id?c}" name="product-more" value="${product.productID?c}">+</button>
+                                <button type="button" class="btn btn-outline-danger waves-effect" onclick="changeAmount(this)" id="${product.getOrderedID?c}" name="product-less" value="${product.productID}">-</button>
+                                <div id="amount${product.getOrderedID?c}" name="${product.getOrderedID}"><span class="badge badge-primary badge-pill">${product.amount}</span></div>
+                                <button type="button" class="btn btn-outline-success waves-effect" onclick="changeAmount(this)" id="${product.getOrderedID?c}" name="product-more" value="${product.productID}">+</button>
 
-                                <strong><i id="total-price${product.id}">${product.totalPrice} ₽</i></strong>
+                                <strong><i id="total-price${product.getOrderedID}">${product.totalPrice} ₽</i></strong>
 
-                                <button type="submit" onclick="removeFromOrder(this)" class="btn btn-danger btn-md" name="remove-product" id="remove-product" value="${product.id?c}">Удалить</button>
+                                <button type="submit" onclick="removeFromOrder(this)" class="btn btn-danger btn-md" name="remove-product" id="remove-product" value="${product.getOrderedID?c}">Удалить</button>
                             </li>
                         </#list>
                     <#else>
