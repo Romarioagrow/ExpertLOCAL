@@ -37,23 +37,23 @@ public class ServiceController {
         return productService.searchProducts(searchRequest);
     }
 
-    @PostMapping("/order")
+    @PostMapping("/getOrder")
     private Integer addProductToOrder
             (@AuthenticationPrincipal User user, @RequestBody String productID) {
         return orderService.addProductToOrder(productID, user);
     }
-    @DeleteMapping("/order")
+    @DeleteMapping("/getOrder")
     private Order removeProductFromOrder
             (@AuthenticationPrincipal User user, @RequestBody String productID) {
         return orderService.removeProductFromOrder(user, productID);
     }
-    @PutMapping("/order")
+    @PutMapping("/getOrder")
     private Queue<Object> changeAmount
             (@AuthenticationPrincipal User user, @RequestBody Map<String, String> data) {
         return orderService.changeAmount(user, data);
     }
 
-    @PostMapping("/order/confirm")
+    @PostMapping("/getOrder/confirm")
     private Set<String> confirmOrder
             (@AuthenticationPrincipal User user, @Valid @RequestBody OrderContacts contacts, BindingResult validResult)
     {

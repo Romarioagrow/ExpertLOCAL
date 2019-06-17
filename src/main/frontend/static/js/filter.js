@@ -81,7 +81,7 @@ function resolveOrderButton(product, productsID) {
         return '<br><a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>';
     }
     else return '<div orderedID="addToOrderDiv'+product.productID.toString()+'">'+
-        '<button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" orderedID="addToOrder'+product.productID+'" value="'+product.productID+'">'+
+        '<button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" modelName="addToOrder" orderedID="addToOrder'+product.productID+'" value="'+product.productID+'">'+
         'В корзину'+
         '</button>'+
         '</div>';
@@ -90,12 +90,12 @@ function resolveOrderButton(product, productsID) {
 function constructFiltersData(url) {
     var country = [], brand = [];
     ($('option:checked').each(function() {
-        if ($(this).is(['name="country"'])) country.push(($(this).val()));
-        if ($(this).is(['name="brand"']))   brand.push(($(this).val()));
+        if ($(this).is(['modelName="country"'])) country.push(($(this).val()));
+        if ($(this).is(['modelName="brand"']))   brand.push(($(this).val()));
     }));
 
     const data = {
-        'sortBy'        : {'sortOrder'  : ($('input[name="sort_options"]:checked').val())},
+        'sortBy'        : {'sortOrder'  : ($('input[modelName="sort_options"]:checked').val())},
         'price'         : {'sortmin'    : ($('#sortmin').val()),    'sortmax' : ($('#sortmax').val())},
         'manufacturer'  : {'brand'      : brand,      'country' : country},
     };
@@ -107,8 +107,8 @@ function constructFiltersData(url) {
         var tv_resolution = [], tv_params = [];
         ($('input:checked').each(function()
         {
-            if      ($(this).is('[name="tv_resolution"]'))  tv_resolution.push(($(this).val()));
-            else if ($(this).is('[name="tv_params"]'))      tv_params.push(($(this).val()));
+            if      ($(this).is('[modelName="tv_resolution"]'))  tv_resolution.push(($(this).val()));
+            else if ($(this).is('[modelName="tv_params"]'))      tv_params.push(($(this).val()));
         }));
         data.displayParams  = {'diag_min' : ($('#diag_min').val()), 'diag_max' : ($('#diag_max').val()), 'tv_resolution' : tv_resolution};
         data.tvParams       = {'tv_params' : tv_params};

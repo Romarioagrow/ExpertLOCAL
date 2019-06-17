@@ -66,14 +66,14 @@
                                             <br><a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
                                         <#else>
                                             <div id="addToOrderDiv${product.productID?c}">
-                                                <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID?c}" value="${product.productID?c}">
+                                                <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" modelName="addToOrder" id="addToOrder${product.productID?c}" value="${product.productID?c}">
                                                     В корзину
                                                 </button>
                                             </div>
                                         </#if>
                                     <#else>
                                         <div id="addToOrderDiv${product.productID?c}">
-                                            <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID?c}" value="${product.productID?c}">
+                                            <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" modelName="addToOrder" id="addToOrder${product.productID?c}" value="${product.productID?c}">
                                                 В корзину
                                             </button>
                                         </div>
@@ -92,7 +92,7 @@
                                     <h5 class="card-title">
                                         <a href="/info/${product.productID}">
                                             <strong>
-                                                ${product.name}
+                                                ${product.getFullName}
                                             </strong>
                                         </a>
                                     </h5>

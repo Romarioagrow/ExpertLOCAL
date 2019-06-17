@@ -15,7 +15,7 @@
                         </div>
                     </div>
 
-                    <#--<input type="hidden" name="_csrf" value="${_csrf.token}"/>-->
+                    <#--<input type="hidden" modelName="_csrf" value="${_csrf.token}"/>-->
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Post</button>
                     </div>

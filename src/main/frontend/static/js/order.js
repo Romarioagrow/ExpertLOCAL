@@ -1,8 +1,8 @@
 $(document).ready(function(){
-    $('button[name="cards-layout-inp"]').on('click', showCardsLayout);
+    $('button[modelName="cards-layout-inp"]').on('click', showCardsLayout);
 });
 $(document).ready(function(){
-    $('button[name="rows-layout-inp"]').on('click', showRowsLayout);
+    $('button[modelName="rows-layout-inp"]').on('click', showRowsLayout);
 });
 
 function showCardsLayout() {
@@ -123,12 +123,12 @@ function removeFromOrder(button) {
                     '</div>' +
                     '</h4>' +
                     '<p class="card-text">' +
-                    '<button type="button" onclick="changeAmount(this)" orderedID="'+product.id+'" name="product-less" value="'+product.productID+'" class="btn btn-outline-danger waves-effect">-</button>' +
+                    '<button type="button" onclick="changeAmount(this)" orderedID="'+product.id+'" modelName="product-less" value="'+product.productID+'" class="btn btn-outline-danger waves-effect">-</button>' +
                     '<span class="badge badge-primary badge-pill" orderedID="amount'+product.id+'">'+(product.amount).toLocaleString('ru')+'</span>' +
-                    '<button type="button" onclick="changeAmount(this)" orderedID="'+product.id+'" name="product-more" value="'+product.productID+'" class="btn btn-outline-success waves-effect">+</button>' +
+                    '<button type="button" onclick="changeAmount(this)" orderedID="'+product.id+'" modelName="product-more" value="'+product.productID+'" class="btn btn-outline-success waves-effect">+</button>' +
                     '</p>' +
                     '</div>' +
-                    '<button type="submit" onclick="removeFromOrder(this)" name="remove-product" class="btn btn-danger btn-md"  orderedID="remove-product" value="'+product.id+'">Удалить</button>' +
+                    '<button type="submit" onclick="removeFromOrder(this)" modelName="remove-product" class="btn btn-danger btn-md"  orderedID="remove-product" value="'+product.id+'">Удалить</button>' +
                     '</div>'
                 );
             }
@@ -170,10 +170,10 @@ function displayOrderDeal() {
     }, 1000);
 
     ///
-    $("button[name='product-less']").each(function() {
+    $("button[modelName='product-less']").each(function() {
         this.disabled = true;
     });
-    $("button[name='product-more']").each(function() {
+    $("button[modelName='product-more']").each(function() {
         this.disabled = true;
     });
     $("button[orderedID='remove-product']").each(function() {
@@ -186,10 +186,10 @@ function editOrder() {
     document.getElementById("edit-order").style.display 	= "none";
     document.getElementById("order-button").style.display 	= "block";
 
-    $("button[name='product-less']").each(function() {
+    $("button[modelName='product-less']").each(function() {
         this.disabled = false;
     });
-    $("button[name='product-more']").each(function() {
+    $("button[modelName='product-more']").each(function() {
         this.disabled = false;
     });
     $("button[orderedID='remove-product']").each(function() {
@@ -205,7 +205,7 @@ $(document).ready(function() {
 });
 
 function acceptOrder() {
-    var name 	= $('#name').val();
+    var name 	= $('#modelName').val();
     var surname = $('#surname').val();
     var mobile 	= $('#mobile').val();
     var email 	= $('#email').val();
@@ -218,7 +218,7 @@ function acceptOrder() {
 
     if (hasValidErrors(name, surname, mobile, email)) {
         if (name.length < 1) {
-            $('#name').after('<span class="error">Введите имя</span>');
+            $('#modelName').after('<span class="error">Введите имя</span>');
         }
         if (surname.length < 1) {
             $('#surname').after('<span class="error">Введите фамилию</span>');

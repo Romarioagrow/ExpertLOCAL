@@ -25,7 +25,7 @@ public class OrderedProduct /*extends Product*/implements Serializable {
 
     public String productID;
 
-    /*@JoinColumn(name = "product_id")
+    /*@JoinColumn(modelName = "product_id")
     private Integer productID;*/
     //private Integer finalPrice;
 

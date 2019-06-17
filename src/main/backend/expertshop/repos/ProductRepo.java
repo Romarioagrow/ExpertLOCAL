@@ -1,5 +1,6 @@
 package expertshop.repos;
 import expertshop.domain.Product;
+import expertshop.domain.ProductBase;
 import expertshop.domain.categories.Category;
 import expertshop.domain.categories.SubCategory;
 import expertshop.domain.categories.Type;
@@ -23,7 +24,7 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
 
     List<Product> findBySubCategoryContains(String productRequest);
 
-    List<Product> findByNameContains(String name);
+    List<Product> findByFullNameContains(String name);
 
     List<Product> findBySubCategoryContainsOrProductGroupContains(String subCategory, String ProductGroup);
 
@@ -32,4 +33,6 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     Set<Product> findByProductGroupContainingIgnoreCase(String productRequest);
 
     Set<Product> findByTypeContainingIgnoreCase(String productRequest);
+
+    Product findFirstByModelNameContaining(String modelName);
 }

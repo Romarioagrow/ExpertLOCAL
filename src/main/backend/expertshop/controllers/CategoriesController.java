@@ -1,9 +1,8 @@
 package expertshop.controllers;
 import expertshop.domain.Order;
 import expertshop.domain.User;
-import expertshop.domain.categories.Category;
-import expertshop.domain.categories.SubCategory;
 import expertshop.repos.ProductRepo;
+import expertshop.services.CatalogParser;
 import expertshop.services.OrderService;
 import expertshop.services.ProductService;
 
@@ -24,6 +23,7 @@ import java.io.IOException;
 public class CategoriesController {
     private final ProductService productService;
     private final OrderService orderService;
+    private final CatalogParser catalogParser;
     private final ProductRepo productRepo;
 
     @GetMapping("/supplier")
@@ -34,15 +34,14 @@ public class CategoriesController {
     public String loadCSV (@RequestParam("file") MultipartFile file, Model model, @AuthenticationPrincipal User user) throws IOException {
         log.info(file.getOriginalFilename());
 
-        productService.processFile(file);
+        catalogParser.processFile(file);
         return "pages/supplier";
     }
 
     @GetMapping("/")
     public String showAll(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("url", "");
-        model.addAttribute("order", order(user));
-        //model.addAttribute("products", productService.findAll());
+        model.addAttribute("order", getOrder(user));
         return "pages/catalog";
     }
 
@@ -52,8 +51,7 @@ public class CategoriesController {
         log.info("Category: " + category);
 
         model.addAttribute("url", category);
-        model.addAttribute("order", order(user));
-        /*model.addAttribute("products", productService.findProducts(Category.valueOf(category)));*/
+        model.addAttribute("order", getOrder(user));
         return "pages/categories";
     }
 
@@ -63,15 +61,14 @@ public class CategoriesController {
         log.info("Category: " + req_subcategory);
 
         model.addAttribute("url", req_subcategory);
-        model.addAttribute("order", order(user));
-        /*model.addAttribute("products", productService.findProducts(SubCategory.valueOf(req_subcategory)));*/
+        model.addAttribute("order", getOrder(user));
         return "pages/products";
     }
 
     @GetMapping("/order")
-    public String order(Model model, @AuthenticationPrincipal User user)
+    public String getOrder(Model model, @AuthenticationPrincipal User user)
     {
-        model.addAttribute("order", order(user));
+        model.addAttribute("order", getOrder(user));
         model.addAttribute("orderedProducts", orderService.showOrderedProducts(user));
         return "pages/order";
     }
@@ -80,20 +77,18 @@ public class CategoriesController {
     public String showProduct(Model model, @PathVariable String productID, @AuthenticationPrincipal User user)
     {
         model.addAttribute("url", getCurrentURL(productID));
-        model.addAttribute("order", order(user));
-        /*model.addAttribute("product", productRepo.findByProductID(Integer.parseInt(productID)));*/
-
+        model.addAttribute("order", getOrder(user));
         productService.getOrderedID(user, model);
         return "pages/product";
     }
 
     @GetMapping("/categories")
-    public String categories(Model model) {
+    public String categories() {
         return "redirect:/hello";
     }
 
     @GetMapping("/subcats")
-    public String subCategories( Model model) {
+    public String subCategories() {
         return "redirect:/hello";
     }
 
@@ -101,7 +96,7 @@ public class CategoriesController {
         return productRepo.findByProductID(productID).getType().toString();
     }
 
-    private Order order(User user) {
+    private Order getOrder(User user) {
         return user != null ? orderService.getUserOrder(user.getUserID()) : orderService.getSessionOrder();
     }
 }

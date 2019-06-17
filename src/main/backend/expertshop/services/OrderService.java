@@ -79,8 +79,8 @@ public class OrderService {
             orderedProduct.constructOrderedProduct(product, productID);///
             order.addProductToOrder(orderedProduct);
 
-            /*setOrderStats(order, orderedProduct.getTotalPrice());
-            orderRepo.save(order);*/
+            /*setOrderStats(getOrder, orderedProduct.getTotalPrice());
+            orderRepo.save(getOrder);*/
         }
         else
         {
@@ -96,12 +96,12 @@ public class OrderService {
             orderedProduct.constructOrderedProduct(product, productID); ///
             order.addProductToOrder(orderedProduct);
 
-            /*setOrderStats(order, orderedProduct.getTotalPrice());
-            orderRepo.save(order);*/
+            /*setOrderStats(getOrder, orderedProduct.getTotalPrice());
+            orderRepo.save(getOrder);*/
         }
 
         System.out.println("\n");
-        log.info("Product with ID " + productID + " add to order");
+        log.info("Product with ID " + productID + " add to getOrder");
 
         return order.getProductsAmount();
     }
@@ -113,9 +113,9 @@ public class OrderService {
         Order order = resolveOrder(user);
         order.getOrderedProducts().remove(orderedProduct);
 
-        /*order.setTotalPrice     (order.getTotalPrice()      - orderedProduct.getTotalPrice());
-        order.setTotalAmount    (order.getTotalAmount()     - orderedProduct.getAmount());
-        order.setProductsAmount (order.getProductsAmount()  - 1);*/
+        /*getOrder.setTotalPrice     (getOrder.getTotalPrice()      - orderedProduct.getTotalPrice());
+        getOrder.setTotalAmount    (getOrder.getTotalAmount()     - orderedProduct.getAmount());
+        getOrder.setProductsAmount (getOrder.getProductsAmount()  - 1);*/
 
         orderRepo.save(order);
         ///
@@ -136,12 +136,12 @@ public class OrderService {
         orderedProduct.setTotalPrice(orderedProduct.getFinalPrice() * orderedProduct.getAmount());
         orderedProductRepo.save(orderedProduct);
 
-        Order order = resolveOrder(user);
-        order.setTotalPrice(order.getTotalOrderPrice());
-        order.setTotalAmount(order.getTotalProductsAmount());
+        Order getOrder = resolveOrder(user);
+        getOrder.setTotalPrice(getOrder.getTotalOrderPrice());
+        getOrder.setTotalAmount(getOrder.getTotalProductsAmount());
 
-        orderRepo.save(order);*//*
-        return packageOrderAndProduct(order, orderedProduct);*/
+        orderRepo.save(getOrder);*//*
+        return packageOrderAndProduct(getOrder, orderedProduct);*/
         return null;
     }
 
@@ -201,7 +201,7 @@ public class OrderService {
     {
         StringBuilder orderList = new StringBuilder();
 
-        /*for (OrderedProduct product : order.getOrderedProducts())
+        /*for (OrderedProduct product : getOrder.getOrderedProducts())
         {
             StringJoiner item = new StringJoiner (", ");
             item    .add("\n" + product.getType() + " " + product.getBrand() + " " + product.getModel())

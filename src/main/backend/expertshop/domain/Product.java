@@ -1,19 +1,20 @@
 package expertshop.domain;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import expertshop.domain.categories.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 @Data
 @Entity
-/*@Inheritance(strategy = InheritanceType.SINGLE_TABLE)*/
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "product")
-/*@SuppressWarnings("PMD")*/
 public class Product implements Serializable {
     @Id
     @Column(name = "product_id")
@@ -33,9 +34,14 @@ public class Product implements Serializable {
     private String supplier;
 
     @Column(length = 25000)
-    private String name;
+    private String fullName;
 
-    private String brand, pic, finalPrice;
+    private String modelName;
+
+    @Column(length = 25000)
+    private String pic;
+
+    private String brand, finalPrice;
 
     @Column(name = "price")
     private String price;
@@ -48,7 +54,7 @@ public class Product implements Serializable {
 
     /*
     @OneToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "product_id")
+    @JoinColumn(modelName = "product_id")
     private ProductParams productParams;
 
     @JsonIgnore
