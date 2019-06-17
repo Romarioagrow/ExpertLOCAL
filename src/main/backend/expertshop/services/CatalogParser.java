@@ -40,10 +40,8 @@ public class CatalogParser {
         if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty())
         {
             parseFile(file);
+            resolvePics();
         }
-        resolvePics();
-
-
     }
 
     private void resolvePics()
@@ -52,15 +50,15 @@ public class CatalogParser {
         List<ProductBase> productsBase = baseRepo.findAll();
 
         for (Product product : products) {
-            if (product.getPic() == null) {
+            if (product.getPic() == null)
+            {
                 ProductBase productBase = baseRepo.findFirstByModelNameContaining(product.getModelName());
 
-                if (productBase != null) {
+                if (productBase != null)
+                {
                     product.setPic(productBase.getPics());
-                    log.info(product.getModelName() + " URL: " + product.getPic());
-                    //count++;
-
                     productRepo.save(product);
+                    log.info(product.getModelName() + " URL: " + product.getPic());
                 }
             }
         }
@@ -68,16 +66,17 @@ public class CatalogParser {
         for (ProductBase productBase : productsBase) {
             Product product = productRepo.findFirstByModelNameContaining(productBase.getModelName());
 
-            if (product != null && product.getPic() == null) {
+            if (product != null && product.getPic() == null)
+            {
                 product.setPic(productBase.getPics());
                 productRepo.save(product);
                 log.info(product.getModelName() + " URL: " + product.getPic());
             }
-            else log.info("ПОШЕЛ НАХУЙ");
         }
 
         int count = 0;
-        for (Product product : products) {
+        for (Product product : products)
+        {
             if (product.getPic() != null) count++;
         }
 
@@ -87,222 +86,197 @@ public class CatalogParser {
     private void parseFile(MultipartFile file) throws IOException
     {
         /*FileWriter fw = new FileWriter("filename.txt", Charset.forName("utf-8"));*/
+        /*InputStream inputStream = file.getInputStream();*/
 
-        InputStream inputStream = file.getInputStream();
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
 
-        CSVReader reader = new CSVReader(bufferedReader, ';');
+            CSVReader reader = new CSVReader(bufferedReader, ';');
 
-        List<Product> products = new ArrayList<>();
-        String[] line;
+            String[] line;
+            List<Product> products = new ArrayList<>();
 
-        if (Objects.requireNonNull(file.getOriginalFilename()).contains("BASE")) {
-            parseBase(file);
-        }
+            if (Objects.requireNonNull(file.getOriginalFilename()).contains("BASE")) {
+                parseBase(file);
+            }
 
-        ////////// ЗАМЕНИТЬ ПРОВЕРКУ НАЗВАНИЙ НА SWITCH И РАЗБИТЬ НА МЕТОДЫ ДЛЯ КАЖДОЙ БАЗЫ
-        if (Objects.requireNonNull(file.getOriginalFilename()).contains("СП2")) {
-            log.info("\nParsing RBT file: " + file.getOriginalFilename());
+            /// ЗАМЕНИТЬ ПРОВЕРКУ НАЗВАНИЙ НА SWITCH И РАЗБИТЬ НА МЕТОДЫ ДЛЯ КАЖДОЙ БАЗЫ
+            if (Objects.requireNonNull(file.getOriginalFilename()).contains("СП2")) {
+                log.info("\nParsing RBT file: " + file.getOriginalFilename());
 
-            while ((line = reader.readNext()) != null)
-            {
-                if (line[0].equals("Код товара") ///checkFileRBT(line);
-                        || line[0].equals(";")
-                        || line[0].contains("г. Челябинск")
-                        || line[0].contains("8(351)")
-                        || line[0].startsWith(".")
-                        || line[0].startsWith(" ")
-                ){
-                    log.info("!!! Пропуск некоректной строки a" + file.getOriginalFilename() + ": " + line[0]);
-                }
-                else
+                while ((line = reader.readNext()) != null)
                 {
-                    Product product = new Product();
-
-                    String productName = line[3];
-                    String productBrand = line[4];
-
-                    String trimName = trimProductName(productName, productBrand/*line[5], line[3]*/);
-                    String trimAfterComma = trimAllAfterComma(trimName);
-                    String noRussian = noRussianChar(trimAfterComma, productBrand/*line[3]*/);
-                    String trimGarbage = trimGarbageChar(noRussian);
-                    String finalName = removeAllSpacesAfterBrand(trimGarbage, productBrand);
-
-                    product.setModelName(finalName);
-                    //log.info("|||| MODEL NAME: " + product.getModelName());
-
-                    product.setProductID(line[0]);
-
-                    ArrayList<String> typeRBT = resolveProductRBT(line);
-
-                    String productType = typeRBT.get(0);
-                    String productGroup = typeRBT.get(1);
-
-                    product.setFullName(productType + line[3]);
-                    product.setProductGroup(productGroup);
-
-                    if (line[2].contains("_")) {
-                        product.setType(line[2].substring(line[2].indexOf("_")+1));
+                    if (line[0].equals("Код товара") ///checkFileRBT(line);
+                            || line[0].equals(";")
+                            || line[0].contains("г. Челябинск")
+                            || line[0].contains("8(351)")
+                            || line[0].startsWith(".")
+                            || line[0].startsWith(" ")
+                    ){
+                        log.info("!!! Пропуск некоректной строки a" + file.getOriginalFilename() + ": " + line[0]);
                     }
-                    else product.setType(line[2]);
+                    else
+                    {
+                        Product product = new Product();
 
-                    product.setCategory(line[1]);
+                        ArrayList<String> typeRBT = resolveProductRBT(line);
 
-                    product.setBrand(line[4]);
-                    product.setAnnotation(line[5]);
+                        String productType = typeRBT.get(0);
+                        String productGroup = typeRBT.get(1);
+                        String productName = line[3];
+                        String productBrand = line[4];
 
-                    product.setAmount(line[6]);
-                    product.setPrice(line[7]);
-                    product.setPic(line[10]);
+                        ///resolveModelName();
+                        String trimName = trimProductName(productName, productBrand/*line[5], line[3]*/);
+                        String trimAfterComma = trimAllAfterComma(trimName);
+                        String noRussian = noCyrillicChars(trimAfterComma, productBrand/*line[3]*/);
+                        String trimGarbage = trimGarbageChar(noRussian);
+                        String finalName = removeAllSpacesAfterBrand(trimGarbage, productBrand);
+
+                        product.setModelName(finalName);
+                        //log.info("MODEL NAME: " + product.getModelName());
+
+                        product.setFullName(productType + line[3]);
+                        product.setProductGroup(productGroup);
+                        product.setProductID(line[0]);
+
+                        if (line[2].contains("_")) {
+                            product.setType(line[2].substring(line[2].indexOf("_")+1));
+                        }
+                        else product.setType(line[2]);
+
+                        product.setCategory(line[1]);
+                        product.setBrand(line[4]);
+                        product.setAnnotation(line[5]);
+                        product.setAmount(line[6]);
+                        product.setPrice(line[7]);
+                        product.setPic(line[10]);
 
                     /*String trimName = trimProductName(line[3], line[4]);
 
                     product.setModelName(trimAllAfterComma(trimName));
                     log.info("|||| MODEL NAME: " + product.getModelName());*/
 
-                    product.setSupplier("1RBT");
-
-                    products.add(product);
-                    productRepo.save(product);
-                }
-            }
-        }
-        else if (Objects.requireNonNull(file.getOriginalFilename()).contains("RUSBT")) {
-            log.info("\nParsing RUS_BT file: " + file.getOriginalFilename());
-
-            while ((line = reader.readNext()) != null)
-            {
-                if (line[0].equals("Код товара") ///checkFileRUSBT(line);
-                        || line[0].equals(" ")
-                        || line[0].startsWith(";")
-                        /*|| line[0].contains(";")
-                        || line[0].startsWith("Группа")
-                        || line[0].startsWith(" ")
-                        || line[6].startsWith(" ")
-                        || line[6].contains("ПОДАР")
-                        || line[6].contains("УЦЕНКА")
-                        || line[6].contains("Уценка")*/
-                        || line[5].isEmpty()
-                ){
-                    log.info("!!! Пропуск некоректной строки " + file.getOriginalFilename() + line[0] + " " + line[0]);
-                }
-                else
-                {
-                    if (alreadyAdd(line)) log.info("PRODUCT ALREADY EXISTS");
-                    else {
-
-                        Product product = new Product();
-                        String productName = line[6];
-                        String productBrand = line[4];
-
-                        String trimName = trimProductName(productName, productBrand/*line[5], line[3]*/);
-                        String trimAfterComma = trimAllAfterComma(trimName);
-                        String noRussian = noRussianChar(trimAfterComma, productBrand/*line[3]*/);
-                        String trimGarbage = trimGarbageChar(noRussian);
-                        String finalName = removeAllSpacesAfterBrand(trimGarbage, productBrand);
-
-                        product.setModelName(finalName);
-                        //log.info("|||| MODEL NAME: " + product.getModelName());
-
-
-                        if (!line[6].isEmpty() && line[6].contains(","))
-                        {
-                            String name = line[6].substring(0, line[6].indexOf(","));
-                            String info = line[6].substring(line[6].indexOf(",")+1);
-
-                            product.setFullName(name);
-                            product.setAnnotation(info);
-                        }
-                        else product.setFullName(line[6]);
-
-                        product.setProductID(line[5]);
-                        product.setCategory(line[0]);
-                        product.setSubCategory(line[1]);
-
-                        String productGroup = resolveProductRUS(line);
-                        product.setProductGroup(productGroup);
-
-                        product.setType(line[3]);
-                        product.setBrand(line[4]);
-                        product.setAmount(line[7]+line[8]);
-                        product.setPrice(line[13]);
-
-                        product.setSupplier("2RUS_BT");
-
-                        /*String trimName = trimProductName(line[6], line[4]);
-                        product.setModelName(trimAllAfterComma(trimName));
-                        log.info("|||| MODEL NAME: " + product.getModelName());*/
-
-                        if (picRequiredRUS(line[5]))
-                        {
-                            String pic = parsePicFromHTML(line[17]);
-                            product.setPic(pic);
-                        }
-
+                        product.setSupplier("1RBT");
                         products.add(product);
                         productRepo.save(product);
                     }
                 }
             }
-        }
-        else if (Objects.requireNonNull(file.getOriginalFilename()).contains("Доставка")) {
-            log.info("\nParsing M_TRADE file: " + file.getOriginalFilename());
-
-            while ((line = reader.readNext()) != null)
+            else if (Objects.requireNonNull(file.getOriginalFilename()).contains("RUSBT"))
             {
-                if (line[0].equals("Код товара") ///checkFileMTRADE(line);
-                        || line[0].startsWith(";")
-                        || line[0].equals("КОД")
-                        || line[0].startsWith(" ")
-                ){
-                    log.info("!!! Пропуск некоректной строки " + file.getOriginalFilename() + " " + line[0]);
-                }
-                else
+                log.info("Parsing RUS_BT file: " + file.getOriginalFilename());
+
+                while ((line = reader.readNext()) != null)
                 {
-                    //log.info(Arrays.toString(line));
-
-                    Product product = new Product();
-                    String productName = line[5];
-                    String productBrand = line[3];
-
-                    String trimName = trimProductName(productName, productBrand/*line[5], line[3]*/);
-                    String trimAfterComma = trimAllAfterComma(trimName);
-                    String noRussian = noRussianChar(trimAfterComma, productBrand/*line[3]*/);
-                    String trimGarbage = trimGarbageChar(noRussian);
-                    String finalName = removeAllSpacesAfterBrand(trimGarbage, productBrand);
-
-                    product.setModelName(finalName);
-                    //log.info("|||| MODEL NAME: " + product.getModelName());
-
-                    product.setProductID(line[0]);
-                    product.setCategory(line[1]);
-                    product.setType(line[4]);
-                    product.setProductGroup(resolveTypeMT(line[2]));
-
-                    product.setFullName(resolveNameMT(line[5]));
-                    //log.info(product.getModelName());
-
-                    product.setBrand(line[3]);
-                    product.setAnnotation(line[6]);
-                    product.setPrice(line[7]);
-                    product.setAmount(line[8]);
-
-                    product.setSupplier("3M_TRADE");
-
-
-                    /*if (picRequiredMT(line[10]))
+                    if (line[0].equals("Код товара") ///checkFileRUSBT(line);
+                            || line[0].equals(" ")
+                            || line[0].startsWith(";")
+                            || line[5].isEmpty()
+                    ){
+                        log.info("!!! Пропуск некоректной строки " + file.getOriginalFilename() + line[0] + " " + line[0]);
+                    }
+                    else
                     {
-                        String pic = findPicAndParse(line[5]);
-                        product.setPic(pic);
-                    }*/
+                        if (alreadyAdd(line)) log.info("PRODUCT ALREADY EXISTS!");
+                        else {
 
-                    products.add(product);
-                    productRepo.save(product);
+                            Product product = new Product();
+                            String productName = line[6];
+                            String productBrand = line[4];
+
+                            String trimName = trimProductName(productName, productBrand/*line[5], line[3]*/);
+                            String trimAfterComma = trimAllAfterComma(trimName);
+                            String noRussian = noCyrillicChars(trimAfterComma, productBrand/*line[3]*/);
+                            String trimGarbage = trimGarbageChar(noRussian);
+                            String finalName = removeAllSpacesAfterBrand(trimGarbage, productBrand);
+                            product.setModelName(finalName);
+                            //log.info("MODEL NAME: " + product.getModelName());
+
+                            if (!line[6].isEmpty() && line[6].contains(","))
+                            {
+                                String name = line[6].substring(0, line[6].indexOf(","));
+                                String info = line[6].substring(line[6].indexOf(",")+1);
+
+                                product.setFullName(name);
+                                product.setAnnotation(info);
+                            }
+                            else product.setFullName(line[6]);
+
+                            if (picRequiredRUS(line[5]))
+                            {
+                                String pic = parsePicFromHTML(line[17]);
+                                product.setPic(pic);
+                            }
+
+                            String productGroup = resolveProductRUS(line);
+                            product.setProductGroup(productGroup);
+
+                            product.setProductID(line[5]);
+                            product.setCategory(line[0]);
+                            product.setSubCategory(line[1]);
+                            product.setType(line[3]);
+                            product.setBrand(line[4]);
+                            product.setAmount(line[7]+line[8]);
+                            product.setPrice(line[13]);
+
+                            product.setSupplier("2RUS_BT");
+                            products.add(product);
+                            productRepo.save(product);
+                        }
+                    }
                 }
             }
+            else if (Objects.requireNonNull(file.getOriginalFilename()).contains("Доставка"))
+            {
+                log.info("\nParsing M_TRADE file: " + file.getOriginalFilename());
+
+                while ((line = reader.readNext()) != null)
+                {
+                    if (line[0].equals("Код товара") ///checkFileMTRADE(line);
+                            || line[0].startsWith(";")
+                            || line[0].equals("КОД")
+                            || line[0].startsWith(" ")
+                    ){
+                        log.info("!!! Пропуск некоректной строки " + file.getOriginalFilename() + " " + line[0]);
+                    }
+                    else
+                    {
+                        Product product = new Product();
+                        String productName = line[5];
+                        String productBrand = line[3];
+
+                        ///resolveModelName()
+                        String trimName = trimProductName(productName, productBrand);
+                        String trimAfterComma = trimAllAfterComma(trimName);
+                        String noRussian = noCyrillicChars(trimAfterComma, productBrand);
+                        String trimGarbage = trimGarbageChar(noRussian);
+                        String finalName = removeAllSpacesAfterBrand(trimGarbage, productBrand);
+                        product.setModelName(finalName);
+                        //log.info("MODEL NAME: " + product.getModelName());
+
+                        product.setFullName(resolveNameMT(line[5]));
+
+                        product.setProductID(line[0]);
+                        product.setCategory(line[1]);
+                        product.setType(line[4]);
+                        product.setProductGroup(resolveTypeMT(line[2]));
+                        product.setBrand(line[3]);
+                        product.setAnnotation(line[6]);
+                        product.setPrice(line[7]);
+                        product.setAmount(line[8]);
+
+                        product.setSupplier("3M_TRADE");
+                        products.add(product);
+                        productRepo.save(product);
+                    }
+                }
+            }
+            //products.forEach(product -> log.info(product.toString()));
+            log.info("Products add: " + products.size());
         }
-        log.info("Products add: " + products.size());
-        //products.forEach(product -> log.info(product.toString()));
+        catch (Exception exp) {
+            log.info("Something wrong!");
+        }
     }
 
     private String removeAllSpacesAfterBrand(String trimGarbage, String productBrand) {
@@ -323,30 +297,26 @@ public class CatalogParser {
 
         if (!temp.isEmpty()) {
             result = productBrand.toLowerCase().concat(" ").concat(temp);
-            //System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! "+result);
-            //return result;
         }
 
         return result.isEmpty() ? trimGarbage : result;
         /*String[] result;
-
         result = trimGarbage.split(productBrand);
-
         for (String s : result) {
-            System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! "+s);
-        }*/
-        //return trimGarbage;
+            System.out.println("!!! " + s);
+        }
+        return trimGarbage;*/
     }
 
-    private String trimGarbageChar(String noRussian) {
+    private String trimGarbageChar(String string) {
         String result = "";
 
-        if (noRussian.contains("(")) {
-            result = noRussian.split("\\(")[0];
+        if (string.contains("(")) {
+            result = string.split("\\(")[0];
         }
 
-        if (noRussian.contains("/")) {
-            result = noRussian.split("/")[0];
+        if (string.contains("/")) {
+            result = string.split("/")[0];
         }
 
         if (!result.isEmpty()) {
@@ -367,32 +337,28 @@ public class CatalogParser {
         }
         else return noRussian;*/
 
-        return result.isEmpty() ? noRussian : result;
+        return result.isEmpty() ? string : result;
     }
 
-    private String noRussianChar(String trimAfterComma, String brand) {
-
+    private String noCyrillicChars(String trimAfterComma, String brand)
+    {
         //String test = "jkb5!2@-=|/.;:af23ывапыв";
         //if (Regex.Match(inputString, "[а-яА-ЯёЁ]"))
 
         String regex = "[а-яёА-ЯЁ]+"; /*"[а-яА-Я]*"*/
-        //String str = "Работа не walk - работа work";
-
         Pattern pattern = Pattern.compile(regex);
         Matcher match = pattern.matcher(brand);
+
         if (!match.find()){
             String result = trimAfterComma.replaceAll("[а-яёА-ЯЁ]*", "");
             //log.info("FINAL TRIM REGEX"+result);
             return result;
         }
         return trimAfterComma;
-
-        /*if (brand.contains("k")) {
-
-        }*/
     }
 
-    private String trimAllAfterComma(String trimName) {
+    private String trimAllAfterComma(String trimName)
+    {
         //log.info(trimName);
         String result = "";
 
@@ -413,66 +379,71 @@ public class CatalogParser {
 
     private void parseBase(MultipartFile file) throws IOException
     {
-        InputStream inputStream = file.getInputStream();
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        try {
 
-        CSVReader reader = new CSVReader(bufferedReader, ';');
 
-        List<ProductBase> products = new ArrayList<>();
-        String[] line;
+            /*InputStream inputStream = file.getInputStream();*/
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream()));
+            CSVReader reader = new CSVReader(bufferedReader, ';');
 
-        while ((line = reader.readNext()) != null)
-        {
-            if (line[0].equals("Категория")
-            ){
-                log.info("!!! Пропуск первой строки");
-            }
-            else
+            String[] line;
+            List<ProductBase> products = new ArrayList<>();
+
+            while ((line = reader.readNext()) != null)
             {
-                ProductBase product = new ProductBase();
-                product.setProductID(UUID.randomUUID().toString());
+                if (line[0].equals("Категория")
+                ){
+                    log.info("!!! Пропуск первой строки");
+                }
+                else
+                {
+                    ProductBase product = new ProductBase();
+                    product.setProductID(UUID.randomUUID().toString());
 
-                String productBrand = line[13];
+                    String productBrand = line[13];
 
-                try {
-                    product.setCategory(line[0]);
-                    product.setSubCategory(line[1]);
+                    try {
+                        product.setCategory(line[0]);
+                        product.setSubCategory(line[1]);
 
-                    if (line[2].isEmpty()) {
-                        product.setProductGroup(line[1]);
+                        if (line[2].isEmpty()) {
+                            product.setProductGroup(line[1]);
+                        }
+                        else product.setProductGroup(line[2]);
+
+                        product.setArticul(line[3]);
+                        product.setArticulModification(line[4]);
+                        product.setFullName(line[5]);
+                        product.setFullCategory(line[6]);
+                        product.setPrice(line[7]);
+                        product.setAnnotation(line[11]);
+                        product.setBrand(line[13]);
+                        product.setPics(line[18]);
+                        product.setParamsHTML(line[19]);
+
+                        String trim = trimProductName(line[5], line[13]);
+                        String finalName = removeAllSpacesAfterBrand(trim, productBrand);
+                        product.setModelName(finalName);
+
+                        products.add(product);
+                        //log.info(product.getFullName());
+                        baseRepo.save(product);
                     }
-                    else product.setProductGroup(line[2]);
+                    catch (ArrayIndexOutOfBoundsException e) {
+                        //log.info("EXP!");
+                    }
 
-                    product.setArticul(line[3]);
-                    product.setArticulModification(line[4]);
-                    product.setFullName(line[5]);
-                    product.setFullCategory(line[6]);
-                    product.setPrice(line[7]);
-                    product.setAnnotation(line[11]);
-                    product.setBrand(line[13]);
-                    product.setPics(line[18]);
-                    product.setParamsHTML(line[19]);
-
-                    String trim = trimProductName(line[5], line[13]);
-                    String finalName = removeAllSpacesAfterBrand(trim, productBrand);
-                    product.setModelName(finalName);
-
-                    products.add(product);
-                    //log.info(product.getFullName());
-                    baseRepo.save(product);
                 }
-                catch (ArrayIndexOutOfBoundsException e) {
-                    //log.info("EXP!");
-                }
-
             }
+            log.info("Products add: " + products.size());
         }
-        log.info("Products add: " + products.size());
+        catch (Exception exp) {
+            log.info("Something went wrong with Base!");
+        }
     }
 
-    private String trimUntilBrandFirst(String fullName, String brand) {
+    /*private String trimUntilBrandFirst(String fullName, String brand) {
         String result;
-
         try {
             if (!fullName.startsWith(brand)) {
                 return fullName.substring(fullName.indexOf(" ")).trim();
@@ -482,10 +453,10 @@ public class CatalogParser {
         catch (StringIndexOutOfBoundsException e) {
             log.info("Out of");
         }
-
         return "lol";
-    }
+    }*/
 
+    ///В РЕКУРСИЮ
     private String trimProductName(String fullNameCAT, String brandCAT)
     {
         String fullName = fullNameCAT.toLowerCase();
@@ -500,22 +471,18 @@ public class CatalogParser {
                 {
                     result = fullName.substring(fullName.indexOf(" ")).trim();
                     //log.info("Result1: " + result);
-
                     if (!result.startsWith(brand.trim()))
                     {
                         result = result.substring(result.indexOf(" ")).trim();
                         //log.info("Result2: " +result);
-
                         if (!result.startsWith(brand.trim()))
                         {
                             result = result.substring(result.indexOf(" ")).trim();
                             //log.info("Result3: " +result);
-
                             if (!result.startsWith(brand.trim()))
                             {
                                 result = result.substring(result.indexOf(" ")).trim();
                                 //log.info("Result4: " +result);
-
                                 if (!result.startsWith(brand.trim()))
                                 {
                                     result = result.substring(result.indexOf(" ")).trim();
@@ -538,58 +505,8 @@ public class CatalogParser {
         return "ZZZ";
     }
 
-    /*private String trimProductName(String fullName, String brand) {
-        log.info(fullName + "; Brand: " + brand);
-        String result;
-
-        if (!brand.isEmpty() && fullName.contains(" ")) {
-            result = trimUntilBrandFirst(fullName, brand);
-
-            if (!result.startsWith(brand)) {
-                result = trimUntilBrandFirst(result, brand);
-            }
-            else return result;
-
-            *//*try {
-                if (!fullName.startsWith(brand) && fullName.contains(" ")) {
-                    result = fullName.substring(fullName.indexOf(" ")).trim();
-                    log.info("Result1: " + result);
-
-                    if (!result.startsWith(brand.trim())) {
-                        result = result.substring(result.indexOf(" ")).trim();
-                        log.info("Result2: " +result);
-                    }
-                }
-            }
-            catch (StringIndexOutOfBoundsException e) {
-                log.info("Out of");
-            }*//*
-        }
-        *//*while (!fullName.startsWith(brand)) {
-            result = fullName.substring(fullName.indexOf(" "));
-            log.info(result);
-        }*//*
-
-        return "lol";
-    }*/
-
-
-    /*try {
-                if (!fullName.startsWith(brand) && fullName.contains(" ")) {
-                    result = fullName.substring(fullName.indexOf(" ")).trim();
-                    log.info("Result1: " + result);
-
-                    if (!result.startsWith(brand.trim())) {
-                        result = result.substring(result.indexOf(" ")).trim();
-                        log.info("Result2: " +result);
-                    }
-                }
-            }
-            catch (StringIndexOutOfBoundsException e) {
-                log.info("Out of");
-            }*/
-
-    private String parsePicFromHTML(String link) throws IOException {
+    private String parsePicFromHTML(String link) throws IOException
+    {
         if (!link.isEmpty() && !link.equals("В ячейке нет гиперссылки!")) {
             try {
                 String pic;
@@ -623,32 +540,28 @@ public class CatalogParser {
         return null;
     }
 
-    /*private String findPicAndParse(String requestName) throws IOException {
-     *//*https://www.google.com/search?q=Hotpoint-Ariston%20PCN%20642%20IX/HA%20RU*//*
-        //https://yandex.com/images/search?text=Hotpoint-Ariston PCN 642 IX/HA RU
-
+    /*private String findPicAndParse(String requestName) throws IOException
+    {
         log.info(requestName);
-
         if (!requestName.isEmpty())
         {
-            //String request = "https://yandex.com/images/search?text=".concat(requestName);
-            String request = "https://www.bing.com/images/search?q=".concat("Panasonic KX-TGB210RUR");
-            Document page = Jsoup.connect(request).get();
-
-            //Elements elements = page.select("img");
+            Document page = Jsoup.connect(requestName).get();
+            Elements elements = page.select("img");
             //Elements elements = page.getElementsByAttribute("img");
-            Elements elements = page.getElementsByClass("mimg");
+            //Elements elements = page.getElementsByClass("mimg");
             //Elements elements = page.getAllElements();
             for (Element element : elements) {
                 log.info(element.toString());
             }
-            //Element pics = page.select("class=\"serp-item__thumb justifier__thumb\"").first();
+            //Element pic = page.select("class=\"serp-item__thumb justifier__thumb\"").first();
             //log.info(pics.toString());
         }
-        return "lol";
+        return pic.toString();
     }*/
 
-    private boolean alreadyAdd(String[] line) {
+    ///ПАРАМЕТРЫ МЕТОДА В STRING
+    private boolean alreadyAdd(String[] line)
+    {
         Product product = productRepo.findByProductID(line[5]);
         if (product == null) return false;
         else {
@@ -656,7 +569,9 @@ public class CatalogParser {
         }
     }
 
-    private boolean picRequiredRUS(String line) {
+    ///ЛОГИКА
+    private boolean picRequiredRUS(String line)
+    {
         if (productRepo.findByProductID(line) != null && productRepo.findByProductID(line).getPic() != null) {
             return false;
         }
