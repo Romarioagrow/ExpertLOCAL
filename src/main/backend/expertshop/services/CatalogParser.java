@@ -724,4 +724,7 @@ public class CatalogParser {
         }
         else return line2;
     }
+
+    public void test() {
+    }
 }
