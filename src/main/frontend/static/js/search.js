@@ -1,8 +1,9 @@
 $(document).ready(function(){
-    $('#search-button')           .on('click', searchProducts);
+    $('#search-button').on('click', searchProducts);
 });
 $(document).ready(function(){
-    $('input[modelName="main-search"]').on('keyup', searchProducts);
+    //$('input[modelName="main-search"]').on('keyup', searchProducts);
+    $('#main-search').on('keyup', searchProducts);
 });
 $('body').click(function(){
     /// if элеиентПодСтрелкой.modelName != search
@@ -12,7 +13,7 @@ $('body').click(function(){
 function searchProducts(e) {
     e.preventDefault();
 
-    var searchRequest = ($('#main-search').val()).trim().toUpperCase();
+    var searchRequest = $('#main-search').val().trim()/*.toUpperCase()*/;
     console.log(searchRequest);
 
     $.ajax({
@@ -33,10 +34,10 @@ function searchProducts(e) {
 
             response.responseJSON.forEach(product => $("#display-result").append
             (
-                '<div class="one-product" style="margin-top: 3px!important;">'                  +
-                    '<a href="http://localhost:8080/products/info/'+ product.productID +'">'          +
-                        product.productParams.type + " " + product.brand + " " + product.model  +
-                    '</a>'                                                                      +
+                '<div class="one-product" style="margin-top: 3px!important;">'                      +
+                '<a href="http://localhost:8080/products/info/'+product.productID+'">'              +
+                /*product.productParams.type + " " + product.brand + " " + */product.fullName       +
+                '</a>'                                                                              +
                 '</div>'
             ));
         }

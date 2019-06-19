@@ -1,16 +1,30 @@
 <#import "../parts/template.ftl" as t>
+<#import "../parts/pager.ftl" as p>
+
 <@t.template>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-3 marker1">
-                <div class="marker2"></div>
+        <div class="row mt-2">
+            <div class="col-3"></div>
+            <div class="col-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Каталог</a></li>
+                        <li class="breadcrumb-item"><a href="/categories/${path[0]}">${path[0]}</a></li>
+                        <li class="breadcrumb-item disabled" style="color: #7a7979;">${path[1]}</li>
+                    </ol>
+                </nav>
             </div>
-            <div class="col marker3">
-                <div class="marker2 mt-4">
-                    <div>
-                        <h3>${url}</h3>
-                    </div>
+        </div>
+        <div class="row">
+            <div class="col-3 marker1"></div>
+            <div class="col-9">
+                <div class="mt-1">
+                    <h1>${path[1]?upper_case}</h1>
                 </div>
+                <div class="text-muted">
+                    <small>Всего товаров: ${total}</small>
+                </div>
+                <@p.pager url page/>
             </div>
         </div>
         <div class="row mb-3">
@@ -21,7 +35,7 @@
                     </form>
                 </div>
             </div>
-            <div class="col marker3">
+            <div class="col-9 marker3">
                 <div class="mt-2 marker2">
                     <div class="btn-group btn-group-toggle" data-toggle="buttons" id="sorting">
                         <label class="btn btn-secondary active">
@@ -36,83 +50,32 @@
                     </div>
                 </div>
                 <div class="card-group marker2" id="products">
-                    <#--<#if products??>
-                        <#list products as product>
-                            <div class="card product-card mr-3 mt-3">
-                                <#if product.pic??>
-                                    <img class="card-img-top" src="${product.pic}" alt="Card image cap" width="180" height="180">
-                                </#if>
-                                <div class="card-body" style="margin-bottom: 0 !important;">
-                                    <h5 class="card-title">
-                                        <a class="btn btn-outline-mdb-color btn-rounded waves-effect" href="/info/${product.productID?c}" role="button" >
-                                            <strong>
-                                                ${product.brand}
-                                                ${product.model}
-                                            </strong>
+                    <#if page?has_content>
+                        <#list page.content as product>
+                            <div class="card product-card">
+                                <div class="view overlay">
+                                    <#if product.pic??>
+                                        <img class="img-fluid scale-pic" src="${product.pic}" alt="Product pic">
+                                        <a href="#">
+                                            <div class="mask rgba-white-slight"></div>
                                         </a>
-                                    </h5>
-                                    <p class="card-text">
-                                        <small>
-                                            <#include "../parts/params.ftl">
-                                        </small>
-                                    </p>
-                                </div>
-                                <div class="card-footer">
-                                    <small class="text-muted">
-                                        <strong><i>${product.price}₽</i></strong>
-                                    </small>
-                                    <#if orderedProductsID??>
-                                        <#if orderedProductsID?seq_contains('${product.productID?c}')>
-                                            <br><a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
-                                        <#else>
-                                            <div id="addToOrderDiv${product.productID?c}">
-                                                <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" modelName="addToOrder" id="addToOrder${product.productID?c}" value="${product.productID?c}">
-                                                    В корзину
-                                                </button>
-                                            </div>
-                                        </#if>
-                                    <#else>
-                                        <div id="addToOrderDiv${product.productID?c}">
-                                            <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" modelName="addToOrder" id="addToOrder${product.productID?c}" value="${product.productID?c}">
-                                                В корзину
-                                            </button>
-                                        </div>
                                     </#if>
                                 </div>
-                            </div>
-                        </#list>
-                    </#if>-->
-                    <#if products??>
-                        <#list products as product>
-                            <div class="card product-card mr-3 mt-3">
-                                <#if product.pic??>
-                                    <img class="card-img-top" src="${product.pic}" alt="Pic">
-                                </#if>
-                                <div class="card-body" style="margin-bottom: 0 !important;">
+                                <div class="card-body">
                                     <h5 class="card-title">
-                                        <a href="/info/${product.productID}">
+                                        <a href="/products/info/${product.productID}">
                                             <strong>
-                                                ${product.getFullName}
+                                                ${product.fullName}
                                             </strong>
                                         </a>
                                     </h5>
                                     <p class="card-text">
-                                        <strong><i class="mb-4">${product.type}</i></strong>
-                                        <small>
-                                            <#if product.annotation??>
-                                                <br>${product.annotation}
-                                            </#if>
-                                        </small>
+                                        <strong><i>${product.type}</i></strong>
                                     </p>
-                                </div>
-                                <div class="card-footer" style="color: #0f0f0f !important;">
-                                    <strong>
-                                        ${product.price}₽
-                                    </strong>
-                                    <br>${product.supplier}
-                                    <#if orderedProductsID?? <#--&& orderedProductsID?seq_contains('${product.productID}')-->>
-                                        <#if orderedProductsID?seq_contains('${product.productID}')>
-                                            <br><a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
+                                    <h3><strong>${product.price} ₽</strong></h3>
+                                    <div>
+                                        <#if orderedProductsID?? && orderedProductsID?seq_contains('${product.productID}')>
+                                            <a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
                                         <#else>
                                             <div id="addToOrderDiv${product.productID}">
                                                 <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID}" value="${product.productID}">
@@ -120,23 +83,35 @@
                                                 </button>
                                             </div>
                                         </#if>
-                                    <#else>
-                                        <div id="addToOrderDiv${product.productID}">
-                                            <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID}" value="${product.productID}">
-                                                В корзину
-                                            </button>
-                                        </div>
-                                    </#if>
+                                    </div>
                                 </div>
                             </div>
                         </#list>
                     </#if>
                 </div>
+                <@p.pager url page/>
             </div>
         </div>
     </div>
 </@t.template>
+
 <style>
+    .product-card {
+        min-width: 23rem;
+        max-width: 23rem;
+
+        min-height: 25rem;
+        max-height: 25rem;
+
+        text-align: center;
+        margin-bottom: 2rem !important;
+    }
+    .scale-pic {
+        height: 100% !important;
+        width: 100% !important;
+        object-fit: contain !important;
+    }
+
     .b-add {
         border-color: #e52d00 !important;
         color: #e52d00 !important;
@@ -145,5 +120,9 @@
         border-color: #e52d00 !important;
         background-color: #e52d00 !important;
         color: #ffffff !important;
+    }
+    .breadcrumb {
+        background-color: #fbf4f4;
+        padding-left: 0;
     }
 </style>

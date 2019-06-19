@@ -105,7 +105,7 @@ function removeFromOrder(button) {
             for (var item in order.orderedProducts)
             {
                 let product = order.orderedProducts[item];
-
+                	//сервер загружает на элемент данные а ajax обновляет
                 $("#bucket-products").append
                 (
                     '<div class="card ordered-card mb-4">' +

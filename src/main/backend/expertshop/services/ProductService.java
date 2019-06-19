@@ -9,11 +9,17 @@ import expertshop.repos.ProductRepo;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.util.*;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static expertshop.controllers.ControllerService.getSessionID;
 
@@ -24,19 +30,19 @@ public class ProductService {
     private final ProductRepo productRepo;
     private final OrderRepo orderRepo;
 
-    public List<Product> findProducts(String requiredProduct)
+    public Page<Product> findProducts(String request, Pageable pageable, Model model)
     {
-        log.info(requiredProduct);
+        log.info("Request " + request);
 
-        Set<Product> products = productRepo.findByProductGroupContainingIgnoreCase(requiredProduct);
-        products.addAll(productRepo.findByTypeContainingIgnoreCase(requiredProduct));
+        Page<Product> page = findRequiredProducts(request, request, request, pageable);
+        model.addAttribute("total", page.getTotalElements());
 
-        List<Product> sortedProducts = new ArrayList<>(products);
-        sortedProducts.sort(Comparator.comparing(Product::getSupplier));
+        log.info("Products found: " + page.getTotalElements() + " on " + page.getTotalPages() + " pages!");
+        return page;
+    }
 
-        products.forEach(productRBT -> log.info(productRBT.toString()));
-        log.info("Products found: " + products.size());
-        return sortedProducts;
+    private Page<Product> findRequiredProducts(String s, String s1, String s2, Pageable pageable) {
+        return productRepo.findByProductGroupContainingIgnoreCaseOrTypeContainingIgnoreCaseOrFullNameContainingIgnoreCase(s, s1, s2, pageable);
     }
 
     public List<Product> searchProducts(String searchRequest)
@@ -44,7 +50,7 @@ public class ProductService {
         log.info("Search request: " + searchRequest);
 
         List<Product> searchedProducts = productRepo.findAll().stream()
-                .filter(product -> product.getFullName()/*getBrand().concat(" ").concat(product.getModel())*/.contains(searchRequest))
+                .filter(product -> StringUtils.containsIgnoreCase(product.getFullName(), searchRequest))
                 .collect(Collectors.toList());
         log.info("Products found: " + searchedProducts.size());
 

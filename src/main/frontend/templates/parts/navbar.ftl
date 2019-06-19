@@ -40,8 +40,9 @@
                     <a href="/user/cabinet">Личный кабинет</a>
                 </div>
             </#if>
-
-            <a href="http://localhost:8080/supplier">supplier</a>
+            <div style="padding-top: 1rem;">
+                <a href="http://localhost:8080/supplier">Поставщики</a>
+            </div>
         </ul>
     </div>
 </nav>

@@ -27,7 +27,7 @@ public class CategoriesController {
     private final ProductRepo productRepo;
 
     @GetMapping("/supplier")
-    public String supplier(Model model, @AuthenticationPrincipal User user) {
+    public String supplier() {
         return "pages/supplier";
     }
     @PostMapping("/supplier")
@@ -35,6 +35,12 @@ public class CategoriesController {
         log.info(file.getOriginalFilename());
 
         catalogParser.processFile(file);
+        return "pages/supplier";
+    }
+
+    @GetMapping("/supplier/pics")
+    public String checkProductPics() {
+        catalogParser.checkProductPics();
         return "pages/supplier";
     }
 
@@ -71,15 +77,6 @@ public class CategoriesController {
         model.addAttribute("order", getOrder(user));
         model.addAttribute("orderedProducts", orderService.showOrderedProducts(user));
         return "pages/order";
-    }
-
-    @GetMapping("/info/{productID}")
-    public String showProduct(Model model, @PathVariable String productID, @AuthenticationPrincipal User user)
-    {
-        model.addAttribute("url", getCurrentURL(productID));
-        model.addAttribute("order", getOrder(user));
-        productService.getOrderedID(user, model);
-        return "pages/product";
     }
 
     @GetMapping("/categories")

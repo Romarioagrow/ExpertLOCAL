@@ -14,10 +14,14 @@
                             <label class="custom-file-label" for="customFile">Choose</label>
                         </div>
                     </div>
-
-                    <#--<input type="hidden" modelName="_csrf" value="${_csrf.token}"/>-->
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Post</button>
+                    </div>
+                </form>
+
+                <form method="get" action="/supplier/pics">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Check pics</button>
                     </div>
                 </form>
             </div>

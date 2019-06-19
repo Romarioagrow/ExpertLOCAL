@@ -8,7 +8,6 @@ import expertshop.repos.ProductRepo;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.ConnectException;
 import java.util.*;
@@ -44,12 +43,35 @@ public class CatalogParser {
         }
     }
 
+    public void checkProductPics()
+    {
+       /* try {
+            int count = 0;
+            List<Product> products = productRepo.findAll();
+
+            for (Product product : products)
+            {
+                if (product.getPic())
+                else if (product.getPic().isEmpty() || product.getPic().equals("N/A"))
+                {
+                    product.setPic("no pic");
+                    productRepo.save(product);
+                }
+            }
+            log.info(products.size()-count + " products with pics from " + products.size());
+        }
+        catch (NullPointerException exp) {
+            log.info("null");
+        }*/
+    }
+
     private void resolvePics()
     {
         List<Product> products = productRepo.findAll();
         List<ProductBase> productsBase = baseRepo.findAll();
 
-        for (Product product : products) {
+        for (Product product : products)
+        {
             if (product.getPic() == null)
             {
                 ProductBase productBase = baseRepo.findFirstByModelNameContaining(product.getModelName());
@@ -63,7 +85,8 @@ public class CatalogParser {
             }
         }
 
-        for (ProductBase productBase : productsBase) {
+        /*for (ProductBase productBase : productsBase)
+        {
             Product product = productRepo.findFirstByModelNameContaining(productBase.getModelName());
 
             if (product != null && product.getPic() == null)
@@ -72,7 +95,7 @@ public class CatalogParser {
                 productRepo.save(product);
                 log.info(product.getModelName() + " URL: " + product.getPic());
             }
-        }
+        }*/
 
         int count = 0;
         for (Product product : products)
@@ -144,12 +167,15 @@ public class CatalogParser {
                         }
                         else product.setType(line[2]);
 
+                        product.setPic(line[10]);
+
                         product.setCategory(line[1]);
                         product.setBrand(line[4]);
-                        product.setAnnotation(line[5]);
+                        product.setAnnotation(line[5].replaceAll(";", "<br>"));
                         product.setAmount(line[6]);
                         product.setPrice(line[7]);
-                        product.setPic(line[10]);
+
+
 
                     /*String trimName = trimProductName(line[3], line[4]);
 
@@ -198,7 +224,7 @@ public class CatalogParser {
                                 String info = line[6].substring(line[6].indexOf(",")+1);
 
                                 product.setFullName(name);
-                                product.setAnnotation(info);
+                                product.setAnnotation(info.replaceAll(",", "<br>"));
                             }
                             else product.setFullName(line[6]);
 
@@ -245,13 +271,13 @@ public class CatalogParser {
                         String productName = line[5];
                         String productBrand = line[3];
 
-                        ///resolveModelName()
-                        String trimName = trimProductName(productName, productBrand);
-                        String trimAfterComma = trimAllAfterComma(trimName);
-                        String noRussian = noCyrillicChars(trimAfterComma, productBrand);
-                        String trimGarbage = trimGarbageChar(noRussian);
-                        String finalName = removeAllSpacesAfterBrand(trimGarbage, productBrand);
-                        product.setModelName(finalName);
+                        ///String modelName = resolveModelName(productName, productBrand);
+                        String trimName         = trimProductName(productName, productBrand);
+                        String trimAfterComma   = trimAllAfterComma(trimName);
+                        String noRussian        = noCyrillicChars(trimAfterComma, productBrand);
+                        String trimGarbage      = trimGarbageChar(noRussian);
+                        String modelName        = removeAllSpacesAfterBrand(trimGarbage, productBrand);
+                        product.setModelName(modelName);
                         //log.info("MODEL NAME: " + product.getModelName());
 
                         product.setFullName(resolveNameMT(line[5]));
@@ -261,9 +287,10 @@ public class CatalogParser {
                         product.setType(line[4]);
                         product.setProductGroup(resolveTypeMT(line[2]));
                         product.setBrand(line[3]);
-                        product.setAnnotation(line[6]);
+                        product.setAnnotation(line[6].replaceAll(",", "<br>"));
                         product.setPrice(line[7]);
                         product.setAmount(line[8]);
+                        product.setPic("");
 
                         product.setSupplier("3M_TRADE");
                         products.add(product);
@@ -537,7 +564,7 @@ public class CatalogParser {
             }
         }
         else log.info("ССЫЛКА ОТСУТСТВУЕТ!");
-        return null;
+        return "NO PIC";
     }
 
     /*private String findPicAndParse(String requestName) throws IOException
@@ -688,8 +715,8 @@ public class CatalogParser {
             }
 
             default -> {
-                types.add("Type ");
-                types.add("Group");
+                types.add("");
+                types.add("");
             }
         }
         return types;
@@ -726,5 +753,30 @@ public class CatalogParser {
     }
 
     public void test() {
+        /*String[] ann = StringUtils.stripAll(productRepo.findByProductID("LOOL").getAnnotation(), ",");
+
+       if (StringUtils.containsAny(productRepo.findByProductID("LOOL").getAnnotation(), "drt")) {
+
+       }
+       //String l = StringUtils.removeIgnoreCase()
+       log.info(Arrays.toString(ann));
+
+        *//*List<Product> products = productRepo.findBySupplier("3M_TRADE");
+        for (Product product : products) {
+            String[] ann = StringUtils.stripAll(product.getAnnotation());
+            log.info(Arrays.toString(ann));
+        }*/
+
+        /*List<Product> searchedProducts11 = productRepo.findAll();
+        for (Product product : searchedProducts11)
+        {
+            if (product.getFullName().startsWith(" "))
+            {
+                product.setFullName(product.getFullName().trim());
+                product.setProductGroup(product.getProductGroup().trim());
+                productRepo.save(product);
+                log.info(product.getFullName() + " | " + product.getProductGroup());
+            }
+        }*/
     }
 }

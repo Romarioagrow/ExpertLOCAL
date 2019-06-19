@@ -20,11 +20,7 @@ form input:hover {
     flex-wrap: wrap;
     justify-content: center;
 }
-.product-card {
-    min-width: 15vw;
-    max-width: 15vw;
-    text-align: center;
-}
+
 .text-muted {
     color: #212529 !important;
 }

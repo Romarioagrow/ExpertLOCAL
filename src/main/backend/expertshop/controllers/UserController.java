@@ -39,7 +39,7 @@ public class UserController {
         if (validResult.hasErrors())
         {
             Map<String, String> validErrors = ControllerService.getValidErrors(validResult);
-
+            
             model.mergeAttributes(validErrors);
             model.addAttribute("user", user);
             return "pages/registration";
@@ -49,7 +49,6 @@ public class UserController {
             if (!userService.registerUser(user))
             {
                 log.info("User already exists!");
-
                 model.addAttribute("message", "User exists!");
                 return "pages/registration";
             }
