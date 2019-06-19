@@ -6,9 +6,8 @@
             <div class="col">
                 <div id="registration-error">
                 </div>
-                <form action="/user/registration" method="post" name="registration" id="registrationForm" class="text-center border border-light p-5">
+                <form action="/user/registration" method="post" name="registration" id="registrationForm" class="text-center<#-- border border-light--> p-5">
                     <p class="h4 mb-4">Регистрация</p>
-
                     <#if userExists??>
                     <div class="row">
                         <div class="col">
@@ -18,7 +17,6 @@
                         </div>
                     </div>
                     </#if>
-
                     <div class="form-row mb-4">
                         <div class="col">
                             <input type="text" id="firstName" name="firstName" placeholder="Имя" required
@@ -29,7 +27,6 @@
                                 </div>
                             </#if>
                         </div>
-
                         <div class="col">
                             <input type="text" id="lastName" name="lastName" required placeholder="Фамилия"
                                    class="form-control ${(lastNameError??)?string('is-invalid','')}" value="<#if user??>${user.lastName}</#if>">
@@ -40,7 +37,6 @@
                             </#if>
                         </div>
                     </div>
-
                     <div class="form-row mb-4">
                         <div class="col">
                             <input type="password" id="password" name="password" required placeholder="Ваш пароль" aria-describedby="registerPassword"
@@ -51,7 +47,6 @@
                                 </div>
                             </#if>
                         </div>
-
                         <div class="col">
                             <input type="password" id="registerPasswordConfirm" required class="form-control" placeholder="Повторите пароль" aria-describedby="registerPasswordConfirm">
                         </div>
@@ -83,11 +78,14 @@
                         </div>
                     </div>
                     <button id="submitRegistration" class="btn btn-info my-4 btn-block" type="submit">Зарегестрироваться!</button>
+                    <div>
+                        <p>Регистрация через социальные сети</p>
+                        <button type="button" class="btn btn-gplus"><i class="fab pr-1"></i> Google </button>
+                        <button type="button" class="btn btn-so"><i class="fab pr-1"></i>Yandex</button>
+                        <button type="button" class="btn btn-li"><i class="fab pr-1"></i>Mail.ru</button>
+                    </div>
                 </form>
-                <p>Регистрация через социальные сети</p>
-                <button type="button" class="btn btn-gplus"><i class="fab pr-1"></i> Google </button>
-                <button type="button" class="btn btn-so"><i class="fab pr-1"></i>Yandex</button>
-                <button type="button" class="btn btn-li"><i class="fab pr-1"></i>Mail.ru</button>
+
             </div>
         </div>
     </div>

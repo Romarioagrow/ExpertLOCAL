@@ -5,11 +5,11 @@
     <div class="container-fluid">
         <div class="row mt-2">
             <div class="col-3"></div>
-            <div class="col-3">
+            <div class="col-4">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/">Каталог</a></li>
-                        <li class="breadcrumb-item"><a href="/categories/${path[0]}">${path[0]}</a></li>
+                        <li class="breadcrumb-item"><a href="/"><strong>Каталог</strong></a></li>
+                        <li class="breadcrumb-item"><a href="/categories/${path[0]}"><strong>${path[0]}</strong></a></li>
                         <li class="breadcrumb-item disabled" style="color: #7a7979;">${path[1]}</li>
                     </ol>
                 </nav>

@@ -5,9 +5,6 @@ import expertshop.repos.ProductRepo;
 import expertshop.services.OrderService;
 import expertshop.services.ProductService;
 
-import lombok.AllArgsConstructor;
-import lombok.extern.java.Log;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,8 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.net.URL;
-
+import lombok.AllArgsConstructor;
+import lombok.extern.java.Log;
 
 @Log
 @Controller
@@ -46,23 +43,23 @@ public class ProductController {
         String url = "/products/"+category+"/"+request;
         String[] path = {StringUtils.capitalize(category), StringUtils.capitalize(request)};
 
+        productService.getOrderedID(user, model);
+
         model.addAttribute("url", url);
         model.addAttribute("path", path);
         model.addAttribute("order", getOrder(user));
         model.addAttribute("page", productService.findProducts(request, pageable, model));
-
-
-        productService.getOrderedID(user, model);
         return "pages/products";
     }
 
     @GetMapping("/info/{productID}")
     public String showProduct(Model model, @PathVariable String productID, @AuthenticationPrincipal User user)
     {
+        productService.getOrderedID(user, model);
+
         model.addAttribute("url", getCurrentURL(productID));
         model.addAttribute("order", getOrder(user));
         model.addAttribute("product", productRepo.findByProductID(productID));
-        productService.getOrderedID(user, model);
         return "pages/product";
     }
 
