@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 @Data
 @Entity
@@ -29,19 +30,13 @@ public class Product implements Serializable {
     @Column(name = "product_group")
     private String productGroup;
 
-    private String type;
-
-    private String supplier;
+    private String type, supplier, modelName, brand, finalPrice, amount;
 
     @Column(length = 25000)
     private String fullName;
 
-    private String modelName;
-
     @Column(length = 25000)
     private String pic;
-
-    private String brand, finalPrice;
 
     @Column(name = "price")
     private String price;
@@ -49,8 +44,21 @@ public class Product implements Serializable {
     @Column(length = 25000)
     private String annotation;
 
-    private String amount;
+    @Column(length = 25000)
+    private String shortHtmlInfo;
 
+    @Column(length = 25000)
+    private String pics;
+
+    @Column(length = 25000)
+    private String fullInfo;
+
+    private String groupAndBrand;
+
+
+    /*public void setPicsArray(String pic) {
+        this.pics.add(pic);
+    }*/
 
     /*
     @OneToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)

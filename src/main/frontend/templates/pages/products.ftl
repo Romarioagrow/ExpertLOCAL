@@ -21,10 +21,12 @@
                 <div class="mt-1">
                     <h1>${path[1]?upper_case}</h1>
                 </div>
-                <div class="text-muted">
+                <div class="text-muted" id="products-found">
                     <small>Всего товаров: ${total}</small>
                 </div>
-                <@p.pager url page/>
+                <div id="pageable">
+                    <@p.pager url page/>
+                </div>
             </div>
         </div>
         <div class="row mb-3">
@@ -49,7 +51,7 @@
                         </label>
                     </div>
                 </div>
-                <div class="card-group marker2" id="products">
+                <div class="card-group marker2" id="products"><#--<script>-->
                     <#if page?has_content>
                         <#list page.content as product>
                             <div class="card product-card">
@@ -89,40 +91,11 @@
                         </#list>
                     </#if>
                 </div>
-                <@p.pager url page/>
+                <div id="pageable1">
+                    <@p.pager url page/>
+                </div>
             </div>
         </div>
     </div>
 </@t.template>
 
-<style>
-    .product-card {
-        min-width: 23rem;
-        max-width: 23rem;
-
-        min-height: 25rem;
-        max-height: 25rem;
-
-        text-align: center;
-        margin-bottom: 2rem !important;
-    }
-    .scale-pic {
-        height: 100% !important;
-        width: 100% !important;
-        object-fit: contain !important;
-    }
-
-    .b-add {
-        border-color: #e52d00 !important;
-        color: #e52d00 !important;
-    }
-    .b-add:hover {
-        border-color: #e52d00 !important;
-        background-color: #e52d00 !important;
-        color: #ffffff !important;
-    }
-    .breadcrumb {
-        background-color: #fbf4f4;
-        padding-left: 0;
-    }
-</style>

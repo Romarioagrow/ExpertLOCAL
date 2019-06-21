@@ -6,6 +6,18 @@ import expertshop.domain.ProductBase;
 import expertshop.repos.ProductBaseRepo;
 import expertshop.repos.ProductRepo;
 
+import lombok.AllArgsConstructor;
+import lombok.extern.java.Log;
+
+import org.jsoup.HttpStatusException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -13,19 +25,6 @@ import java.net.ConnectException;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.jsoup.HttpStatusException;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
-
-import lombok.AllArgsConstructor;
-import lombok.extern.java.Log;
 
 @Log
 @Service
@@ -39,30 +38,135 @@ public class CatalogParser {
         if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty())
         {
             parseFile(file);
-            resolvePics();
+            //resolvePics();
         }
+    }
+
+    public void brandModel() {
+        List<Product> products = productRepo.findAll();
+        for (Product product : products)
+        {
+            /*product.setGroupAndBrand(org.apache.commons.lang3.StringUtils.capitalize(product.getBrand().toLowerCase()).concat(" ").concat(product.getProductGroup()));*/
+            product.setGroupAndBrand(product.getProductGroup().concat(" ").concat(StringUtils.capitalize(product.getBrand().toLowerCase())));
+            productRepo.save(product);
+        }
+        log.info("Capitalize complete!");
+    }
+
+    public void countPics()
+    {
+        List<Product> products = productRepo.findAll();
+        int totalPics = 0, picsFromSite = 0;
+
+        for (Product product : products)
+        {
+            if (!product.getPic().equals("no pic"))
+            {
+                totalPics++;
+                if (product.getPic().contains("top-tehnica.ru"))
+                {
+                    picsFromSite++;
+                }
+            }
+        }
+        log.info("Total pics: " + totalPics);
+        log.info("Pics from site: " + picsFromSite);
     }
 
     public void checkProductPics()
     {
-       /* try {
-            int count = 0;
-            List<Product> products = productRepo.findAll();
+        String request = "телевизоры";
+        //Set<Product> products = productRepo.findProductsByProductGroupContainingIgnoreCaseOrTypeContainingIgnoreCaseOrFullNameContainingIgnoreCase(request, request, request);
+        List<Product> products = productRepo.findAll();
+        int count = 0;
 
-            for (Product product : products)
+        for (Product product : products)
+        {
+            if (checkForParse(product))
             {
-                if (product.getPic())
-                else if (product.getPic().isEmpty() || product.getPic().equals("N/A"))
-                {
-                    product.setPic("no pic");
-                    productRepo.save(product);
+                String model = product.getModelName();//.replaceAll(" ", "-");
+                String parseSearchRequest = "https://top-tehnica.ru/search?q=".concat(model/*.substring(0, model.length() - 3)*/); ///СТРОГАЯ ЛОГИКА ПОИСКА
+                log.info("request " + parseSearchRequest);
+
+                try {
+                    Document page = Jsoup.connect(parseSearchRequest).get();
+                    Elements links = page.select("a");
+
+                    for (Element linkAttr : links)
+                    {
+                        String link = linkAttr.attr("href");
+                        //log.info(link);
+
+                        if (link.contains("https://top-tehnica.ru//catalog"))
+                        {
+                            System.out.println("\n");
+                            log.info("Ссылка на товар " + link);
+                            count++;
+
+                            Document productPage = Jsoup.connect(link).get();
+                            Elements pics = productPage.select("img"); ///УТОЧНИТЬ
+
+                            for (Element pic : pics)
+                            {
+                                String picSrc = pic.attr("src");
+
+                                if (picSrc.contains("image.webp") && product.getPic().equals("no pic"))
+                                {
+                                    product.setPic("https://top-tehnica.ru/".concat(picSrc));
+                                    productRepo.save(product);
+                                    log.info("Основная картинка для " + model + ":" + picSrc);
+                                }
+                                else if (picSrc.contains("/img/product"))
+                                {
+                                    String fullLink = "https://top-tehnica.ru/".concat(picSrc);
+
+                                    String anotherPic = (product.getPics() == null) ? "" : product.getPics(); ///IF
+                                    anotherPic = anotherPic.concat(" ").concat(fullLink);
+
+                                    product.setPics(anotherPic);
+                                    productRepo.save(product);
+                                    log.info("Ссылка на картинку для " + model + ":" + picSrc);
+                                }
+                            }
+
+                            if (product.getShortHtmlInfo() == null)
+                            {
+                                Elements params = productPage.getElementsByClass("n-product-spec-list");
+                                for (Element param : params)
+                                {
+                                    String li = param.html();
+                                    product.setShortHtmlInfo(li);
+                                    productRepo.save(product);
+                                    log.info("Short Info for " + product.getModelName());
+                                }
+                            }
+
+                            if (product.getFullInfo() == null)
+                            {
+                                Document productParamsPage = Jsoup.connect(link.concat("/harakteristiki")).get();
+                                Elements tab = productParamsPage.getElementsByClass("product-options-table");
+                                for (Element element : tab)
+                                {
+                                    String table = element.html();
+                                    product.setFullInfo(table);
+                                    productRepo.save(product);
+                                    log.info("Full Info for " + product.getModelName());
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (IOException e) {///
+                    e.getStackTrace();
                 }
             }
-            log.info(products.size()-count + " products with pics from " + products.size());
+            else log.info("Not required for product " + product.getModelName());
         }
-        catch (NullPointerException exp) {
-            log.info("null");
-        }*/
+        log.info("END OF SEQUENCE! " + count + " Products parsed!");
+    }
+
+    private boolean checkForParse(Product product) {
+        return product.getPic().equals("no pic") || product.getShortHtmlInfo() == null || product.getFullInfo() == null;
     }
 
     private void resolvePics()

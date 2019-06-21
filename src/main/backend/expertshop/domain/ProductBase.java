@@ -47,7 +47,7 @@ public class ProductBase {
     @Column(length = 250000)
     private String paramsHTML;
 
-    /*public void setPics(String s) {
+    /*public void setPicsArray(String s) {
 
     }*/
 }

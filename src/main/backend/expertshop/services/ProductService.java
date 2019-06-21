@@ -1,4 +1,5 @@
 package expertshop.services;
+
 import expertshop.domain.Order;
 import expertshop.domain.OrderedProduct;
 import expertshop.domain.Product;
@@ -11,15 +12,14 @@ import lombok.extern.java.Log;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.util.*;
-import java.util.function.Supplier;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static expertshop.controllers.ControllerService.getSessionID;
 
@@ -29,6 +29,15 @@ import static expertshop.controllers.ControllerService.getSessionID;
 public class ProductService {
     private final ProductRepo productRepo;
     private final OrderRepo orderRepo;
+
+    public List<Product> findProducts(String request) {
+        /*return findRequiredProducts(request, request, request, pageable);*/
+        return productRepo.findProductsListByProductGroupContainingIgnoreCaseOrTypeContainingIgnoreCaseOrFullNameContainingIgnoreCase(request, request, request);
+    }
+
+    /*public Page<Product> findProducts(String request, Pageable pageable) {
+        return findRequiredProducts(request, request, request, pageable);
+    }*/
 
     public Page<Product> findProducts(String request, Pageable pageable, Model model)
     {

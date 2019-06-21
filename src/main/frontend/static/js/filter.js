@@ -2,7 +2,7 @@ $(document).ready(function(){
     $('#filter-button')         .on('click', collectFilters);
 });
 $(document).ready(function(){
-    $('input[type="radio"]')    .on('change', collectFilters); ///ОБЪЕДЕНИТЬ ДЛЯ ВСЕХ INPUT
+    $('input[type="radio"]')    .on('change', collectFilters);
 });
 $(document).ready(function(){
     $('input[type="checkbox"]') .on('change', collectFilters);
@@ -10,23 +10,23 @@ $(document).ready(function(){
 /*$(document).ready(function(){
     $('input[type="text"]')     .on('keyup', collectFilters);
 });*/
-$(document).ready(function() {
+/*$(document).ready(function() {
     $('.mdb-select').materialSelect();
-});
+});*/
 
 var url = document.URL;
 
 function collectFilters(e) {
     e.preventDefault();
-    console.log('Current URL: ' + url);
+    //console.log('Current URL: ' + url);
 
     var filters = constructFiltersData(url);
-    deleteEmptyParams(filters);
+    //deleteEmptyParams(filters);
 
     filters = JSON.stringify(filters);
 
     $.ajax({
-        url: url,
+        url: url+'?page=2',
         type: 'POST',
         dataType: 'json',
         data: filters,
@@ -35,44 +35,84 @@ function collectFilters(e) {
         complete: function(productsAndOrderedID)
         {
             const response  = JSON.parse(JSON.stringify(productsAndOrderedID));
-            console.log(response);
+            const products  = response.responseJSON.content;
+            const total     = response.responseJSON.totalElements;
 
-            const products  = response.responseJSON[0];
-            const orderedID = response.responseJSON[1];
+            var currentPage = response.responseJSON.number;
+            /*var nextPage = url+'?page='+currentPage+1;
+            var prevPage = url+'?page='+currentPage-1;*/
+
+            console.log(response);
+            console.log(products);
+            console.log(currentPage);
 
             $("#products").empty();
+
+            $('#pageable').empty().append(
+                /*'<ul class="pagination" style="margin-left: -0.80rem; margin-bottom: 0; margin-top: 1rem;">'+
+                '<li class="page-item disabled">'+
+                '<a class="page-link" href="#" tabindex="-1">Страницы</a></li>'+
+                '<li class="page-item">'+
+                '<a class="page-link" href="'+prevPage+'">Назад</a></li>'+
+                '<li class="page-item"><a class="page-link" href="'+nextPage+'">Вперед</a></li></ul>'*/
+            );
+            $('#pageable1').empty().append(/*новый пагинатор*/);//html.load
+
+            $('#products-found').empty().append(
+                '<small>Всего товаров: '+total+'</small>'
+            );
 
             for (var item in products)
             {
                 let product = products[item];
-                let displayParams = resolveDisplayType(product);
-                let orderButton = resolveOrderButton(product, orderedID);
+                //let displayParams = resolveDisplayType(product);
+                //let orderButton = resolveOrderButton(product, orderedID);
 
-                var productCard = constructProductCard(product, displayParams, orderButton);
+                var productCard = constructProductCard(product/*, displayParams, orderButton*/);
 
-                $("#products").append(productCard);
+                $("#products").append(productCard); ///load html block
             }
         }
     });
 }
 
-function constructProductCard(product, displayParams, orderButton) {
-    return '<div class="card product-card mr-3 mt-3">' +
-        '<img class="card-img-top" src="' + product.pic + '" alt="Card image cap">' +
-        '<div class="card-body" style="margin-bottom: 0 !important;">' +
-        '<h5 class="card-title">' +
-        '<a class="btn btn-outline-mdb-color btn-rounded waves-effect" href="/info/' + product.productID.toString() + '" role="button" >' +
-        '<strong>' + product.brand + product.model + '</strong>' +
-        '</a>' +
-        '</h5>' +
-        '<p class="card-text"><small>' + displayParams + '</small></p>' +
-        '</div>' +
-        '<div class="card-footer">' +
-        '<small class="text-muted">' +
-        '<strong><i>' + product.price + '₽</i></strong>' +
-        '</small>' +
-        orderButton +
-        '</div>' +
+function constructProductCard(product/*, displayParams, orderButton*/) {
+    return '<div class="card product-card">'+
+        '<div class="view overlay">'+
+        /*<#if product.pic??>*/
+        '<img class="img-fluid scale-pic" src="'+product.pic+'" alt="Product pic">'+
+        '<a href="#">'+
+        '<div class="mask rgba-white-slight"></div>'+
+        '</a>'+
+        /*</#if>*/
+        '</div>'+
+        '<div class="card-body">'+
+        '<h5 class="card-title">'+
+        '<a href="/products/info/'+product.productID+'">'+
+        '<strong>'+
+        product.fullName+
+        '</strong>'+
+        '</a>'+
+        '</h5>'+
+        '<p class="card-text">'+
+        '<strong><i>'+product.type+'</i></strong>'+
+        '</p>'+
+        '<h3><strong>'+product.price+' ₽</strong></h3>'+
+        '<div>'+
+        '<button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID}" value="${product.productID}">'+
+        'В корзину'+
+        '</button>'+
+        /*<#if orderedProductsID?? && orderedProductsID?seq_contains('${product.productID}')>
+            <a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
+        <#else>
+        <div id="addToOrderDiv${product.productID}">
+            <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID}" value="${product.productID}">
+            В корзину
+        </button>
+        </div>
+        </#if>*/
+        '</div>'+
+        '</div>'+
         '</div>';
 }
 
@@ -87,28 +127,34 @@ function resolveOrderButton(product, productsID) {
         '</div>';
 }
 
-function constructFiltersData(url) {
-    var country = [], brand = [];
-    ($('option:checked').each(function() {
-        if ($(this).is(['modelName="country"'])) country.push(($(this).val()));
-        if ($(this).is(['modelName="brand"']))   brand.push(($(this).val()));
-    }));
+function constructFiltersData(url)
+{
+    var brand = [];
+    $('input:checked').each(function()
+    {
+        if ($(this).attr('name') === 'brand') {
+            brand.push($(this).val());
+            console.log($(this).val());
+        }
+    });
 
     const data = {
-        'sortBy'        : {'sortOrder'  : ($('input[modelName="sort_options"]:checked').val())},
-        'price'         : {'sortmin'    : ($('#sortmin').val()),    'sortmax' : ($('#sortmax').val())},
-        'manufacturer'  : {'brand'      : brand,      'country' : country},
+        'sortmin' : $('#sortmin').val(),
+        'sortmax' : $('#sortmax').val(),
+        'brand'   : brand
     };
 
-    if      (selected("tv"))     return collectTvFilters(data);
-    else if (selected("stoves")) return collectStovesFilters(data);
+    return data;
+
+    /*if      (selected("телевизоры"))  return collectTvFilters(data);
+    else if (selected("stoves"))      return collectStovesFilters(data);*/
 
     function collectTvFilters(data) {
         var tv_resolution = [], tv_params = [];
         ($('input:checked').each(function()
         {
-            if      ($(this).is('[modelName="tv_resolution"]'))  tv_resolution.push(($(this).val()));
-            else if ($(this).is('[modelName="tv_params"]'))      tv_params.push(($(this).val()));
+            if      ($(this).is('[name="tv_resolution"]'))  tv_resolution.push(($(this).val()));
+            else if ($(this).is('[name="tv_params"]'))      tv_params.push(($(this).val()));
         }));
         data.displayParams  = {'diag_min' : ($('#diag_min').val()), 'diag_max' : ($('#diag_max').val()), 'tv_resolution' : tv_resolution};
         data.tvParams       = {'tv_params' : tv_params};
@@ -121,8 +167,8 @@ function constructFiltersData(url) {
 }
 
 function resolveDisplayType(product) {
-    if      (selected("tv"))     return displayTV(product);
-    else if (selected("stoves")) return displayStoves(product);
+    if      (selected("телевизоры"))    return displayTV(product);
+    else if (selected("stoves"))        return displayStoves(product);
 
     function displayTV(product) {
         return disp =

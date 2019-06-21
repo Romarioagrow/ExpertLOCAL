@@ -70,3 +70,32 @@ form input:hover {
     background-color: #e52d00 !important;
 }
 
+/*PRODUCTS*/
+.product-card {
+    min-width: 23rem;
+    max-width: 23rem;
+
+    min-height: 25rem;
+    max-height: 25rem;
+
+    text-align: center;
+    margin-bottom: 2rem !important;
+}
+.scale-pic {
+    height: 100% !important;
+    width: 100% !important;
+    object-fit: contain !important;
+}
+.b-add {
+    border-color: #e52d00 !important;
+    color: #e52d00 !important;
+}
+.b-add:hover {
+    border-color: #e52d00 !important;
+    background-color: #e52d00 !important;
+    color: #ffffff !important;
+}
+.breadcrumb {
+    background-color: #fbf4f4;
+    padding-left: 0;
+}

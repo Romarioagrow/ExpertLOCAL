@@ -27,7 +27,10 @@ public class CategoriesController {
     private final ProductRepo productRepo;
 
     @GetMapping("/supplier")
-    public String supplier() {
+    public String supplier()
+    {
+        //catalogParser.countPics();
+        catalogParser.brandModel();
         return "pages/supplier";
     }
     @PostMapping("/supplier")

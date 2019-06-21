@@ -1,48 +1,31 @@
 <div>
     <button class="btn btn-secondary btn-block filter-button"
-            type="button" data-toggle="collapse" data-target="#filter1" aria-expanded="false"><span>Цена и бренд</span>
+            type="button" data-toggle="collapse" data-target="#filter1" aria-expanded="false"><span>Цена и бренды</span>
     </button>
-    <div class="collapse" id="filter1">
+    <div class="collapse show" id="filter1">
         <div class="card card-body filter-filed">
-            <h5>Цена</h5>
-            <div class="input-group mb-3">
+            <div class="md-form input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">От</span>
+                    <span class="input-group-text md-addon">Цена</span>
                 </div>
-                <input type="text" id="sortmin" name="sortmin" placeholder="₽" class="form-control" aria-label="Amount (to the nearest dollar)">
+                <input type="text" aria-label="First name" id="sortmin" name="sortmin" class="form-control" placeholder="От ₽">
+                <input type="text" aria-label="Last name" id="sortmax" name="sortmax" class="form-control" placeholder="До ₽">
             </div>
-            <div class="input-group">
-                <input type="text" id="sortmax" name="sortmax" placeholder="₽" class="form-control" aria-label="Amount (to the nearest dollar)">
-                <div class="input-group-append">
-                    <span class="input-group-text">До</span>
+            <div class="md-form input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text md-addon">Бренды</span>
                 </div>
-            </div>
-            <h5 class="mt-2">Бренд</h5>
-            <div class="col-md-12" style="margin-top: -15px !important;">
-                <select class="mdb-select colorful-select dropdown-primary md-form"  multiple>
-                    <#if url?contains("tv")>
-                        <option value="" disabled selected>Выберите бренд</option>
-                        <option name="brand" value="DOFFLER">DOFFLER</option>
-                        <option name="brand" value="HARPER">HARPER</option>
-                        <option name="brand" value="LG">LG</option>
-                        <option name="brand" value="ORION">ORION</option>
-                        <option name="brand" value="SAMSUNG">SAMSUNG</option>
-                        <option name="brand" value="TOSHIBA">TOSHIBA</option>
-                        <option name="brand" value="AMCV">AMCV</option>
-                        <option name="brand" value="BBK">BBK</option>
-                        <option name="brand" value="AKAI">AKAI</option>
-                    </#if>
-                    <#if url?contains("stoves")>
-                        <option name="brand" value="brand1">GRETA</option>
-                        <option name="brand" value="brand2">DARINA</option>
-                    </#if>
-                </select>
+                <div class="form-check">
+                    <div class="container">
+                        <#include "../parts/brands.ftl">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<#if url?contains("tv")>
+<#if url?contains("телевизоры")>
     <div>
         <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-filter1" aria-expanded="false">
             <span>Характеристики экрана</span>

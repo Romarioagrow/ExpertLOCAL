@@ -82,10 +82,10 @@
                 <h3>Параметры товара</h3>
                 <table class="table table table-borderless w-30">
                     <thead>
-                    <tr></tr>
+                    <tr>${product.annotation}</tr>
                     </thead>
                     <tbody>
-                    ${product.annotation}
+                    ${product.fullInfo}
                     <#--<#include "../parts/product-info.ftl">-->
                     </tbody>
                 </table>

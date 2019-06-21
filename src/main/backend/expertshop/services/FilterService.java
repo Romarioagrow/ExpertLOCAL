@@ -4,13 +4,17 @@ import expertshop.domain.Order;
 import expertshop.domain.OrderedProduct;
 import expertshop.domain.Product;
 import expertshop.domain.User;
-import expertshop.domain.categories.Type;
 import expertshop.repos.OrderRepo;
-import expertshop.repos.ProductRepo;
 
+import expertshop.repos.ProductRepo;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -22,21 +26,52 @@ import static expertshop.controllers.ControllerService.getSessionID;
 @AllArgsConstructor
 public class FilterService {
     private final ProductRepo productRepo;
+    private final ProductService productService;
     private final OrderRepo orderRepo;
 
-    public Queue<Object> filterProducts(Map<String, Object> params, String req_type, User user)
+    public Page<Product>/*Queue<Object>*/ filterProducts(Map<String, Object> filters, String requiredType, /*User user,*/ Pageable pageable/*, Model model*/)
     {
-        showReceivedParams(params);
+        log.info(requiredType);
 
-        List<Product> products = productRepo.findByType(req_type);
+        filters.forEach((s, o) -> log.info(s + " " + o.toString()));
 
-        for (Map.Entry<String, Object> paramObject : params.entrySet())
+        List<Product> products = productService.findProducts(requiredType);
+        log.info("Product list before filter " + products.size());
+
+        for (Map.Entry<String, Object> filter : filters.entrySet())
+        {
+            switch (filter.getKey())
+            {
+                case "brand" -> {
+                    String brands = String.join(",", filters.get("brand").toString());
+                    log.info(brands);
+                    products = products.stream().filter(product -> StringUtils.containsIgnoreCase(brands, product.getBrand())).collect(Collectors.toList());
+                }
+            }
+        }
+
+        products.forEach(product -> log.info(product.getModelName()));
+
+        log.info("Product after filter " + products.size());
+
+        int start = (int) pageable.getOffset();
+        int end = (start + pageable.getPageSize()) > products.size() ? products.size() : (start + pageable.getPageSize());
+        Page<Product> page = new PageImpl<>(products.subList(start, end), pageable, products.size());
+
+        log.info(page.getTotalElements() + " ");
+        return page;
+
+        /*showReceivedParams(params);
+
+        List<Product> products = productRepo.findByType(req_type);*/
+
+        /*for (Map.Entry<String, Object> paramObject : params.entrySet())
         {
             Map<String, Object> inner = (Map<String, Object>) paramObject.getValue();
             for (Map.Entry<String, Object> filter : inner.entrySet())
             {
                 switch (filter.getKey()) {
-                    /*case "sortmin"      -> products = products.stream().filter(product -> product.getFinalPrice() >= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
+                    *//*case "sortmin"      -> products = products.stream().filter(product -> product.getFinalPrice() >= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
                     case "sortmax"      -> products = products.stream().filter(product -> product.getFinalPrice() <= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
                     case "brand"        -> {
                         String brands = filter.getValue().toString();
@@ -57,14 +92,15 @@ public class FilterService {
                         for (Object tv_param : tv_params) {
                             products = products.stream().filter(product -> product.getTvFeatures().contains(tv_param.toString())).collect(Collectors.toList());
                         }
-                    }*/
+                    }*//*
                 }
             }
         }
         sortProducts(products, params);
         log.info("After filter: " + products.size());
 
-        return packageProductsAndOrderedID(products, user);
+        return packageProductsAndOrderedID(products, user);*/
+        //return new LinkedList<>();
     }
 
     private void sortProducts(List<Product> products, Map<String, Object> params)
