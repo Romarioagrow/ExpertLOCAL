@@ -15,7 +15,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 @Service
 @AllArgsConstructor
 public class CatalogParser {
+    private final ProductService productService;
     private final ProductRepo productRepo;
     private final ProductBaseRepo baseRepo;
 
@@ -41,6 +42,105 @@ public class CatalogParser {
             //resolvePics();
         }
     }
+
+    public void resolveTvResol() {
+        List<Product> products = productService.findProductsByRequestType("телевизоры");
+
+        for (Product product : products)
+        {
+            String annotation = product.getAnnotation();
+
+            if (product.get_tv_resol() == null || !product.get_tv_resol().equals("n/a"))
+            {
+                if (StringUtils.containsIgnoreCase(annotation, "HD")
+                        && !StringUtils.containsIgnoreCase(annotation, "Full HD")
+                        && !StringUtils.containsIgnoreCase(annotation, "Ultra HD")
+                        && !StringUtils.containsIgnoreCase(annotation, "UHD")
+                        || StringUtils.containsIgnoreCase(annotation, "1366 x 768")
+                        || StringUtils.containsIgnoreCase(annotation, "1366х768"))
+                {
+                    product.set_tv_resol("HD_Ready");
+                }
+                else if (StringUtils.containsIgnoreCase(annotation, "Full HD")
+                        || StringUtils.containsIgnoreCase(annotation, "1920 x 1080")
+                        || StringUtils.containsIgnoreCase(annotation, "1920x1080"))
+                {
+                    product.set_tv_resol("Full_HD");
+                }
+                else if (StringUtils.containsIgnoreCase(annotation, "4K")
+                        || StringUtils.containsIgnoreCase(annotation, "Ultra HD")
+                        || StringUtils.containsIgnoreCase(annotation, "3840 x 2160")
+                        || StringUtils.containsIgnoreCase(annotation, "3840x2160")
+                        || StringUtils.containsIgnoreCase(annotation, "UHD"))
+                {
+                    product.set_tv_resol("4K");
+                }
+                else product.set_tv_resol("n/a");
+                productRepo.save(product);
+            }
+
+            if (product.get_tv_diag() == null || !product.get_tv_resol().equals("n/a"))
+            {
+                if (annotation.contains("<br>") && annotation.contains("диагональ"))
+                {
+                    product.set_tv_diag(StringUtils.substringBetween(annotation, "диагональ", "<br>"));
+                }
+                else if (annotation.contains("Диагональ:") && annotation.contains("\""))
+                {
+                    product.set_tv_diag(StringUtils.substringBetween(annotation, "Диагональ:", "\""));
+                }
+                else if (annotation.contains("Диагональ экрана") && annotation.contains("\"."))
+                {
+                    product.set_tv_diag(StringUtils.substringBetween(annotation, "Диагональ экрана", "\"."));
+                }
+                else if (annotation.contains("Диагональ экрана") && annotation.contains("\" ."))
+                {
+                    product.set_tv_diag(StringUtils.substringBetween(annotation, "Диагональ экрана", "\" ."));
+                }
+                else if (annotation.contains("Диагональ") && annotation.contains("<br>"))
+                {
+                    product.set_tv_diag(StringUtils.substringBetween(annotation, "Диагональ", "<br>"));
+                }
+                else if (annotation.contains("диагональ") && annotation.contains("\""))
+                {
+                    product.set_tv_diag(StringUtils.substringBetween(annotation, "диагональ", "\""));
+                }
+                else if (StringUtils.substring(annotation, 0, 1).matches("[\\d ]")) {
+                    product.set_tv_diag(StringUtils.substring(annotation, 0, 2));
+                }
+                else product.set_tv_diag("n/a");
+
+                if (product.get_tv_diag() != null)
+                {
+                    String diag = product.get_tv_diag();
+                    if (product.get_tv_diag().contains("\""))
+                    {
+                        product.set_tv_diag(StringUtils.substringBefore(diag, "\"").trim());
+                    }
+                    else if (product.get_tv_diag().contains("-"))
+                    {
+                        product.set_tv_diag(diag.replaceAll("-", "").trim());
+                    }
+                    else if (product.get_tv_diag().contains(":"))
+                    {
+                        product.set_tv_diag(diag.replaceAll(":", "").trim());
+                    }
+                    else if (product.get_tv_diag().contains(" экрана: "))
+                    {
+                        product.set_tv_diag(diag.replaceAll(" экрана: ", "").trim());
+                    }
+                }
+
+                productRepo.save(product);
+            }
+
+
+        }
+    }
+
+    /*public void resolveTvDiag() {
+
+    }*/
 
     public void brandModel() {
         List<Product> products = productRepo.findAll();
@@ -418,7 +518,7 @@ public class CatalogParser {
 
         if (trimGarbage.contains(" ")) {
             temp = trimGarbage.substring(trimGarbage.indexOf(" "));
-            temp = StringUtils.trimAllWhitespace(temp);
+            temp = org.springframework.util.StringUtils.trimAllWhitespace(temp);
             //String temp = trimGarbage.substring(trimGarbage.indexOf(" ")).replaceAll(" ", "").replaceAll("-", "");
         }
 
@@ -459,7 +559,7 @@ public class CatalogParser {
 
             /*if (result.endsWith("."))  result = result.substring(0, result.length() - 1);*/
 
-            int occurrence = StringUtils.countOccurrencesOf("result", " ");
+            int occurrence = org.springframework.util.StringUtils.countOccurrencesOf("result", " ");
             if (occurrence >= 4) return result.substring(0, result.lastIndexOf(" "));
         }
 
@@ -855,6 +955,8 @@ public class CatalogParser {
         }
         else return line2;
     }
+
+
 
     public void test() {
         /*String[] ann = StringUtils.stripAll(productRepo.findByProductID("LOOL").getAnnotation(), ",");

@@ -30,7 +30,8 @@ public class CategoriesController {
     public String supplier()
     {
         //catalogParser.countPics();
-        catalogParser.brandModel();
+        //catalogParser.brandModel();
+        catalogParser.resolveTvResol();
         return "pages/supplier";
     }
     @PostMapping("/supplier")

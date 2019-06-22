@@ -55,36 +55,8 @@ public class Product implements Serializable {
 
     private String groupAndBrand;
 
-
-    /*public void setPicsArray(String pic) {
-        this.pics.add(pic);
-    }*/
-
-    /*
-    @OneToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(modelName = "product_id")
-    private ProductParams productParams;
-
-    @JsonIgnore
-    public String getTypeName() {
-        return productParams.getType();
-    }
-    @JsonIgnore
-    public String getDiagonal() {
-        return productParams.getDiagonal();
-    }
-    @JsonIgnore
-    public String getResolution() {
-        return productParams.getResolution();
-    }
-    @JsonIgnore
-    public String getTvFeatures() {
-        return productParams.getTvFeatures();
-    }
-    @JsonIgnore
-    public String getStoveDimensions() {
-        return productParams.getStoveDimensions();
-    }*/
+    @Column(length = 2500)
+    private String _tv_resol, _tv_diag;
 }
 
 

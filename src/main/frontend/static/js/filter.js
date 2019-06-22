@@ -21,12 +21,12 @@ function collectFilters(e) {
     //console.log('Current URL: ' + url);
 
     var filters = constructFiltersData(url);
-    //deleteEmptyParams(filters);
+    deleteEmptyParams(filters);
 
     filters = JSON.stringify(filters);
 
     $.ajax({
-        url: url+'?page=2',
+        url: url/*+'?page=2'*/,
         type: 'POST',
         dataType: 'json',
         data: filters,
@@ -39,22 +39,22 @@ function collectFilters(e) {
             const total     = response.responseJSON.totalElements;
 
             var currentPage = response.responseJSON.number;
-            /*var nextPage = url+'?page='+currentPage+1;
-            var prevPage = url+'?page='+currentPage-1;*/
+            var nextPage = url+'?page='+currentPage+1;
+            var prevPage = url+'?page='+currentPage-1;
 
-            console.log(response);
+            /*console.log(response);
             console.log(products);
-            console.log(currentPage);
+            console.log(currentPage);*/
 
             $("#products").empty();
 
             $('#pageable').empty().append(
-                /*'<ul class="pagination" style="margin-left: -0.80rem; margin-bottom: 0; margin-top: 1rem;">'+
+                '<ul class="pagination" style="margin-left: -0.80rem; margin-bottom: 0; margin-top: 1rem;">'+
                 '<li class="page-item disabled">'+
                 '<a class="page-link" href="#" tabindex="-1">Страницы</a></li>'+
                 '<li class="page-item">'+
-                '<a class="page-link" href="'+prevPage+'">Назад</a></li>'+
-                '<li class="page-item"><a class="page-link" href="'+nextPage+'">Вперед</a></li></ul>'*/
+                '<a class="page-link" href="#/*'+prevPage+'*/">Назад</a></li>'+
+                '<li class="page-item"><a class="page-link" href="#/*'+nextPage+'*/">Вперед</a></li></ul>'
             );
             $('#pageable1').empty().append(/*новый пагинатор*/);//html.load
 
@@ -144,26 +144,34 @@ function constructFiltersData(url)
         'brand'   : brand
     };
 
+    if (selected(encodeURI("телевизоры"))) return collectTvFilters(data);
+    //else if (selected("stoves"))      return collectStovesFilters(data);
     return data;
 
-    /*if      (selected("телевизоры"))  return collectTvFilters(data);
-    else if (selected("stoves"))      return collectStovesFilters(data);*/
+    function collectTvFilters(data)
+    {
+        console.log("tv filters");
 
-    function collectTvFilters(data) {
         var tv_resolution = [], tv_params = [];
         ($('input:checked').each(function()
         {
             if      ($(this).is('[name="tv_resolution"]'))  tv_resolution.push(($(this).val()));
             else if ($(this).is('[name="tv_params"]'))      tv_params.push(($(this).val()));
         }));
-        data.displayParams  = {'diag_min' : ($('#diag_min').val()), 'diag_max' : ($('#diag_max').val()), 'tv_resolution' : tv_resolution};
-        data.tvParams       = {'tv_params' : tv_params};
+
+        data.tvResolution = tv_resolution;
+        data.tvParams = tv_params;
+        data.diagMin = $('#diag_min').val();
+        data.diagMax = $('#diag_max').val();
+
+        console.log(data);
         return data;
     }
-    function collectStovesFilters(data) {
+    /*function collectStovesFilters(data)
+    {
         data.stoveDimensions = {'stove_width' : $('#stove_width').val()};
         return data;
-    }
+    }*/
 }
 
 function resolveDisplayType(product) {
@@ -181,14 +189,12 @@ function resolveDisplayType(product) {
     }
 }
 
-function deleteEmptyParams(filters) {
-    for (var fieldKey in filters) {
-        for (var attrKey in filters[fieldKey]) {
-            if (filters[fieldKey][attrKey] === '' || filters[fieldKey][attrKey].length === 0) {
-                delete filters[fieldKey][attrKey];
-            }
-        }
-        if (Object.getOwnPropertyNames(filters[fieldKey]).length === 0) {
+function deleteEmptyParams(filters)
+{
+    for (var fieldKey in filters)
+    {
+        if (filters[fieldKey] === '' || filters[fieldKey].length === 0)
+        {
             delete filters[fieldKey];
         }
     }

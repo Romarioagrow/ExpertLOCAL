@@ -30,14 +30,9 @@ public class ProductService {
     private final ProductRepo productRepo;
     private final OrderRepo orderRepo;
 
-    public List<Product> findProducts(String request) {
-        /*return findRequiredProducts(request, request, request, pageable);*/
+    public List<Product> findProductsByRequestType(String request) {
         return productRepo.findProductsListByProductGroupContainingIgnoreCaseOrTypeContainingIgnoreCaseOrFullNameContainingIgnoreCase(request, request, request);
     }
-
-    /*public Page<Product> findProducts(String request, Pageable pageable) {
-        return findRequiredProducts(request, request, request, pageable);
-    }*/
 
     public Page<Product> findProducts(String request, Pageable pageable, Model model)
     {
@@ -50,7 +45,7 @@ public class ProductService {
         return page;
     }
 
-    private Page<Product> findRequiredProducts(String s, String s1, String s2, Pageable pageable) {
+    private Page<Product> findRequiredProducts(String s, String s1, String s2, Pageable pageable) { ///lol
         return productRepo.findByProductGroupContainingIgnoreCaseOrTypeContainingIgnoreCaseOrFullNameContainingIgnoreCase(s, s1, s2, pageable);
     }
 

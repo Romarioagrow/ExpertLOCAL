@@ -6,7 +6,6 @@ import expertshop.domain.Product;
 import expertshop.domain.User;
 import expertshop.repos.OrderRepo;
 
-import expertshop.repos.ProductRepo;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
@@ -14,7 +13,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,7 +23,6 @@ import static expertshop.controllers.ControllerService.getSessionID;
 @Service
 @AllArgsConstructor
 public class FilterService {
-    private final ProductRepo productRepo;
     private final ProductService productService;
     private final OrderRepo orderRepo;
 
@@ -35,8 +32,11 @@ public class FilterService {
 
         filters.forEach((s, o) -> log.info(s + " " + o.toString()));
 
-        List<Product> products = productService.findProducts(requiredType);
+        List<Product> products = productService.findProductsByRequestType(requiredType);
         log.info("Product list before filter " + products.size());
+
+        /*коллкеция всех товаров по типу и из нее наполняется коллекция запрашеваемых товаров по фильтру */
+        /*ОТДЕЛЬНЫЙ ФИЛЬТР ПО ЦЕНЕ*/
 
         for (Map.Entry<String, Object> filter : filters.entrySet())
         {
@@ -47,6 +47,12 @@ public class FilterService {
                     log.info(brands);
                     products = products.stream().filter(product -> StringUtils.containsIgnoreCase(brands, product.getBrand())).collect(Collectors.toList());
                 }
+                case "tvResolution" -> {
+                    String resolution = filter.getValue().toString();
+                    log.info(resolution);
+                    products = products.stream().filter(product -> resolution.contains(Objects.requireNonNull(product.get_tv_resol()))).collect(Collectors.toList());
+                }
+
             }
         }
 
@@ -60,6 +66,8 @@ public class FilterService {
 
         log.info(page.getTotalElements() + " ");
         return page;
+
+
 
         /*showReceivedParams(params);
 
