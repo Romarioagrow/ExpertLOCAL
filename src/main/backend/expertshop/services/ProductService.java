@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,11 +31,11 @@ public class ProductService {
     private final ProductRepo productRepo;
     private final OrderRepo orderRepo;
 
-    public List<Product> findProductsByRequestType(String request) {
+    /*public List<Product> findProductsByRequestType(String request) {
         return productRepo.findProductsListByProductGroupContainingIgnoreCaseOrTypeContainingIgnoreCaseOrFullNameContainingIgnoreCase(request, request, request);
-    }
+    }*/
 
-    public Page<Product> findProducts(String request, Pageable pageable, Model model)
+    /*public Page<Product> findProducts(String request, Pageable pageable, Model model)
     {
         log.info("Request " + request);
 
@@ -47,18 +48,18 @@ public class ProductService {
 
     private Page<Product> findRequiredProducts(String s, String s1, String s2, Pageable pageable) { ///lol
         return productRepo.findByProductGroupContainingIgnoreCaseOrTypeContainingIgnoreCaseOrFullNameContainingIgnoreCase(s, s1, s2, pageable);
-    }
+    }*/
 
     public List<Product> searchProducts(String searchRequest)
     {
         log.info("Search request: " + searchRequest);
 
-        List<Product> searchedProducts = productRepo.findAll().stream()
+        /*List<Product> searchedProducts = productRepo.findAll().stream()
                 .filter(product -> StringUtils.containsIgnoreCase(product.getFullName(), searchRequest))
                 .collect(Collectors.toList());
         log.info("Products found: " + searchedProducts.size());
 
-        return searchedProducts;
+        return searchedProducts;*/return new ArrayList<>();
     }
 
     public void getOrderedID(User user, Model model)

@@ -60,10 +60,10 @@ public class OrderService {
         else return new HashSet<>();
     }
 
-    public Integer addProductToOrder(String productID, User user)
+    /*public Integer addProductToOrder(String productID, User user)
     {
         Order order;
-        Product product = productRepo.findByProductID(productID);///
+        ///Product product = productRepo.findByProductID(productID);///
         OrderedProduct orderedProduct = new OrderedProduct(); ///new OrderedProduct(productID);
 
         if (user == null)
@@ -79,8 +79,8 @@ public class OrderService {
             orderedProduct.constructOrderedProduct(product, productID);///
             order.addProductToOrder(orderedProduct);
 
-            /*setOrderStats(getOrder, orderedProduct.getTotalPrice());
-            orderRepo.save(getOrder);*/
+            *//*setOrderStats(getOrder, orderedProduct.getTotalPrice());
+            orderRepo.save(getOrder);*//*
         }
         else
         {
@@ -96,15 +96,15 @@ public class OrderService {
             orderedProduct.constructOrderedProduct(product, productID); ///
             order.addProductToOrder(orderedProduct);
 
-            /*setOrderStats(getOrder, orderedProduct.getTotalPrice());
-            orderRepo.save(getOrder);*/
+            *//*setOrderStats(getOrder, orderedProduct.getTotalPrice());
+            orderRepo.save(getOrder);*//*
         }
 
         System.out.println("\n");
         log.info("Product with ID " + productID + " add to getOrder");
 
         return order.getProductsAmount();
-    }
+    }*/
 
     public Order removeProductFromOrder(User user, String orderedID)
     {

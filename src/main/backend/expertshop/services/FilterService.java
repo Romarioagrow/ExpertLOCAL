@@ -26,7 +26,7 @@ public class FilterService {
     private final ProductService productService;
     private final OrderRepo orderRepo;
 
-    public Page<Product>/*Queue<Object>*/ filterProducts(Map<String, Object> filters, String requiredType, /*User user,*/ Pageable pageable/*, Model model*/)
+    /*public Page<Product>*//*Queue<Object>*//* filterProducts(Map<String, Object> filters, String requiredType, *//*User user,*//* Pageable pageable*//*, Model model*//*)
     {
         log.info(requiredType);
 
@@ -35,14 +35,14 @@ public class FilterService {
         List<Product> products = productService.findProductsByRequestType(requiredType);
         log.info("Product list before filter " + products.size());
 
-        /*коллкеция всех товаров по типу и из нее наполняется коллекция запрашеваемых товаров по фильтру */
-        /*ОТДЕЛЬНЫЙ ФИЛЬТР ПО ЦЕНЕ*/
+        *//*коллкеция всех товаров по типу и из нее наполняется коллекция запрашеваемых товаров по фильтру *//*
+        *//*ОТДЕЛЬНЫЙ ФИЛЬТР ПО ЦЕНЕ*//*
 
         for (Map.Entry<String, Object> filter : filters.entrySet())
         {
             switch (filter.getKey())
             {
-                case "brand" -> {
+                *//*case "brand" -> {
                     String brands = String.join(",", filters.get("brand").toString());
                     log.info(brands);
                     products = products.stream().filter(product -> StringUtils.containsIgnoreCase(brands, product.getBrand())).collect(Collectors.toList());
@@ -51,7 +51,7 @@ public class FilterService {
                     String resolution = filter.getValue().toString();
                     log.info(resolution);
                     products = products.stream().filter(product -> resolution.contains(Objects.requireNonNull(product.get_tv_resol()))).collect(Collectors.toList());
-                }
+                }*//*
 
             }
         }
@@ -69,17 +69,17 @@ public class FilterService {
 
 
 
-        /*showReceivedParams(params);
+        *//*showReceivedParams(params);
 
-        List<Product> products = productRepo.findByType(req_type);*/
+        List<Product> products = productRepo.findByType(req_type);*//*
 
-        /*for (Map.Entry<String, Object> paramObject : params.entrySet())
+        *//*for (Map.Entry<String, Object> paramObject : params.entrySet())
         {
             Map<String, Object> inner = (Map<String, Object>) paramObject.getValue();
             for (Map.Entry<String, Object> filter : inner.entrySet())
             {
                 switch (filter.getKey()) {
-                    *//*case "sortmin"      -> products = products.stream().filter(product -> product.getFinalPrice() >= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
+                    *//**//*case "sortmin"      -> products = products.stream().filter(product -> product.getFinalPrice() >= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
                     case "sortmax"      -> products = products.stream().filter(product -> product.getFinalPrice() <= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
                     case "brand"        -> {
                         String brands = filter.getValue().toString();
@@ -100,16 +100,16 @@ public class FilterService {
                         for (Object tv_param : tv_params) {
                             products = products.stream().filter(product -> product.getTvFeatures().contains(tv_param.toString())).collect(Collectors.toList());
                         }
-                    }*//*
+                    }*//**//*
                 }
             }
         }
         sortProducts(products, params);
         log.info("After filter: " + products.size());
 
-        return packageProductsAndOrderedID(products, user);*/
+        return packageProductsAndOrderedID(products, user);*//*
         //return new LinkedList<>();
-    }
+    }*/
 
     private void sortProducts(List<Product> products, Map<String, Object> params)
     {

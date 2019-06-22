@@ -2,7 +2,7 @@ package expertshop.controllers;
 import expertshop.domain.Order;
 import expertshop.domain.User;
 import expertshop.repos.ProductRepo;
-import expertshop.services.CatalogParser;
+import expertshop.products.CatalogParser;
 import expertshop.services.OrderService;
 import expertshop.services.ProductService;
 
@@ -31,7 +31,7 @@ public class CategoriesController {
     {
         //catalogParser.countPics();
         //catalogParser.brandModel();
-        catalogParser.resolveTvResol();
+        //catalogParser.resolveTvResol();
         return "pages/supplier";
     }
     @PostMapping("/supplier")
@@ -43,8 +43,9 @@ public class CategoriesController {
     }
 
     @GetMapping("/supplier/pics")
-    public String checkProductPics() {
-        catalogParser.checkProductPics();
+    public String checkProductPics()
+    {
+        //catalogParser.checkProductPics();
         return "pages/supplier";
     }
 
@@ -93,9 +94,9 @@ public class CategoriesController {
         return "redirect:/hello";
     }
 
-    String getCurrentURL(String productID) {
+    /*String getCurrentURL(String productID) {
         return productRepo.findByProductID(productID).getType().toString();
-    }
+    }*/
 
     private Order getOrder(User user) {
         return user != null ? orderService.getUserOrder(user.getUserID()) : orderService.getSessionOrder();

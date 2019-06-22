@@ -17,19 +17,20 @@ import java.util.Set;
 
 @Repository
 public interface ProductRepo extends JpaRepository<Product, Long> {
-    List<Product> findByCategory(String category);
+    Product findByProductID(String ID);
+    //Product findFirstByModelNameContaining(String modelName);
+
+
+    /*List<Product> findByCategory(String category);
     List<Product> findBySubCategory(String subCategory);
     List<Product> findBySupplier(String supplier);
     List<Product> findByType(String type);
-
-    Product findByProductID(String ID);
-    Product findFirstByModelNameContaining(String modelName);
 
     Page<Product> findByProductGroupContainingIgnoreCaseOrTypeContainingIgnoreCaseOrFullNameContainingIgnoreCase(String s, String s1, String s3, Pageable pageable);
 
     Set<Product> findProductsSetByProductGroupContainingIgnoreCaseOrTypeContainingIgnoreCaseOrFullNameContainingIgnoreCase(String s, String s1, String s3);
 
-    List<Product> findProductsListByProductGroupContainingIgnoreCaseOrTypeContainingIgnoreCaseOrFullNameContainingIgnoreCase(String s, String s1, String s3);
+    List<Product> findProductsListByProductGroupContainingIgnoreCaseOrTypeContainingIgnoreCaseOrFullNameContainingIgnoreCase(String s, String s1, String s3);*/
     /*
     Page<Product> findByProductGroupContainsIgnoreCase(String productRequest, Pageable pageable);
     Page<Product> findByProductGroupContainingIgnoreCase(String productRequest, Pageable pageable);

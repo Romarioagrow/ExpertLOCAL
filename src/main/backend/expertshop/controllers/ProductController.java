@@ -48,7 +48,7 @@ public class ProductController {
         model.addAttribute("url", url);
         model.addAttribute("path", path);
         model.addAttribute("order", getOrder(user));
-        model.addAttribute("page", productService.findProducts(request, pageable, model));
+        ///model.addAttribute("page", productService.findProducts(request, pageable, model));
         return "pages/products";
     }
 
@@ -57,9 +57,9 @@ public class ProductController {
     {
         productService.getOrderedID(user, model);
 
-        model.addAttribute("url", getCurrentURL(productID));
+        ///model.addAttribute("url", getCurrentURL(productID));
         model.addAttribute("order", getOrder(user));
-        model.addAttribute("product", productRepo.findByProductID(productID));
+        ///model.addAttribute("product", productRepo.findByProductID(productID));
         return "pages/product";
     }
 
@@ -67,8 +67,8 @@ public class ProductController {
         return user != null ? orderService.getUserOrder(user.getUserID()) : orderService.getSessionOrder();
     }
 
-    String getCurrentURL(String productID) {
+    /*String getCurrentURL(String productID) {
         return productRepo.findByProductID(productID).getType();
-    }
+    }*/
 }
 

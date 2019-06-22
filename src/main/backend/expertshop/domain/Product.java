@@ -1,5 +1,4 @@
 package expertshop.domain;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,54 +8,73 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "product")
+@Table(name = "products")
 public class Product implements Serializable {
+    /*ОТ ПОСТАВШИКОВ В БД БЕЗ РЕДАКТИРОВАНИЯ*/
     @Id
     @Column(name = "product_id")
     public String productID;
 
-    @Column(name = "category")
-    private String category;
+    @Column(name = "original_category")
+    private String originalCategory;
 
-    @Column(name = "subcategory")
-    private String subCategory;
+    @Column(name = "original_subcategory")
+    private String originalSubCategory;
 
+    @Column(name = "original_group")
+    private String originalGroup;
+
+    @Column(name = "original_type")
+    private String originalType;
+
+    @Column(name = "original_brand")
+    private String originalBrand;
+
+    @Column(name = "original_name", length = 10000)
+    private String originalName;
+
+    @Column(name = "original_annotation", length = 20000)
+    private String originalAnnotation;
+
+    @Column(name = "original_amount")
+    private String originalAmount;
+
+    @Column(name = "original_price")
+    private String originalPrice;
+
+    @Column(name = "original_pic", length = 10000)
+    private String originalPic;
+
+    /*ОБЩИЕ ПОЛЯ*/
+    private String supplier;
+
+    @Column(name = "available_to_delivery")
+    private Boolean availableToDelivery = false;
+
+    @Column(name = "available_now")
+    private Boolean availableNow        = false;
+
+    private LocalDate update;
+
+    /*ДЛЯ ВЫВОДА НА СТРАНИЦУ*/
     @Column(name = "product_group")
     private String productGroup;
 
-    private String type, supplier, modelName, brand, finalPrice, amount;
+    @Column(name = "product_single_type")
+    private String singleType;
 
-    @Column(length = 25000)
-    private String fullName;
+    @Column(name = "product_model_name")
+    private String modelName;
 
-    @Column(length = 25000)
-    private String pic;
-
-    @Column(name = "price")
-    private String price;
-
-    @Column(length = 25000)
-    private String annotation;
-
-    @Column(length = 25000)
-    private String shortHtmlInfo;
-
-    @Column(length = 25000)
-    private String pics;
-
-    @Column(length = 25000)
-    private String fullInfo;
-
-    private String groupAndBrand;
-
-    @Column(length = 2500)
-    private String _tv_resol, _tv_diag;
+    @Column(name = "product_sale_name")
+    private String saleName	;
 }
 
 
