@@ -1,6 +1,7 @@
 package expertshop.controllers;
 import expertshop.domain.Order;
 import expertshop.domain.User;
+import expertshop.products.ProductResolver;
 import expertshop.repos.ProductRepo;
 import expertshop.products.CatalogParser;
 import expertshop.services.OrderService;
@@ -25,13 +26,13 @@ public class CategoriesController {
     private final OrderService orderService;
     private final CatalogParser catalogParser;
     private final ProductRepo productRepo;
+    private final ProductResolver productResolver;
 
     @GetMapping("/supplier")
     public String supplier()
     {
-        //catalogParser.countPics();
-        //catalogParser.brandModel();
-        //catalogParser.resolveTvResol();
+        productResolver.resolveProductGroups();
+        productResolver.resolveOriginalPrice();
         return "pages/supplier";
     }
     @PostMapping("/supplier")

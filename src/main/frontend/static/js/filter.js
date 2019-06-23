@@ -7,9 +7,10 @@ $(document).ready(function(){
 $(document).ready(function(){
     $('input[type="checkbox"]') .on('change', collectFilters);
 });
-/*$(document).ready(function(){
+$(document).ready(function(){
     $('input[type="text"]')     .on('keyup', collectFilters);
-});*/
+});
+
 /*$(document).ready(function() {
     $('.mdb-select').materialSelect();
 });*/
@@ -18,7 +19,6 @@ var url = document.URL;
 
 function collectFilters(e) {
     e.preventDefault();
-    //console.log('Current URL: ' + url);
 
     var filters = constructFiltersData(url);
     deleteEmptyParams(filters);
@@ -80,7 +80,7 @@ function constructProductCard(product/*, displayParams, orderButton*/) {
     return '<div class="card product-card">'+
         '<div class="view overlay">'+
         /*<#if product.pic??>*/
-        '<img class="img-fluid scale-pic" src="'+product.pic+'" alt="Product pic">'+
+        '<img class="img-fluid scale-pic" src="'+product.originalPic+'" alt="Product pic">'+
         '<a href="#">'+
         '<div class="mask rgba-white-slight"></div>'+
         '</a>'+
@@ -90,14 +90,14 @@ function constructProductCard(product/*, displayParams, orderButton*/) {
         '<h5 class="card-title">'+
         '<a href="/products/info/'+product.productID+'">'+
         '<strong>'+
-        product.fullName+
+        product.originalName+
         '</strong>'+
         '</a>'+
         '</h5>'+
         '<p class="card-text">'+
-        '<strong><i>'+product.type+'</i></strong>'+
+        '<strong><i>'+product.originalType+'</i></strong>'+
         '</p>'+
-        '<h3><strong>'+product.price+' ₽</strong></h3>'+
+        '<h3><strong>'+product.originalPrice+' ₽</strong></h3>'+
         '<div>'+
         '<button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID}" value="${product.productID}">'+
         'В корзину'+

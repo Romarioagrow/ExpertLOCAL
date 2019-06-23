@@ -31,6 +31,32 @@ public class ProductService {
     private final ProductRepo productRepo;
     private final OrderRepo orderRepo;
 
+    public Page<Product> findOriginalProducts(String request, Pageable pageable, Model model) {
+        Page<Product> products = productRepo.findByOriginalTypeContainingOrOriginalGroupContainingOrOriginalNameContaining(request, request, request, pageable);
+        model.addAttribute("total", products.getTotalElements());
+        return products;
+    }
+
+    public Page<Product> findOriginalProducts(String request, Pageable pageable) {
+        return productRepo.findByOriginalTypeContainingOrOriginalGroupContainingOrOriginalNameContaining(request, request, request, pageable);
+    }
+
+    public Page<Product> findProducts(String request, Pageable pageable, Model model)
+    {
+        log.info("Request " + request);
+
+        Page<Product> page = productRepo.findByProductGroupEqualsIgnoreCase(request, pageable);
+
+        if (page.getTotalElements() == 0) {
+            page = findOriginalProducts(request, pageable);
+        }
+
+        model.addAttribute("total", page.getTotalElements());
+
+        log.info("Products found: " + page.getTotalElements() + " on " + page.getTotalPages() + " pages!");
+        return page;
+    }
+
     /*public List<Product> findProductsByRequestType(String request) {
         return productRepo.findProductsListByProductGroupContainingIgnoreCaseOrTypeContainingIgnoreCaseOrFullNameContainingIgnoreCase(request, request, request);
     }*/
@@ -85,6 +111,9 @@ public class ProductService {
 
         model.addAttribute("orderedProductsID", orderedProductsID);
     }
+
+    /*public Object findProducts(String request, Pageable pageable) {
+    }*/
 }
 
 

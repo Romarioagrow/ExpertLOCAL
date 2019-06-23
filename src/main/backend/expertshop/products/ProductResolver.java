@@ -1,14 +1,128 @@
 package expertshop.products;
+import expertshop.domain.Product;
+import expertshop.repos.ProductRepo;
+
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Log
+@Service
 @AllArgsConstructor
 public class ProductResolver {
+    private final ProductRepo productRepo;
+
+    /*String[] matches = {
+                ///ТЕЛЕ-ВИДЕО-АУДИО
+                "Телевизоры","телевизоры","DVB-T2","Кронштейны","Телемебель",
+                "Музыкальный ","CD-магнитолы","антенны" ,"Синтезаторы",
+
+                ///ВСТРАЕВАЕМАЯ ТЕХНИКА
+                "Электрические духовые шкафы независимые","поверхности независимые","Вытяжки встраиваемые в шкаф",
+                "Встраиваемые посудомоечные машины","Встраиваемые холодильники","Встраиваемые микроволновые печи",
+
+                ///КУХОННАЯ ТЕХНИКА
+                "холодильники","Морозилка сверху","Морозилка снизу","Многокамерные","Холодильники","Винные шкафы",
+                "Морозилки","Морозильные","Эл/плиты","Плиты газ","Микроволновые печи соло","Микроволновые печи гриль","конвекция"
+        };*/
+
+    public void resolveProductGroups() {
+        List<Product> products = productRepo.findAll();
+
+        /*ТЕЛЕ-ВИДЕО-АУДИО*/
+        String[] tv             = {"Телевизоры", "телевизоры", "телевизор"};
+        String[] receivers      = {"ресиверы", "TV-тюнер", "Цифровая тв приставка"};
+        String[] tvCables       = {"разъемы для ТВА", "15.08.24.03 Кабели питания"};
+        String[] tvKronshteyn   = {"Кронштейны", "Кронштейны для ТВ", "кронштейны"};
+        String[] antennas       = {"Комнатные антенны", "Антенны телевизионные"};
+
+        main: for (Product product : products)
+        {
+            String type  = product.getOriginalType();
+            String group = product.getProductGroup();
+            String name  = product.getOriginalName();
+
+            if (product.getProductGroup() == null)
+            {
+                /*ТЕЛЕ-ВИДЕО-АУДИО*/
+                for (String alias : tv) {
+                    if (type.contains(alias) || group.contains(alias) || name.contains(alias) && !type.contains("Клавиатуры")) {
+                        setProductGroup(product,"Телевизоры", "Телевизор");
+                        continue main;
+                    }
+                }
+                for (String string : receivers) {
+                    if (type.contains(string) || name.contains(string)) {
+                        setProductGroup(product,"Ресиверы для тв", "Цифровой ресивер");
+                        continue main;
+                    }}
+                for (String string : tvCables) {
+                    if (type.contains(string)) {
+                        setProductGroup(product,"Кабели ТВ", "ТВ кабель");
+                        continue main;
+                    }}
+                for (String string : tvKronshteyn) {
+                    if (type.contains(string) && !type.contains("AV") && !type.contains("СВЧ")) {
+                        setProductGroup(product,"Кронштейны ТВ", "ТВ кронштейн");
+                        continue main;
+                    }
+                }
+                for (String string : antennas) {
+                    if (type.contains(string)) {
+                        setProductGroup(product,"Антенны ТВ", "ТВ антенная");
+                        continue main;
+                    }
+                }
+                if (type.contains("Телемебель")) {
+                    setProductGroup(product,"Телемебель", "Телемебель");
+                }
+                if (type.contains("Музыкальные центры") || group.contains("Музыкальные центры")) {
+                    setProductGroup(product,"Музыкальные центры", "Музыкальный центр");
+                }
+                if (type.contains("Синтезаторы и цифровые фортепьяно")) {
+                    setProductGroup(product,"Синтезаторы", "Синтезатор");
+                }
+            }
+        }
+    }
+
+    private void setProductGroup(Product product, String group, String single)
+    {
+        product.setProductGroup(group);
+        product.setSingleType(single);
+        productRepo.save(product);
+        log.info(product.getProductID() + " " + product.getSingleType());
+    }
+
+    public void resolveOriginalPrice()
+    {
+        List<Product> products= productRepo.findAll();
+
+        for (Product product : products)
+        {
+            if (product.getOriginalPrice().contains(","))
+            {
+                product.setPrice(Integer.parseInt(StringUtils.substringBefore(product.getOriginalPrice().replaceAll(" ", ""), ",")));
+            }
+            else
+            {
+                product.setPrice(Integer.parseInt(product.getOriginalPrice().replaceAll(" ", "")));
+            }
+            productRepo.save(product);
+        }
+    }
+
+
+
+
+    //////////////////////////////
     private String removeAllSpacesAfterBrand(String trimGarbage, String productBrand) {
         String result = "";
         String temp = "";

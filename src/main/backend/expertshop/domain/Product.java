@@ -74,7 +74,9 @@ public class Product implements Serializable {
     private String modelName;
 
     @Column(name = "product_sale_name")
-    private String saleName	;
+    private String saleName;
+
+    private Integer price;
 }
 
 

@@ -30,17 +30,16 @@ public class ServiceController {
     private final ProductService productService;
     private final OrderService orderService;
 
-    /*@PostMapping("/products/{category}/{reqType}")
-    public Page<Product>*//*Queue<Object>*//* filterProducts
-            (Model model,
-             @RequestBody Map<String, Object> params,
+    @PostMapping("/products/{category}/{reqType}")
+    public Page<Product> filterProducts
+            (@RequestBody Map<String, Object> params,
              @PathVariable String reqType,
              @AuthenticationPrincipal User user,
              @PathVariable String category,
              @PageableDefault(sort = {"supplier"}, direction = Sort.Direction.ASC, size = 15) Pageable pageable)
     {
-        return filterService.filterProducts(params, reqType, *//*user,*//* pageable*//*, model*//*);
-    }*/
+        return filterService.filterProducts(params, reqType, pageable);
+    }
 
     @PostMapping("/search")
     public List<Product> searchProducts

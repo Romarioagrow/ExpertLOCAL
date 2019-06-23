@@ -26,28 +26,29 @@
                             <a class="catalogue-info__subcategory" href="/products/теле-видео-аудио/телевизоры">
                                 <span class="badge badge-light">Телевизоры</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/теле-видео-аудио/ресиверы">
-                                <span class="badge badge-light"> DVB-С/T2 ресиверы</span>
+                            <a class="catalogue-info__subcategory" href="/products/теле-видео-аудио/ресиверы_для_тв">
+                                <span class="badge badge-light">Ресиверы для ТВ</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/теле-видео-аудио/кабели">
-                                <span class="badge badge-light">Кабели и переходники</span>
+                            <a class="catalogue-info__subcategory" href="/products/теле-видео-аудио/кабели_тв">
+                                <span class="badge badge-light">Кабели и переходники ТВ</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/теле-видео-аудио/кронштейны">
-                                <span class="badge badge-light">Кронштейны</span>
+                            <a class="catalogue-info__subcategory" href="/products/теле-видео-аудио/кронштейны_тв">
+                                <span class="badge badge-light">Кронштейны для ТВ</span>
                             </a>
                             <a class="catalogue-info__subcategory" href="/products/теле-видео-аудио/телемебель">
                                 <span class="badge badge-light">Телемебель</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/теле-видео-аудио/музыкальные">
+                            <a class="catalogue-info__subcategory" href="/products/теле-видео-аудио/музыкальные_центры">
                                 <span class="badge badge-light">Музыкальные центры</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/теле-видео-аудио/магнитолы">
+                            <#--<a class="catalogue-info__subcategory" href="/products/теле-видео-аудио/магнитолы">
                                 <span class="badge badge-light">Магнитолы</span>
-                            </a><a class="catalogue-info__subcategory" href="/products/теле-видео-аудио/антенны">
-                                <span class="badge badge-light">Антенны</span>
+                            </a>-->
+                            <a class="catalogue-info__subcategory" href="/products/теле-видео-аудио/антенны_тв">
+                                <span class="badge badge-light">Антенны для ТВ</span>
                             </a>
                             <a class="catalogue-info__subcategory" href="/products/теле-видео-аудио/синтезаторы">
-                                <span class="badge badge-light">Синтезаторы и цифровые фортепиано</span>
+                                <span class="badge badge-light">Синтезаторы и цифровые фортепьяно</span>
                             </a>
                         </div>
                     </div>
@@ -66,20 +67,22 @@
                         </a>
                         <div class="catalogue-info__subcategories">
                             <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_духовые_шкафы">
-                                <span class="badge badge-light">Встраиваемые духовые шкафы</span></a>
+                                <span class="badge badge-light">Встраиваемые духовые шкафы</span>
+                            </a>
                             <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/варочные_панели">
                                 <span class="badge badge-light">Варочные панели</span>
                             </a>
                             <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_вытяжки">
                                 <span class="badge badge-light">Вытяжки</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_посудомоечные_машины">
-                                <span class="badge badge-light">Встраиваемые посудомоечные машины</span></a>
                             <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_холодильники">
                                 <span class="badge badge-light">Встраиваемые холодильники</span>
                             </a>
                             <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_микроволновые_печи">
                                 <span class="badge badge-light">Встраиваемые микроволновые печи</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_посудомоечные_машины">
+                                <span class="badge badge-light">Встраиваемые посудомоечные машины</span>
                             </a>
                         </div>
                     </div>

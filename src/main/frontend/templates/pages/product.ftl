@@ -5,29 +5,29 @@
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/products/groups/${url}">${url}</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">${product.brand}</li>
+                    <li class="breadcrumb-item active" aria-current="page">${product.originalBrand}</li>
                 </ol>
             </nav>
         </div>
         <div class="row">
             <div class="col">
-                <h2>${product.fullName}</h2>
+                <h2>${product.originalName}</h2>
             </div>
         </div>
         <div class="row">
             <div class="col-7">
-                <#if product.pic??>
+                <#if product.originalPic??>
                     <div class="product-page-pic">
                         <div id="carousel-thumb" class="product-page-pic carousel slide carousel-fade carousel-thumbnails" data-ride="carousel">
                             <div class="carousel-inner" role="listbox">
                                 <div class="carousel-item active">
-                                    <img class="d-block scale-pic " src="${product.pic}" alt="First slide" style="max-height: 15rem !important;">
+                                    <img class="d-block scale-pic " src="${product.originalPic}" alt="First slide" style="max-height: 15rem !important;">
                                 </div>
                                 <div class="carousel-item">
-                                    <img class="d-block scale-pic" src="${product.pic}" alt="Second slide" style="max-height: 15rem !important;">
+                                    <img class="d-block scale-pic" src="${product.originalPic}" alt="Second slide" style="max-height: 15rem !important;">
                                 </div>
                                 <div class="carousel-item">
-                                    <img class="d-block scale-pic" src="${product.pic}" alt="Third slide" style="max-height: 15rem !important;">
+                                    <img class="d-block scale-pic" src="${product.originalPic}" alt="Third slide" style="max-height: 15rem !important;">
                                 </div>
                                 <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -40,13 +40,13 @@
                             </a>
                             <ol class="carousel-indicators">
                                 <li data-target="#carousel-thumb" data-slide-to="0" class="active">
-                                    <img class="d-block scale-pic" src="${product.pic}" style="max-height: 5rem !important;">
+                                    <img class="d-block scale-pic" src="${product.originalPic}" style="max-height: 5rem !important;">
                                 </li>
                                 <li data-target="#carousel-thumb" data-slide-to="1">
-                                    <img class="d-block scale-pic" src="${product.pic}" style="max-height: 5rem !important;">
+                                    <img class="d-block scale-pic" src="${product.originalPic}" style="max-height: 5rem !important;">
                                 </li>
                                 <li data-target="#carousel-thumb" data-slide-to="2">
-                                    <img class="d-block scale-pic" src="${product.pic}" style="max-height: 5rem !important;">
+                                    <img class="d-block scale-pic" src="${product.originalPic}" style="max-height: 5rem !important;">
                                 </li>
                             </ol>
                         </div>
@@ -54,7 +54,7 @@
                 </#if>
             </div>
             <div class="col price">
-                <h2><strong>${product.price} ₽</strong></h2>
+                <h2><strong>${product.originalPrice} ₽</strong></h2>
                 <button type="button" class="btn btn-success waves-effect waves-light">Купить!</button>
                 <#if orderedProductsID??>
                     <#if orderedProductsID?seq_contains('${product.productID}')>
@@ -82,12 +82,12 @@
                 <h3>Параметры товара</h3>
                 <table class="table table table-borderless w-30">
                     <thead>
-                    <tr>${product.annotation}</tr>
+                    <tr>${product.originalAnnotation}</tr>
                     </thead>
                     <tbody>
-                    ${product.fullInfo}
-                    <#--<#include "../parts/product-info.ftl">-->
-                    </tbody>
+                    <#--${product.fullInfo}
+                    &lt;#&ndash;<#include "../parts/product-info.ftl">&ndash;&gt;
+                    </tbody>-->
                 </table>
             </div>
         </div>
