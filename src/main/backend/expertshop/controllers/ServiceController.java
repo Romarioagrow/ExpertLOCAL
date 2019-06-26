@@ -10,6 +10,7 @@ import expertshop.services.ProductService;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -38,7 +39,8 @@ public class ServiceController {
              @PathVariable String category,
              @PageableDefault(sort = {"supplier"}, direction = Sort.Direction.ASC, size = 15) Pageable pageable)
     {
-        return filterService.filterProducts(params, reqType, pageable);
+        String request = StringUtils.capitalize(reqType.replaceAll("_", " "));
+        return filterService.filterProducts(params, request, pageable);
     }
 
     @PostMapping("/search")

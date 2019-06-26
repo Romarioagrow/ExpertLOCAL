@@ -56,43 +56,6 @@
             </div>
             <div class="col mb-4">
                 <div class="catalogue-info  catalogue-main__catalogue">
-                    <a class="image-link  catalogue-info__image" href="/cat/vstraivaemaya_tehnika/">
-                        <span class="image image_format_index image_lazy">
-                            <img class="image__adaptive" data-original="//cdn.rbt.ru/images/gen/catalogue/image/1/41/5_r4408.jpg" src="//cdn.rbt.ru/images/gen/catalogue/image/1/41/5_r4408.jpg" alt="Встраиваемая техника" style="display: inline;" width="180" height="180">
-                        </span>
-                    </a>
-                    <div class="catalogue-info__column">
-                        <a class="catalogue-info__header" href="/cat/vstraivaemaya_tehnika/">
-                            <h2><span class="">Встраиваемая техника</span></h2>
-                        </a>
-                        <div class="catalogue-info__subcategories">
-                            <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_духовые_шкафы">
-                                <span class="badge badge-light">Встраиваемые духовые шкафы</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_варочные_панели">
-                                <span class="badge badge-light">Варочные панели</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_вытяжки">
-                                <span class="badge badge-light">Вытяжки</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_холодильники">
-                                <span class="badge badge-light">Встраиваемые холодильники</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_СВЧ">
-                                <span class="badge badge-light">Встраиваемые микроволновые печи</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_посудомоечные_машины">
-                                <span class="badge badge-light">Встраиваемые посудомоечные машины</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col mb-4">
-                <hr>
-                <div class="catalogue-info  catalogue-main__catalogue">
                     <a class="image-link  catalogue-info__image" href="/cat/kuhonnaya_tehnika/">
                         <span class="image image_format_index image_lazy">
                             <img class="image__adaptive" data-original="//cdn.rbt.ru/images/gen/catalogue/image/1/41/8_r7857.jpg" src="//cdn.rbt.ru/images/gen/catalogue/image/1/41/8_r7857.jpg" alt="Кухонная техника" style="display: inline;" width="180" height="180">
@@ -149,6 +112,43 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row">
+            <div class="col mb-4">
+                <hr>
+                <div class="catalogue-info  catalogue-main__catalogue">
+                    <a class="image-link  catalogue-info__image" href="/cat/vstraivaemaya_tehnika/">
+                        <span class="image image_format_index image_lazy">
+                            <img class="image__adaptive" data-original="//cdn.rbt.ru/images/gen/catalogue/image/1/41/5_r4408.jpg" src="//cdn.rbt.ru/images/gen/catalogue/image/1/41/5_r4408.jpg" alt="Встраиваемая техника" style="display: inline;" width="180" height="180">
+                        </span>
+                    </a>
+                    <div class="catalogue-info__column">
+                        <a class="catalogue-info__header" href="/cat/vstraivaemaya_tehnika/">
+                            <h2><span class="">Встраиваемая техника</span></h2>
+                        </a>
+                        <div class="catalogue-info__subcategories">
+                            <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_духовые_шкафы">
+                                <span class="badge badge-light">Встраиваемые духовые шкафы</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_варочные_панели">
+                                <span class="badge badge-light">Варочные панели</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_вытяжки">
+                                <span class="badge badge-light">Вытяжки</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_холодильники">
+                                <span class="badge badge-light">Встраиваемые холодильники</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_СВЧ">
+                                <span class="badge badge-light">Встраиваемые микроволновые печи</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_посудомоечные_машины">
+                                <span class="badge badge-light">Встраиваемые посудомоечные машины</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="col mb-4">
                 <hr>
                 <div class="catalogue-info catalogue-main__catalogue_shifted catalogue-main__catalogue">
@@ -191,6 +191,93 @@
                 <div class="catalogue-info  catalogue-main__catalogue">
                     <a class="image-link  catalogue-info__image" href="#">
                         <span class="image image_format_index image_lazy">
+                            <img class="image__adaptive" data-original="//cdn.rbt.ru/images/gen/catalogue/image/1/41/3_r9141.jpg" src="//cdn.rbt.ru/images/gen/catalogue/image/1/41/3_r9141.jpg" alt="Климатическая техника" style="display: inline;" width="180" height="180">
+                        </span>
+                    </a>
+                    <div class="catalogue-info__column">
+                        <a class="catalogue-info__header" href="#">
+                            <h2><span class="">Климатическая техника</span></h2>
+                        </a>
+                        <div class="catalogue-info__subcategories">
+                            <a class="catalogue-info__subcategory" href="/products/климатическая_техника/кондиционеры">
+                                <span class="badge badge-light">Кондиционеры</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/климатическая_техника/водонагреватели">
+                                <span class="badge badge-light">Водонагреватели</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/климатическая_техника/увлажнители воздуха">
+                                <span class="badge badge-light">Увлажнители воздуха</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/климатическая_техника/обогревательные_приборы">
+                                <span class="badge badge-light">Обогревательные приборы</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/климатическая_техника/вентиляторы">
+                                <span class="badge badge-light">Вентиляторы</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/климатическая_техника/очистители_воздуха">
+                                <span class="badge badge-light">Очистители воздуха</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/климатическая_техника/метеостанции">
+                                <span class="badge badge-light">Метеостанции</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-4">
+                <hr>
+                <div class="catalogue-info catalogue-main__catalogue_shifted catalogue-main__catalogue">
+                    <a class="image-link  catalogue-info__image" href="#">
+                        <span class="image image_format_index image_lazy">
+                            <img class="image__adaptive" data-original="//cdn.rbt.ru/images/gen/catalogue/image/1/41/2_r9873.jpg" src="//cdn.rbt.ru/images/gen/catalogue/image/1/41/2_r9873.jpg" alt="Приборы персонального ухода" style="display: inline;" width="180" height="180">
+                        </span>
+                    </a>
+                    <div class="catalogue-info__column">
+                        <a class="catalogue-info__header" href="#">
+                            <h2><span class="">Приборы персонального ухода</span></h2>
+                        </a>
+                        <div class="catalogue-info__subcategories">
+                            <a class="catalogue-info__subcategory" href="/products/приборы_персонального_ухода/щипцы_для_волос">
+                                <span class="badge badge-light">Щипцы для волос</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/приборы_персонального_ухода/стайлеры">
+                                <span class="badge badge-light">Стайлеры</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/приборы_персонального_ухода/фены">
+                                <span class="badge badge-light">Фены</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/приборы_персонального_ухода/триммеры_для_бритья">
+                                <span class="badge badge-light">Триммеры</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/приборы_персонального_ухода/бритвы">
+                                <span class="badge badge-light">Бритвы</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/приборы_персонального_ухода/эпиляторы">
+                                <span class="badge badge-light">Эпиляторы</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/приборы_персонального_ухода/массажеры">
+                                <span class="badge badge-light">Массажеры</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/приборы_персонального_ухода/напольные весы">
+                                <span class="badge badge-light">Весы</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/приборы_персонального_ухода/маникюрные наборы">
+                                <span class="badge badge-light">Маникюрные наборы</span>
+                            </a>
+                            <#--<a class="catalogue-info__subcategory" href="/products/приборы_персонального_ухода/медицинские_приборы">
+                                <span class="badge badge-light">Медицинские приборы</span>
+                            </a>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col mb-4">
+                <hr>
+                <div class="catalogue-info  catalogue-main__catalogue">
+                    <a class="image-link  catalogue-info__image" href="#">
+                        <span class="image image_format_index image_lazy">
                             <img class="image__adaptive" data-original="//cdn.rbt.ru/images/gen/catalogue/image/1/41/6_r3507.jpg" src="//cdn.rbt.ru/images/gen/catalogue/image/1/41/6_r3507.jpg" alt="Цифровые устройства" style="display: inline;" width="180" height="180">
                         </span>
                     </a>
@@ -202,8 +289,8 @@
                             <a class="catalogue-info__subcategory" href="/products/цифровые_устройства/смартфоны">
                                 <span class="badge badge-light">Смартфоны</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/цифровые_устройства/мобильные_телефоны">
-                                <span class="badge badge-light">Мобильные телефоны</span>
+                            <a class="catalogue-info__subcategory" href="/products/цифровые_устройства/сотовые_телефоны">
+                                <span class="badge badge-light">Сотовые телефоны</span>
                             </a>
                             <a class="catalogue-info__subcategory" href="/products/цифровые_устройства/чехлы_для_телефонов">
                                 <span class="badge badge-light">Чехлы для телефонов</span>
@@ -226,7 +313,7 @@
                             <a class="catalogue-info__subcategory" href="/products/цифровые_устройства/электронные_книги">
                                 <span class="badge badge-light">Электронные книги</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/цифровые_устройства/карты_памяти">
+                            <a class="catalogue-info__subcategory" href="/products/цифровые_устройства/карты_памяти_microSD">
                                 <span class="badge badge-light">Карты памяти microSD</span>
                             </a>
                             <a class="catalogue-info__subcategory" href="/products/цифровые_устройства/MP3_плееры">
@@ -252,19 +339,22 @@
                             <a class="catalogue-info__subcategory" href="/products/компьютеры_и_орг_техника/ноутбуки">
                                 <span class="badge badge-light">Ноутбуки</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/компьютеры_и_орг_техника/настольные_компьютеры">
-                                <span class="badge badge-light">Настольные компьютеры</span>
+                            <a class="catalogue-info__subcategory" href="/products/компьютеры_и_орг_техника/готовые_ПК">
+                                <span class="badge badge-light">Готовые компьютеры</span>
                             </a>
                             <a class="catalogue-info__subcategory" href="/products/компьютеры_и_орг_техника/принтеры">
                                 <span class="badge badge-light">Принтеры</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/компьютеры_и_орг_техника/клавиатуры_и_мыши">
-                                <span class="badge badge-light">Клавиатуры и мыши</span>
+                            <a class="catalogue-info__subcategory" href="/products/компьютеры_и_орг_техника/клавиатуры">
+                                <span class="badge badge-light">Клавиатуры</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/компьютеры_и_орг_техника/мыши">
+                                <span class="badge badge-light">Мыши</span>
                             </a>
                             <a class="catalogue-info__subcategory" href="/products/компьютеры_и_орг_техника/внешние_жесткие_диски">
                                 <span class="badge badge-light">Внешние жесткие диски</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/компьютеры_и_орг_техника/Роутеры_и_сетевое_оборудование">
+                            <a class="catalogue-info__subcategory" href="/products/компьютеры_и_орг_техника/роутеры_и_сетевое_оборудование">
                                 <span class="badge badge-light">Роутеры и сетевое оборудование</span>
                             </a>
                             <a class="catalogue-info__subcategory" href="/products/компьютеры_и_орг_техника/мониторы">
@@ -273,9 +363,9 @@
                             <a class="catalogue-info__subcategory" href="/products/компьютеры_и_орг_техника/flash_карты">
                                 <span class="badge badge-light">Flash карты</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/компьютеры_и_орг_техника/кресла">
+                            <#--<a class="catalogue-info__subcategory" href="/products/компьютеры_и_орг_техника/кресла">
                                 <span class="badge badge-light">Кресла</span>
-                            </a>
+                            </a>-->
                         </div>
                     </div>
                 </div>
@@ -312,93 +402,6 @@
                             </a>
                             <a class="catalogue-info__subcategory" href="/products/гаджеты/колонки_с_голосовым_помощником">
                                 <span class="badge badge-light">Колонки с голосовым помощником</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col mb-4">
-                <hr>
-                <div class="catalogue-info catalogue-main__catalogue_shifted catalogue-main__catalogue">
-                    <a class="image-link  catalogue-info__image" href="#">
-                        <span class="image image_format_index image_lazy">
-                            <img class="image__adaptive" data-original="//cdn.rbt.ru/images/gen/catalogue/image/1/41/2_r9873.jpg" src="//cdn.rbt.ru/images/gen/catalogue/image/1/41/2_r9873.jpg" alt="Приборы персонального ухода" style="display: inline;" width="180" height="180">
-                        </span>
-                    </a>
-                    <div class="catalogue-info__column">
-                        <a class="catalogue-info__header" href="#">
-                            <h2><span class="">Приборы персонального ухода</span></h2>
-                        </a>
-                        <div class="catalogue-info__subcategories">
-                            <a class="catalogue-info__subcategory" href="/products/приборы_персонального_ухода/выпрямители_для_волос">
-                                <span class="badge badge-light">Выпрямители для волос</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/приборы_персонального_ухода/стайлеры">
-                                <span class="badge badge-light">Стайлеры</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/приборы_персонального_ухода/фены">
-                                <span class="badge badge-light">Фены</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/приборы_персонального_ухода/триммеры">
-                                <span class="badge badge-light">Триммеры</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/приборы_персонального_ухода/бритвы">
-                                <span class="badge badge-light">Бритвы</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/приборы_персонального_ухода/эпиляторы">
-                                <span class="badge badge-light">Эпиляторы</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/приборы_персонального_ухода/массажеры">
-                                <span class="badge badge-light">Массажеры</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/приборы_персонального_ухода/весы">
-                                <span class="badge badge-light">Весы</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/приборы_персонального_ухода/маникюрные наборы">
-                                <span class="badge badge-light">Маникюрные наборы</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/приборы_персонального_ухода/медицинские_приборы">
-                                <span class="badge badge-light">Медицинские приборы</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col mb-4">
-                <hr>
-                <div class="catalogue-info  catalogue-main__catalogue">
-                    <a class="image-link  catalogue-info__image" href="#">
-                        <span class="image image_format_index image_lazy">
-                            <img class="image__adaptive" data-original="//cdn.rbt.ru/images/gen/catalogue/image/1/41/3_r9141.jpg" src="//cdn.rbt.ru/images/gen/catalogue/image/1/41/3_r9141.jpg" alt="Климатическая техника" style="display: inline;" width="180" height="180">
-                        </span>
-                    </a>
-                    <div class="catalogue-info__column">
-                        <a class="catalogue-info__header" href="#">
-                            <h2><span class="">Климатическая техника</span></h2>
-                        </a>
-                        <div class="catalogue-info__subcategories">
-                            <a class="catalogue-info__subcategory" href="/products/климатическая_техника/кондиционеры">
-                                <span class="badge badge-light">Кондиционеры</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/климатическая_техника/водонагреватели">
-                                <span class="badge badge-light">Водонагреватели</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/климатическая_техника/увлажнители воздуха">
-                                <span class="badge badge-light">Увлажнители воздуха</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/климатическая_техника/обогреватели">
-                                <span class="badge badge-light">Обогреватели</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/климатическая_техника/вентиляторы">
-                                <span class="badge badge-light">Вентиляторы</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/климатическая_техника/очистители_и_мойки_воздуха">
-                                <span class="badge badge-light">Очистители и мойки воздуха</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/климатическая_техника/метеостанции">
-                                <span class="badge badge-light">Метеостанции</span>
                             </a>
                         </div>
                     </div>

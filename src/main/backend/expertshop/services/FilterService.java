@@ -55,7 +55,7 @@ public class FilterService {
             }
         }
 
-        products.forEach(product -> log.info(product.getModelName()));
+        //products.forEach(product -> log.info(product.getModelName()));
 
         log.info("Product after filter " + products.size());
 
