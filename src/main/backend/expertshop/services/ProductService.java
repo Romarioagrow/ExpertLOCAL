@@ -57,35 +57,21 @@ public class ProductService {
         return page;
     }
 
-    /*public List<Product> findProductsByRequestType(String request) {
-        return productRepo.findProductsListByProductGroupContainingIgnoreCaseOrTypeContainingIgnoreCaseOrFullNameContainingIgnoreCase(request, request, request);
-    }*/
+    /*!!!!для каждого продукт поиск по модели, если больше чем один продукт, сранивнивать по цене и отображать только с самой низкой ценой,
+    * для остальных setDuple(true)*/
 
-    /*public Page<Product> findProducts(String request, Pageable pageable, Model model)
-    {
-        log.info("Request " + request);
-
-        Page<Product> page = findRequiredProducts(request, request, request, pageable);
-        model.addAttribute("total", page.getTotalElements());
-
-        log.info("Products found: " + page.getTotalElements() + " on " + page.getTotalPages() + " pages!");
-        return page;
-    }
-
-    private Page<Product> findRequiredProducts(String s, String s1, String s2, Pageable pageable) { ///lol
-        return productRepo.findByProductGroupContainingIgnoreCaseOrTypeContainingIgnoreCaseOrFullNameContainingIgnoreCase(s, s1, s2, pageable);
-    }*/
+    /*проверка уникальности: обрезать название до бренда и проверить startWith modelName*/
 
     public List<Product> searchProducts(String searchRequest)
     {
         log.info("Search request: " + searchRequest);
 
-        /*List<Product> searchedProducts = productRepo.findAll().stream()
-                .filter(product -> StringUtils.containsIgnoreCase(product.getFullName(), searchRequest))
+        List<Product> searchedProducts = productRepo.findAll().stream()
+                .filter(product -> StringUtils.containsIgnoreCase(product.getOriginalName(), searchRequest))
                 .collect(Collectors.toList());
         log.info("Products found: " + searchedProducts.size());
 
-        return searchedProducts;*/return new ArrayList<>();
+        return searchedProducts;
     }
 
     public void getOrderedID(User user, Model model)
@@ -111,9 +97,6 @@ public class ProductService {
 
         model.addAttribute("orderedProductsID", orderedProductsID);
     }
-
-    /*public Object findProducts(String request, Pageable pageable) {
-    }*/
 }
 
 

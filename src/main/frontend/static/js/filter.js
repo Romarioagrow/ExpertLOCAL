@@ -7,9 +7,9 @@ $(document).ready(function(){
 $(document).ready(function(){
     $('input[type="checkbox"]') .on('change', collectFilters);
 });
-$(document).ready(function(){
+/*$(document).ready(function(){
     $('input[type="text"]')     .on('keyup', collectFilters);
-});
+});*/
 
 /*$(document).ready(function() {
     $('.mdb-select').materialSelect();

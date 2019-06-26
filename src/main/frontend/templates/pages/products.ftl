@@ -57,7 +57,7 @@
                             <div class="card product-card">
                                 <div class="view overlay">
                                     <#if product.originalPic??>
-                                        <img class="img-fluid scale-pic" src="${product.originalPic}" alt="Product pic">
+                                        <img class="img-fluid scale-pic" src="${product.originalPic}" alt="Фотографии пока нет">
                                         <a href="#">
                                             <div class="mask rgba-white-slight"></div>
                                         </a>
@@ -74,7 +74,7 @@
                                     <p class="card-text">
                                         <strong><i>${product.originalType}</i></strong>
                                     </p>
-                                    <h3><strong>${product.originalPrice} ₽</strong></h3>
+                                    <h3><strong>${product.price} ₽</strong></h3>
                                     <div>
                                         <#if orderedProductsID?? && orderedProductsID?seq_contains('${product.productID}')>
                                             <a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>

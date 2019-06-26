@@ -27,7 +27,7 @@ public class FilterService {
     {
         log.info(requiredType);
 
-        filters.forEach((s, o) -> log.info(s + " " + o.toString()));
+        filters.forEach((key, filter) -> log.info(key + " " + filter.toString()));
 
         List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCase(requiredType);
         log.info("Product list before filter " + products.size());

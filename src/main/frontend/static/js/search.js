@@ -36,7 +36,7 @@ function searchProducts(e) {
             (
                 '<div class="one-product" style="margin-top: 3px!important;">'                      +
                 '<a href="http://localhost:8080/products/info/'+product.productID+'">'              +
-                /*product.productParams.type + " " + product.brand + " " + */product.fullName       +
+                product.singleType + " " + product.originalName                                     +
                 '</a>'                                                                              +
                 '</div>'
             ));

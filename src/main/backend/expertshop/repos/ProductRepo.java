@@ -25,6 +25,8 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
 
     List<Product> findProductsByProductGroupEqualsIgnoreCase(String productGroup);
 
+    List<Product> findByOriginalGroup(String group);
+
     //Product findFirstByModelNameContaining(String modelName);
 
 

@@ -69,7 +69,7 @@
                             <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_духовые_шкафы">
                                 <span class="badge badge-light">Встраиваемые духовые шкафы</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/варочные_панели">
+                            <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_варочные_панели">
                                 <span class="badge badge-light">Варочные панели</span>
                             </a>
                             <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_вытяжки">
@@ -78,7 +78,7 @@
                             <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_холодильники">
                                 <span class="badge badge-light">Встраиваемые холодильники</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_микроволновые_печи">
+                            <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_СВЧ">
                                 <span class="badge badge-light">Встраиваемые микроволновые печи</span>
                             </a>
                             <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_посудомоечные_машины">
@@ -118,7 +118,7 @@
                             <a class="catalogue-info__subcategory" href="/products/кухонная_техника/микроволновые_печи">
                                 <span class="badge badge-light">Микроволновые печи</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/кухонная_техника/чайники_электрические">
+                            <a class="catalogue-info__subcategory" href="/products/кухонная_техника/электрические_чайники">
                                 <span class="badge badge-light">Чайники электрические</span>
                             </a>
                             <a class="catalogue-info__subcategory" href="/products/кухонная_техника/кофеварки">
@@ -136,8 +136,8 @@
                             <a class="catalogue-info__subcategory" href="/products/кухонная_техника/мясорубки">
                                 <span class="badge badge-light">Мясорубки</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/кухонная_техника/хлебопечки">
-                                <span class="badge badge-light">Хлебопечки</span>
+                            <a class="catalogue-info__subcategory" href="/products/кухонная_техника/хлебопечи">
+                                <span class="badge badge-light">Хлебопечи</span>
                             </a>
                             <a class="catalogue-info__subcategory" href="/products/кухонная_техника/кастрюли">
                                 <span class="badge badge-light">Кастрюли</span>

@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -66,6 +65,9 @@ public class Product implements Serializable {
     /*ДЛЯ ВЫВОДА НА СТРАНИЦУ*/
     @Column(name = "product_group")
     private String productGroup;
+
+    @Column(name = "product_type")
+    private String productType;
 
     @Column(name = "product_single_type")
     private String singleType;
