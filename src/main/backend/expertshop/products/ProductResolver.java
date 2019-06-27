@@ -26,24 +26,26 @@ public class ProductResolver {
 
         /*ТЕЛЕ-ВИДЕО-АУДИО*/
         String[] tv                 = {"Телевизоры", "телевизоры", "телевизор"};
-        String[] receivers          = {"ресиверы", "TV-тюнер", "Цифровая тв приставка"};
-        String[] tvCables           = {"разъемы для ТВА", "15.08.24.03 Кабели питания"};
+        String[] receivers          = {"ресиверы", "TV-тюнер", "Цифровая тв приставка", "15.02.17.01 Спутниковое ТВ"};
+        String[] tvCables           = {"разъемы для ТВА", "15.08.24.03 Кабели питания", "15.02.08", "15.02.09", "15.02.10"};
         String[] tvKronshteyn       = {"Кронштейны", "Кронштейны для ТВ", "кронштейны"};
         String[] antennas           = {"Комнатные антенны", "Антенны телевизионные"};
+        String[] muzCenters         = {"10.10", "Музыкальные центры"};
 
         /*ВСТРАИВАЕМАЯ ТЕХНИКА*/
         String[] builtInOvens       = {"07.01.01", "Встраиваемые духовые шкафы", "Духовые шкафы"};
-        String[] builtInCookSurf    = {"07.03.01", "07.03.03", "07.04.01", "Встраиваемые варочные поверхности", "варочные поверхности"};
+        String[] builtInCookSurf    = {"07.03.01", "07.03.03", "07.04", "Встраиваемые варочные поверхности", "варочные поверхности", "газовые независимые", "электрические независимые "};
         String[] builtInHoods       = {"07.05", "Вытяжки встраиваемые", "вытяжки", "07.05.02_Вытяжки", "07.05.03_Вытяжки", "07.05.04_Вытяжки", "07.05.05_Вытяжки"};
         String[] builtInFridges     = {"07.07_Встраиваемые", "Холодильники встраиваемые"};
-        String[] builtInMicroWaves  = {"07.08"};
+        String[] builtInMicroWaves  = {"07.08", "свч печи встраиваемые"};
+        String[] builtInDishWashers = {"07.06", "Посудомоечные машины встраиваемые"};
 
         /*КУХОННАЯ ТЕХНИКА*/
         String[] fridges            = {"01.01.02", "Холодильники"};
         String[] freezers           = {"01.01.03", "Морозильники"};
-        String[] elStoves           = {"Эл/плиты", "Плиты стационарные электрические", "Электрическая плита"};
-        String[] gasStoves          = {"01.03", "Плиты стационарные газовые", "Газовая плита"};
-        String[] microWaves         = {"01.05", "Микроволновые печи"};
+        String[] elStoves           = {"01.02", "Эл/плиты", "Плиты стационарные электрические", "Электрическая плита"};
+        String[] gasStoves          = {"01.03", "Плиты стационарные газовые", "Газовая плита", "газовые"};
+        String[] microWaves         = {"01.05", "Микроволновые печи", "СВЧ печи"};
         String[] teaPods            = {"01.18", "Чайники электрические", "чайники"};
         String[] coffeeMakers       = {"01.19", "Кофеварки"};
         String[] multiCooker        = {"01.12", "Мультиварки"};
@@ -62,6 +64,7 @@ public class ProductResolver {
         String[] steamers           = {"03.03.02", "03.03.03", "03.03.04", "Отпариватели"};
 
         /*ЦИФРОВЫЕ УСТРОЙСТВА*/
+        String[] photo              = {"09.06.01", "09.06.02", "09.06.03", "09.06.04", "фотоаппараты"};
         String[] smartphones        = {"09.01.02", "Смартфоны"};
         String[] mobiles            = {"09.01.01", "Сотовые телефоны", "мобильные телефоны"};
         String[] tablets            = {"08.02", "планшеты"};
@@ -75,29 +78,34 @@ public class ProductResolver {
         String[] mouses             = {"15.08.37", "Мышь"};
         String[] monitors           = {"08.04", "Мониторы"};
         String[] flashCards         = {"15.08.18", "Флеш"};
+        String[] powerFilters       = {"15.02.04", "Сетевые фильтры"};
 
         /*КЛИМАТИЧЕСКАЯ ТЕХНИКА*/
         String[] airConditions      = {"04.01", "Кондиционеры"};
         String[] waterHeaters       = {"04.05", "Водонагреватели"};
         String[] airHumidifiers     = {"04.04.01", "Увлажнители"};
-        String[] heaters            = {"04.02.01", "Обогревательные приборы", "Обогреватели"};
+        String[] heaters            = {"04.02", "Обогревательные приборы", "Обогреватели"};
         String[] vents              = {"04.03", "Вентиляторы"};
         String[] airCleaner         = {"04.04.03", "Мойки воздуха"};
 
         /*ПРИБОРЫ ПЕРСОНАЛЬНОГО УХОДА*/
-        String[] hairStraighteners  = {"05.02.02.01", "Щипцы для волос"};
+        String[] hairStraighteners  = {"05.02.02", "Щипцы для волос"};
         String[] stylers            = {"05.02.03", "стайлеры"};
         String[] hairDryers         = {"05.01.01", "фены"};
-        String[] razors             = {"05.06", "05.07", "бритвы"};
+        String[] razors             = {"05.06", "05.07", "бритвы", "15.05.01.05 Бритвенные станки"};
         String[] trimmers           = {"05.03.02", "Триммер для бритья"};
         String[] epilators          = {"05.07.01", "эпиляторы"};
         String[] weighers           = {"05.10.01", "весы напольные"};
 
         /*ИНСТРУМЕНТЫ ДЛЯ ДОМА*/
-        String[] tools              = {"06.01.01", "06.01.02", "06.01.03", "06.01.04"};
+        String[] tools              = {"06.01.01", "06.01.02", "06.01.03", "06.01.04", "06.01.05", "Шуруповерты", "Дрели", };
+        String[] shlif              = {"06.02", "Шлифовальные машины"};
+        String[] welders            = {"06.06.08", "Сварочные аппараты"};
 
         /*АВТОТОВАРЫ*/
         String[] videoRegs          = {"15.10.04.03", "видеорегистраторы"};
+        String[] autoMagnitols      = {"10.02", "Автомагнитолы"};
+        String[] autoAudio          = {"10.01","Коаксиальная акустика"};
 
         /*ГАДЖЕТЫ*/
         String[] smartWatches       = {"15.25.01", "Умные спортивные часы"};
@@ -109,20 +117,20 @@ public class ProductResolver {
             String group = product.getOriginalGroup();
             String subCategory = product.getOriginalSubCategory() != null ? product.getOriginalSubCategory() : "n/a";
 
-            //if (product.getProductGroup() == null)
+            if (product.getProductGroup() == null)
             {
                 /*АВТОТОВАРЫ*/
-                ifTypeStarts("10.02",       type, product, "Автомагнитолы", "Автомагнитола");
-                ifTypeStarts("10.01",       type, product, "Автоакустика", "Автоакустика");
                 ifTypeStarts("15.10.04.01", type, product, "Радар детекторы", "Радар детектор");
-                typeStartWith(videoRegs, product, type, "Видеорегистраторы", "Видеорегистратор");
+                typeStartWith(autoAudio,        product,    type, "Автоакустика", "Автоакустика");
+                typeStartWith(autoMagnitols,    product,    type, "Автомагнитолы", "Автомагнитола");
+                typeStartWith(videoRegs,        product,    type, "Видеорегистраторы", "Видеорегистратор");
 
                 /*ИНСТРУМЕНТЫ ДЛЯ ДОМА*/
-                typeStartWith(tools, product, type, "Инструменты", "Инструмент");
+                typeStartWith(tools,    product,        type, "Инструменты", "Инструмент");
+                typeStartWith(shlif,    product,        type, "Шлифовальные машины", "Шлифовальная машина");
+                typeStartWith(welders,  product,        type, "Сварочное оборудование", "Сварочный аппарат");
                 ifTypeStarts("06.01.06_Перфораторы",         type, product, "Перфораторы", "Перфоратор");
-                ifTypeStarts("06.02",                        type, product, "Шлифовальные машины", "Шлифовальная машина");
                 ifTypeStarts("06.03",                        type, product, "Электропилы", "Электропила");
-                ifTypeStarts("06.06.08",                     type, product, "Сварочное оборудование", "Сварочный аппарат");
 
                 /*ГАДЖЕТЫ*/
                 typeStartsOrNameContains(smartWatches, product, type, name, "Умные часы", "Умные часы");
@@ -149,36 +157,13 @@ public class ProductResolver {
                 typeStartWithOrGroupEquals(airConditions,   product, type, group, "Кондиционеры", "Кондиционер");
 
                 /*КОМПЬЮТЕРЫ И ОРГТЕХНИКА*/
-                typeOrGroupStartWith(flashCards, product, type, group, "Flash карты", "Flash карта");
-                /*for (String alias : flashCards) {
-                    if (type.startsWith(alias) || group.startsWith(alias)) {
-                        setProductGroup(product,"Flash карты", "Flash карта");
-                        continue main;
-                    }}*/
-                typeOrGroupStartWith(monitors, product, type, group, "Мониторы", "Монитор");
-                /*for (String alias : monitors) {
-                    if (type.startsWith(alias) || group.startsWith(alias)) {
-                        setProductGroup(product,"Мониторы", "Монитор");
-                        continue main;
-                    }}*/
-                typeOrNameStartsWith(hairStraighteners, product, type, name, "Мыши", "Мышь");
-                /*for (String alias : mouses) {
-                    if (type.startsWith(alias) || name.startsWith(alias)) {
-                        setProductGroup(product,"Мыши", "Мышь");
-                        continue main;
-                    }}*/
-                typeOrNameStartsWith(keyboard, product, type, name, "Клавиатуры", "Клавиатуры");
-                /*for (String alias : keyboard) {
-                    if (type.startsWith(alias) || name.startsWith(alias)) {
-                        setProductGroup(product,"Клавиатуры", "Клавиатура");
-                        continue main;
-                    }}*/
-                typeStartWith(printers, product, type, "Принтеры", "Принтер");
-                /*for (String alias : printers) {
-                    if (StringUtils.startsWithIgnoreCase(type, alias)) {
-                        setProductGroup(product,"Принтеры", "Принтер");
-                        continue main;
-                    }}*/
+                typeOrGroupStartWith(flashCards,product, type, group, "Flash карты", "Flash карта");
+                typeOrGroupStartWith(monitors,  product, type, group, "Мониторы", "Монитор");
+                typeOrNameStartsWith(mouses,    product, type, name, "Мыши", "Мышь");
+                typeOrNameStartsWith(keyboard,  product, type, name, "Клавиатуры", "Клавиатуры");
+                typeStartWith(printers,         product, type, "Принтеры", "Принтер");
+                typeStartWith(powerFilters,     product, type, "Сетевые фильтры", "Сетевой шнур");
+
                 for (String alias : notebooks) {
                     if (type.startsWith(alias) || group.equals(alias) || StringUtils.equalsIgnoreCase(type, alias)) {
                         setProductGroup(product,"Ноутбуки", "Ноутбук");
@@ -195,18 +180,10 @@ public class ProductResolver {
                 }
 
                 /*ЦИФРОВЫЕ УСТРОЙСТВА*/
-                typeStartWith(chargers, product, type, "Внешние аккумуляторы", "Внешний аккумулятор");
-                /*for (String alias : chargers) {
-                    if (StringUtils.startsWithIgnoreCase(type, alias)) {
-                        setProductGroup(product,"Внешние аккумуляторы", "Внешний аккумулятор");
-                        continue main;
-                    }}*/
-                typeStartWith(headphones, product, type, "Наушники и гарнитуры", "Наушники");
-                /*for (String alias : headphones) {
-                    if (StringUtils.startsWithIgnoreCase(type, alias)) {
-                        setProductGroup(product,"Наушники и гарнитуры", "Наушники");
-                        continue main;
-                    }}*/
+                typeStartWith(chargers,     product, type, "Внешние аккумуляторы", "Внешний аккумулятор");
+                typeStartWith(headphones,   product, type, "Наушники и гарнитуры", "Наушники");
+                typeStartWith(photo,        product, type, "Фотоаппараты", "Фотоаппарат");
+
                 for (String alias : tablets) {
                     if (type.startsWith(alias) || StringUtils.equalsIgnoreCase(type, alias)) {
                         setProductGroup(product,"Планшеты", "Планшет");
@@ -236,9 +213,6 @@ public class ProductResolver {
                 }
                 if (type.equals("15.09.03.01 Чехлы для телефонов")) {
                     setProductGroup(product, "Чехлы для телефонов", "Чехол для телефона");
-                }
-                if (type.contains("фотоаппараты")) {
-                    setProductGroup(product, "Фотоаппараты", "Фотоаппарат");
                 }
 
                 /*ТЕХНИКА ДЛЯ ДОМА*/
@@ -279,7 +253,7 @@ public class ProductResolver {
                         continue main;
                     }}
                 for (String alias : pans) {
-                    if (type.startsWith(alias) || StringUtils.equalsIgnoreCase(type, alias)) {
+                    if (type.startsWith(alias) || type.contains("Кастрюли")) {
                         setProductGroup(product,"Кастрюли", "Кастрюля");
                         continue main;
                     }}
@@ -299,7 +273,7 @@ public class ProductResolver {
                         continue main;
                     }}
                 for (String alias : blenders) {
-                    if (type.startsWith(alias) || group.startsWith(alias) || (type.startsWith(alias) && StringUtils.equalsIgnoreCase(type, alias))) {
+                    if (StringUtils.startsWithIgnoreCase(type, alias) || group.startsWith(alias) || (type.startsWith(alias) && StringUtils.equalsIgnoreCase(type, alias))) {
                         setProductGroup(product,"Блендеры", "Блендер");
                         continue main;
                     }}
@@ -345,6 +319,7 @@ public class ProductResolver {
                 }
 
                 /*ВСТРАИВАЕМАЯ ТЕХНИКА*/
+                typeStartWithOrGroupEquals(builtInDishWashers, product, type, group, "Встраиваемые посудомоечные машины", "Встраиваемая посудомоечная машина");
                 for (String alias : builtInMicroWaves) {
                     if (type.contains(alias) || group.contains(alias)) {
                         setProductGroup(product,"Встраиваемые СВЧ", "Встраиваемая СВЧ");
@@ -356,28 +331,26 @@ public class ProductResolver {
                         continue main;
                     }}
                 for (String alias : builtInOvens) {
-                    if (group.contains(alias) || subCategory.contains(alias)) {
+                    if (type.startsWith(alias) || group.contains(alias) || subCategory.contains(alias)) {
                         setProductGroup(product,"Встраиваемые духовые шкафы", "Встраиваемый духовой шкаф");
                         continue main;
                     }}
                 for (String alias : builtInCookSurf) {
-                    if (group.contains(alias) || subCategory.contains(alias)) {
+                    if (type.startsWith(alias) || StringUtils.containsIgnoreCase(group, alias) || subCategory.contains(alias)) {
                         setProductGroup(product,"Встраиваемые варочные панели", "Встраиваемая варочная панель");
                         continue main;
                     }}
                 for (String alias : builtInHoods) {
-                    if (group.contains(alias) || type.contains(alias) && (!type.startsWith("15.07.03.02 Аксессуары") && !type.startsWith("15.07.03.01 Фильтры"))) {
+                    if (type.startsWith(alias) || StringUtils.containsIgnoreCase(group, alias) || type.contains(alias) && (!type.startsWith("15.07.03.02 Аксессуары") && !type.startsWith("15.07.03.01 Фильтры") && !type.startsWith("15.03.07.05"))) {
                         setProductGroup(product,"Встраиваемые вытяжки", "Встраиваемая вытяжка");
                         continue main;
-                    }
-                }
-                if (type.startsWith("07.06")) {
-                    setProductGroup(product,"Встраиваемые посудомоечные машины", "Встраиваемая посудомоечная машина");
-                }
+                    }}
 
                 /*ТЕЛЕ-ВИДЕО-АУДИО*/
+                typeStartWithOrGroupEquals(muzCenters, product, type, group,"Музыкальные центры", "Музыкальный центр");
+
                 for (String alias : tv) {
-                    if (type.contains(alias) || group.contains(alias) || name.contains(alias) && !type.contains("Клавиатуры")) {
+                    if (type.contains(alias) || group.contains(alias) || StringUtils.containsIgnoreCase(name, alias) && !type.contains("Клавиатуры")) {
                         setProductGroup(product,"Телевизоры", "Телевизор");
                         continue main;
                     }}
@@ -387,7 +360,7 @@ public class ProductResolver {
                         continue main;
                     }}
                 for (String alias : tvCables) {
-                    if (type.contains(alias)) {
+                    if (type.contains(alias) && !type.equals("15.15.02.08 Казаны")) {
                         setProductGroup(product,"Кабели ТВ", "ТВ кабель");
                         continue main;
                     }}
@@ -404,14 +377,21 @@ public class ProductResolver {
                 if (type.contains("Телемебель")) {
                     setProductGroup(product,"Телемебель", "Телемебель");
                 }
-                if (type.contains("Музыкальные центры") || group.contains("Музыкальные центры")) {
-                    setProductGroup(product,"Музыкальные центры", "Музыкальный центр");
-                }
+                /*if (type.contains("Музыкальные центры") || group.contains("Музыкальные центры")) {
+                    setProductGroup(product,);
+                }*/
                 if (type.contains("Синтезаторы и цифровые фортепьяно")) {
                     setProductGroup(product,"Синтезаторы", "Синтезатор");
                 }
             }
         }
+    }
+
+    private void typeContains(String[] matches, Product product, String type, String productGroup, String single) {
+        for (String alias : matches) {
+            if (StringUtils.containsIgnoreCase(type, alias)) {
+                setProductGroup(product,productGroup, single);
+            }}
     }
 
     private void ifTypeStarts(String match, String type, Product product, String productGroup, String single) {
@@ -422,33 +402,26 @@ public class ProductResolver {
         for (String alias : matches) {
             if (type.startsWith(alias) || name.contains(alias)) {
                 setProductGroup(product,productGroup, single);
-                //continue main;
             }}
     }
 
-    /*private void ifNameContains(Product product, String name, String productGroup, String single) {
-        if (name.contains("Умные спортивные часы"))
-            setProductGroup(product, productGroup, single);
-    }*/
-
-    private void typeOrGroupStartWith(String[] matches, Product product, String type, String group, String productGroup, String single) {
+     private void typeOrGroupStartWith(String[] matches, Product product, String type, String group, String productGroup, String single) {
         for (String alias : matches) {
             if (type.startsWith(alias) || group.startsWith(alias)) {
                 setProductGroup(product,productGroup, single);
-                //continue main;
             }}
     }
 
     private void typeContainsAndNotEquals(String[] matches, Product product, String type, String productGroup, String single) {
         for (String alias : matches) {
-            if (type.contains(alias) && !type.equals("весы кухонные")) {
+            if (StringUtils.containsIgnoreCase(type, alias) && !type.equals("весы кухонные")) {
                 setProductGroup(product,productGroup, single);
             }}
     }
 
     private void typeOrNameStartsWith(String[] matches, Product product, String type, String name, String productGroup, String single) {
         for (String alias : matches) {
-            if (type.startsWith(alias) || name.startsWith(alias)) {
+            if (type.startsWith(alias) || StringUtils.startsWithIgnoreCase(name, alias)) {
                 setProductGroup(product,productGroup, single);
             }}
     }

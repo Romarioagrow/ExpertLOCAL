@@ -35,8 +35,8 @@ public class ProductController {
                               @AuthenticationPrincipal User user,
                               @PageableDefault(sort = {"supplier"}, direction = Sort.Direction.ASC, size = 15) Pageable pageable)
     {
+        String url = "/products/"+category+"/"+requiredProduct;
         String request = requiredProduct.replaceAll("_", " ").toLowerCase();
-        String url = "/products/"+category+"/"+requiredProduct/*request*/;
         String[] path = {StringUtils.capitalize(category), StringUtils.capitalize(request)};
 
         productService.getOrderedID(user, model);

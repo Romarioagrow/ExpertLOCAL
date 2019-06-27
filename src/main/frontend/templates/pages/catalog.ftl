@@ -360,6 +360,9 @@
                             <a class="catalogue-info__subcategory" href="/products/компьютеры_и_орг_техника/мониторы">
                                 <span class="badge badge-light">Мониторы</span>
                             </a>
+                            <a class="catalogue-info__subcategory" href="/products/компьютеры_и_орг_техника/сетевые_фильтры">
+                                <span class="badge badge-light">Сетевые фильтры</span>
+                            </a>
                             <a class="catalogue-info__subcategory" href="/products/компьютеры_и_орг_техника/flash_карты">
                                 <span class="badge badge-light">Flash карты</span>
                             </a>
