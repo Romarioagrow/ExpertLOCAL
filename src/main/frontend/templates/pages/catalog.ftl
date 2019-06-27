@@ -374,35 +374,38 @@
         <div class="row">
             <div class="col mb-4">
                 <hr>
-                <div class="catalogue-info  catalogue-main__catalogue">
+                <div class="catalogue-info catalogue-main__catalogue_shifted catalogue-main__catalogue">
                     <a class="image-link  catalogue-info__image" href="#">
                         <span class="image image_format_index image_lazy">
-                            <img class="image__adaptive" data-original="//cdn.rbt.ru/images/gen/catalogue/image/9/41/886_r3394.jpg" src="//cdn.rbt.ru/images/gen/catalogue/image/9/41/886_r3394.jpg" alt="Гаджеты" style="display: inline;" width="180" height="180">
+                            <img class="image__adaptive" data-original="//cdn.rbt.ru/images/gen/catalogue/image/1/41/4_r9867.jpg" src="//cdn.rbt.ru/images/gen/catalogue/image/1/41/4_r9867.jpg" alt="Инструменты для дома" style="display: inline;" width="180" height="180">
                         </span>
                     </a>
                     <div class="catalogue-info__column">
                         <a class="catalogue-info__header" href="#">
-                            <h2><span class="">Гаджеты</span></h2>
+                            <h2><span class="">Инструменты для дома</span></h2>
                         </a>
                         <div class="catalogue-info__subcategories">
-                            <a class="catalogue-info__subcategory" href="/products/гаджеты/смарт_часы">
-                                <span class="badge badge-light">Smart часы</span>
+                            <a class="catalogue-info__subcategory" href="/products/инструменты_для_дома/шлифовальные_машины">
+                                <span class="badge badge-light">Шлифовальные машины</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/гаджеты/фитнес_браслеты">
-                                <span class="badge badge-light">Фитнес браслеты</span>
+                            <a class="catalogue-info__subcategory" href="/products/инструменты_для_дома/инструменты">
+                                <span class="badge badge-light">Дрели, шуруповерты и гайковерты</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/гаджеты/детские_часы">
-                                <span class="badge badge-light">Детские часы</span>
+                            <a class="catalogue-info__subcategory" href="/products/инструменты_для_дома/электропилы">
+                                <span class="badge badge-light">Электропилы</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/гаджеты/портативная_беспроводная_акуститка">
-                                <span class="badge badge-light">Портативная беспроводная акуститка</span>
+                            <a class="catalogue-info__subcategory" href="/products/инструменты_для_дома/сварочное_оборудование">
+                                <span class="badge badge-light">Сварочное оборудование</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/гаджеты/очки_виртуальной_реальности">
-                                <span class="badge badge-light">Очки виртуальной реальности</span>
+                            <a class="catalogue-info__subcategory" href="/products/инструменты_для_дома/перфораторы">
+                                <span class="badge badge-light">Перфораторы и отбойные молотки</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/гаджеты/колонки_с_голосовым_помощником">
-                                <span class="badge badge-light">Колонки с голосовым помощником</span>
-                            </a>
+                            <#--<a class="catalogue-info__subcategory" href="/products/инструменты_для_дома/лобзики">
+                                <span class="badge badge-light">Лобзики</span>
+                            </a>-->
+                            <#--<a class="link link_color_grey-blue link_underline_disabled catalogue-info__subcategory_last catalogue-info__subcategory" href="/products/инструменты_для_дома/деревообрабатывающие_станки">
+                                <span class="badge badge-light">Деревообрабатывающие станки</span>
+                            </a>-->
                         </div>
                     </div>
                 </div>
@@ -423,27 +426,27 @@
                             <a class="catalogue-info__subcategory" href="/products/автотовары/автомагнитолы">
                                 <span class="badge badge-light">Автомагнитолы</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/автотовары/видеорегистраторы">
-                                <span class="badge badge-light">Видеорегистраторы</span>
-                            </a>
                             <a class="catalogue-info__subcategory" href="/products/автотовары/автоакустика">
                                 <span class="badge badge-light">Автоакустика</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/автотовары/сабвуферы_для_авто">
-                                <span class="badge badge-light">Сабвуферы для авто</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/автотовары/навигаторы">
-                                <span class="badge badge-light">Навигаторы</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/автотовары/усилители">
-                                <span class="badge badge-light">Усилители</span>
+                            <a class="catalogue-info__subcategory" href="/products/автотовары/видеорегистраторы">
+                                <span class="badge badge-light">Видеорегистраторы</span>
                             </a>
                             <a class="catalogue-info__subcategory" href="/products/автотовары/радар_детекторы">
                                 <span class="badge badge-light">Радар-детекторы</span>
                             </a>
-                            <a class="catalogue-info__subcategory" href="/products/автотовары/комплекты_подключения_автозвука">
+                            <#--<a class="catalogue-info__subcategory" href="/products/автотовары/сабвуферы_для_авто">
+                                <span class="badge badge-light">Сабвуферы для авто</span>
+                            </a>-->
+                            <#--<a class="catalogue-info__subcategory" href="/products/автотовары/навигаторы">
+                                <span class="badge badge-light">Навигаторы</span>
+                            </a>-->
+                            <#--<a class="catalogue-info__subcategory" href="/products/автотовары/усилители">
+                                <span class="badge badge-light">Усилители</span>
+                            </a>-->
+                            <#--<a class="catalogue-info__subcategory" href="/products/автотовары/комплекты_подключения_автозвука">
                                 <span class="badge badge-light">Комплекты подключения автозвука</span>
-                            </a>
+                            </a>-->
                         </div>
                     </div>
                 </div>
@@ -452,6 +455,41 @@
         <div class="row">
             <div class="col mb-4">
                 <hr>
+                <div class="catalogue-info  catalogue-main__catalogue">
+                    <a class="image-link  catalogue-info__image" href="#">
+                        <span class="image image_format_index image_lazy">
+                            <img class="image__adaptive" data-original="//cdn.rbt.ru/images/gen/catalogue/image/9/41/886_r3394.jpg" src="//cdn.rbt.ru/images/gen/catalogue/image/9/41/886_r3394.jpg" alt="Гаджеты" style="display: inline;" width="180" height="180">
+                        </span>
+                    </a>
+                    <div class="catalogue-info__column">
+                        <a class="catalogue-info__header" href="#">
+                            <h2><span class="">Гаджеты</span></h2>
+                        </a>
+                        <div class="catalogue-info__subcategories">
+                            <#--<a class="catalogue-info__subcategory" href="/products/гаджеты/колонки_с_голосовым_помощником">
+                                <span class="badge badge-light">Колонки с голосовым помощником</span>
+                            </a>-->
+                            <a class="catalogue-info__subcategory" href="/products/гаджеты/bluetooth колонки">
+                                <span class="badge badge-light">Bluetooth колонки</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/гаджеты/умные_часы">
+                                <span class="badge badge-light">Умные часы</span>
+                            </a>
+                            <#--<a class="catalogue-info__subcategory" href="/products/гаджеты/фитнес_браслеты">
+                                <span class="badge badge-light">Фитнес браслеты</span>
+                            </a>
+                            <a class="catalogue-info__subcategory" href="/products/гаджеты/детские_часы">
+                                <span class="badge badge-light">Детские часы</span>
+                            </a>-->
+                            <a class="catalogue-info__subcategory" href="/products/гаджеты/VR_системы">
+                                <span class="badge badge-light">Очки виртуальной реальности</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col mb-4">
+                <#--<hr>
                 <div class="catalogue-info catalogue-main__catalogue">
                     <a class="image-link  catalogue-info__image" href="#">
                         <span class="image image_format_index image_lazy">
@@ -474,45 +512,7 @@
                             </a>
                         </div>
                     </div>
-                </div>
-            </div>
-            <div class="col mb-4">
-                <hr>
-                <div class="catalogue-info catalogue-main__catalogue_shifted catalogue-main__catalogue">
-                    <a class="image-link  catalogue-info__image" href="#">
-                        <span class="image image_format_index image_lazy">
-                            <img class="image__adaptive" data-original="//cdn.rbt.ru/images/gen/catalogue/image/1/41/4_r9867.jpg" src="//cdn.rbt.ru/images/gen/catalogue/image/1/41/4_r9867.jpg" alt="Инструменты для дома" style="display: inline;" width="180" height="180">
-                        </span>
-                    </a>
-                    <div class="catalogue-info__column">
-                        <a class="catalogue-info__header" href="#">
-                            <h2><span class="">Инструменты для дома</span></h2>
-                        </a>
-                        <div class="catalogue-info__subcategories">
-                            <a class="catalogue-info__subcategory" href="/products/инструменты_для_дома/дрели_шуруповерты_и_гайковерты">
-                                <span class="badge badge-light">Дрели, шуруповерты и гайковерты</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/инструменты_для_дома/перфораторы_и_отбойные_молотки">
-                                <span class="badge badge-light">Перфораторы и отбойные молотки</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/инструменты_для_дома/шлифовальные_машины">
-                                <span class="badge badge-light">Шлифовальные машины</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/инструменты_для_дома/пилы">
-                                <span class="badge badge-light">Пилы</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/инструменты_для_дома/лобзики">
-                                <span class="badge badge-light">Лобзики</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/инструменты_для_дома/сварочное_оборудование">
-                                <span class="badge badge-light">Сварочное оборудование</span>
-                            </a>
-                            <a class="link link_color_grey-blue link_underline_disabled catalogue-info__subcategory_last catalogue-info__subcategory" href="/products/инструменты_для_дома/деревообрабатывающие_станки">
-                                <span class="badge badge-light">Деревообрабатывающие станки</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                </div>-->
             </div>
         </div>
         <div class="row">
