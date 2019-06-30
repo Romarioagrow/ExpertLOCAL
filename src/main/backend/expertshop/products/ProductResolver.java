@@ -9,9 +9,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Log
 @Service
@@ -19,7 +22,156 @@ import java.util.regex.Pattern;
 public class ProductResolver {
     private final ProductRepo productRepo;
 
-    /*обрезать с начала и до product.getBrand*/
+    public void findDuplicates(List<Product> products, String modelName)
+    {
+        List<Product> duplicates = products.stream()
+                .filter(product -> StringUtils.containsIgnoreCase(product.getOriginalName(), modelName) || StringUtils.containsIgnoreCase(product.getModelName(), modelName))
+                .collect(Collectors.toList());
+
+        if (duplicates.size() > 1)
+        {
+            duplicates.sort(Comparator.comparing(Product::getModelName));
+
+            System.out.println();
+            log.info("MODEL: " + modelName);
+            log.info("Size: " + duplicates.size());
+            duplicates.forEach(product -> log.info(product.getModelName() + "; " + product.getSupplier() + "; " + product.getPrice()));
+        }
+    }
+
+    public void resolveDuplicates(String request)
+    {
+        List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCase(request);
+        products.sort(Comparator.comparing(Product::getModelName));
+
+        for (Product product : products) {
+            String modelName = product.getModelName();
+            if (modelName != null) {
+                findDuplicates(products, modelName);
+            }
+        }
+    }
+
+    public void showModelName(String request)
+    {
+        List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCase(request);
+        products.sort(Comparator.comparing(Product::getModelName));
+
+        products.forEach(product ->
+        {
+            if (product.getModelName() != null)
+            {
+                System.out.println();
+                log.info(product.getSupplier());
+                log.info(product.getOriginalName());
+            }
+        });
+    }
+
+    public void clearModelName(String request)
+    {
+        //List<Product> products = productRepo.findAllByModelNameNotNull();
+        List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCase(request);
+        //products.sort(Comparator.comparing(Product::getModelName));
+
+        ///тв, ресиверы, кронштейныТВ, телемебель, музыкальные_центры
+        Pattern pattern = Pattern.compile("[а-яёА-ЯЁ()]+");
+        String[] notBrands = {"ORION", "Electriclight"};
+
+        products.forEach(product ->
+        {
+            if (product.getModelName() != null && !Arrays.asList(notBrands).contains(product.getOriginalBrand()))
+            {
+                String modelName = product.getModelName();
+                Matcher match = pattern.matcher(modelName);
+                if (match.find())
+                {
+                    System.out.println();
+                    log.info(product.getSupplier() + ": " + product.getOriginalName());
+
+                    modelName = modelName.replaceAll(pattern.pattern(), "");
+
+                    if (modelName.contains(" ")) modelName = modelName.replaceAll(" ", "");
+                    if (modelName.contains(".")) modelName = modelName.replaceAll(".", "");
+
+                    product.setModelName(modelName);
+
+                    productRepo.save(product);
+
+                    log.info(product.getModelName());
+                }
+            }
+            else log.info("NO ModelName for " + product.getOriginalName());
+        });
+    }
+
+    private boolean checkBrandAndGroup(Product product) {
+        return !product.getOriginalBrand().isEmpty() && product.getProductGroup() != null;
+    }
+
+    public void resolveProductModel()
+    {
+        List<Product> products1 = productRepo.findBySupplier("1RBT");
+        products1.forEach(product ->
+        {
+            if (checkBrandAndGroup(product))
+            {
+                modelNameBeforeComma(product);
+            }
+        });
+
+        List<Product> products2 = productRepo.findBySupplier("2RUS-BT");
+        for (Product product : products2)
+        {
+            if (checkBrandAndGroup(product))
+            {
+                try {
+                    String originalName = product.getOriginalName();
+                    String brand = product.getOriginalBrand();
+
+                    product.setModelName(StringUtils.substringBetween(originalName, brand, ",").trim());
+                    productRepo.save(product);
+
+                    System.out.println();
+                    log.info(originalName);
+                    log.info(product.getModelName());
+                }
+                catch (NullPointerException e) {
+                    log.info("NULL at " + product.getOriginalName());
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        List<Product> products3 = productRepo.findBySupplier("3M-TRADE");
+        products3.forEach(product ->
+        {
+            if (checkBrandAndGroup(product))
+            {
+                modelNameBeforeComma(product);
+            }
+        });
+    }
+
+    private void modelNameBeforeComma(Product product)
+    {
+        try
+        {
+            String modelName = StringUtils.substringAfter(product.getOriginalName().toUpperCase(), product.getOriginalBrand().toUpperCase()).trim();
+
+            product.setModelName(modelName);
+            productRepo.save(product);
+
+            System.out.println();
+            log.info(product.getOriginalName());
+            log.info(product.getModelName());
+        }
+        catch (NullPointerException e) {
+            log.info("NULL at " + product.getOriginalName());
+            e.printStackTrace();
+        }
+    }
+
     public void resolveProductGroups()
     {
         List<Product> products = productRepo.findAll();
@@ -43,7 +195,7 @@ public class ProductResolver {
         /*КУХОННАЯ ТЕХНИКА*/
         String[] fridges            = {"01.01.02", "Холодильники"};
         String[] freezers           = {"01.01.03", "Морозильники"};
-        String[] elStoves           = {"01.02", "Эл/плиты", "Плиты стационарные электрические", "Электрическая плита"};
+        String[] elStoves           = {"01.02", "Эл/плиты", "Плиты стационарные электрические", "Электрическая плита", "электрические"};
         String[] gasStoves          = {"01.03", "Плиты стационарные газовые", "Газовая плита", "газовые"};
         String[] microWaves         = {"01.05", "Микроволновые печи", "СВЧ печи"};
         String[] teaPods            = {"01.18", "Чайники электрические", "чайники"};
@@ -302,7 +454,7 @@ public class ProductResolver {
                         continue main;
                     }}
                 for (String alias : elStoves) {
-                    if (type.startsWith(alias) || group.startsWith(alias) || name.contains(alias)) {
+                    if (type.startsWith(alias) || group.startsWith(alias) /*|| name.contains(alias)*/) {
                         setProductGroup(product,"Электрические плиты", "Эликтрическая плита");
                         continue main;
                     }}
@@ -377,9 +529,6 @@ public class ProductResolver {
                 if (type.contains("Телемебель")) {
                     setProductGroup(product,"Телемебель", "Телемебель");
                 }
-                /*if (type.contains("Музыкальные центры") || group.contains("Музыкальные центры")) {
-                    setProductGroup(product,);
-                }*/
                 if (type.contains("Синтезаторы и цифровые фортепьяно")) {
                     setProductGroup(product,"Синтезаторы", "Синтезатор");
                 }
@@ -405,7 +554,7 @@ public class ProductResolver {
             }}
     }
 
-     private void typeOrGroupStartWith(String[] matches, Product product, String type, String group, String productGroup, String single) {
+    private void typeOrGroupStartWith(String[] matches, Product product, String type, String group, String productGroup, String single) {
         for (String alias : matches) {
             if (type.startsWith(alias) || group.startsWith(alias)) {
                 setProductGroup(product,productGroup, single);

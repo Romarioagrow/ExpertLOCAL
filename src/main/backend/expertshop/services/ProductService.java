@@ -45,7 +45,7 @@ public class ProductService {
     {
         log.info("Request " + request);
 
-        Page<Product> page = productRepo.findByProductGroupEqualsIgnoreCase(request, pageable);
+        Page<Product> page = productRepo.findByProductGroupEqualsIgnoreCaseAndSupplier(request, "1RBT", pageable);
 
         if (page.getTotalElements() == 0) {
             page = findOriginalProducts(request, pageable);
@@ -57,16 +57,12 @@ public class ProductService {
         return page;
     }
 
-    /*!!!!для каждого продукт поиск по модели, если больше чем один продукт, сранивнивать по цене и отображать только с самой низкой ценой,
-    * для остальных setDuple(true)*/
-
-    /*проверка уникальности: обрезать название до бренда и проверить startWith modelName*/
 
     public List<Product> searchProducts(String searchRequest)
     {
         log.info("Search request: " + searchRequest);
 
-        List<Product> searchedProducts = productRepo.findAll().stream()
+        List<Product> searchedProducts = productRepo.findBySupplier("1RBT").stream()
                 .filter(product -> StringUtils.containsIgnoreCase(product.getOriginalName(), searchRequest))
                 .collect(Collectors.toList());
         log.info("Products found: " + searchedProducts.size());

@@ -21,9 +21,19 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
 
     Page<Product> findByOriginalTypeContainingOrOriginalGroupContainingOrOriginalNameContaining(String type, String group, String name, Pageable pageable);
 
-    Page<Product> findByProductGroupEqualsIgnoreCase(String productGroup, Pageable pageable);
+    Page<Product> findByProductGroupEqualsIgnoreCaseAndSupplier(String productGroup, String supplier, Pageable pageable);
 
     List<Product> findProductsByProductGroupEqualsIgnoreCase(String productGroup);
+
+    List<Product> findBySupplier(String supplier);
+
+    List<Product> findProductsByProductGroupEqualsIgnoreCaseAndSupplier(String productGroup, String supplier);
+
+    List<Product> findByModelNameIgnoreCaseOrOriginalNameIgnoreCase(String modelName, String origName);
+
+    List<Product> findAllByModelNameNotNull();
+
+    List<Product> findByModelNameStartsWithIgnoreCase(String modelName);
 
     List<Product> findByOriginalGroup(String group);
 

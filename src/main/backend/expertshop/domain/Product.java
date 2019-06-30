@@ -79,6 +79,9 @@ public class Product implements Serializable {
     private String saleName;
 
     private Integer price;
+
+    @Column(name = "duplicate")
+    private Boolean isDuplicate = false;
 }
 
 

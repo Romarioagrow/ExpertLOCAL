@@ -31,8 +31,7 @@ public class CategoriesController {
     @GetMapping("/supplier")
     public String supplier()
     {
-        productResolver.resolveProductGroups();
-        productResolver.resolveOriginalPrice();
+        ///productResolver.showModelName(request);
         return "pages/supplier";
     }
     @PostMapping("/supplier")
@@ -46,7 +45,7 @@ public class CategoriesController {
     @GetMapping("/supplier/pics")
     public String checkProductPics()
     {
-        //catalogParser.checkProductPics();
+        ///catalogParser.checkProductPics();
         return "pages/supplier";
     }
 
@@ -94,10 +93,6 @@ public class CategoriesController {
     public String subCategories() {
         return "redirect:/hello";
     }
-
-    /*String getCurrentURL(String productID) {
-        return productRepo.findByProductID(productID).getType().toString();
-    }*/
 
     private Order getOrder(User user) {
         return user != null ? orderService.getUserOrder(user.getUserID()) : orderService.getSessionOrder();
