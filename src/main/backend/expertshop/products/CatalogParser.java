@@ -98,10 +98,7 @@ public class CatalogParser {
                     product.setProductID(line[0]);
 
                     product.setOriginalCategory(line[1]);
-                    product.setOriginalSubCategory("n/a");
-                    product.setOriginalGroup("n/a");
                     product.setOriginalType(line[2]);
-
                     product.setOriginalBrand(line[4]);
                     product.setOriginalName(line[3]);
                     product.setOriginalAnnotation(line[5]);
@@ -153,8 +150,8 @@ public class CatalogParser {
                     product.setProductID(line[5]);
 
                     product.setOriginalCategory(line[0]);
-                    product.setOriginalSubCategory(line[1]);
-                    product.setOriginalGroup(line[2]);
+                    /*product.setOriginalSubCategory(line[1]);
+                    product.setOriginalGroup(line[2]);*/
                     product.setOriginalType(line[3]);
 
                     product.setOriginalBrand(line[4]);
@@ -208,8 +205,8 @@ public class CatalogParser {
                     product.setProductID(line[0]);
 
                     product.setOriginalCategory(line[1]);
-                    product.setOriginalSubCategory("n/a");
-                    product.setOriginalGroup(line[2]);
+                    /*product.setOriginalSubCategory("n/a");
+                    product.setOriginalGroup(line[2]);*/
                     product.setOriginalType(line[4]);
 
                     product.setOriginalBrand(line[3]);
@@ -258,6 +255,7 @@ public class CatalogParser {
     }
 
     private boolean fileRBT(MultipartFile file) {
+
         return Objects.requireNonNull(file.getOriginalFilename()).contains("СП2");
     }
 
@@ -277,9 +275,6 @@ public class CatalogParser {
     {
         return (line[0].equals("Код товара") || line[0].startsWith("ПРАЙС") || line[0].isEmpty() || line[0].startsWith(";") || line[0].equals("КОД") || line[0].startsWith(" "));
     }
-
-
-
 
     /*private void parseBase(MultipartFile file) throws IOException
     {

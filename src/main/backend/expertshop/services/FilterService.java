@@ -1,6 +1,5 @@
 package expertshop.services;
 import expertshop.domain.Product;
-import expertshop.domain.User;
 import expertshop.repos.ProductRepo;
 
 import lombok.AllArgsConstructor;
@@ -11,8 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -38,24 +37,27 @@ public class FilterService {
         for (Map.Entry<String, Object> filter : filters.entrySet())
         {
             /*ложить productGroup в объект фильтров и разделять по productGroup*/
-            switch (filter.getKey())
+            try
             {
-                case "sortmin" -> products = products.stream().filter(product -> product.getPrice() >= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
-                case "sortmax" -> products = products.stream().filter(product -> product.getPrice() <= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
-                case "brand" -> {
-                    String brands = String.join(",", filters.get("brand").toString());
-                    log.info(brands);
-                    products = products.stream().filter(product -> StringUtils.containsIgnoreCase(brands, product.getOriginalBrand())).collect(Collectors.toList());
+                switch (filter.getKey())
+                {
+                    ///TV
+                    case "sortmin"  -> products = products.stream().filter(product -> product.getPrice() >= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
+                    case "sortmax"  -> products = products.stream().filter(product -> product.getPrice() <= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
+                    case "brand"    -> {
+                        String brands = String.join(",", filters.get("brand").toString());
+                        products = products.stream().filter(product -> StringUtils.containsIgnoreCase(brands, product.getOriginalBrand())).collect(Collectors.toList());
+                    }
+                    case "diagMin", "diagMax" -> products = filterTvDiag(products, filter);
+                    case "tvResolution"       -> products = filterTvResol(products, filter);
+                    case "hzMin", "hzMax"     -> products = filterTvHZ(products, filter);
+                    case "tvParams"           -> products = filterTvParams(products, filter);
                 }
-                /*case "tvResolution" -> {
-                    String resolution = filter.getValue().toString();
-                    log.info(resolution);
-                    products = products.stream().filter(product -> resolution.contains(Objects.requireNonNull(product.get_tv_resol()))).collect(Collectors.toList());
-                }*/
+            }
+            catch (NullPointerException e) {
+                e.printStackTrace();
             }
         }
-
-        //products.forEach(product -> log.info(product.getModelName()));
 
         log.info("Product after filter " + products.size());
 
@@ -65,6 +67,54 @@ public class FilterService {
 
         log.info(page.getTotalElements() + " ");
         return page;
+    }
+
+    private List<Product> filterTvParams(List<Product> products, Map.Entry<String, Object> filter) {
+        String tvParams = filter.getValue().toString();
+        return new ArrayList<>();
+    }
+
+    private List<Product> filterTvHZ(List<Product> products, Map.Entry<String, Object> filter) {
+        int hz = Integer.parseInt(filter.getValue().toString());
+        return products.stream().filter(product ->
+        {
+            if (product.getOriginalAnnotation().contains("Индекс частоты обновления:"))
+            {
+                int productHZ = Integer.parseInt(StringUtils.substringBetween(product.getOriginalAnnotation(), "Индекс частоты обновления:", ";").trim());
+                return filter.getKey().equals("hzMin")? hz <= productHZ : hz >= productHZ;
+            }
+            return false;
+        }).collect(Collectors.toList());
+    }
+
+    private List<Product> filterTvResol(List<Product> products, Map.Entry<String, Object> filter) {
+        String resolution = filter.getValue().toString();
+        return products.stream().filter(product ->
+        {
+            if (product.getOriginalAnnotation().contains("Разрешение:"))
+            {
+                String productResol = StringUtils.substringBetween(product.getOriginalAnnotation(), "Разрешение", ";").trim();
+                productResol = StringUtils.substringBetween(productResol, "(", ")");
+                return resolution.contains(productResol);
+            }
+            return false;
+        }).collect(Collectors.toList());
+    }
+
+    private List<Product> filterTvDiag(List<Product> products, Map.Entry<String, Object> filter) {
+        return products.stream().filter(product ->
+        {
+            if (product.getOriginalAnnotation().contains("Диагональ"))
+            {
+                String diag = StringUtils.substringBetween(product.getOriginalAnnotation(), "Диагональ:", ";").trim();
+                if (diag.contains(",")) diag = diag.replaceAll(",", ".");
+                double productDiag = Double.parseDouble(diag);
+                return filter.getKey().equals("diagMin") ? Double.parseDouble(filter.getValue().toString()) <= productDiag : Double.parseDouble(filter.getValue().toString()) >= productDiag;
+            }
+            return false;
+        }).collect(Collectors.toList());
+
+        //return products;
     }
 }
        /* showReceivedParams(params);

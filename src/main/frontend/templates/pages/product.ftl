@@ -11,7 +11,11 @@
         </div>
         <div class="row">
             <div class="col">
-                <h2>${product.originalName}</h2>
+                <h2><#--${product.originalName}-->
+                    ${product.singleType}
+                    ${product.originalBrand?capitalize}
+                    ${product.modelName}
+                </h2>
             </div>
         </div>
         <div class="row">

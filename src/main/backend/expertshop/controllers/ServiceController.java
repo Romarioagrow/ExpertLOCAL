@@ -37,7 +37,7 @@ public class ServiceController {
              @PathVariable String reqType,
              @AuthenticationPrincipal User user,
              @PathVariable String category,
-             @PageableDefault(sort = {"supplier"}, direction = Sort.Direction.ASC, size = 15) Pageable pageable)
+             @PageableDefault(sort = {"supplier"}, direction = Sort.Direction.ASC, size = 100) Pageable pageable)
     {
         String request = StringUtils.capitalize(reqType.replaceAll("_", " "));
         return filterService.filterProducts(params, request, pageable);

@@ -31,7 +31,8 @@ public class CategoriesController {
     @GetMapping("/supplier")
     public String supplier()
     {
-        ///productResolver.showModelName(request);
+        productResolver.resolveProductType();
+        productResolver.resolveTypeBrand();
         return "pages/supplier";
     }
     @PostMapping("/supplier")
@@ -39,6 +40,9 @@ public class CategoriesController {
         log.info(file.getOriginalFilename());
 
         catalogParser.processFile(file);
+        productResolver.resolveProductGroups();
+        productResolver.resolveProductModel();
+        productResolver.resolveOriginalPrice();
         return "pages/supplier";
     }
 

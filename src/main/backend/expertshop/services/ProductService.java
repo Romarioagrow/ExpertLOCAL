@@ -1,5 +1,4 @@
 package expertshop.services;
-
 import expertshop.domain.Order;
 import expertshop.domain.OrderedProduct;
 import expertshop.domain.Product;
@@ -16,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,14 +29,14 @@ public class ProductService {
     private final ProductRepo productRepo;
     private final OrderRepo orderRepo;
 
-    public Page<Product> findOriginalProducts(String request, Pageable pageable, Model model) {
+    /*public Page<Product> findOriginalProducts(String request, Pageable pageable, Model model) {
         Page<Product> products = productRepo.findByOriginalTypeContainingOrOriginalGroupContainingOrOriginalNameContaining(request, request, request, pageable);
         model.addAttribute("total", products.getTotalElements());
         return products;
-    }
+    }*/
 
     public Page<Product> findOriginalProducts(String request, Pageable pageable) {
-        return productRepo.findByOriginalTypeContainingOrOriginalGroupContainingOrOriginalNameContaining(request, request, request, pageable);
+        return productRepo.findByOriginalTypeContainingOrOriginalNameContaining(request,request,pageable);
     }
 
     public Page<Product> findProducts(String request, Pageable pageable, Model model)

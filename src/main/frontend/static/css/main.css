@@ -99,3 +99,9 @@ form input:hover {
     background-color: #fbf4f4;
     padding-left: 0;
 }
+
+.md-form {
+    position: relative;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}

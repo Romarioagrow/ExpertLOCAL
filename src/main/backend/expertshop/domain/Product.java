@@ -14,7 +14,7 @@ import java.time.LocalDate;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "products")
+@Table(name = "products1")
 public class Product implements Serializable {
     /*ОТ ПОСТАВШИКОВ В БД БЕЗ РЕДАКТИРОВАНИЯ*/
     @Id
@@ -24,11 +24,11 @@ public class Product implements Serializable {
     @Column(name = "original_category")
     private String originalCategory;
 
-    @Column(name = "original_subcategory")
+    /*@Column(name = "original_subcategory")
     private String originalSubCategory;
 
     @Column(name = "original_group")
-    private String originalGroup;
+    private String originalGroup;*/
 
     @Column(name = "original_type")
     private String originalType;
@@ -79,6 +79,9 @@ public class Product implements Serializable {
     private String saleName;
 
     private Integer price;
+
+    @Column(name = "type_brand")
+    private String typeBrand;
 
     @Column(name = "duplicate")
     private Boolean isDuplicate = false;

@@ -67,12 +67,15 @@
                                     <h5 class="card-title">
                                         <a href="/products/info/${product.productID}">
                                             <strong>
-                                                ${product.originalName}
+                                                <#--${product.originalName}-->
+                                                ${product.singleType}
+                                                ${product.originalBrand?capitalize}
+                                                ${product.modelName}
                                             </strong>
                                         </a>
                                     </h5>
                                     <p class="card-text">
-                                        <strong><i>${product.originalType}</i></strong>
+                                        <strong><i>${product.productType}</i></strong>
                                     </p>
                                     <h3><strong>${product.price} ₽</strong></h3>
                                     <div>

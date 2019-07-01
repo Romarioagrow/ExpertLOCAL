@@ -8,8 +8,14 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text md-addon">Цена</span>
                 </div>
-                <input type="text" aria-label="First name" id="sortmin" name="sortmin" class="form-control" placeholder="От ₽">
-                <input type="text" aria-label="Last name" id="sortmax" name="sortmax" class="form-control" placeholder="До ₽">
+                <div class="row">
+                    <div class="col-5">
+                        <input type="text" aria-label="First name" id="sortmin" name="sortmin" class="form-control" placeholder="От ₽">
+                    </div>
+                    <div class="col-5">
+                        <input type="text" aria-label="Last name" id="sortmax" name="sortmax" class="form-control" placeholder="До ₽">
+                    </div>
+                </div>
             </div>
             <div class="md-form input-group">
                 <div class="input-group-prepend">
@@ -32,31 +38,63 @@
         </button>
         <div class="collapse" id="tv-filter1">
             <div class="card card-body filter-filed">
-                <div>
-                    <h5 style="margin-bottom: -15px !important;">Диагональ</h5>
-                    <div class="input-group mb-1">
-                        <br><input type="text" id="diag_min" name="diag_min" placeholder="Не меньше" class="form-control mt-2" style="width: auto">
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Диагональ</span>
                     </div>
-                    <div class="input-group">
-                        <input type="text" id="diag_max" name="diag_max" placeholder="Не больше" class="form-control">
-                        <div class="input-group-append">
-                            <span class="input-group-text">Дюйм</span>
+                    <div class="row">
+                        <div class="col-5">
+                            <input type="text" id="diag_min" name="diag_min" class="form-control" placeholder="От дюйм">
+                        </div>
+                        <div class="col-5">
+                            <input type="text" id="diag_max" name="diag_max" class="form-control" placeholder="До дюйм">
                         </div>
                     </div>
                 </div>
-                <div class="mt-2">
-                    <h5>Разрешение экрана</h5>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="form-check-input" name="tv_resolution" id="720p" value="HD_Ready">
-                        <label class="custom-control-label" for="720p">720p HD</label>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Разрешение</span>
                     </div>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="form-check-input" name="tv_resolution" id="1080p" value="Full_HD">
-                        <label class="custom-control-label" for="1080p">1080p Full HD</label>
+                    <#--<div class="form-check">-->
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="form-check-input" name="tv_resolution" id="720p" value="HD Ready">
+                                        <label class="custom-control-label" for="720p">720p HD</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="form-check-input" name="tv_resolution" id="1080p" value="Full HD">
+                                        <label class="custom-control-label" for="1080p">1080p Full HD</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="form-check-input" name="tv_resolution" id="4K" value="4K UHD">
+                                        <label class="custom-control-label" for="4K">4K UHD</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <#--</div>-->
+                </div>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Частота обновления экрана</span>
                     </div>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="form-check-input" name="tv_resolution" id="4K" value="4K UHD">
-                        <label class="custom-control-label" for="4K">4K UHD</label>
+                    <div class="row">
+                        <div class="col-5">
+                            <input type="text" id="hz_min" name="hz_min" class="form-control" placeholder="От Гц">
+                        </div>
+                        <div class="col-5">
+                            <input type="text" id="hz_max" name="hz_max" class="form-control" placeholder="До Гц">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -75,12 +113,16 @@
                             <label class="custom-control-label" for="SmartTV">SmartTV</label>
                         </div>
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="form-check-input" name="tv_params" id="WiFI" value="Wi-Fi">
+                            <input type="checkbox" class="form-check-input" name="tv_params" id="WiFI" value="Поддержка Wi-Fi: есть">
                             <label class="custom-control-label" for="WiFI">Wi-FI</label>
                         </div>
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="form-check-input" name="tv_params" id="3D" value="3D">
                             <label class="custom-control-label" for="3D">3D</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="form-check-input" name="tv_params" id="DVB-T2" value="Приём DVB-T2: есть">
+                            <label class="custom-control-label" for="3D">Приём DVB-T2</label>
                         </div>
                         <div class="custom-control custom-checkbox">
                             <input type="checkbox" class="form-check-input" name="tv_params" id="curved" value="Curved">

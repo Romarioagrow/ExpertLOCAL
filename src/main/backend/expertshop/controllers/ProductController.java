@@ -41,10 +41,10 @@ public class ProductController {
 
         productService.getOrderedID(user, model);
 
-        model.addAttribute("url", url);
-        model.addAttribute("path", path);
+        model.addAttribute("url",   url);
+        model.addAttribute("path",  path);
         model.addAttribute("order", getOrder(user));
-        model.addAttribute("page", productService.findProducts(request, pageable, model));
+        model.addAttribute("page",  productService.findProducts(request, pageable, model));
         return "pages/products";
     }
 

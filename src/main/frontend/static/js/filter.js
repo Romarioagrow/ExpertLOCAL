@@ -77,6 +77,7 @@ function collectFilters(e) {
 }
 
 function constructProductCard(product/*, displayParams, orderButton*/) {
+    const productName = product.singleType.concat(" ").concat(product.originalBrand).concat(" ").concat( product.modelName);
     return '<div class="card product-card">'+
         '<div class="view overlay">'+
         /*<#if product.pic??>*/
@@ -89,15 +90,15 @@ function constructProductCard(product/*, displayParams, orderButton*/) {
         '<div class="card-body">'+
         '<h5 class="card-title">'+
         '<a href="/products/info/'+product.productID+'">'+
-        '<strong>'+
-        product.originalName+
-        '</strong>'+
+        '<strong>'  +
+        productName +
+        '</strong>' +
         '</a>'+
         '</h5>'+
         '<p class="card-text">'+
-        '<strong><i>'+product.originalType+'</i></strong>'+
+        '<strong><i>'+product.productType+'</i></strong>'+
         '</p>'+
-        '<h3><strong>'+product.originalPrice+' ₽</strong></h3>'+
+        '<h3><strong>'+(product.price).toLocaleString('ru')+' ₽</strong></h3>'+
         '<div>'+
         '<button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID}" value="${product.productID}">'+
         'В корзину'+
@@ -127,12 +128,12 @@ function resolveOrderButton(product, productsID) {
         '</div>';
 }
 
-function constructFiltersData(url)
-{
+function constructFiltersData(url) {
     var brand = [];
     $('input:checked').each(function()
     {
-        if ($(this).attr('name') === 'brand') {
+        if ($(this).attr('name') === 'brand')
+        {
             brand.push($(this).val());
             console.log($(this).val());
         }
@@ -144,11 +145,15 @@ function constructFiltersData(url)
         'brand'   : brand
     };
 
-    if (selected(encodeURI("телевизоры"))) return collectTvFilters(data);
-    //else if (selected("stoves"))      return collectStovesFilters(data);
-    return data;
+    const request = decodeURI(url).substring(decodeURI(url).lastIndexOf('/')+1);
 
-    function collectTvFilters(data)
+    switch (request) {
+        case 'телевизоры'       : return tvFilters(data);
+        case 'ресиверы_для_тв'  : return '';
+        default : return data;
+    }
+
+    function tvFilters(data)
     {
         console.log("tv filters");
 
@@ -159,22 +164,19 @@ function constructFiltersData(url)
             else if ($(this).is('[name="tv_params"]'))      tv_params.push(($(this).val()));
         }));
 
-        data.tvResolution = tv_resolution;
-        data.tvParams = tv_params;
-        data.diagMin = $('#diag_min').val();
-        data.diagMax = $('#diag_max').val();
+        data.tvResolution   = tv_resolution;
+        data.tvParams       = tv_params;
+        data.diagMin        = $('#diag_min').val();
+        data.diagMax        = $('#diag_max').val();
+        data.hzMin          = $('#hz_min').val();
+        data.hzMax          = $('#hz_max').val();
 
         console.log(data);
         return data;
     }
-    /*function collectStovesFilters(data)
-    {
-        data.stoveDimensions = {'stove_width' : $('#stove_width').val()};
-        return data;
-    }*/
 }
 
-function resolveDisplayType(product) {
+/*function resolveDisplayType(product) {
     if      (selected("телевизоры"))    return displayTV(product);
     else if (selected("stoves"))        return displayStoves(product);
 
@@ -187,13 +189,12 @@ function resolveDisplayType(product) {
     function displayStoves(product) {
         return disp = '\nГабариты: '   + '<strong>' + product.productParams.stoveDimensions + '</strong>'
     }
-}
+}*/
 
-function deleteEmptyParams(filters)
-{
+function deleteEmptyParams(filters) {
     for (var fieldKey in filters)
     {
-        if (filters[fieldKey] === '' || filters[fieldKey].length === 0)
+        if (filters[fieldKey] === undefined || filters[fieldKey].length === 0)
         {
             delete filters[fieldKey];
         }
@@ -201,7 +202,7 @@ function deleteEmptyParams(filters)
 }
 
 function selected(type) {
-    return url.includes(type);
+    return url.includes(encodeURI(type));
 }
 
 
