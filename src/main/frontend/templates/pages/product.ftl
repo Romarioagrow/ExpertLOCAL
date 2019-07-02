@@ -4,14 +4,15 @@
         <div class="row mt-2">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/products/groups/${url}">${url}</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">${product.originalBrand}</li>
+                    <li class="breadcrumb-item"><a href="/products/groups/${product.productGroup}">${product.productGroup}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">${product.productType}</li>
+                    <li class="breadcrumb-item active" aria-current="page">${product.typeBrand}</li>
                 </ol>
             </nav>
         </div>
         <div class="row">
             <div class="col">
-                <h2><#--${product.originalName}-->
+                <h2>
                     ${product.singleType}
                     ${product.originalBrand?capitalize}
                     ${product.modelName}

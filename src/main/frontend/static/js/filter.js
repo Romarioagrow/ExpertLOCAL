@@ -15,10 +15,19 @@ $(document).ready(function(){
     $('.mdb-select').materialSelect();
 });*/
 
-var url = document.URL;
+
+function resolveURL() {
+    var url = decodeURI(document.URL);
+    if (url.includes("?")) {
+        url = url.substring(0, url.lastIndexOf('?'));
+    }
+    return url;
+}
 
 function collectFilters(e) {
     e.preventDefault();
+
+    var url = resolveURL();
 
     var filters = constructFiltersData(url);
     deleteEmptyParams(filters);
@@ -42,10 +51,6 @@ function collectFilters(e) {
             var nextPage = url+'?page='+currentPage+1;
             var prevPage = url+'?page='+currentPage-1;
 
-            /*console.log(response);
-            console.log(products);
-            console.log(currentPage);*/
-
             $("#products").empty();
 
             $('#pageable').empty().append(
@@ -56,7 +61,7 @@ function collectFilters(e) {
                 '<a class="page-link" href="#/*'+prevPage+'*/">Назад</a></li>'+
                 '<li class="page-item"><a class="page-link" href="#/*'+nextPage+'*/">Вперед</a></li></ul>'
             );
-            $('#pageable1').empty().append(/*новый пагинатор*/);//html.load
+            $('#pageable1').empty().append(/*новый пагинатор*/);///html.load
 
             $('#products-found').empty().append(
                 '<small>Всего товаров: '+total+'</small>'
@@ -65,8 +70,8 @@ function collectFilters(e) {
             for (var item in products)
             {
                 let product = products[item];
-                //let displayParams = resolveDisplayType(product);
-                //let orderButton = resolveOrderButton(product, orderedID);
+                /*let displayParams = resolveDisplayType(product);
+                let orderButton = resolveOrderButton(product, orderedID);*/
 
                 var productCard = constructProductCard(product/*, displayParams, orderButton*/);
 
@@ -74,6 +79,86 @@ function collectFilters(e) {
             }
         }
     });
+}
+
+function constructFiltersData(url) {
+    var brands = [];
+    $('input:checked').each(function()
+    {
+        if ($(this).attr('name') === 'brand')
+        {
+            brands.push($(this).val());
+            console.log($(this).val());
+        }
+    });
+
+    var data = {
+        'sortmin' : $('#sortmin').val(),
+        'sortmax' : $('#sortmax').val(),
+        'brand'   : brands
+    };
+
+    const request = url.substring(url.lastIndexOf('/')+1);
+
+    switch (request) {
+        case 'телевизоры'       : return tvFilters(data);
+        case 'ресиверы_для_тв'  : return data;
+        case 'кабели_тв'        : return tvCablesFilters(data);
+        default : return data;
+    }
+
+    function tvFilters(data)
+    {
+        var tv_resolution = [], tv_params = [], tv_type = [];
+        ($('input:checkbox:checked').each(function()
+        {
+            switch (this.getAttribute("name")) {
+                case 'tv_resolution' : tv_resolution.push($(this).val()); break;
+                case 'tv_params'     : tv_params.push($(this).val()); break;
+                case 'tv_type'       : tv_type.push($(this).val()); break;
+            }
+        }));
+
+        data.tvResolution   = tv_resolution;
+        data.tvParams       = tv_params;
+        data.tvType         = tv_type;
+        data.diagMin        = $('#diag_min').val();
+        data.diagMax        = $('#diag_max').val();
+        data.hzMin          = $('#hz_min').val();
+        data.hzMax          = $('#hz_max').val();
+        console.log(data);
+        return data;
+    }
+
+    function tvCablesFilters(data) {
+        var tvCables = [], tvCablesTypes = [], tvCablesLength = [];
+        $('input:checkbox:checked').each(function ()
+        {
+            switch (this.getAttribute("name")) {
+                case 'tv-cables'            : tvCables.push($(this).val());         break;
+                case 'tv-cables-type'       : tvCablesTypes.push($(this).val());    break;
+                case 'tv-cables-length'     : tvCablesLength.push($(this).val());   break;
+            }
+        });
+        data.tvCables       = tvCables;
+        data.tvCablesType   = tvCablesTypes;
+        data.tvCablesLength = tvCablesLength;
+        console.log(data);
+        return data;
+    }
+}
+
+function deleteEmptyParams(filters) {
+    for (var fieldKey in filters)
+    {
+        if (filters[fieldKey] === undefined || filters[fieldKey].length === 0) {
+            delete filters[fieldKey];
+        }
+    }
+}
+
+function selected(type) {
+    return url.includes(encodeURI(type));
 }
 
 function constructProductCard(product/*, displayParams, orderButton*/) {
@@ -128,81 +213,19 @@ function resolveOrderButton(product, productsID) {
         '</div>';
 }
 
-function constructFiltersData(url) {
-    var brand = [];
-    $('input:checked').each(function()
-    {
-        if ($(this).attr('name') === 'brand')
-        {
-            brand.push($(this).val());
-            console.log($(this).val());
-        }
-    });
-
-    const data = {
-        'sortmin' : $('#sortmin').val(),
-        'sortmax' : $('#sortmax').val(),
-        'brand'   : brand
-    };
-
-    const request = decodeURI(url).substring(decodeURI(url).lastIndexOf('/')+1);
-
-    switch (request) {
-        case 'телевизоры'       : return tvFilters(data);
-        case 'ресиверы_для_тв'  : return '';
-        default : return data;
-    }
-
-    function tvFilters(data)
-    {
-        console.log("tv filters");
-
-        var tv_resolution = [], tv_params = [];
-        ($('input:checked').each(function()
-        {
-            if      ($(this).is('[name="tv_resolution"]'))  tv_resolution.push(($(this).val()));
-            else if ($(this).is('[name="tv_params"]'))      tv_params.push(($(this).val()));
-        }));
-
-        data.tvResolution   = tv_resolution;
-        data.tvParams       = tv_params;
-        data.diagMin        = $('#diag_min').val();
-        data.diagMax        = $('#diag_max').val();
-        data.hzMin          = $('#hz_min').val();
-        data.hzMax          = $('#hz_max').val();
-
-        console.log(data);
-        return data;
-    }
-}
-
 /*function resolveDisplayType(product) {
-    if      (selected("телевизоры"))    return displayTV(product);
-    else if (selected("stoves"))        return displayStoves(product);
+if      (selected("телевизоры"))    return displayTV(product);
+else if (selected("stoves"))        return displayStoves(product);
 
-    function displayTV(product) {
-        return disp =
-            'Диагональ: '            + '<strong>' + product.productParams.diagonal   + '</strong>' +
-            '\nРазрешение: '         + '<strong>' + product.productParams.resolution + '</strong>' +
-            '<br>'+'\nОсобенности: ' + '<strong>' + product.productParams.tvFeatures + '</strong>'
-    }
-    function displayStoves(product) {
-        return disp = '\nГабариты: '   + '<strong>' + product.productParams.stoveDimensions + '</strong>'
-    }
+function displayTV(product) {
+    return disp =
+        'Диагональ: '            + '<strong>' + product.productParams.diagonal   + '</strong>' +
+        '\nРазрешение: '         + '<strong>' + product.productParams.resolution + '</strong>' +
+        '<br>'+'\nОсобенности: ' + '<strong>' + product.productParams.tvFeatures + '</strong>'
+}
+function displayStoves(product) {
+    return disp = '\nГабариты: '   + '<strong>' + product.productParams.stoveDimensions + '</strong>'
+}
 }*/
-
-function deleteEmptyParams(filters) {
-    for (var fieldKey in filters)
-    {
-        if (filters[fieldKey] === undefined || filters[fieldKey].length === 0)
-        {
-            delete filters[fieldKey];
-        }
-    }
-}
-
-function selected(type) {
-    return url.includes(encodeURI(type));
-}
 
 

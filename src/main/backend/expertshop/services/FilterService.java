@@ -11,7 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,27 +31,18 @@ public class FilterService {
         List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCase(requiredType);
         log.info("Product list before filter " + products.size());
 
-        /*коллкеция всех товаров по типу и из нее наполняется коллекция запрашеваемых товаров по фильтру?*/
-        /*ОТДЕЛЬНЫЙ ФИЛЬТР ПО ЦЕНЕ?*/
-
         for (Map.Entry<String, Object> filter : filters.entrySet())
         {
-            /*ложить productGroup в объект фильтров и разделять по productGroup*/
             try
             {
                 switch (filter.getKey())
                 {
-                    ///TV
-                    case "sortmin"  -> products = products.stream().filter(product -> product.getPrice() >= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
-                    case "sortmax"  -> products = products.stream().filter(product -> product.getPrice() <= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
-                    case "brand"    -> {
-                        String brands = String.join(",", filters.get("brand").toString());
-                        products = products.stream().filter(product -> StringUtils.containsIgnoreCase(brands, product.getOriginalBrand())).collect(Collectors.toList());
-                    }
-                    case "diagMin", "diagMax" -> products = filterTvDiag(products, filter);
-                    case "tvResolution"       -> products = filterTvResol(products, filter);
-                    case "hzMin", "hzMax"     -> products = filterTvHZ(products, filter);
-                    case "tvParams"           -> products = filterTvParams(products, filter);
+                    case "sortmin", "sortmax"   -> products = filterPrice(products, filter);
+                    case "brand"                -> products = filterBrands(products, filter);
+                    case "diagMin", "diagMax"   -> products = filterTvDiag(products, filter);
+                    case "tvResolution"         -> products = filterTvResol(products, filter);
+                    case "hzMin", "hzMax"       -> products = filterTvHZ(products, filter);
+                    case "tvParams", "tvType", "tvCables", "tvCablesType", "tvCablesLength" -> products = filterParamsInAnnotationAndType(products, filter);
                 }
             }
             catch (NullPointerException e) {
@@ -63,25 +54,60 @@ public class FilterService {
 
         int start = (int) pageable.getOffset();
         int end = (start + pageable.getPageSize()) > products.size() ? products.size() : (start + pageable.getPageSize());
-        Page<Product> page = new PageImpl<>(products.subList(start, end), pageable, products.size());
-
-        log.info(page.getTotalElements() + " ");
-        return page;
+        return new PageImpl<>(products.subList(start, end), pageable, products.size());
     }
 
-    private List<Product> filterTvParams(List<Product> products, Map.Entry<String, Object> filter) {
-        String tvParams = filter.getValue().toString();
-        return new ArrayList<>();
+    private List<Product> filterParamsInAnnotationAndType(List<Product> products, Map.Entry<String, Object> filter)
+    {
+        String[] tvParams = filter.getValue().toString().split(resolveSplitter(filter.getKey()));
+        log.info(Arrays.toString(tvParams));
+
+        return products.stream().filter(product ->
+        {
+            for (String val : tvParams)
+            {
+                String param = val.replaceAll("[\\[\\]]", "").trim();
+
+                System.out.println();
+                log.info("Param: " + param);
+                log.info("Product Anno: " + product.getOriginalAnnotation());
+
+                if (product.getOriginalAnnotation().contains(param) || product.getProductType().contains(param))
+                {
+                    log.info(param + " | " + product.getOriginalAnnotation());
+                    return true;
+                }
+            }
+            return false;
+        }).collect(Collectors.toList());
+    }
+
+    private String resolveSplitter(String key) {
+        return switch (key) {
+            case "tvCablesLength" -> ";,";
+            default -> ",";
+        };
+    }
+
+    private List<Product> filterPrice(List<Product> products, Map.Entry<String, Object> filter) {
+        return filter.getKey().equals("sortmin") ?
+                products.stream().filter(product -> product.getPrice() >= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList()):
+                products.stream().filter(product -> product.getPrice() <= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
+    }
+
+    private List<Product> filterBrands(List<Product> products, Map.Entry<String, Object> filter) {
+        String brands = String.join(",", filter.getValue().toString());
+        return products.stream().filter(product -> StringUtils.containsIgnoreCase(brands, product.getOriginalBrand())).collect(Collectors.toList());
     }
 
     private List<Product> filterTvHZ(List<Product> products, Map.Entry<String, Object> filter) {
         int hz = Integer.parseInt(filter.getValue().toString());
         return products.stream().filter(product ->
         {
-            if (product.getOriginalAnnotation().contains("Индекс частоты обновления:"))
+            if (product.getOriginalAnnotation().contains("Индекс частоты обновления:")) ///checkParam()
             {
                 int productHZ = Integer.parseInt(StringUtils.substringBetween(product.getOriginalAnnotation(), "Индекс частоты обновления:", ";").trim());
-                return filter.getKey().equals("hzMin")? hz <= productHZ : hz >= productHZ;
+                return filter.getKey().equals("hzMin") ? hz <= productHZ : hz >= productHZ;
             }
             return false;
         }).collect(Collectors.toList());
@@ -113,51 +139,11 @@ public class FilterService {
             }
             return false;
         }).collect(Collectors.toList());
-
-        //return products;
     }
 }
-       /* showReceivedParams(params);
 
-        List<Product> products = productRepo.findByType(req_type);
 
-        for (Map.Entry<String, Object> paramObject : params.entrySet())
-        {
-            Map<String, Object> inner = (Map<String, Object>) paramObject.getValue();
-            for (Map.Entry<String, Object> filter : inner.entrySet())
-            {
-                switch (filter.getKey()) {
-                    case "sortmin"      -> products = products.stream().filter(product -> product.getFinalPrice() >= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
-                    case "sortmax"      -> products = products.stream().filter(product -> product.getFinalPrice() <= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
-                    case "brand"        -> {
-                        String brands = filter.getValue().toString();
-                        products = products.stream().filter(product -> brands.contains(product.getBrand())).collect(Collectors.toList());
-                    }
-                    case "country"      -> {
-                        String countries = filter.getValue().toString();
-                        products = products.stream().filter(product -> countries.contains(product.getCountry())).collect(Collectors.toList());
-                    }
-                    case "diag_min"     -> products = products.stream().filter(product -> Integer.parseInt(product.getDiagonal()) >= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
-                    case "diag_max"     -> products = products.stream().filter(product -> Integer.parseInt(product.getDiagonal()) <= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
-                    case "tv_resolution" -> {
-                        String resolution = filter.getValue().toString();
-                        products = products.stream().filter(product -> resolution.contains(product.getResolution())).collect(Collectors.toList());
-                    }
-                    case "tv_params" -> {
-                        List<Object> tv_params = new ArrayList<>((Collection<?>) filter.getValue());
-                        for (Object tv_param : tv_params) {
-                            products = products.stream().filter(product -> product.getTvFeatures().contains(tv_param.toString())).collect(Collectors.toList());
-                        }
-                    }
-                }
-            }
-        }
-        sortProducts(products, params);
-        log.info("After filter: " + products.size());
 
-        return packageProductsAndOrderedID(products, user);
-        //return new LinkedList<>();
-    }*/
 
     /*private void sortProducts(List<Product> products, Map<String, Object> params)
     {

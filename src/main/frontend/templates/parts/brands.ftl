@@ -35,115 +35,57 @@
             <label class="form-check-label" for="PANASONIC">Panasonic</label>
         </div>
         <div class="col-6">
-            <input type="checkbox" name="brand" class="form-check-input" id="Samsung" value="Samsung">
-            <label class="form-check-label" for="Samsung">Samsung</label>
+            <input type="checkbox" name="brand" class="form-check-input" id="Prestigio" value="Prestigio">
+            <label class="form-check-label" for="Prestigio">Prestigio</label>
         </div>
     </div>
     <div class="row">
         <div class="col-6">
+            <input type="checkbox" name="brand" class="form-check-input" id="Samsung" value="Samsung">
+            <label class="form-check-label" for="Samsung">Samsung</label>
+        </div>
+        <div class="col-6">
             <input type="checkbox" name="brand" class="form-check-input" id="TELEFUNKEN" value="TELEFUNKEN">
             <label class="form-check-label" for="TELEFUNKEN">Telefunken</label>
         </div>
+    </div>
+    <div class="row">
         <div class="col-6">
             <input type="checkbox" name="brand" class="form-check-input" id="Toshiba" value="Toshiba">
             <label class="form-check-label" for="Toshiba">Toshiba</label>
         </div>
     </div>
-    <#--<div class="row">
-        <div class="col-6">
+</#if>
 
+<#if url?contains("кабели_тв")>
+    <div class="row">
+        <div class="col-7">
+            <input type="checkbox" name="brand" class="form-check-input" id="Belsis" value="Belsis">
+            <label class="form-check-label" for="Belsis">Belsis</label>
         </div>
-        <div class="col-6">
-
+        <div class="col-5">
+            <input type="checkbox" name="brand" class="form-check-input" id="Doffler" value="Doffler">
+            <label class="form-check-label" for="Doffler">Doffler</label>
         </div>
     </div>
     <div class="row">
-        <div class="col-6">
-
+        <div class="col-7">
+            <input type="checkbox" name="brand" class="form-check-input" id="Pro legend" value="Pro legend">
+            <label class="form-check-label" for="Pro legend">Pro Legend</label>
         </div>
-        <div class="col-6">
-            <input type="checkbox" name="brand" class="form-check-input" id="FUSION" value="FUSION">
-            <label class="form-check-label" for="FUSION">Fusion</label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-
-        </div>
-        <div class="col-6">
-            <input type="checkbox" name="brand" class="form-check-input" id="BBK" value="BBK">
-            <label class="form-check-label" for="BBK">BBK</label>
+        <div class="col-5">
+            <input type="checkbox" name="brand" class="form-check-input" id="Sparks" value="Sparks">
+            <label class="form-check-label" for="Sparks">Sparks</label>
         </div>
     </div>
     <div class="row">
-        <div class="col-6">
-
+        <div class="col-7">
+            <input type="checkbox" name="brand" class="form-check-input" id="Supra" value="Supra">
+            <label class="form-check-label" for="Supra">Supra</label>
         </div>
-        <div class="col-6">
-            <input type="checkbox" name="brand" class="form-check-input" id="SOUNDMAX" value="SOUNDMAX">
-            <label class="form-check-label" for="SOUNDMAX">Soundmax</label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-
-        </div>
-        <div class="col-6">
-
+        <div class="col-5">
+            <input type="checkbox" name="brand" class="form-check-input" id="Sven" value="Sven">
+            <label class="form-check-label" for="Sven">Sven</label>
         </div>
     </div>
-    <div class="row">
-        <div class="col-6">
-
-        </div>
-        <div class="col-6">
-            <input type="checkbox" name="brand" class="form-check-input" id="POLARLINE" value="POLARLINE">
-            <label class="form-check-label" for="POLARLINE">Polarline</label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            <input type="checkbox" name="brand" class="form-check-input" id="HARPER" value="HARPER">
-            <label class="form-check-label" for="HARPER">Harper</label>
-        </div>
-        <div class="col-6">
-            <input type="checkbox" name="brand" class="form-check-input" id="HARTENS" value="HARTENS">
-            <label class="form-check-label" for="HARTENS">Hartens</label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            <input type="checkbox" name="brand" class="form-check-input" id="SHIVAKI" value="SHIVAKI">
-            <label class="form-check-label" for="SHIVAKI">Shivaki</label>
-        </div>
-        <div class="col-6">
-
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            <input type="checkbox" name="brand" class="form-check-input" id="PRESTIGIO" value="PRESTIGIO">
-            <label class="form-check-label" for="PRESTIGIO">Prestigio</label>
-        </div>
-        <div class="col-6">
-            <input type="checkbox" name="brand" class="form-check-input" id="SUPRA" value="SUPRA">
-            <label class="form-check-label" for="SUPRA">Supra</label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            <input type="checkbox" name="brand" class="form-check-input" id="VEKTA" value="VEKTA">
-            <label class="form-check-label" for="VEKTA">Vetka</label>
-        </div>
-        <div class="col-6">
-            <input type="checkbox" name="brand" class="form-check-input" id="MYSTERY" value="MYSTERY">
-            <label class="form-check-label" for="MYSTERY">Mystery</label>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            <input type="checkbox" name="brand" class="form-check-input" id="ECON" value="ECON">
-            <label class="form-check-label" for="ECON">Econ</label>
-        </div>
-    </div>-->
 </#if>
