@@ -92,45 +92,110 @@ function constructFiltersData(url) {
         }
     });
 
-    var data = {
+    var filters = {
         'sortmin' : $('#sortmin').val(),
         'sortmax' : $('#sortmax').val(),
         'brand'   : brands
     };
 
     const request = url.substring(url.lastIndexOf('/')+1);
-
-    switch (request) {
-        case 'телевизоры'       : return tvFilters(data);
-        case 'ресиверы_для_тв'  : return data;
-        case 'кабели_тв'        : return tvCablesFilters(data);
-        default : return data;
+    switch (request)
+    {
+        case 'телевизоры'           : return tv        (filters);
+        case 'кабели_тв'            : return tvCables  (filters);
+        case 'кронштейны_тв'        : return tvBrackets(filters);
+        case 'музыкальные_центры'   : return muzCenters(filters);
+        case 'телемебель'           : return tvMebel (filters);
+        default : return filters;
     }
 
-    function tvFilters(data)
-    {
+    function tvMebel(filters) {
+        var tvMebelType = [], tvMebelWidth = [], tvMebelLoad = [];
+        ($('input:checkbox:checked').each(function()
+        {
+            switch (this.getAttribute("name"))
+            {
+                case 'tvMebelType'    : tvMebelType.push    ($(this).val());   break;
+                case 'tvMebelWidth'   : tvMebelWidth.push   ($(this).val());   break;
+                case 'tvMebelLoad'    : tvMebelLoad.push    ($(this).val());   break;
+            }
+        }));
+        filters.tvMebelType      = tvMebelType;
+        filters.tvMebelWidth     = tvMebelWidth;
+        filters.tvMebelLoad      = tvMebelLoad;
+        filters.tvMebelDiagMin   = $('#tvMebelDiagMin').val();
+        filters.tvMebelDiagMax   = $('#tvMebelDiagMax').val();
+        console.log(filters);
+        return filters;
+    }
+
+    function muzCenters(filters) {
+        var muzCenterType = [], muzCenterMainBlock = [], muzCenterAcoustic = [], muzCenterParams = [];
+        ($('input:checkbox:checked').each(function()
+        {
+            switch (this.getAttribute("name"))
+            {
+                case 'muzCenterType'        : muzCenterType.push        ($(this).val());   break;
+                case 'muzCenterMainBlock'   : muzCenterMainBlock.push   ($(this).val());   break;
+                case 'muzCenterAcoustic'    : muzCenterAcoustic.push    ($(this).val());   break;
+                case 'muzCenterParams'      : muzCenterParams.push      ($(this).val());   break;
+            }
+        }));
+        filters.muzCenterType       = muzCenterType;
+        filters.muzCenterMainBlock  = muzCenterMainBlock;
+        filters.muzCenterAcoustic   = muzCenterAcoustic;
+        filters.muzCenterParams     = muzCenterParams;
+        filters.muzCenterPowerMin   = $('#muzCenterPowerMin').val();
+        filters.muzCenterPowerMax   = $('#muzCenterPowerMax').val();
+        console.log(filters);
+        return filters;
+    }
+
+    function tvBrackets(filters) {
+        var tvBracketsType = [], tvBracketsMount =[];
+        ($('input:checkbox:checked').each(function()
+        {
+            switch (this.getAttribute("name"))
+            {
+                case 'tv-brackets-type'     : tvBracketsType.push   ($(this).val()); break;
+                case 'tv-brackets-mount'    : tvBracketsMount.push  ($(this).val()); break;
+            }
+        }));
+        filters.tvBracketsType         = tvBracketsType;
+        filters.tvBracketsMount        = tvBracketsMount;
+        filters.tvBracketsLoadMin      = $('#tv-brackets-load_min').val();
+        filters.tvBracketsLoadMax      = $('#tv-brackets-load_max').val();
+        filters.tvBracketsDiagMin      = $('#tv-brackets-diag_min').val();
+        filters.tvBracketsDiagMax      = $('#tv-brackets-diag_max').val();
+        filters.tvBracketsWallDistMin  = $('#tvBracketsWallDistMin').val();
+        filters.tvBracketsWallDistMax  = $('#tvBracketsWallDistMax').val();
+        console.log(filters);
+        return filters;
+    }
+
+    function tv(filters){
         var tv_resolution = [], tv_params = [], tv_type = [];
         ($('input:checkbox:checked').each(function()
         {
-            switch (this.getAttribute("name")) {
+            switch (this.getAttribute("name"))
+            {
                 case 'tv_resolution' : tv_resolution.push($(this).val()); break;
                 case 'tv_params'     : tv_params.push($(this).val()); break;
                 case 'tv_type'       : tv_type.push($(this).val()); break;
             }
         }));
-
-        data.tvResolution   = tv_resolution;
-        data.tvParams       = tv_params;
-        data.tvType         = tv_type;
-        data.diagMin        = $('#diag_min').val();
-        data.diagMax        = $('#diag_max').val();
-        data.hzMin          = $('#hz_min').val();
-        data.hzMax          = $('#hz_max').val();
-        console.log(data);
-        return data;
+        filters.tvResolution   = tv_resolution;
+        filters.tvParams       = tv_params;
+        filters.tvType         = tv_type;
+        filters.diagMin        = $('#diag_min').val();
+        filters.diagMax        = $('#diag_max').val();
+        filters.hzMin          = $('#hz_min').val();
+        filters.hzMax          = $('#hz_max').val();
+        console.log(filters);
+        return filters;
     }
 
-    function tvCablesFilters(data) {
+    function tvCables(filters) {
         var tvCables = [], tvCablesTypes = [], tvCablesLength = [];
         $('input:checkbox:checked').each(function ()
         {
@@ -140,11 +205,11 @@ function constructFiltersData(url) {
                 case 'tv-cables-length'     : tvCablesLength.push($(this).val());   break;
             }
         });
-        data.tvCables       = tvCables;
-        data.tvCablesType   = tvCablesTypes;
-        data.tvCablesLength = tvCablesLength;
-        console.log(data);
-        return data;
+        filters.tvCables       = tvCables;
+        filters.tvCablesType   = tvCablesTypes;
+        filters.tvCablesLength = tvCablesLength;
+        console.log(filters);
+        return filters;
     }
 }
 

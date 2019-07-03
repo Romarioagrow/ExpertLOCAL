@@ -36,7 +36,7 @@ public class ProductService {
     }*/
 
     public Page<Product> findOriginalProducts(String request, Pageable pageable) {
-        return productRepo.findByOriginalTypeContainingOrOriginalNameContaining(request,request,pageable);
+        return productRepo.findByOriginalTypeContainingOrOriginalNameContaining(request, request, pageable);
     }
 
     public Page<Product> findProducts(String request, Pageable pageable, Model model)
@@ -45,12 +45,12 @@ public class ProductService {
 
         Page<Product> page = productRepo.findByProductGroupEqualsIgnoreCaseAndSupplier(request, "1RBT", pageable);
 
-        if (page.getTotalElements() == 0) {
+        if (page.getTotalElements() == 0) 
+        {
             page = findOriginalProducts(request, pageable);
         }
 
         model.addAttribute("total", page.getTotalElements());
-
         log.info("Products found: " + page.getTotalElements() + " on " + page.getTotalPages() + " pages!");
         return page;
     }

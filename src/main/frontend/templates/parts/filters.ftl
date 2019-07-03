@@ -42,7 +42,6 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text md-addon">Тип экрана</span>
                     </div>
-                    <#--<div class="form-check">-->
                     <div class="container">
                         <div class="row">
                             <div class="col">
@@ -292,22 +291,117 @@
     </div>
 </#if>
 
-<#if url?contains("fridges")>
+<#if url?contains("кронштейны_тв")>
     <div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-filter2" aria-expanded="false">
-            <span>Количество камер</span>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-brackets1" aria-expanded="false">
+            <span>Тип кронштейна</span>
         </button>
-        <div class="collapse" id="tv-filter2">
+        <div class="collapse" id="tv-brackets1">
             <div class="card card-body filter-filed">
-                <div class="form-group">
-                    <div>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="form-check-input" name="sort_options" id="SmartTV">
-                            <label class="custom-control-label" for="SmartTV">Однокамерные</label>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Тип</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="form-check-input" name="tv-brackets-type" id="Наклонно-поворотный" value="Тип кронштейна: наклонно-поворотный">
+                                    <label class="custom-control-label" for="Наклонно-поворотный">Наклонно-поворотный</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="form-check-input" name="sort_options" id="WiFI">
-                            <label class="custom-control-label" for="WiFI">Двухкамерные</label>
+                        <div class="row">
+                            <div class="col">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="form-check-input" name="tv-brackets-type" id="Наклонный" value="Тип кронштейна: наклонный">
+                                    <label class="custom-control-label" for="Наклонный">Наклонный</label>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="form-check-input" name="tv-brackets-type" id="Поворотный" value="Тип кронштейна: поворотный">
+                                    <label class="custom-control-label" for="Поворотный">Поворотный</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="form-check-input" name="tv-brackets-type" id="Фиксированный" value="Тип кронштейна: фиксированный">
+                                    <label class="custom-control-label" for="Фиксированный">Фиксированный</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Способ крепления</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="form-check-input" name="tv-brackets-mount" id="Настенный" value="Способ крепления: настенный">
+                                    <label class="custom-control-label" for="Настенный">Настенный</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="form-check-input" name="tv-brackets-mount" id="Настольный" value="Способ крепления: настольный">
+                                    <label class="custom-control-label" for="Настольный">Настольный</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-brackets2" aria-expanded="false">
+            <span>Нагрузка и габариты</span>
+        </button>
+        <div class="collapse" id="tv-brackets2">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Нагрузка</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                            <input type="text" id="tv-brackets-load_min" name="tv-brackets-load_min" class="form-control" placeholder="От кг">
+                        </div>
+                        <div class="col-5">
+                            <input type="text" id="tv-brackets-load_max" name="tv-brackets-load_max" class="form-control" placeholder="До кг">
+                        </div>
+                    </div>
+                </div>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Максимальная диагональ</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                            <input type="text" id="tv-brackets-diag_min" name="tv-brackets-diag_min" class="form-control" placeholder="От дюйм">
+                        </div>
+                        <div class="col-5">
+                            <input type="text" id="tv-brackets-diag_max" name="tv-brackets-diag_max" class="form-control" placeholder="До дюйм">
+                        </div>
+                    </div>
+                </div>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Расстояние от стены</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                            <input type="text" id="tvBracketsWallDistMin" name="tvBracketsWallDistMin" class="form-control" placeholder="От мм">
+                        </div>
+                        <div class="col-5">
+                            <input type="text" id="tvBracketsWallDistMax" name="tvBracketsWallDistMax" class="form-control" placeholder="До мм">
                         </div>
                     </div>
                 </div>
@@ -316,23 +410,304 @@
     </div>
 </#if>
 
-<#if url?contains("stoves")>
+<#if url?contains("музыкальные_центры")>
     <div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-filter1" aria-expanded="false">
-            <span>Габариты плиты</span>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-brackets1" aria-expanded="false">
+            <span>Тип музыкального центра</span>
         </button>
-        <div class="collapse" id="tv-filter1">
+        <div class="collapse" id="tv-brackets1">
             <div class="card card-body filter-filed">
-                <div class="mt-2">
-                    <h5>Ширина плиты</h5>
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="form-check-input" name="stove_width" id="stove_width" value="Ширина до 50см">
-                        <label class="custom-control-label" for="stove_width">Ширина до 50см</label>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Тип устройства</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="form-check-input" name="muzCenterType" id="мидисистема" value="Тип: мидисистема">
+                                    <label class="custom-control-label" for="мидисистема">Миди-система</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="form-check-input" name="muzCenterType" id="микросистема" value="Тип: микросистема">
+                                    <label class="custom-control-label" for="микросистема">Микро-система</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="form-check-input" name="muzCenterType" id="минисистема" value="Тип: минисистема">
+                                    <label class="custom-control-label" for="минисистема">Мини-система</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Основной блок</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="form-check-input" name="muzCenterMainBlock" id="компонентная система" value="Основной блок: компонентная система">
+                                    <label class="custom-control-label" for="компонентная система">Компонентная система</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="form-check-input" name="muzCenterMainBlock" id="моноблок" value="Основной блок: моноблок">
+                                    <label class="custom-control-label" for="моноблок">Моноблок</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="form-check-input" name="muzCenterMainBlock" id="одноблочная система" value="Основной блок: одноблочная система">
+                                    <label class="custom-control-label" for="одноблочная система">Одноблочная система</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-brackets2" aria-expanded="false">
+            <span>Акустика и звук</span>
+        </button>
+        <div class="collapse" id="tv-brackets2">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Мощность звука</span>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                            <input type="text" id="muzCenterPowerMin" class="form-control" placeholder="От Ватт">
+                        </div>
+                        <div class="col-5">
+                            <input type="text" id="muzCenterPowerMax" class="form-control" placeholder="До Ватт">
+                        </div>
+                    </div>
+                </div>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Аккустическая система</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="muzCenterAcoustic" id="аккустика1.0" value="Комплект акустических систем: 1.0">
+                                <label class="custom-control-label" for="аккустика1.0">1.0</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="muzCenterAcoustic" id="аккустика2.0" value="Комплект акустических систем: 2.0">
+                                <label class="custom-control-label" for="аккустика2.0">2.0</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="muzCenterAcoustic" id="аккустика2.1" value="Комплект акустических систем: 2.1">
+                                <label class="custom-control-label" for="аккустика2.1">2.1</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-brackets3" aria-expanded="false">
+            <span>Особенности музыкульного центра</span>
+        </button>
+        <div class="collapse" id="tv-brackets3">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="muzCenterParams" id="Эквалайзер" value="Эквалайзер: есть">
+                                <label class="custom-control-label" for="Эквалайзер">Эквалайзер</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="muzCenterParams" id="Чтение с USB" value="Воспроизведение с USB-накопителей: есть">
+                                <label class="custom-control-label" for="Чтение с USB">Чтение с USB</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="muzCenterParams" id="Поддержка Wi-Fi" value="Wi-Fi: есть">
+                                <label class="custom-control-label" for="Поддержка Wi-Fi">Поддержка Wi-Fi</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="muzCenterParams" id="Наличие Bluetooth" value="Bluetooth: есть">
+                                <label class="custom-control-label" for="Наличие Bluetooth">Наличие Bluetooth</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="muzCenterParams" id="Караоке" value="Караоке: есть">
+                                <label class="custom-control-label" for="Караоке">Караоке</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="muzCenterParams" id="Часы" value="Часы: есть">
+                                <label class="custom-control-label" for="Часы">Часы</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="muzCenterParams" id="Таймер" value="Таймер: есть">
+                                <label class="custom-control-label" for="Таймер">Таймер</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </#if>
+
+<#if url?contains("телемебель")>
+    <div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-mebel1" aria-expanded="false">
+            <span>Тип мебели</span>
+        </button>
+        <div class="collapse" id="tv-mebel1">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <#--<div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Тип</span>
+                    </div>-->
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="form-check-input" name="tvMebelType" id="С подвесом" value="Тип: тумба с подвесом">
+                                    <label class="custom-control-label" for="С подвесом">Тумба с подвесом</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="form-check-input" name="tvMebelType" id="Тумба без подвеса" value="Тип: тумба без подвеса">
+                                    <label class="custom-control-label" for="Тумба без подвеса">Тумба без подвеса</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-mebel2" aria-expanded="false">
+            <span>Габариты и нагрузка</span>
+        </button>
+        <div class="collapse" id="tv-mebel2">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div>
+                        <div class="input-group-prepend">
+                            <span class="input-group-text md-addon">Ширина</span>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="form-check-input" name="tvMebelWidth" id="80 см" value="Ширина: 80">
+                                        <label class="custom-control-label" for="80 см">80 см</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="form-check-input" name="tvMebelWidth" id="90 см" value="Ширина: 89,4">
+                                        <label class="custom-control-label" for="90 см">90 см</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="form-check-input" name="tvMebelWidth" id="110 см" value="Ширина: 110">
+                                        <label class="custom-control-label" for="110 см">110 см</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="form-check-input" name="tvMebelWidth" id="150 см" value="Ширина: 150">
+                                        <label class="custom-control-label" for="150 см">150 см</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md-form input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text md-addon">Нагрузка</span>
+                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="form-check-input" name="tvMebelLoad" id="До 30 кг" value="Нагрузка: 30">
+                                        <label class="custom-control-label" for="До 30 кг">До 30 кг</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="form-check-input" name="tvMebelLoad" id="До 40 кг" value="Нагрузка: 40">
+                                        <label class="custom-control-label" for="До 40 кг">До 40 кг</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="form-check-input" name="tvMebelLoad" id="До 50 кг" value="Нагрузка: 50">
+                                        <label class="custom-control-label" for="До 50 кг">До 50 кг</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Под диагональ ТВ</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5">
+                                <input type="text" id="tvMebelDiagMin" class="form-control" placeholder="От дюйм">
+                            </div>
+                            <div class="col-5">
+                                <input type="text" id="tvMebelDiagMax" class="form-control" placeholder="До дюйм">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</#if>
+
 
 <button type="submit" id="filter-button" class="btn btn-primary btn-block filter-button search">Показать</button>

@@ -80,6 +80,9 @@ public class Product implements Serializable {
 
     private Integer price;
 
+    @Column(name = "product_category")
+    private String productCategory;
+
     @Column(name = "type_brand")
     private String typeBrand;
 

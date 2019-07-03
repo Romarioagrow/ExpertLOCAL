@@ -89,3 +89,67 @@
         </div>
     </div>
 </#if>
+
+<#if url?contains("кронштейны_тв")>
+    <div class="row">
+        <div class="col-7">
+            <input type="checkbox" name="brand" class="form-check-input" id="Doffler" value="Doffler">
+            <label class="form-check-label" for="Doffler">Doffler</label>
+        </div>
+        <div class="col-5"></div>
+    </div>
+</#if>
+
+<#if url?contains("ресиверы_для_тв")>
+    <div class="row">
+        <div class="col-7">
+            <input type="checkbox" name="brand" class="form-check-input" id="МТС" value="МТС">
+            <label class="form-check-label" for="МТС">МТС</label>
+        </div>
+        <div class="col-5"></div>
+    </div>
+</#if>
+
+<#if url?contains("антенны_тв")>
+    <div class="row">
+        <div class="col-7">
+            <input type="checkbox" name="brand" class="form-check-input" id="Doffler" value="Doffler">
+            <label class="form-check-label" for="Doffler">Doffler</label>
+        </div>
+        <div class="col-5">
+            <input type="checkbox" name="brand" class="form-check-input" id=" Рэмо" value=" Рэмо">
+            <label class="form-check-label" for=" Рэмо"> Рэмо</label>
+        </div>
+    </div>
+</#if>
+
+<#if url?contains("музыкальные_центры")>
+    <div class="row">
+        <div class="col-7">
+            <input type="checkbox" name="brand" class="form-check-input" id="LG" value="LG">
+            <label class="form-check-label" for="LG">LG</label>
+        </div>
+        <div class="col-5">
+            <input type="checkbox" name="brand" class="form-check-input" id="Pioneer" value="Pioneer">
+            <label class="form-check-label" for="Pioneer">Pioneer</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-7">
+            <input type="checkbox" name="brand" class="form-check-input" id="Sony" value="Sony">
+            <label class="form-check-label" for="Sony">Sony</label>
+        </div>
+        <div class="col-5">
+            <input type="checkbox" name="brand" class="form-check-input" id="Spl" value="Spl">
+            <label class="form-check-label" for="Spl">Spl</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-7">
+            <input type="checkbox" name="brand" class="form-check-input" id="Telefunken" value="Telefunken">
+            <label class="form-check-label" for="Telefunken">Telefunken</label>
+        </div>
+        <div class="col-5">
+        </div>
+    </div>
+</#if>
