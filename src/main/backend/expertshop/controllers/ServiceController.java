@@ -33,7 +33,7 @@ public class ServiceController {
 
     @PostMapping("/products/{category}/{reqType}")
     public Page<Product> filterProducts
-            (@RequestBody Map<String, Object> params,
+            (@RequestBody Map<String, String> params,
              @PathVariable String reqType,
              @AuthenticationPrincipal User user,
              @PathVariable String category,

@@ -7,14 +7,6 @@ $(document).ready(function(){
 $(document).ready(function(){
     $('input[type="checkbox"]') .on('change', collectFilters);
 });
-/*$(document).ready(function(){
-    $('input[type="text"]')     .on('keyup', collectFilters);
-});*/
-
-/*$(document).ready(function() {
-    $('.mdb-select').materialSelect();
-});*/
-
 
 function resolveURL() {
     var url = decodeURI(document.URL);
@@ -26,16 +18,41 @@ function resolveURL() {
 
 function collectFilters(e) {
     e.preventDefault();
+    var filters = {};
 
-    var url = resolveURL();
+    $('input:checkbox:checked').each(function()
+    {
+        let key = this.getAttribute("name");
+        let val = $(this).val();
 
-    var filters = constructFiltersData(url);
-    deleteEmptyParams(filters);
+        if (!filters.hasOwnProperty(key)) {
+            filters[key] = val;
+        }
+        else filters[key] = filters[key].concat(", ").concat(val);
+    });
 
+    $('input:text').each(function()
+    {
+        let inpKey = this.getAttribute("id");
+        let inpVal = $(this).val();
+
+        if (inpVal)
+        {
+            console.log(inpVal);
+            if (!filters.hasOwnProperty(inpKey))
+            {
+                filters[inpKey] = inpVal;
+            }
+            else filters[inpKey] = filters[inpKey].join(", ").concat(inpVal);
+        }
+    });
+    console.log(filters);
+
+    const url = resolveURL();
     filters = JSON.stringify(filters);
 
     $.ajax({
-        url: url/*+'?page=2'*/,
+        url: url, ///+'?page=2'
         type: 'POST',
         dataType: 'json',
         data: filters,
@@ -79,151 +96,6 @@ function collectFilters(e) {
             }
         }
     });
-}
-
-function constructFiltersData(url) {
-    var brands = [];
-    $('input:checked').each(function()
-    {
-        if ($(this).attr('name') === 'brand')
-        {
-            brands.push($(this).val());
-            console.log($(this).val());
-        }
-    });
-
-    var filters = {
-        'sortmin' : $('#sortmin').val(),
-        'sortmax' : $('#sortmax').val(),
-        'brand'   : brands
-    };
-
-    const request = url.substring(url.lastIndexOf('/')+1);
-    switch (request)
-    {
-        case 'телевизоры'           : return tv        (filters);
-        case 'кабели_тв'            : return tvCables  (filters);
-        case 'кронштейны_тв'        : return tvBrackets(filters);
-        case 'музыкальные_центры'   : return muzCenters(filters);
-        case 'телемебель'           : return tvMebel (filters);
-        default : return filters;
-    }
-
-    function tvMebel(filters) {
-        var tvMebelType = [], tvMebelWidth = [], tvMebelLoad = [];
-        ($('input:checkbox:checked').each(function()
-        {
-            switch (this.getAttribute("name"))
-            {
-                case 'tvMebelType'    : tvMebelType.push    ($(this).val());   break;
-                case 'tvMebelWidth'   : tvMebelWidth.push   ($(this).val());   break;
-                case 'tvMebelLoad'    : tvMebelLoad.push    ($(this).val());   break;
-            }
-        }));
-        filters.tvMebelType      = tvMebelType;
-        filters.tvMebelWidth     = tvMebelWidth;
-        filters.tvMebelLoad      = tvMebelLoad;
-        filters.tvMebelDiagMin   = $('#tvMebelDiagMin').val();
-        filters.tvMebelDiagMax   = $('#tvMebelDiagMax').val();
-        console.log(filters);
-        return filters;
-    }
-
-    function muzCenters(filters) {
-        var muzCenterType = [], muzCenterMainBlock = [], muzCenterAcoustic = [], muzCenterParams = [];
-        ($('input:checkbox:checked').each(function()
-        {
-            switch (this.getAttribute("name"))
-            {
-                case 'muzCenterType'        : muzCenterType.push        ($(this).val());   break;
-                case 'muzCenterMainBlock'   : muzCenterMainBlock.push   ($(this).val());   break;
-                case 'muzCenterAcoustic'    : muzCenterAcoustic.push    ($(this).val());   break;
-                case 'muzCenterParams'      : muzCenterParams.push      ($(this).val());   break;
-            }
-        }));
-        filters.muzCenterType       = muzCenterType;
-        filters.muzCenterMainBlock  = muzCenterMainBlock;
-        filters.muzCenterAcoustic   = muzCenterAcoustic;
-        filters.muzCenterParams     = muzCenterParams;
-        filters.muzCenterPowerMin   = $('#muzCenterPowerMin').val();
-        filters.muzCenterPowerMax   = $('#muzCenterPowerMax').val();
-        console.log(filters);
-        return filters;
-    }
-
-    function tvBrackets(filters) {
-        var tvBracketsType = [], tvBracketsMount =[];
-        ($('input:checkbox:checked').each(function()
-        {
-            switch (this.getAttribute("name"))
-            {
-                case 'tv-brackets-type'     : tvBracketsType.push   ($(this).val()); break;
-                case 'tv-brackets-mount'    : tvBracketsMount.push  ($(this).val()); break;
-            }
-        }));
-        filters.tvBracketsType         = tvBracketsType;
-        filters.tvBracketsMount        = tvBracketsMount;
-        filters.tvBracketsLoadMin      = $('#tv-brackets-load_min').val();
-        filters.tvBracketsLoadMax      = $('#tv-brackets-load_max').val();
-        filters.tvBracketsDiagMin      = $('#tv-brackets-diag_min').val();
-        filters.tvBracketsDiagMax      = $('#tv-brackets-diag_max').val();
-        filters.tvBracketsWallDistMin  = $('#tvBracketsWallDistMin').val();
-        filters.tvBracketsWallDistMax  = $('#tvBracketsWallDistMax').val();
-        console.log(filters);
-        return filters;
-    }
-
-    function tv(filters){
-        var tv_resolution = [], tv_params = [], tv_type = [];
-        ($('input:checkbox:checked').each(function()
-        {
-            switch (this.getAttribute("name"))
-            {
-                case 'tv_resolution' : tv_resolution.push($(this).val()); break;
-                case 'tv_params'     : tv_params.push($(this).val()); break;
-                case 'tv_type'       : tv_type.push($(this).val()); break;
-            }
-        }));
-        filters.tvResolution   = tv_resolution;
-        filters.tvParams       = tv_params;
-        filters.tvType         = tv_type;
-        filters.diagMin        = $('#diag_min').val();
-        filters.diagMax        = $('#diag_max').val();
-        filters.hzMin          = $('#hz_min').val();
-        filters.hzMax          = $('#hz_max').val();
-        console.log(filters);
-        return filters;
-    }
-
-    function tvCables(filters) {
-        var tvCables = [], tvCablesTypes = [], tvCablesLength = [];
-        $('input:checkbox:checked').each(function ()
-        {
-            switch (this.getAttribute("name")) {
-                case 'tv-cables'            : tvCables.push($(this).val());         break;
-                case 'tv-cables-type'       : tvCablesTypes.push($(this).val());    break;
-                case 'tv-cables-length'     : tvCablesLength.push($(this).val());   break;
-            }
-        });
-        filters.tvCables       = tvCables;
-        filters.tvCablesType   = tvCablesTypes;
-        filters.tvCablesLength = tvCablesLength;
-        console.log(filters);
-        return filters;
-    }
-}
-
-function deleteEmptyParams(filters) {
-    for (var fieldKey in filters)
-    {
-        if (filters[fieldKey] === undefined || filters[fieldKey].length === 0) {
-            delete filters[fieldKey];
-        }
-    }
-}
-
-function selected(type) {
-    return url.includes(encodeURI(type));
 }
 
 function constructProductCard(product/*, displayParams, orderButton*/) {
@@ -277,20 +149,3 @@ function resolveOrderButton(product, productsID) {
         '</button>'+
         '</div>';
 }
-
-/*function resolveDisplayType(product) {
-if      (selected("телевизоры"))    return displayTV(product);
-else if (selected("stoves"))        return displayStoves(product);
-
-function displayTV(product) {
-    return disp =
-        'Диагональ: '            + '<strong>' + product.productParams.diagonal   + '</strong>' +
-        '\nРазрешение: '         + '<strong>' + product.productParams.resolution + '</strong>' +
-        '<br>'+'\nОсобенности: ' + '<strong>' + product.productParams.tvFeatures + '</strong>'
-}
-function displayStoves(product) {
-    return disp = '\nГабариты: '   + '<strong>' + product.productParams.stoveDimensions + '</strong>'
-}
-}*/
-
-

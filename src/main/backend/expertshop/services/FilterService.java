@@ -23,20 +23,40 @@ import java.util.stream.Collectors;
 public class FilterService {
     private final ProductRepo productRepo;
 
-    public Page<Product> filterProducts(Map<String, Object> filters, String requiredType, Pageable pageable)
+    public Page<Product> filterProducts(Map<String, String> filters, String requiredType, Pageable pageable)
     {
         System.out.println();
-        log.info(requiredType);
-        filters.forEach((key, filter) -> log.info(key + " " + filter.toString()));
+        log.info("Request: " + requiredType);
+        log.info("Received filters:");
+        filters.forEach((key, filter) -> log.info(key + " " + filter));
 
         List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCase(requiredType);
         log.info("Product list before filter " + products.size());
 
-        for (Map.Entry<String, Object> filter : filters.entrySet())
+        for (Map.Entry<String, String> filter : filters.entrySet())
         {
             try
             {
-                switch (filter.getKey())
+                String condition = filter.getKey();
+
+                if (condition.startsWith("Cont-")) {
+                    products = filterContainsParams(products, filter);
+                }
+                else if (condition.startsWith("Comp-")) {
+                    products = filterComputeParams(products, filter);
+                }
+                else switch (condition) {
+                        case "sortmin", "sortmax"   -> products = filterPrice   (products, filter);
+                        case "brand"                -> products = filterBrands  (products, filter);
+
+                        case "diagMin", "diagMax"   -> products = filterTvDiag  (products, filter);
+                        case "tvResolution"         -> products = filterTvResol (products, filter);
+                        case "hzMin", "hzMax"       -> products = filterTvHZ    (products, filter);
+                        default -> {
+                        }
+                    }
+
+                /*switch (filter.getKey())
                 {
                     case "sortmin", "sortmax"   -> products = filterPrice(products, filter);
                     case "brand"                -> products = filterBrands(products, filter);
@@ -59,7 +79,7 @@ public class FilterService {
                             "muzCenterPowerMin", "muzCenterPowerMax",
                             "tvMebelDiagMin", "tvMebelDiagMax"
                             -> products = filterComputeParams(products, filter);
-                }
+                }*/
             }
             catch (NullPointerException e) {
                 e.printStackTrace();
@@ -72,8 +92,8 @@ public class FilterService {
         return new PageImpl<>(products.subList(start, end), pageable, products.size());
     }
 
-    private List<Product> filterContainsParams(List<Product> products, Map.Entry<String, Object> filter) {
-        String[] params = filter.getValue().toString().split(resolveSplitter(filter.getKey()));
+    private List<Product> filterContainsParams(List<Product> products, Map.Entry<String, String> filter) {
+        String[] params = filter.getValue().split(resolveSplitter(filter.getKey()));
         log.info(Arrays.toString(params));
 
         return products.stream().filter(product ->
@@ -101,8 +121,8 @@ public class FilterService {
         };
     }
 
-    private List<Product> filterComputeParams(List<Product> products, Map.Entry<String, Object> filter) {
-        double computeFilter = Double.parseDouble(filter.getValue().toString());
+    private List<Product> filterComputeParams(List<Product> products, Map.Entry<String, String> filter) {
+        double computeFilter = Double.parseDouble(filter.getValue());
         return products.stream().filter(product ->
         {
             if (!product.getOriginalAnnotation().isEmpty())
@@ -122,7 +142,7 @@ public class FilterService {
         switch (key)
         {
             case "tvBracketsLoadMin" , "tvBracketsLoadMax"          -> {
-                return extractComputeParam("Нагрузка:", ";", product);
+                return extractComputeParam("Нагрузка:", ";", product); /// добавлять param в name inputText!
             }
             case "tvBracketsDiagMin", "tvBracketsDiagMax"           -> {
                 return extractComputeParam("Максимальная диагональ ТВ:", ";", product);
@@ -144,19 +164,19 @@ public class FilterService {
         return anno.contains(param) ? Double.parseDouble(StringUtils.substringBetween(anno, param, close).trim()) : 0;
     }
 
-    private List<Product> filterPrice(List<Product> products, Map.Entry<String, Object> filter) {
+    private List<Product> filterPrice(List<Product> products, Map.Entry<String, String> filter) {
         return filter.getKey().equals("sortmin") ?
                 products.stream().filter(product -> product.getPrice() >= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList()):
                 products.stream().filter(product -> product.getPrice() <= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
     }
 
-    private List<Product> filterBrands(List<Product> products, Map.Entry<String, Object> filter) {
+    private List<Product> filterBrands(List<Product> products, Map.Entry<String, String> filter) {
         String brands = String.join(",", filter.getValue().toString());
         return products.stream().filter(product -> StringUtils.containsIgnoreCase(brands, product.getOriginalBrand())).collect(Collectors.toList());
     }
 
     /// в filterComputeParams()
-    private List<Product> filterTvDiag(List<Product> products, Map.Entry<String, Object> filter) {
+    private List<Product> filterTvDiag(List<Product> products, Map.Entry<String, String> filter) {
         return products.stream().filter(product ->
         {
             if (product.getOriginalAnnotation().contains("Диагональ"))
@@ -172,7 +192,7 @@ public class FilterService {
             return false;
         }).collect(Collectors.toList());
     }
-    private List<Product> filterTvHZ(List<Product> products, Map.Entry<String, Object> filter) {
+    private List<Product> filterTvHZ(List<Product> products, Map.Entry<String, String> filter) {
         int hz = Integer.parseInt(filter.getValue().toString());
         return products.stream().filter(product ->
         {
@@ -184,7 +204,7 @@ public class FilterService {
             return false;
         }).collect(Collectors.toList());
     }
-    private List<Product> filterTvResol(List<Product> products, Map.Entry<String, Object> filter) {
+    private List<Product> filterTvResol(List<Product> products, Map.Entry<String, String> filter) {
         String resolution = filter.getValue().toString();
         return products.stream().filter(product ->
         {
@@ -202,9 +222,9 @@ public class FilterService {
 
 
 
-    /*private void sortProducts(List<Product> products, Map<String, Object> params)
+    /*private void sortProducts(List<Product> products, Map<String, String> params)
     {
-        Object sort = extractParamValue(params, "sortBy", "sortOrder");
+        String sort = extractParamValue(params, "sortBy", "sortOrder");
         switch (sort.toString()) {
             *//*case "lowest"   -> products.sort(Comparator.comparingLong(Product::getFinalPrice));
             case "highest"  -> products.sort(Comparator.comparingLong(Product::getFinalPrice).reversed());
@@ -212,8 +232,8 @@ public class FilterService {
         }
     }
 
-    private Queue<Object> packageProductsAndOrderedID(List<Product> products, User user) {
-        Queue<Object> productsAndOrder = new LinkedList<>();
+    private Queue<String> packageProductsAndOrderedID(List<Product> products, User user) {
+        Queue<String> productsAndOrder = new LinkedList<>();
         productsAndOrder.add(products);
         productsAndOrder.add(getOrderedID(user));
         return productsAndOrder;
@@ -243,12 +263,12 @@ public class FilterService {
         return orderedProductsID;
     }
 
-    private Object extractParamValue(Map<String, Object> params, String primaryParam, String innerParam) {
-        Map<String, Object> paramType = (Map<String, Object>) params.get(primaryParam);
+    private String extractParamValue(Map<String, String> params, String primaryParam, String innerParam) {
+        Map<String, String> paramType = (Map<String, String>) params.get(primaryParam);
         return paramType.get(innerParam);
     }
 
-    private void showReceivedParams (Map<String, Object> params) {
+    private void showReceivedParams (Map<String, String> params) {
         log.info("\nServer received params with args:");
         params.forEach((param, args) -> log.info(param + ":" + Arrays.toString(new Map[]{(Map) args})));
     }*/
