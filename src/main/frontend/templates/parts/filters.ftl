@@ -10,10 +10,10 @@
                 </div>
                 <div class="row">
                     <div class="col-5">
-                        <input type="text" class="form-control" id="Comp-sortmin" name="sortmin" placeholder="От ₽">
+                        <input type="text" class="form-control" id="sortmin" placeholder="От ₽">
                     </div>
                     <div class="col-5">
-                        <input type="text" class="form-control" id="Comp-sortmax" name="sortmax" placeholder="До ₽">
+                        <input type="text" class="form-control" id="sortmax" placeholder="До ₽">
                     </div>
                 </div>
             </div>
@@ -92,10 +92,10 @@
                     </div>
                     <div class="row">
                         <div class="col-5">
-                            <input type="text" class="form-control" id="Comp-diagMin" name="diagMin" placeholder="От дюйм">
+                            <input type="text" class="form-control" id="diagMin" placeholder="От дюйм">
                         </div>
                         <div class="col-5">
-                            <input type="text" class="form-control" id="Comp-diagMax" name="diagMax" placeholder="До дюйм">
+                            <input type="text" class="form-control" id="diagMax" placeholder="До дюйм">
                         </div>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                         <div class="row">
                             <div class="col">
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="form-check-input" name="Cont-tvResolution" id="720p" value="HD Ready">
+                                    <input type="checkbox" class="form-check-input" name="tvResolution" id="720p" value="HD Ready">
                                     <label class="custom-control-label" for="720p">720p HD</label>
                                 </div>
                             </div>
@@ -116,7 +116,7 @@
                         <div class="row">
                             <div class="col">
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="form-check-input" name="Cont-tvResolution" id="1080p" value="Full HD">
+                                    <input type="checkbox" class="form-check-input" name="tvResolution" id="1080p" value="Full HD">
                                     <label class="custom-control-label" for="1080p">1080p Full HD</label>
                                 </div>
                             </div>
@@ -124,7 +124,7 @@
                         <div class="row">
                             <div class="col">
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="form-check-input" name="Cont-tvResolution" id="4K" value="4K UHD">
+                                    <input type="checkbox" class="form-check-input" name="tvResolution" id="4K" value="4K UHD">
                                     <label class="custom-control-label" for="4K">4K UHD</label>
                                 </div>
                             </div>
@@ -138,10 +138,10 @@
                     </div>
                     <div class="row">
                         <div class="col-5">
-                            <input type="text" class="form-control" id="Comp-hzMin" name="hzMin" placeholder="От Гц">
+                            <input type="text" class="form-control" id="hzMin" name="hzMin" placeholder="От Гц">
                         </div>
                         <div class="col-5">
-                            <input type="text" class="form-control" id="Comp-hzMax" name="hzMax" placeholder="До Гц">
+                            <input type="text" class="form-control" id="hzMax" name="hzMax" placeholder="До Гц">
                         </div>
                     </div>
                 </div>
@@ -156,11 +156,11 @@
             <div class="card card-body filter-filed">
                 <div class="form-group">
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="form-check-input" name="Cont-tvParams" id="SmartTV" value="Smart TV: есть">
+                        <input type="checkbox" class="form-check-input" name="tvParams" id="SmartTV" value="Smart TV: есть">
                         <label class="custom-control-label" for="SmartTV">SmartTV</label>
                     </div>
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="form-check-input" name="Cont-tvParams" id="WiFI" value="Поддержка Wi-Fi: есть">
+                        <input type="checkbox" class="form-check-input" name="tvParams" id="WiFI" value="Поддержка Wi-Fi: есть">
                         <label class="custom-control-label" for="WiFI">Wi-FI</label>
                     </div>
                     <#--<div class="custom-control custom-checkbox">
@@ -168,11 +168,11 @@
                         <label class="custom-control-label" for="3D">3D</label>
                     </div>-->
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="form-check-input" name="Cont-tvParams" id="DVB-T2" value="Приём DVB-T2: есть">
+                        <input type="checkbox" class="form-check-input" name="tvParams" id="DVB-T2" value="Приём DVB-T2: есть">
                         <label class="custom-control-label" for="DVB-T2">Приём DVB-T2</label>
                     </div>
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="form-check-input" name="Cont-tvParams" id="curved" value="Изогнутый экран: есть">
+                        <input type="checkbox" class="form-check-input" name="tvParams" id="curved" value="Изогнутый экран: есть">
                         <label class="custom-control-label" for="curved">Изогнутый экран</label>
                     </div>
                 </div>
@@ -372,10 +372,10 @@
                     </div>
                     <div class="row">
                         <div class="col-5">
-                            <input type="text" class="form-control" id="Comp-tvBracketsLoadMin" name="tvBracketsLoadMin" placeholder="От кг">
+                            <input type="text" class="form-control" id="Comp-Min-Нагрузка:" name="tvBracketsLoadMin" placeholder="От кг">
                         </div>
                         <div class="col-5">
-                            <input type="text" class="form-control" id="Comp-tvBracketsLoadMax" name="tvBracketsLoadMax" placeholder="До кг">
+                            <input type="text" class="form-control" id="Comp-Max-Нагрузка:" name="tvBracketsLoadMax" placeholder="До кг">
                         </div>
                     </div>
                 </div>
@@ -385,10 +385,10 @@
                     </div>
                     <div class="row">
                         <div class="col-5">
-                            <input type="text" id="tvBracketsDiagMin" name="Comp-tvBracketsDiagMin" class="form-control" placeholder="От дюйм">
+                            <input type="text" class="form-control" id="Comp-Min-Максимальная диагональ ТВ:" placeholder="От дюйм">
                         </div>
                         <div class="col-5">
-                            <input type="text" id="tvBracketsDiagMax" name="Comp-tvBracketsDiagMax" class="form-control" placeholder="До дюйм">
+                            <input type="text" class="form-control" id="Comp-Max-Максимальная диагональ ТВ:" placeholder="До дюйм">
                         </div>
                     </div>
                 </div>
@@ -398,10 +398,10 @@
                     </div>
                     <div class="row">
                         <div class="col-5">
-                            <input type="text" id="tvBracketsWallDistMin" name="Comp-tvBracketsWallDistMin" class="form-control" placeholder="От мм">
+                            <input type="text" class="form-control" id="Comp-Min-Расстояние от стены:" placeholder="От мм">
                         </div>
                         <div class="col-5">
-                            <input type="text" id="tvBracketsWallDistMax" name="Comp-tvBracketsWallDistMax" class="form-control" placeholder="До мм">
+                            <input type="text" class="form-control" id="Comp-Max-Расстояние от стены:" placeholder="До мм">
                         </div>
                     </div>
                 </div>
@@ -490,10 +490,10 @@
                     </div>
                     <div class="row">
                         <div class="col-5">
-                            <input type="text" class="form-control" id="Comp-muzCenterPowerMin" placeholder="От Ватт">
+                            <input type="text" class="form-control" id="Comp-Special-Min-Полная выходная мощность (RMS):" placeholder="От Ватт">
                         </div>
                         <div class="col-5">
-                            <input type="text" class="form-control" id="Comp-muzCenterPowerMax" placeholder="До Ватт">
+                            <input type="text" class="form-control" id="Comp-Special-Max-Полная выходная мощность (RMS):" placeholder="До Ватт">
                         </div>
                     </div>
                 </div>
@@ -696,10 +696,10 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-5">
-                                <input type="text" class="form-control" id="Comp-tvMebelDiagMin" placeholder="От дюйм">
+                                <input type="text" class="form-control" id="Comp-Special-Min-Диагональ:" placeholder="От дюйм">
                             </div>
                             <div class="col-5">
-                                <input type="text" class="form-control" id="Comp-tvMebelDiagMax" placeholder="До дюйм">
+                                <input type="text" class="form-control" id="Comp-Special-Max-Диагональ:" placeholder="До дюйм">
                             </div>
                         </div>
                     </div>
@@ -807,10 +807,10 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-5">
-                                <input type="text" class="form-control" id="Comp-fridgeWidthMin" name="fridgeWidthMin"  placeholder="От см">
+                                <input type="text" class="form-control" id="Comp-Min-Ширина:" placeholder="От см">
                             </div>
                             <div class="col-5">
-                                <input type="text" class="form-control" id="Comp-fridgeWidthMax" name="fridgeWidthMax"  placeholder="До см">
+                                <input type="text" class="form-control" id="Comp-Max-Ширина:" placeholder="До см">
                             </div>
                         </div>
                     </div>
@@ -822,10 +822,10 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-5">
-                                <input type="text" class="form-control" id="Comp-fridgeDeepMin" name="fridgeDeepMin"  placeholder="От см">
+                                <input type="text" class="form-control" id="Comp-Min-Глубина:" placeholder="От см">
                             </div>
                             <div class="col-5">
-                                <input type="text" class="form-control" id="Comp-fridgeDeepMax" name="fridgeDeepMax"  placeholder="До см">
+                                <input type="text" class="form-control" id="Comp-Max-Глубина:" placeholder="До см">
                             </div>
                         </div>
                     </div>
@@ -837,10 +837,10 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-5">
-                                <input type="text" class="form-control" id="Comp-fridgeHeightMin" name="fridgeHeightMin"  placeholder="От см">
+                                <input type="text" class="form-control" id="Comp-Min-Высота:" name="fridgeHeightMin"  placeholder="От см">
                             </div>
                             <div class="col-5">
-                                <input type="text" class="form-control" id="Comp-fridgeHeightMax" name="fridgeHeightMax"  placeholder="До см">
+                                <input type="text" class="form-control" id="Comp-Max-Высота:" name="fridgeHeightMax"  placeholder="До см">
                             </div>
                         </div>
                     </div>
@@ -916,10 +916,10 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-5">
-                                <input type="text" class="form-control" id="Comp-fridgeVolumeGenMin" name="fridgeVolumeGenMin" placeholder="От литров">
+                                <input type="text" class="form-control" id="Comp-Min-Общий объем:" placeholder="От литров">
                             </div>
                             <div class="col-5">
-                                <input type="text" class="form-control" id="Comp-fridgeVolumeGenMax" name="fridgeVolumeGenMax" placeholder="До литров">
+                                <input type="text" class="form-control" id="Comp-Max-Общий объем:" placeholder="До литров">
                             </div>
                         </div>
                     </div>
@@ -931,10 +931,10 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-5">
-                                <input type="text" class="form-control" id="Comp-fridgeFridgeVolumeMin" name="fridgeFridgeVolumeMin"  placeholder="От литров">
+                                <input type="text" class="form-control" id="Comp-Min-Объем холодильной камеры:" placeholder="От литров">
                             </div>
                             <div class="col-5">
-                                <input type="text" class="form-control" id="Comp-fridgeFridgeVolumeMax" name="fridgeFridgeVolumeMax"  placeholder="До литров">
+                                <input type="text" class="form-control" id="Comp-Max-Объем холодильной камеры:" placeholder="До литров">
                             </div>
                         </div>
                     </div>
@@ -946,10 +946,10 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-5">
-                                <input type="text" class="form-control" id="Comp-fridgeFrostVolumeMin" name="fridgeFrostVolumeMin"  placeholder="От литров">
+                                <input type="text" class="form-control" id="Comp-Min-Объем морозильной камеры:" placeholder="От литров">
                             </div>
                             <div class="col-5">
-                                <input type="text" class="form-control" id="Comp-fridgeFrostVolumeMax" name="fridgeFrostVolumeMax"  placeholder="До литров">
+                                <input type="text" class="form-control" id="Comp-Max-Объем морозильной камеры:" placeholder="До литров">
                             </div>
                         </div>
                     </div>

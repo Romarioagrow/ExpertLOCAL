@@ -23,14 +23,14 @@ import java.util.stream.Collectors;
 public class FilterService {
     private final ProductRepo productRepo;
 
-    public Page<Product> filterProducts(Map<String, String> filters, String requiredType, Pageable pageable)
+    public Page<Product> filterProducts(Map<String, String> filters, String request, Pageable pageable)
     {
         System.out.println();
-        log.info("Request: " + requiredType);
+        log.info("Request: " + request);
         log.info("Received filters:");
         filters.forEach((key, filter) -> log.info(key + " " + filter));
 
-        List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCase(requiredType);
+        List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCase(request);
         log.info("Product list before filter " + products.size());
 
         for (Map.Entry<String, String> filter : filters.entrySet())
@@ -43,43 +43,20 @@ public class FilterService {
                     products = filterContainsParams(products, filter);
                 }
                 else if (condition.startsWith("Comp-")) {
-                    products = filterComputeParams(products, filter);
+                    products = filterComputeParams (products, filter);
                 }
                 else switch (condition) {
                         case "sortmin", "sortmax"   -> products = filterPrice   (products, filter);
                         case "brand"                -> products = filterBrands  (products, filter);
 
+                        /// В ОБЩИЕ МЕТОДЫ!!!
+                        /*<#--УНИКАЛЬНЫЙ КЕЙС ДЛЯ fridgeColor, fridgeEnergyClass -->*/
                         case "diagMin", "diagMax"   -> products = filterTvDiag  (products, filter);
                         case "tvResolution"         -> products = filterTvResol (products, filter);
                         case "hzMin", "hzMax"       -> products = filterTvHZ    (products, filter);
                         default -> {
                         }
                     }
-
-                /*switch (filter.getKey())
-                {
-                    case "sortmin", "sortmax"   -> products = filterPrice(products, filter);
-                    case "brand"                -> products = filterBrands(products, filter);
-
-                    case "diagMin", "diagMax"   -> products = filterTvDiag(products, filter);
-                    case "tvResolution"         -> products = filterTvResol(products, filter);
-                    case "hzMin", "hzMax"       -> products = filterTvHZ(products, filter);
-
-                    case
-                            "tvParams", "tvType",
-                            "tvCables", "tvCablesType", "tvCablesLength",
-                            "tvBracketsType", "tvBracketsMount",
-                            "muzCenterType", "muzCenterMainBlock", "muzCenterAcoustic", "muzCenterParams",
-                            "tvMebelType", "tvMebelWidth", "tvMebelLoad"
-                            -> products = filterContainsParams(products, filter);
-
-                    case
-                            "tvBracketsLoadMin" , "tvBracketsLoadMax", "tvBracketsDiagMin", "tvBracketsDiagMax",
-                            "tvBracketsWallDistMin", "tvBracketsWallDistMax",
-                            "muzCenterPowerMin", "muzCenterPowerMax",
-                            "tvMebelDiagMin", "tvMebelDiagMax"
-                            -> products = filterComputeParams(products, filter);
-                }*/
             }
             catch (NullPointerException e) {
                 e.printStackTrace();
@@ -127,56 +104,41 @@ public class FilterService {
         {
             if (!product.getOriginalAnnotation().isEmpty())
             {
-                double computeParam  = resolveComputeParam(product, filter.getKey());
+                double computeParam  = extractComputeParam(product, filter);
                 log.info(computeParam + "");
                 if (computeParam != 0)
                 {
-                    return StringUtils.endsWithIgnoreCase(filter.getKey(), "min") ? computeFilter <= computeParam : computeFilter >= computeParam;
+                    return StringUtils.contains(filter.getKey(), "Min") ? computeFilter <= computeParam : computeFilter >= computeParam;
                 }
                 return false;
             }
             return false;
         }).collect(Collectors.toList());
     }
-    private double resolveComputeParam(Product product, String key) {
-        switch (key)
-        {
-            case "tvBracketsLoadMin" , "tvBracketsLoadMax"          -> {
-                return extractComputeParam("Нагрузка:", ";", product); /// добавлять param в name inputText!
-            }
-            case "tvBracketsDiagMin", "tvBracketsDiagMax"           -> {
-                return extractComputeParam("Максимальная диагональ ТВ:", ";", product);
-            }
-            case "tvBracketsWallDistMin", "tvBracketsWallDistMax"   -> {
-                return extractComputeParam("Расстояние от стены:", ";", product);
-            }
-            case "muzCenterPowerMin", "muzCenterPowerMax"           -> {/// extractComputeParamAfter()
-                return product.getOriginalAnnotation().contains("Полная выходная мощность (RMS):") ? Double.parseDouble(StringUtils.substringAfter(product.getOriginalAnnotation(), "Полная выходная мощность (RMS):").trim()) : 0;
-            }
-            case "tvMebelDiagMin", "tvMebelDiagMax"   -> {
-                return product.getOriginalAnnotation().contains("Диагональ:") ? Double.parseDouble(StringUtils.substringAfter(product.getOriginalAnnotation(), "Диагональ:").trim()) : 0;
-            }
-            default -> {return 0;}
-        }
-    }
-    private double extractComputeParam(String param, String close, Product product) {
+    private double extractComputeParam(Product product, Map.Entry<String, String> filter) {
+        String key = filter.getKey();
         String anno = product.getOriginalAnnotation();
-        return anno.contains(param) ? Double.parseDouble(StringUtils.substringBetween(anno, param, close).trim()) : 0;
-    }
+        String extractName = StringUtils.substringAfterLast(key, "-");
 
+        if (key.contains("Special")) {
+            return anno.contains(extractName)  ? Double.parseDouble(StringUtils.substringAfter(anno, extractName).trim()) : 0;
+        }
+        else return anno.contains(extractName) ? Double.parseDouble(StringUtils.substringBetween(anno, extractName, ";").trim()) : 0;
+    }
+   
     private List<Product> filterPrice(List<Product> products, Map.Entry<String, String> filter) {
         return filter.getKey().equals("sortmin") ?
-                products.stream().filter(product -> product.getPrice() >= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList()):
-                products.stream().filter(product -> product.getPrice() <= Integer.parseInt(filter.getValue().toString())).collect(Collectors.toList());
+                products.stream().filter(product -> product.getPrice() >= Integer.parseInt(filter.getValue())).collect(Collectors.toList()):
+                products.stream().filter(product -> product.getPrice() <= Integer.parseInt(filter.getValue())).collect(Collectors.toList());
     }
 
     private List<Product> filterBrands(List<Product> products, Map.Entry<String, String> filter) {
-        String brands = String.join(",", filter.getValue().toString());
+        String brands = String.join(",", filter.getValue());
         return products.stream().filter(product -> StringUtils.containsIgnoreCase(brands, product.getOriginalBrand())).collect(Collectors.toList());
     }
 
     /// в filterComputeParams()
-    private List<Product> filterTvDiag(List<Product> products, Map.Entry<String, String> filter) {
+    private List<Product> filterTvDiag  (List<Product> products, Map.Entry<String, String> filter) {
         return products.stream().filter(product ->
         {
             if (product.getOriginalAnnotation().contains("Диагональ"))
@@ -185,15 +147,15 @@ public class FilterService {
                 if (diag.contains(",")) diag = diag.replaceAll(",", ".");
                 double productDiag = Double.parseDouble(diag);
 
-                /// double computeParam = resolveComputeParam();
+                /// double computeParam = extractComputeParam();
                 /// filter.getKey.endWith("min") ?
-                return filter.getKey().equals("diagMin") ? Double.parseDouble(filter.getValue().toString()) <= productDiag : Double.parseDouble(filter.getValue().toString()) >= productDiag;
+                return filter.getKey().equals("diagMin") ? Double.parseDouble(filter.getValue()) <= productDiag : Double.parseDouble(filter.getValue()) >= productDiag;
             }
             return false;
         }).collect(Collectors.toList());
     }
-    private List<Product> filterTvHZ(List<Product> products, Map.Entry<String, String> filter) {
-        int hz = Integer.parseInt(filter.getValue().toString());
+    private List<Product> filterTvHZ    (List<Product> products, Map.Entry<String, String> filter) {
+        int hz = Integer.parseInt(filter.getValue());
         return products.stream().filter(product ->
         {
             if (product.getOriginalAnnotation().contains("Индекс частоты обновления:")) ///checkParam()
@@ -204,8 +166,8 @@ public class FilterService {
             return false;
         }).collect(Collectors.toList());
     }
-    private List<Product> filterTvResol(List<Product> products, Map.Entry<String, String> filter) {
-        String resolution = filter.getValue().toString();
+    private List<Product> filterTvResol (List<Product> products, Map.Entry<String, String> filter) {
+        String resolution = filter.getValue();
         return products.stream().filter(product ->
         {
             if (product.getOriginalAnnotation().contains("Разрешение:"))

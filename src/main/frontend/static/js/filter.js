@@ -38,6 +38,7 @@ function collectFilters(e) {
 
         if (inpVal)
         {
+            console.log(inpKey);
             console.log(inpVal);
             if (!filters.hasOwnProperty(inpKey))
             {
