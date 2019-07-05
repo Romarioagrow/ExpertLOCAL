@@ -1,0 +1,107 @@
+body {
+    /*background-color: #fff;*/
+    background-color: #fbf4f4;
+    color: #222222;
+}
+
+form input:hover {
+    background-color: #e5e5e5;
+}
+
+.filter-button {
+    margin-top: 1vh !important;
+}
+.filter-filed {
+    margin-bottom: 1vh;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.text-muted {
+    color: #212529 !important;
+}
+
+.btn-gplus.dropdown-toggle:focus, .btn-gplus.dropdown-toggle:hover {
+    background-color: #e52d00 !important;
+}
+
+.card-footer {
+    background-color: #fff;
+    border-top: 1px solid rgba(0,0,0,.125);
+    color: #fbf4f4 !important;
+    border-top-width: 0 !important;
+}
+.btn-mdb-color {
+    background-color: #e52d00 !important;
+    color: #fff;
+}
+
+.btn-secondary {
+    background-color: #6c757d !important;
+}
+.btn-secondary:hover {
+    color: #fff;
+    background-color: #e52d00 !important;
+    border-color: #e52d00;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.search {
+    background-color: #e52d00 !important;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.btn-secondary:not([disabled]):not(.disabled).active {
+    box-shadow: 0 5px 11px 0 rgba(0,0,0,.18),0 4px 15px 0 rgba(0,0,0,.15);
+    background-color: #e52d00 !important;
+}
+
+/*PRODUCTS*/
+.product-card {
+    min-width: 23rem;
+    max-width: 23rem;
+
+    min-height: 25rem;
+    max-height: 25rem;
+
+    text-align: center;
+    margin-bottom: 2rem !important;
+}
+.scale-pic {
+    height: 100% !important;
+    width: 100% !important;
+    object-fit: contain !important;
+}
+.b-add {
+    border-color: #e52d00 !important;
+    color: #e52d00 !important;
+}
+.b-add:hover {
+    border-color: #e52d00 !important;
+    background-color: #e52d00 !important;
+    color: #ffffff !important;
+}
+.breadcrumb {
+    background-color: #fbf4f4;
+    padding-left: 0;
+}
+
+.md-form {
+    position: relative;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}

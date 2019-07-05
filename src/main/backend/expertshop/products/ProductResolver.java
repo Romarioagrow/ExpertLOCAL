@@ -121,7 +121,8 @@ public class ProductResolver {
             }
         });
 
-        /*List<Product> products2 = productRepo.findBySupplier("2RUS-BT");
+        /*
+        List<Product> products2 = productRepo.findBySupplier("2RUS-BT");
         for (Product product : products2)
         {
             if (checkBrandAndGroup(product))
@@ -143,7 +144,6 @@ public class ProductResolver {
                 }
             }
         }
-
         List<Product> products3 = productRepo.findBySupplier("3M-TRADE");
         products3.forEach(product ->
         {
@@ -151,7 +151,8 @@ public class ProductResolver {
             {
                 trimModelNameAfterBrand(product);
             }
-        });*/
+        });
+        */
     }
 
     private void trimModelNameAfterBrand(Product product)

@@ -48,21 +48,9 @@ public class CatalogParser {
 
         try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream())))
         {
-            if (fileRBT(file))
-            {
-                parseRBT(file, bufferedReader);
-            }
-            else if (fileRUSBT(file))
-            {
-                parseRUSBT(file, bufferedReader);
-            }
-            else if (fileMTRADE(file))
-            {
-                parseMTRADE(file, bufferedReader);
-            }
+            if (fileRBT(file)) parseRBT(file, bufferedReader);
         }
-        catch (Exception exp)
-        {
+        catch (Exception exp) {
             log.info("Something wrong!");
         }
     }
@@ -76,49 +64,119 @@ public class CatalogParser {
 
         while ((line = reader.readNext()) != null)
         {
-            if (incorrectLineRBT(line))
+            if (lineIsCorrect(line))
             {
-                log.info("!!! Пропуск некоректной строки " + file.getOriginalFilename());
-            }
-            else
-            {
-                if (productExists(line[0]))
+                String productID = line[0];
+                if (productAlreadyExists(productID))
                 {
-                    log.info(line[0] + " File already exists");
-                    if (checkProductForUpdate(line[0], line[6], line[7]))
+                    String productAmount          = line[6];
+                    String productPrice           = line[7];
+                    log.info("Updating file" + line[3]);
+
+                    if (checkProductForUpdate(productID, productAmount, productPrice))
                     {
-                        updateProduct(line[0], line[6], line[7]);
-                        countUpdate++;
+                        updateProductStats(productID, productAmount, productPrice);
                     }
+                    else updateProductAvailable(productID);
+                    countUpdate++;
                 }
                 else
                 {
-                    Product product = new Product();
-
-                    product.setProductID(line[0]);
-
-                    product.setOriginalCategory(line[1]);
-                    product.setOriginalType(line[2]);
-                    product.setOriginalBrand(line[4]);
-                    product.setOriginalName(line[3]);
-                    product.setOriginalAnnotation(line[5]);
-                    product.setOriginalAmount(line[6]);
-                    product.setOriginalPrice(line[7].trim());
-
-                    product.setSupplier("1RBT");
-                    product.setUpdate(LocalDate.now());
-
-                    product.setOriginalPic(line[10]);
-
+                    createProductFromRBT(line);
                     countAdd++;
-                    productRepo.save(product);
                 }
             }
+            else log.info("!!! Пропуск некоректной строки " + file.getOriginalFilename());
+
+            /*if (incorrectLineRBT(line)) log.info("!!! Пропуск некоректной строки " + file.getOriginalFilename());
+            else
+            {
+                String productID        = line[0];
+                if (productAlreadyExists(productID))
+                {
+                    String productAmount    = line[6];
+                    String productPrice     = line[7];
+                    log.info("Updating file" + line[3]);
+
+                    if (checkProductForUpdate(productID, productAmount, productPrice))
+                    {
+                        updateProductStats(productID, productAmount, productPrice);
+                        countUpdate++;
+                    }
+                    else updateProductAvailable(productID);
+                }
+                else
+                {
+                    createProductFromRBT(line);
+                    countAdd++;
+                }
+            }*/
         }
         log.info("Products add: " + countAdd);
         log.info("Products updated: " + countUpdate);
     }
 
+    private void createProductFromRBT(String[] line) {
+        Product product = new Product();
+        product.setProductID(line[0]);
+
+        product.setOriginalCategory(line[1]);
+        product.setOriginalType(line[2]);
+
+        product.setOriginalBrand(line[4]);
+        product.setOriginalName(line[3]);
+        product.setOriginalAnnotation(line[5]);
+
+        product.setOriginalAmount(line[6]);
+        product.setOriginalPrice(line[7].trim());
+        product.setSupplier("1RBT");
+        product.setUpdate(LocalDate.now());
+
+        product.setOriginalPic(line[10]);
+        productRepo.save(product);
+    }
+
+    private boolean productAlreadyExists(String productID) {
+        return productRepo.findByProductID(productID) != null;
+    }
+
+    private void updateProductStats(String productID, String amount, String price)
+    {
+        Product product = productRepo.findByProductID(productID);
+        product.setOriginalAmount(amount);
+        product.setOriginalPrice(price);
+        product.setUpdate(LocalDate.now());
+        productRepo.save(product);
+        log.info("Updating " + productID);
+    }
+
+    private void updateProductAvailable(String productID) {
+        Product product = productRepo.findByProductID(productID);
+        product.setUpdate(LocalDate.now());
+        productRepo.save(product);
+        log.info("Updated : " + productID);
+    }
+
+    private boolean checkProductForUpdate(String productID, String amount, String price) {
+        Product product = productRepo.findByProductID(productID);
+        return !product.getOriginalAmount().equals(amount) || !product.getOriginalPrice().equals(price);
+    }
+
+    private boolean fileRBT(MultipartFile file) {
+        return Objects.requireNonNull(file.getOriginalFilename()).contains("СП2");
+    }
+
+    private boolean lineIsCorrect(String[] line) {
+        return !line[0].equals("Код товара") & !line[0].equals(";")      & !line[0].contains("г. Челябинск") &
+               !line[0].contains("8(351)")   & !line[0].startsWith(".")  & !line[0].startsWith(" ");
+    }
+
+    private boolean incorrectLineRBT(String[] line) {
+        return line[0].equals("Код товара")     || line[0].equals(";")      || line[0].contains("г. Челябинск")
+                || line[0].contains("8(351)")   || line[0].startsWith(".")  || line[0].startsWith(" ");
+    }
+
+    /*
     private void parseRUSBT(MultipartFile file, BufferedReader bufferedReader) throws IOException
     {
         log.info("Parsing RUS_BT file: " + file.getOriginalFilename());
@@ -135,12 +193,12 @@ public class CatalogParser {
             }
             else
             {
-                if (productExists(line[5]))
+                if (productAlreadyExists(line[5]))
                 {
                     log.info(line[5] + " File already exists");
                     if (checkProductForUpdate(line[5],line[7]+line[8], line[13]))
                     {
-                        updateProduct(line[5], line[7]+line[8], line[13]);
+                        updateProductStats(line[5], line[7]+line[8], line[13]);
                         countUpdate++;
                     }
                 }
@@ -150,8 +208,8 @@ public class CatalogParser {
                     product.setProductID(line[5]);
 
                     product.setOriginalCategory(line[0]);
-                    /*product.setOriginalSubCategory(line[1]);
-                    product.setOriginalGroup(line[2]);*/
+                    *//*product.setOriginalSubCategory(line[1]);
+                    product.setOriginalGroup(line[2]);*//*
                     product.setOriginalType(line[3]);
 
                     product.setOriginalBrand(line[4]);
@@ -190,12 +248,12 @@ public class CatalogParser {
             }
             else
             {
-                if (productExists(line[0]))
+                if (productAlreadyExists(line[0]))
                 {
                     log.info(line[0] + " File already exists");
                     if (checkProductForUpdate(line[0], line[8], line[7]))
                     {
-                        updateProduct(line[0], line[8], line[7]);
+                        updateProductStats(line[0], line[8], line[7]);
                         countUpdate++;
                     }
                 }
@@ -205,8 +263,8 @@ public class CatalogParser {
                     product.setProductID(line[0]);
 
                     product.setOriginalCategory(line[1]);
-                    /*product.setOriginalSubCategory("n/a");
-                    product.setOriginalGroup(line[2]);*/
+                    *//*product.setOriginalSubCategory("n/a");
+                    product.setOriginalGroup(line[2]);*//*
                     product.setOriginalType(line[4]);
 
                     product.setOriginalBrand(line[3]);
@@ -225,46 +283,17 @@ public class CatalogParser {
         }
         log.info("Products add: " + countAdd);
         log.info("Products updated: " + countUpdate);
-    }
-
-    private boolean productExists(String productID) {
-        return productRepo.findByProductID(productID) != null;
-    }
-
-    private void updateProduct(String productID, String amount, String price)
-    {
-        Product product = productRepo.findByProductID(productID);
-        product.setOriginalAmount(amount);
-        product.setOriginalPrice(price);
-        product.setUpdate(LocalDate.now());
-        productRepo.save(product);
-        log.info("Updating " + productID);
-    }
-
-    private boolean checkProductForUpdate(String productID, String amount, String price) {
-        Product product = productRepo.findByProductID(productID);
-        return !product.getOriginalAmount().equals(amount) || !product.getOriginalPrice().equals(price);
-    }
 
     private boolean fileMTRADE(MultipartFile file) {
         return Objects.requireNonNull(file.getOriginalFilename()).contains("Доставка");
     }
-
     private boolean fileRUSBT(MultipartFile file) {
         return Objects.requireNonNull(file.getOriginalFilename()).contains("RUSBT");
     }
+    }*/
 
-    private boolean fileRBT(MultipartFile file) {
 
-        return Objects.requireNonNull(file.getOriginalFilename()).contains("СП2");
-    }
-
-    private boolean incorrectLineRBT(String[] line)
-    {
-        return line[0].equals("Код товара")     || line[0].equals(";")      || line[0].contains("г. Челябинск")
-                || line[0].contains("8(351)")   || line[0].startsWith(".")  || line[0].startsWith(" ");
-    }
-
+    /*
     private boolean incorrectLineRUSBT(String[] line)
     {
         return line[0].equals("Код товара") || line[0].isEmpty() || line[0].startsWith(";") || line[5].isEmpty()
@@ -275,8 +304,10 @@ public class CatalogParser {
     {
         return (line[0].equals("Код товара") || line[0].startsWith("ПРАЙС") || line[0].isEmpty() || line[0].startsWith(";") || line[0].equals("КОД") || line[0].startsWith(" "));
     }
+    */
 
-    /*private void parseBase(MultipartFile file) throws IOException
+    /*
+    private void parseBase(MultipartFile file) throws IOException
     {
         try {
             *//*InputStream inputStream = file.getInputStream();*//*
@@ -337,8 +368,10 @@ public class CatalogParser {
         catch (Exception exp) {
             log.info("Something went wrong with Base!");
         }
-    }*/
+    }
+    */
 
+    /*
     private String parsePicFromHTML(String link) throws IOException
     {
         if (!link.isEmpty() && !link.equals("В ячейке нет гиперссылки!")) {
@@ -373,8 +406,11 @@ public class CatalogParser {
         else log.info("ССЫЛКА ОТСУТСТВУЕТ!");
         return "NO PIC";
     }
+    */
 
-    /*private String findPicAndParse(String requestName) throws IOException
+    ///!!!
+    /*
+    private String findPicAndParse(String requestName) throws IOException
     {
         log.info(requestName);
         if (!requestName.isEmpty())
