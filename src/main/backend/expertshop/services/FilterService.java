@@ -15,6 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Log
@@ -39,6 +41,7 @@ public class FilterService {
             {
                 String condition = filter.getKey();
 
+                ///РАЗДЕЛИТЬ ФИЛТЬРЫ НА ИСКЛЮЧАЮЩИЕ И ДОПОЛНЯЮЩИЕ!!!
                 if (condition.startsWith("Cont-")) {
                     products = filterContainsParams(products, filter);
                 }
@@ -80,7 +83,7 @@ public class FilterService {
             {
                 String param = val.replaceAll("[\\[\\]]", "").trim();
 
-                if (product.getOriginalAnnotation().contains(param) || product.getProductType().contains(param))
+                if (product.getOriginalAnnotation().startsWith(param) || product.getProductType().startsWith(param))
                 {
                     System.out.println();
                     log.info("FILTER: " + param);
@@ -117,15 +120,26 @@ public class FilterService {
     }
     private double extractComputeParam(Product product, Map.Entry<String, String> filter) {
         String key = filter.getKey();
-        String anno = product.getOriginalAnnotation();
+        String annotation = product.getOriginalAnnotation();
         String extractName = StringUtils.substringAfterLast(key, "-");
 
-        if (key.contains("Special")) {
-            return anno.contains(extractName)  ? Double.parseDouble(StringUtils.substringAfter(anno, extractName).trim()) : 0;
-        }
-        else return anno.contains(extractName) ? Double.parseDouble(StringUtils.substringBetween(anno, extractName, ";").trim()) : 0;
+        System.out.println();
+        log.info("KEY: " + key);
+        log.info("EXTRACT NAME: " + extractName);
+
+        String reg = "^.*"+extractName.concat(" ")+"[0-9]{1,2}([,.][0-9]{1,2})?$";
+        boolean match = Pattern.compile(reg).matcher(annotation).find();
+        log.info(match + Pattern.compile(reg).pattern());
+
+        if (match) return annotation.contains(extractName)  ? parseDouble(StringUtils.substringAfter(annotation, extractName).trim())           : 0;
+        return annotation.contains(extractName)             ? parseDouble(StringUtils.substringBetween(annotation, extractName, ";").trim())  : 0;
     }
-   
+
+    private double parseDouble(String checkingDouble) {
+        if (checkingDouble.contains(",")) return Double.parseDouble(checkingDouble.replaceAll(",", "."));
+        else return Double.parseDouble(checkingDouble);
+    }
+
     private List<Product> filterPrice(List<Product> products, Map.Entry<String, String> filter) {
         return filter.getKey().equals("sortmin") ?
                 products.stream().filter(product -> product.getPrice() >= Integer.parseInt(filter.getValue())).collect(Collectors.toList()):

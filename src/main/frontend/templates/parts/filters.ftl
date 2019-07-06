@@ -1121,5 +1121,99 @@
 </#if>
 <#--УНИКАЛЬНЫЙ КЕЙС ДЛЯfridgeColor, fridgeEnergyClass -->
 
+<#if url?contains("морозильники")>
+    <div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#freezer1" aria-expanded="false">
+            <span>Тип морозильника</span>
+        </button>
+        <div class="collapse" id="freezer1">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-freezerType" id="Вертикальная морозильная камера" value="Морозилки вертикальные">
+                                <label class="custom-control-label" for="Вертикальная морозильная камера">Вертикальная морозильная камера</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-freezerType" id="Морозильный ларь" value="Морозильные лари">
+                                <label class="custom-control-label" for="Морозильный ларь">Морозильный ларь</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#freezer2" aria-expanded="false">
+            <span>Объем и габариты</span>
+        </button>
+        <div class="collapse" id="freezer2">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Общий объем</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Min-Общий объем:" placeholder="От литров">
+                            </div>
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Max-Общий объем:" placeholder="До литров">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Глубина</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Min-Глубина:" placeholder="От см">
+                            </div>
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Max-Глубина:" placeholder="До см">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Ширина</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Min-Ширина:" placeholder="От см">
+                            </div>
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Max-Ширина:" placeholder="До см">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Высота</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Min-Высота:" placeholder="От см">
+                            </div>
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Max-Высота:" placeholder="До см">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</#if>
 
 <button type="submit" id="filter-button" class="btn btn-primary btn-block filter-button search">Показать</button>

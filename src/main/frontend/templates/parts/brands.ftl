@@ -236,3 +236,36 @@
         </div>
     </div>
 </#if>
+
+<#if url?contains("морозильники")>
+    <div class="row">
+        <div class="col-6">
+            <input type="checkbox" name="brand" class="form-check-input" id="Haier" value="Haier">
+            <label class="form-check-label" for="Haier">Haier</label>
+        </div>
+        <div class="col-6">
+            <input type="checkbox" name="brand" class="form-check-input" id="Leran" value="Leran">
+            <label class="form-check-label" for="Leran">Leran</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <input type="checkbox" name="brand" class="form-check-input" id="Pozis" value="Pozis">
+            <label class="form-check-label" for="Pozis">Pozis</label>
+        </div>
+        <div class="col-6">
+            <input type="checkbox" name="brand" class="form-check-input" id="Атлант" value="Атлант">
+            <label class="form-check-label" for="Атлант">Атлант</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <input type="checkbox" name="brand" class="form-check-input" id="Бирюса" value="Бирюса">
+            <label class="form-check-label" for="Бирюса">Бирюса</label>
+        </div>
+        <div class="col-6">
+            <input type="checkbox" name="brand" class="form-check-input" id="Океан" value="Океан">
+            <label class="form-check-label" for="Океан">Океан</label>
+        </div>
+    </div>
+</#if>

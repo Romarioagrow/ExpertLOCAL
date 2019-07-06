@@ -35,16 +35,23 @@ public class CatalogParser {
     {
         if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty())
         {
-            parseFile(file);
+            try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream())))
+            {
+                if (fileRBT(file)) parseRBT(file, bufferedReader);
+            }
+            catch (Exception exp) {
+                log.info("Something wrong!");
+            }
+            /*parseFile(file);*/
         }
     }
 
-    private void parseFile(MultipartFile file)
+    /*private void parseFile(MultipartFile file)
     {
-        /*
+        *//*
         FileWriter fw = new FileWriter("filename.txt", Charset.forName("utf-8"));
         InputStream inputStream = file.getInputStream();
-        */
+        *//*
 
         try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream())))
         {
@@ -53,7 +60,7 @@ public class CatalogParser {
         catch (Exception exp) {
             log.info("Something wrong!");
         }
-    }
+    }*/
 
     private void parseRBT(MultipartFile file, BufferedReader bufferedReader) throws IOException {
         log.info("\nParsing RBT file: " + file.getOriginalFilename());
@@ -83,6 +90,7 @@ public class CatalogParser {
                 else
                 {
                     createProductFromRBT(line);
+                    log.info("Creating new file" + line[3]);
                     countAdd++;
                 }
             }
