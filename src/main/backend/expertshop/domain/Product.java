@@ -88,6 +88,9 @@ public class Product implements Serializable {
 
     @Column(name = "duplicate")
     private Boolean isDuplicate = false;
+
+    @Column(name = "formatted_annotation", length = 20000)
+    private String formattedAnnotation;
 }
 
 

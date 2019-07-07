@@ -35,6 +35,23 @@ public class ProductResolver {
         }
     }
 
+    public void formatAnnotation() {
+        List<Product> products = productRepo.findAll();
+        products.forEach(product ->
+        {
+            String origAnno = product.getOriginalAnnotation();
+            if (product.getFormattedAnnotation() == null)
+            {
+                if (!origAnno.isEmpty() && origAnno.contains(";"))
+                {
+                    product.setFormattedAnnotation(origAnno.replaceAll(";", "<br>"));
+                    productRepo.save(product);
+                    log.info(product.productID);
+                }
+            }
+        });
+    }
+
     public void findDuplicates(List<Product> products, String modelName)
     {
         List<Product> duplicates = products.stream()
@@ -256,8 +273,11 @@ public class ProductResolver {
                     /*КУХОННАЯ ТЕХНИКА*/
                     matchProduct("01.01.02, Холодильники"											, "Холодильники"							, "Холодильник"						, "Кухонная техника"			    , product);
                     matchProduct("01.01.03, Морозильники"											, "Морозильники"							, "Морозильник"						, "Кухонная техника"			    , product);
-                    matchProduct("01.02, Эл/плиты, электрические"									, "Электрические плиты"						, "Эликтрическая плита"				, "Кухонная техника"			    , product);
-                    matchProduct("01.03, Газовая плита, газовые"									, "Газовые плиты"							, "Газовая плита"						, "Кухонная техника"			    , product);
+                    matchProduct("01.02.01, 01.02.02, Эл/плиты, электрические"						, "Электрические плиты"						, "Эликтрическая плита"				, "Кухонная техника"			    , product);
+                    matchProduct("01.02.03, Плитки электрические"						            , "Электрические плитки"					, "Эликтрическая плитка"				, "Кухонная техника"			    , product);
+                    matchProduct("01.03.04, Плитки газовые"						                , "Газовые плитки"						    , "Газовая плитка"				    , "Кухонная техника"			    , product);
+                    matchProduct("01.03.01, 01.03.02, Газовая плита, газовые"						, "Газовые плиты"							, "Газовая плита"						, "Кухонная техника"			    , product);
+                    matchProduct("01.03.03, Комбинированная плита"						            , "Комбинированные плиты"					, "Комбинированная плита"				, "Кухонная техника"			    , product);
                     matchProduct("01.05, Микроволновые печи, СВЧ печи"							    , "Микроволновые печи"						, "Микроволновая печь"				, "Кухонная техника"			    , product);
                     matchProduct("01.18, Чайники электрические, чайники"							, "Электрические чайники"					, "Электрический чайник"				, "Кухонная техника"			    , product);
                     matchProduct("01.19, Кофеварки"												, "Кофеварки"								, "Кофеварка"							, "Кухонная техника"			    , product);

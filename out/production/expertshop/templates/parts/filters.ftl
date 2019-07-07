@@ -92,23 +92,22 @@
                     </div>
                     <div class="row">
                         <div class="col-5">
-                            <input type="text" class="form-control" id="diagMin" placeholder="От дюйм">
+                            <input type="text" class="form-control" id="Comp-Min-Диагональ:" placeholder="От дюйм">
                         </div>
                         <div class="col-5">
-                            <input type="text" class="form-control" id="diagMax" placeholder="До дюйм">
+                            <input type="text" class="form-control" id="Comp-Min-Диагональ:" placeholder="До дюйм">
                         </div>
                     </div>
                 </div>
                 <div class="md-form input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text md-addon">Разрешение</span>
+                        <span class="input-group-text md-addon">Разрешение экрана</span>
                     </div>
-                    <#--<div class="form-check">-->
                     <div class="container">
                         <div class="row">
                             <div class="col">
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="form-check-input" name="tvResolution" id="720p" value="HD Ready">
+                                    <input type="checkbox" class="form-check-input" name="Cont-tvResolution" id="720p" value="Разрешение: 1366x768 (HD Ready)">
                                     <label class="custom-control-label" for="720p">720p HD</label>
                                 </div>
                             </div>
@@ -116,7 +115,7 @@
                         <div class="row">
                             <div class="col">
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="form-check-input" name="tvResolution" id="1080p" value="Full HD">
+                                    <input type="checkbox" class="form-check-input" name="Cont-tvResolution" id="1080p" value="1920x1080 (Full HD)">
                                     <label class="custom-control-label" for="1080p">1080p Full HD</label>
                                 </div>
                             </div>
@@ -124,13 +123,12 @@
                         <div class="row">
                             <div class="col">
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="form-check-input" name="tvResolution" id="4K" value="4K UHD">
+                                    <input type="checkbox" class="form-check-input" name="Cont-tvResolution" id="4K" value="3840x2160 (4K UHD)">
                                     <label class="custom-control-label" for="4K">4K UHD</label>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <#--</div>-->
                 </div>
                 <div class="md-form input-group">
                     <div class="input-group-prepend">
@@ -138,10 +136,10 @@
                     </div>
                     <div class="row">
                         <div class="col-5">
-                            <input type="text" class="form-control" id="hzMin" name="hzMin" placeholder="От Гц">
+                            <input type="text" class="form-control" id="Comp-Min-Индекс частоты обновления:" placeholder="От Гц">
                         </div>
                         <div class="col-5">
-                            <input type="text" class="form-control" id="hzMax" name="hzMax" placeholder="До Гц">
+                            <input type="text" class="form-control" id="Comp-Max-Индекс частоты обновления:" placeholder="До Гц">
                         </div>
                     </div>
                 </div>
@@ -156,23 +154,15 @@
             <div class="card card-body filter-filed">
                 <div class="form-group">
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="form-check-input" name="tvParams" id="SmartTV" value="Smart TV: есть">
+                        <input type="checkbox" class="form-check-input" name="Cont-tvParams" id="SmartTV" value="Smart TV: есть">
                         <label class="custom-control-label" for="SmartTV">SmartTV</label>
                     </div>
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="form-check-input" name="tvParams" id="WiFI" value="Поддержка Wi-Fi: есть">
-                        <label class="custom-control-label" for="WiFI">Wi-FI</label>
-                    </div>
-                    <#--<div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="form-check-input" name="Cont-tvParams" id="3D" value="3D">
-                        <label class="custom-control-label" for="3D">3D</label>
-                    </div>-->
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="form-check-input" name="tvParams" id="DVB-T2" value="Приём DVB-T2: есть">
+                        <input type="checkbox" class="form-check-input" name="Cont-tvParams" id="DVB-T2" value="Приём DVB-T2: есть">
                         <label class="custom-control-label" for="DVB-T2">Приём DVB-T2</label>
                     </div>
                     <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="form-check-input" name="tvParams" id="curved" value="Изогнутый экран: есть">
+                        <input type="checkbox" class="form-check-input" name="Cont-tvParams" id="curved" value="Изогнутый экран: есть">
                         <label class="custom-control-label" for="curved">Изогнутый экран</label>
                     </div>
                 </div>
@@ -968,25 +958,25 @@
                     <div class="container">
                         <div class="row">
                             <div class="col">
-                                <input type="checkbox" class="form-check-input" name="Cont-fridgeEnergyClass" id="A" value="Класс энергопотребления: A">
+                                <input type="checkbox" class="form-check-input" name="Cont-fridgeEnergyClass" id="A" value="Класс энергопотребления: A;">
                                 <label class="custom-control-label" for="A">A</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input type="checkbox" class="form-check-input" name="Cont-fridgeEnergyClass" id="A+" value="Класс энергопотребления: A+">
+                                <input type="checkbox" class="form-check-input" name="Cont-fridgeEnergyClass" id="A+" value="Класс энергопотребления: A+;">
                                 <label class="custom-control-label" for="A+">A+</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input type="checkbox" class="form-check-input" name="Cont-fridgeEnergyClass" id="A++" value="Класс энергопотребления: A++">
+                                <input type="checkbox" class="form-check-input" name="Cont-fridgeEnergyClass" id="A++" value="Класс энергопотребления: A++;">
                                 <label class="custom-control-label" for="A++">A++</label>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <input type="checkbox" class="form-check-input" name="Cont-fridgeEnergyClass" id="B" value="Класс энергопотребления: B">
+                                <input type="checkbox" class="form-check-input" name="Cont-fridgeEnergyClass" id="B" value="Класс энергопотребления: B;">
                                 <label class="custom-control-label" for="B">B</label>
                             </div>
                         </div>
@@ -1101,12 +1091,12 @@
                                 <label class="custom-control-label" for="Инверторный">Инверторный</label>
                             </div>
                         </div>
-                        <div class="row">
+                        <#--<div class="row">
                             <div class="col">
                                 <input type="checkbox" class="form-check-input" name="Cont-fridgeParam" id="Защита от детей" value="Защита от детей: есть">
                                 <label class="custom-control-label" for="Защита от детей">Защита от детей</label>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="row">
                             <div class="col">
                                 <input type="checkbox" class="form-check-input" name="Cont-fridgeParam" id="Перевешиваемые двери" value="Перевешиваемые двери: есть">
@@ -1121,5 +1111,1004 @@
 </#if>
 <#--УНИКАЛЬНЫЙ КЕЙС ДЛЯfridgeColor, fridgeEnergyClass -->
 
+<#if url?contains("морозильники")>
+    <div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#freezer1" aria-expanded="false">
+            <span>Тип морозильника</span>
+        </button>
+        <div class="collapse" id="freezer1">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-freezerType" id="Вертикальная морозильная камера" value="Морозилки вертикальные">
+                                <label class="custom-control-label" for="Вертикальная морозильная камера">Вертикальная морозильная камера</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-freezerType" id="Морозильный ларь" value="Морозильные лари">
+                                <label class="custom-control-label" for="Морозильный ларь">Морозильный ларь</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#freezer2" aria-expanded="false">
+            <span>Объем и габариты</span>
+        </button>
+        <div class="collapse" id="freezer2">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Общий объем</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Min-Общий объем:" placeholder="От литров">
+                            </div>
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Max-Общий объем:" placeholder="До литров">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Глубина</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Min-Глубина:" placeholder="От см">
+                            </div>
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Max-Глубина:" placeholder="До см">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Ширина</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Min-Ширина:" placeholder="От см">
+                            </div>
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Max-Ширина:" placeholder="До см">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Высота</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Min-Высота:" placeholder="От см">
+                            </div>
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Max-Высота:" placeholder="До см">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#fridge5" aria-expanded="false">
+            <span>Энергопотребление</span>
+        </button>
+        <div class="collapse" id="fridge5">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Класс энергопотребления</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-freezerEnergyClass" id="A" value="Класс энергопотребления: A;">
+                                <label class="custom-control-label" for="A">A</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-freezerEnergyClass" id="A+" value="Класс энергопотребления: A+;">
+                                <label class="custom-control-label" for="A+">A+</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-freezerEnergyClass" id="B" value="Класс энергопотребления: B;">
+                                <label class="custom-control-label" for="B">B</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-freezerEnergyClass" id="C" value="Класс энергопотребления: C;">
+                                <label class="custom-control-label" for="C">C</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</#if>
+
+<#if url?contains("электрические_плиты")>
+    <div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
+            <span>Тип варочной поверхности</span>
+        </button>
+        <div class="collapse" id="group1">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Варочная поверхность</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-elStoveType" id="стеклокерамика" value="Тип варочной панели: стеклокерамика;">
+                                <label class="custom-control-label" for="стеклокерамика">Стеклокерамика</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-elStoveType" id="металлические" value="Тип варочной панели: металлические конфорки;">
+                                <label class="custom-control-label" for="металлические">Металлические конфорки</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group2" aria-expanded="false">
+            <span>Количество конфорок</span>
+        </button>
+        <div class="collapse" id="group2">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Варочная поверхность</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-elStoveConf" id="2 конфорки" value="Количество конфорок: 2;">
+                                <label class="custom-control-label" for="2 конфорки">2 конфорки</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-elStoveConf" id="3 конфорки" value="Количество конфорок: 3;">
+                                <label class="custom-control-label" for="3 конфорки">3 конфорки</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-elStoveConf" id="4 конфорки" value="Количество конфорок: 4;">
+                                <label class="custom-control-label" for="4 конфорки">4 конфорки</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group3" aria-expanded="false">
+            <span>Габариты</span>
+        </button>
+        <div class="collapse" id="group3">
+            <div class="card card-body filter-filed">
+                                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Ширина</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Min-Ширина:" placeholder="От см">
+                            </div>
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Max-Ширина:" placeholder="До см">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group4" aria-expanded="false">
+            <span>Цвет</span>
+        </button>
+        <div class="collapse" id="group4">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Цвет плиты</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-StoveColor" id="Бежевый" value="Цвет: бежевый">
+                                <label class="form-check-label" for="Бежевый">Бежевый</label>
+                            </div>
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-StoveColor" id="белый" value="Цвет: белый">
+                                <label class="form-check-label" for="белый">Белый</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-StoveColor" id="коричневый" value="Цвет: коричневый">
+                                <label class="form-check-label" for="коричневый">Коричневый</label>
+                            </div>
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-StoveColor" id="нержавеющая сталь" value="Цвет: нержавеющая сталь">
+                                <label class="form-check-label" for="нержавеющая сталь">Стальной</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-StoveColor" id="серебристый" value="Цвет: серебристый">
+                                <label class="form-check-label" for="серебристый">Серебристый</label>
+                            </div>
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-StoveColor" id="серый" value="Цвет: серый">
+                                <label class="form-check-label" for="серый">Серый</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-StoveColor" id="черный" value="Цвет: черный">
+                                <label class="form-check-label" for="черный">Черный</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group5" aria-expanded="false">
+            <span>Особенности плиты</span>
+        </button>
+        <div class="collapse" id="group5">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-StoveParam" id="Конвекция" value="Конвекция: есть">
+                                <label class="custom-control-label" for="Конвекция">Конвекция</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-StoveParam" id="Индукция" value="Индукция: есть">
+                                <label class="custom-control-label" for="Индукция">Индукция</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</#if>
+
+<#if url?contains("газовые_плиты")>
+    <div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
+            <span>Варочная панель</span>
+        </button>
+        <div class="collapse" id="group1">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Тип варочной панели</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-gasStoveType" id="газовая" value="Тип варочной панели: газовая">
+                                <label class="custom-control-label" for="газовая">Газовая</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-gasStoveType" id="комбинированная" value="Тип варочной панели: комбинированная">
+                                <label class="custom-control-label" for="комбинированная">Комбинированная</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Электроподжиг</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-gasStoveElectroBurn" id="Автоматический" value="Электроподжиг варочной панели: автоматический">
+                                <label class="custom-control-label" for="Автоматический">Автоматический поджиг</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-gasStoveElectroBurn" id="кнопкой" value="Электроподжиг варочной панели: механический">
+                                <label class="custom-control-label" for="кнопкой">Поджиг кнопкой</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-gasStoveElectroBurn" id="Без" value="Электроподжиг варочной панели: нет">
+                                <label class="custom-control-label" for="Без">Без поджига</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group2" aria-expanded="false">
+            <span>Конфорки</span>
+        </button>
+        <div class="collapse" id="group2">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Количество газовых конфорок</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-gasStoveConf" id="2 конфорки" value="Количество газовых конфорок: 2">
+                                <label class="custom-control-label" for="2 конфорки">2 конфорки</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-gasStoveConf" id="3 конфорки" value="Количество газовых конфорок: 3">
+                                <label class="custom-control-label" for="3 конфорки">3 конфорки</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-gasStoveConf" id="4 конфорки" value="Количество газовых конфорок: 4">
+                                <label class="custom-control-label" for="4 конфорки">4 конфорки</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Контроль газа конфорок</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-gasStoveGasControlConf" id="Контроль газа конфорок" value="Газ-контроль конфорок: да">
+                                <label class="custom-control-label" for="Контроль газа конфорок">Есть</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group3" aria-expanded="false">
+            <span>Духовка</span>
+        </button>
+        <div class="collapse" id="group3">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Тип духовки</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-gasStoveD" id="Газовая" value="Тип духовки: газовая">
+                                <label class="custom-control-label" for="Газовая">Газовая духовка</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-gasStoveD" id="Электрическая" value="Тип духовки: электрическая">
+                                <label class="custom-control-label" for="Электрическая">Электрическая духовка</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Контроль газа духовки</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-gasStoveGasControlD" id="Контроль газа духовки" value="Газ-контроль духовки: да">
+                                <label class="custom-control-label" for="Контроль газа духовки">Есть</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="group4" aria-expanded="false">
+            <span>Габариты</span>
+        </button>
+        <div class="collapse" id="group4">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Ширина</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Min-Ширина:" placeholder="От см">
+                            </div>
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Max-Ширина:" placeholder="До см">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Высота</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Min-Высота:" placeholder="От см">
+                            </div>
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Max-Высота:" placeholder="До см">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Глубина</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Min-Глубина:" placeholder="От см">
+                            </div>
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Max-Глубина:" placeholder="До см">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group5" aria-expanded="false">
+            <span>Цвет</span>
+        </button>
+        <div class="collapse" id="group5">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Цвет плиты</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-StoveColor" id="Бежевый" value="Цвет: бежевый">
+                                <label class="form-check-label" for="Бежевый">Бежевый</label>
+                            </div>
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-StoveColor" id="белый" value="Цвет: белый">
+                                <label class="form-check-label" for="белый">Белый</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-StoveColor" id="коричневый" value="Цвет: коричневый">
+                                <label class="form-check-label" for="коричневый">Коричневый</label>
+                            </div>
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-StoveColor" id="серебристый" value="Цвет: серебристый">
+                                <label class="form-check-label" for="серебристый">Серебристый</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-StoveColor" id="серый" value="Цвет: серый">
+                                <label class="form-check-label" for="серый">Серый</label>
+                            </div>
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-StoveColor" id="черный" value="Цвет: черный">
+                                <label class="form-check-label" for="черный">Черный</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</#if>
+
+<#if url?contains("микроволновые_печи")>
+    <div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
+            <span>Тип печи</span>
+        </button>
+        <div class="collapse" id="group1">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-MicroWaveType" id="с грилем" value="Тип: с грилем;">
+                                <label class="custom-control-label" for="с грилем">С грилем</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-MicroWaveType" id="с грилем и конвекцией" value="Тип: с грилем и конвекцией;">
+                                <label class="custom-control-label" for="с грилем и конвекцией">С грилем и конвекцией</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-MicroWaveType" id="соло" value="Тип: соло">
+                                <label class="custom-control-label" for="соло">Соло</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group2" aria-expanded="false">
+            <span>Управление и кнопки</span>
+        </button>
+        <div class="collapse" id="group2">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Тип управления</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-MicroWaveControl" id="сенсорное" value="Тип управления: сенсорное">
+                                <label class="custom-control-label" for="сенсорное">Сенсорное</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-MicroWaveControl" id="электронное" value="Тип управления: электронное">
+                                <label class="custom-control-label" for="электронное">Электронное</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-MicroWaveControl" id="механическое" value="Тип управления: механическое">
+                                <label class="custom-control-label" for="механическое">Механическое</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-MicroWaveControl" id="электромеханическое" value="Тип управления: электромеханическое">
+                                <label class="custom-control-label" for="электромеханическое">Электромеханическое</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Переключатели</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-MicroWaveSwitchers" id="сенсорные" value="Переключатели: сенсорные;">
+                                <label class="custom-control-label" for="сенсорные">Сенсорные</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-MicroWaveSwitchers" id="кнопочные" value="Переключатели: кнопочные;">
+                                <label class="custom-control-label" for="кнопочные">Кнопочные</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-MicroWaveSwitchers" id="поворотные" value="Переключатели: поворотные;">
+                                <label class="custom-control-label" for="поворотные">Поворотные</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-MicroWaveSwitchers" id="поворотные/кнопочные" value="Переключатели: поворотные/кнопочные;">
+                                <label class="custom-control-label" for="поворотные/кнопочные">Поворотные/кнопочные</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-MicroWaveType" id="сенсорные/кнопочные" value="Переключатели: сенсорные/кнопочные;">
+                                <label class="custom-control-label" for="сенсорные/кнопочные">Сенсорные/кнопочные</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group3" aria-expanded="false">
+            <span>Мощность и объем</span>
+        </button>
+        <div class="collapse" id="group3">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Мошность печи</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Min-Мощность микроволн:" placeholder="От ватт">
+                            </div>
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Max-Мощность микроволн:" placeholder="До ватт">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Объем</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Min-Объем:" placeholder="От литров">
+                            </div>
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Max-Объем:" placeholder="До литров">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group4" aria-expanded="false">
+            <span>Внутреннее покрытие камеры</span>
+        </button>
+        <div class="collapse" id="group4">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-MicroWaveInner" id="Керамическое" value="Внутреннее покрытие камеры: керамика">
+                                <label class="custom-control-label" for="Керамическое">Керамическое</label>
+                            </div>
+                        </div>
+                        <#--<div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-MicroWaveInner" id="Из нержавеющей стали" value="NULL3">
+                                <label class="custom-control-label" for="Из нержавеющей стали">Из нержавеющей стали</label>
+                            </div>
+                        </div>-->
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-MicroWaveInner" id="Эмалевое" value="Внутреннее покрытие камеры: эмаль">
+                                <label class="custom-control-label" for="Эмалевое">Эмалевое</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group6" aria-expanded="false">
+            <span>Цвет</span>
+        </button>
+        <div class="collapse" id="group6">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Цвет плиты</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-MicroWaveColor" id="Бежевый" value="Цвет: бежевый">
+                                <label class="form-check-label" for="Бежевый">Бежевый</label>
+                            </div>
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-MicroWaveColor" id="белый" value="Цвет: белый">
+                                <label class="form-check-label" for="белый">Белый</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-MicroWaveColor" id="серебристый" value="Цвет: серебристый">
+                                <label class="form-check-label" for="серебристый">Серебристый</label>
+                            </div>
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-MicroWaveColor" id="черный" value="Цвет: черный">
+                                <label class="form-check-label" for="черный">Черный</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group5" aria-expanded="false">
+            <span>Особенности</span>
+        </button>
+        <div class="collapse" id="group5">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-MicroWaveParams" id="Автоматическая разморозка " value="Автоматическая разморозка: есть">
+                                <label class="custom-control-label" for="Автоматическая разморозка ">Автоматическая разморозка </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</#if>
+
+<#if url?contains("электрические_чайники")>
+    <div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
+            <span>Тип и материал</span>
+        </button>
+        <div class="collapse" id="group1">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Тип чайника</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-TeapotType" id="чайник" value="Тип: чайник электрический">
+                                <label class="custom-control-label" for="чайник">Чайник</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-TeapotType" id="термопот" value="Тип: термопот">
+                                <label class="custom-control-label" for="термопот">Термопот</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-TeapotType" id="самовар" value="Тип: самовар">
+                                <label class="custom-control-label" for="самовар">Самовар</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Материал чайника</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-TeapotMaterial" id="керамика" value="Материал корпуса: керамика;">
+                                <label class="custom-control-label" for="керамика">Керамика</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-TeapotMaterial" id="металл" value="Материал корпуса: металл;">
+                                <label class="custom-control-label" for="металл">Металл</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-TeapotMaterial" id="стекло" value="Материал корпуса: стекло;">
+                                <label class="custom-control-label" for="стекло">Стекло</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-TeapotMaterial" id="нержавеющая сталь" value="Материал корпуса: нержавеющая сталь;">
+                                <label class="custom-control-label" for="нержавеющая сталь">Нержавеющая сталь</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-TeapotMaterial" id="металл, пластик" value="Материал корпуса: металл, пластик;">
+                                <label class="custom-control-label" for="металл, пластик">Металл, пластик</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-TeapotMaterial" id="металл, стекло" value="Материал корпуса: металл, стекло;">
+                                <label class="custom-control-label" for="металл, стекло">Металл, стекло</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-TeapotMaterial" id="пластик, стекло" value="Материал корпуса: пластик, стекло;">
+                                <label class="custom-control-label" for="пластик, стекло">Пластик, стекло</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group2" aria-expanded="false">
+            <span>Мощность и объем</span>
+        </button>
+        <div class="collapse" id="group2">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Мошность</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Min-Мощность:" placeholder="От ватт">
+                            </div>
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Max-Мощность:" placeholder="До ватт">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Объем</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Min-Объем:" placeholder="От литров">
+                            </div>
+                            <div class="col-5">
+                                <input type="text" class="form-control" id="Comp-Max-Объем:" placeholder="До литров">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group6" aria-expanded="false">
+            <span>Цвет</span>
+        </button>
+        <div class="collapse" id="group6">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text md-addon">Цвет</span>
+                    </div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-Color" id="Бежевый" value="Цвет: бежевый">
+                                <label class="form-check-label" for="Бежевый">Бежевый</label>
+                            </div>
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-Color" id="белый" value="Цвет: белый">
+                                <label class="form-check-label" for="белый">Белый</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-Color" id="бордовый" value="Цвет: бордовый">
+                                <label class="form-check-label" for="бордовый">Бордовый</label>
+                            </div>
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-Color" id="голубой" value="Цвет: голубой">
+                                <label class="form-check-label" for="голубой">Голубой</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-Color" id="желтый" value="Цвет: желтый">
+                                <label class="form-check-label" for="желтый">Желтый</label>
+                            </div>
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-Color" id="зеленый" value="Цвет: зеленый">
+                                <label class="form-check-label" for="зеленый">Зеленый</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-Color" id="красный" value="Цвет: красный">
+                                <label class="form-check-label" for="красный">Красный</label>
+                            </div>
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-Color" id="оранжевый" value="Цвет: оранжевый">
+                                <label class="form-check-label" for="оранжевый">Оранжевый</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-Color" id="прозрачный" value="Цвет: прозрачный">
+                                <label class="form-check-label" for="прозрачный">Прозрачный</label>
+                            </div>
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-Color" id="рисунок" value="Цвет: рисунок">
+                                <label class="form-check-label" for="рисунок">Рисунок</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-Color" id="розовый" value="Цвет: розовый">
+                                <label class="form-check-label" for="розовый">Розовый</label>
+                            </div>
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-Color" id="серебристый" value="Цвет: серебристый">
+                                <label class="form-check-label" for="серебристый">Серебристый</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-Color" id="серый" value="Цвет: серый">
+                                <label class="form-check-label" for="серый">Серый</label>
+                            </div>
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-Color" id="синий" value="Цвет: синий">
+                                <label class="form-check-label" for="синий">Синий</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-Color" id="сиреневый" value="Цвет: сиреневый">
+                                <label class="form-check-label" for="сиреневый">Сиреневый</label>
+                            </div>
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-Color" id="фиолетовый" value="Цвет: фиолетовый">
+                                <label class="form-check-label" for="фиолетовый">Фиолетовый</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="checkbox" class="form-check-input" name="Cont-Color" id="черный" value="Цвет: черный">
+                                <label class="form-check-label" for="черный">Черный</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group5" aria-expanded="false">
+            <span>Особенности</span>
+        </button>
+        <div class="collapse" id="group5">
+            <div class="card card-body filter-filed">
+                <div class="md-form input-group">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-TeapotParams" id="Двойные стенки" value="Двойные стенки: есть">
+                                <label class="custom-control-label" for="Двойные стенки">Двойные стенки</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <input type="checkbox" class="form-check-input" name="Cont-TeapotParams" id="Подсветка" value="Подсветка: есть">
+                                <label class="custom-control-label" for="Подсветка">Подсветка</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</#if>
 
 <button type="submit" id="filter-button" class="btn btn-primary btn-block filter-button search">Показать</button>

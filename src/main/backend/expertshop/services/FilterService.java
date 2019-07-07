@@ -33,7 +33,7 @@ public class FilterService {
         filters.forEach((key, filter) -> log.info(key + " " + filter));
 
         List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCase(request);
-        log.info("Product list before filter " + products.size());
+        log.info("Product list before filter: " + products.size());
 
         for (Map.Entry<String, String> filter : filters.entrySet())
         {
@@ -52,13 +52,12 @@ public class FilterService {
                         case "sortmin", "sortmax"   -> products = filterPrice   (products, filter);
                         case "brand"                -> products = filterBrands  (products, filter);
 
-                        /// В ОБЩИЕ МЕТОДЫ!!!
-                        /*<#--УНИКАЛЬНЫЙ КЕЙС ДЛЯ fridgeColor, fridgeEnergyClass -->*/
+                        /*/// В ОБЩИЕ МЕТОДЫ!!!
                         case "diagMin", "diagMax"   -> products = filterTvDiag  (products, filter);
                         case "tvResolution"         -> products = filterTvResol (products, filter);
                         case "hzMin", "hzMax"       -> products = filterTvHZ    (products, filter);
                         default -> {
-                        }
+                        }*/
                     }
             }
             catch (NullPointerException e) {
@@ -78,25 +77,26 @@ public class FilterService {
 
         return products.stream().filter(product ->
         {
-            AtomicInteger matches = new AtomicInteger(0);
+            //AtomicInteger matches = new AtomicInteger(0);
             for (String val : params)
             {
                 String param = val.replaceAll("[\\[\\]]", "").trim();
 
-                if (product.getOriginalAnnotation().startsWith(param) || product.getProductType().startsWith(param))
+                if (product.getOriginalAnnotation().contains(param) || product.getProductType().contains(param))
                 {
                     System.out.println();
                     log.info("FILTER: " + param);
                     log.info("RESULT: " + product.getOriginalAnnotation());
-                    matches.getAndIncrement();
+                    return true;
+                    //matches.getAndIncrement();
                 }
             }
-            return matches.get() == params.length;
+            return false;//matches.get() == params.length;
         }).collect(Collectors.toList());
     }
     private String resolveSplitter(String key) {
         return switch (key) {
-            case "tvCablesLength" -> ";,";
+            case "Cont-tvCablesLength", "Cont-TeapotMaterial" -> ";,";
             default -> ",";
         };
     }
@@ -137,7 +137,7 @@ public class FilterService {
 
     private double parseDouble(String checkingDouble) {
         if (checkingDouble.contains(",")) return Double.parseDouble(checkingDouble.replaceAll(",", "."));
-        else return Double.parseDouble(checkingDouble);
+        return Double.parseDouble(checkingDouble);
     }
 
     private List<Product> filterPrice(List<Product> products, Map.Entry<String, String> filter) {
