@@ -40,8 +40,6 @@ public class FilterService {
             try
             {
                 String condition = filter.getKey();
-
-                ///РАЗДЕЛИТЬ ФИЛТЬРЫ НА ИСКЛЮЧАЮЩИЕ И ДОПОЛНЯЮЩИЕ!!!
                 if (condition.startsWith("Cont-")) {
                     products = filterContainsParams(products, filter);
                 }
@@ -51,14 +49,7 @@ public class FilterService {
                 else switch (condition) {
                         case "sortmin", "sortmax"   -> products = filterPrice   (products, filter);
                         case "brand"                -> products = filterBrands  (products, filter);
-
-                        /*/// В ОБЩИЕ МЕТОДЫ!!!
-                        case "diagMin", "diagMax"   -> products = filterTvDiag  (products, filter);
-                        case "tvResolution"         -> products = filterTvResol (products, filter);
-                        case "hzMin", "hzMax"       -> products = filterTvHZ    (products, filter);
-                        default -> {
-                        }*/
-                    }
+                }
             }
             catch (NullPointerException e) {
                 e.printStackTrace();
@@ -75,9 +66,27 @@ public class FilterService {
         String[] params = filter.getValue().split(resolveSplitter(filter.getKey()));
         log.info(Arrays.toString(params));
 
-        return products.stream().filter(product ->
+        if (filter.getKey().contains("MultiParams")) {
+            return products.stream().filter(product ->
+            {
+                AtomicInteger matches = new AtomicInteger(0);
+                for (String val : params)
+                {
+                    String param = val.replaceAll("[\\[\\]]", "").trim();
+
+                    if (product.getOriginalAnnotation().contains(param) || product.getProductType().contains(param))
+                    {
+                        System.out.println();
+                        log.info("FILTER: " + param);
+                        log.info("RESULT: " + product.getOriginalAnnotation());
+                        matches.getAndIncrement();
+                    }
+                }
+                return matches.get() == params.length;
+            }).collect(Collectors.toList());
+        }
+        else return products.stream().filter(product ->
         {
-            //AtomicInteger matches = new AtomicInteger(0);
             for (String val : params)
             {
                 String param = val.replaceAll("[\\[\\]]", "").trim();
@@ -88,10 +97,9 @@ public class FilterService {
                     log.info("FILTER: " + param);
                     log.info("RESULT: " + product.getOriginalAnnotation());
                     return true;
-                    //matches.getAndIncrement();
                 }
             }
-            return false;//matches.get() == params.length;
+            return false;
         }).collect(Collectors.toList());
     }
     private String resolveSplitter(String key) {
@@ -108,11 +116,8 @@ public class FilterService {
             if (!product.getOriginalAnnotation().isEmpty())
             {
                 double computeParam  = extractComputeParam(product, filter);
-                log.info(computeParam + "");
-                if (computeParam != 0)
-                {
-                    return StringUtils.contains(filter.getKey(), "Min") ? computeFilter <= computeParam : computeFilter >= computeParam;
-                }
+                log.info("Result: " + computeParam);
+                if (computeParam != 0) return StringUtils.contains(filter.getKey(), "Min") ? computeFilter <= computeParam : computeFilter >= computeParam;
                 return false;
             }
             return false;
@@ -127,12 +132,16 @@ public class FilterService {
         log.info("KEY: " + key);
         log.info("EXTRACT NAME: " + extractName);
 
-        String reg = "^.*"+extractName.concat(" ")+"[0-9]{1,2}([,.][0-9]{1,2})?$";
-        boolean match = Pattern.compile(reg).matcher(annotation).find();
-        log.info(match + Pattern.compile(reg).pattern());
+        if (!annotation.contains(extractName.concat(" -")))
+        {
+            String reg = "^.*"+extractName.concat(" ")+"[0-9]{1,2}([,.][0-9]{1,2})?$";
+            boolean match = Pattern.compile(reg).matcher(annotation).find();
+            log.info(match + Pattern.compile(reg).pattern());
 
-        if (match) return annotation.contains(extractName)  ? parseDouble(StringUtils.substringAfter(annotation, extractName).trim())           : 0;
-        return annotation.contains(extractName)             ? parseDouble(StringUtils.substringBetween(annotation, extractName, ";").trim())  : 0;
+            if (match) return annotation.contains(extractName)  ? parseDouble(StringUtils.substringAfter(annotation, extractName).trim())           : 0;
+            return annotation.contains(extractName)             ? parseDouble(StringUtils.substringBetween(annotation, extractName, ";").trim())  : 0;
+        }
+        return 0;
     }
 
     private double parseDouble(String checkingDouble) {

@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-3 marker1 filters-col">
+            <div class="col-3 marker1 filters-col" style="margin-top: -9rem;">
                 <div class="marker2">
                     <form method="get" name="filters" id="filters">
                         <#include "../parts/filters.ftl">

@@ -87,7 +87,7 @@
                 <h3>Параметры товара</h3>
                 <table class="table table table-borderless w-30">
                     <thead>
-                    <tr>${product.originalAnnotation}</tr>
+                    <tr>${product.formattedAnnotation}</tr>
                     </thead>
                     <tbody>
                     <#--${product.fullInfo}

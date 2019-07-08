@@ -33,7 +33,10 @@ public class CategoriesController {
     {
         //productResolver.resolveProductType();
         //productResolver.resolveTypeBrand();
-        //productResolver.formatAnnotation();
+        /*productResolver.resolveProductGroups();
+        productResolver.formatAnnotation();
+        productResolver.resolveProductModel();*/
+        productResolver.resolveTypeBrand();
         return "pages/supplier";
     }
     @PostMapping("/supplier")
