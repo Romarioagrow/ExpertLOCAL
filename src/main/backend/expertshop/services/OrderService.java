@@ -1,7 +1,6 @@
 package expertshop.services;
 import expertshop.domain.Order;
 import expertshop.domain.OrderedProduct;
-import expertshop.domain.Product;
 import expertshop.domain.User;
 import expertshop.domain.dto.OrderContacts;
 import expertshop.repos.OrderRepo;
@@ -190,7 +189,7 @@ public class OrderService {
 
             order.setName   (user.getFirstName());
             order.setSurname(user.getLastName());
-            order.setMobile (user.getMobile());
+            order.setMobile (user.getEmail());
             order.setEmail  (user.getUsername());
 
             acceptOrder(order);

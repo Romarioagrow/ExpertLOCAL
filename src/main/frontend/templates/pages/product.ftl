@@ -59,7 +59,7 @@
                 </#if>
             </div>
             <div class="col price">
-                <h2><strong>${product.originalPrice} ₽</strong></h2>
+                <h2><strong>${product.finalPrice} ₽</strong></h2>
                 <button type="button" class="btn btn-success waves-effect waves-light">Купить!</button>
                 <#if orderedProductsID??>
                     <#if orderedProductsID?seq_contains('${product.productID}')>

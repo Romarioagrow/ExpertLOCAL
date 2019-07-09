@@ -207,7 +207,7 @@ $(document).ready(function() {
 function acceptOrder() {
     var name 	= $('#modelName').val();
     var surname = $('#surname').val();
-    var mobile 	= $('#mobile').val();
+    var mobile 	= $('#email').val();
     var email 	= $('#email').val();
 
     $(".error").remove();
@@ -233,7 +233,7 @@ function acceptOrder() {
             }
         }
         if (mobile.length < 8) {
-            $('#mobile').after('<span class="error">Введите номер в формате +7-999-666-14-88</span>');
+            $('#email').after('<span class="error">Введите номер в формате +7-999-666-14-88</span>');
         }
         return;
     }

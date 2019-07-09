@@ -77,7 +77,10 @@
                                     <p class="card-text">
                                         <strong><i>${product.productType}</i></strong>
                                     </p>
-                                    <h3><strong>${product.price} ₽</strong></h3>
+                                    <h3><strong>${product.finalPrice} ₽</strong></h3>
+                                    <p>
+                                        Бонус: ${product.bonus} ₽
+                                    </p>
                                     <div>
                                         <#if orderedProductsID?? && orderedProductsID?seq_contains('${product.productID}')>
                                             <a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>

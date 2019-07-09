@@ -36,7 +36,6 @@ public class UserService implements UserDetailsService {
         user.setRegistrationDate(LocalDateTime.now());
         user.setRoles(Collections.singleton(Role.USER));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-
         userRepo.save(user);
 
         log.info("User " + user.getUsername() + " successfully registered!");

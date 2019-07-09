@@ -19,7 +19,7 @@ public class OrderContacts {
     @NotBlank(message = "surname is mandatory")
     private String surname;
 
-    @NotBlank(message = "mobile is mandatory")
+    @NotBlank(message = "email is mandatory")
     private String mobile;
 
     @Email(message = "not an email!")

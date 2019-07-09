@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -22,7 +23,8 @@ public class User implements UserDetails {
     @Column(name = "user_id")
     private Long userID;
 
-    @NotBlank(message = "Введите e-mail!")
+    @NotBlank(message = "Введите номер телефона!")
+    @Pattern(regexp = "\\+7(-\\d{3}){2}-\\d{4}")
     private String username;
 
     @JsonIgnore
@@ -37,8 +39,8 @@ public class User implements UserDetails {
     @NotBlank(message = "Введите фамилию!")
     private String lastName;
 
-    @NotBlank(message = "Введите номер телефона!")
-    private String mobile;
+    @NotBlank(message = "Введите e-mail!")
+    private String email;
 
     @Column(name = "pic")
     private String userPic;

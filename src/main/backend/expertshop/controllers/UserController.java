@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -39,7 +41,6 @@ public class UserController {
         if (validResult.hasErrors())
         {
             Map<String, String> validErrors = ControllerService.getValidErrors(validResult);
-            
             model.mergeAttributes(validErrors);
             model.addAttribute("user", user);
             return "pages/registration";

@@ -6,7 +6,7 @@
             <div class="col">
                 <div id="registration-error">
                 </div>
-                <form action="/user/registration" method="post" name="registration" id="registrationForm" class="text-center<#-- border border-light--> p-5">
+                <form action="/user/registration" method="post" name="registration" id="registrationForm" class="text-center p-5">
                     <p class="h4 mb-4">Регистрация</p>
                     <#if userExists??>
                     <div class="row">
@@ -19,20 +19,15 @@
                     </#if>
                     <div class="form-row mb-4">
                         <div class="col">
-                            <input type="text" id="firstName" name="firstName" placeholder="Имя" required
-                                   class="form-control ${(firstNameError??)?string('is-invalid','')}" value="<#if user??>${user.firstName}</#if>">
-                            <#if firstNameError??>
+                            <input type="tel" id="mobile" name="mobile" required
+                                   placeholder="Ваш мобильный телефон"
+                                   aria-describedby="registerMobile"
+                                   class="form-control ${(usernameError??)?string('is-invalid','')}"
+                                   <#--pattern="\+7(-\d{3}){2}-\d{4}"-->>
+                            <#--<span class="form__error">Это поле должно содержать формат</span>-->
+                            <#if usernameError??>
                                 <div class="invalid-feedback">
-                                    ${firstNameError}
-                                </div>
-                            </#if>
-                        </div>
-                        <div class="col">
-                            <input type="text" id="lastName" name="lastName" required placeholder="Фамилия"
-                                   class="form-control ${(lastNameError??)?string('is-invalid','')}" value="<#if user??>${user.lastName}</#if>">
-                            <#if lastNameError??>
-                                <div class="invalid-feedback">
-                                    ${lastNameError}
+                                    <span>Номер телефона в формате +7-9xx-xxx-xxxx</span>
                                 </div>
                             </#if>
                         </div>
@@ -40,7 +35,7 @@
                     <div class="form-row mb-4">
                         <div class="col">
                             <input type="password" id="password" name="password" required placeholder="Ваш пароль" aria-describedby="registerPassword"
-                                   class="form-control ${(passwordError??)?string('is-invalid','')}" value="<#if user??>${user.password}</#if>">
+                                   class="form-control ${(passwordError??)?string('is-invalid','')}">
                             <#if passwordError??>
                                 <div class="invalid-feedback">
                                     ${passwordError}
@@ -51,32 +46,39 @@
                             <input type="password" id="registerPasswordConfirm" required class="form-control" placeholder="Повторите пароль" aria-describedby="registerPasswordConfirm">
                         </div>
                     </div>
-
+                    <div class="form-row mb-4">
+                        <div class="col">
+                            <input type="text" id="firstName" name="firstName" placeholder="Имя" required
+                                   class="form-control ${(firstNameError??)?string('is-invalid','')}">
+                            <#if firstNameError??>
+                                <div class="invalid-feedback">
+                                    ${firstNameError}
+                                </div>
+                            </#if>
+                        </div>
+                        <div class="col">
+                            <input type="text" id="lastName" name="lastName" required placeholder="Фамилия"
+                                   class="form-control ${(lastNameError??)?string('is-invalid','')}">
+                            <#if lastNameError??>
+                                <div class="invalid-feedback">
+                                    ${lastNameError}
+                                </div>
+                            </#if>
+                        </div>
+                    </div>
                     <div class="form-row mb-4">
                         <div class="col">
                             <input type="email" id="username" name="username" required placeholder="E-mail"
-                                   class="form-control ${(usernameError??)?string('is-invalid','')}" value="<#if user??>${user.username}</#if>">
+                                   class="form-control ${(emailError??)?string('is-invalid','')}">
                             <span class="form__error">Это поле должно содержать E-Mail в формате example@site.com</span>
-                            <#if usernameError??>
+                            <#if emailError??>
                                 <div class="invalid-feedback">
-                                    ${usernameError}
+                                    ${emailError}
                                 </div>
                             </#if>
                         </div>
                     </div>
 
-                    <div class="form-row mb-4">
-                        <div class="col">
-                            <input type="text" id="mobile" name="mobile" required placeholder="Ваш мобильный телефон" aria-describedby="registerMobile"
-                                   class="form-control ${(mobileError??)?string('is-invalid','')}" value="<#if user??>${user.mobile}</#if>">
-                            <span class="form__error">Это поле должно содержать телефон в формате +7 (123) 456-78-90</span>
-                            <#if mobileError??>
-                                <div class="invalid-feedback">
-                                    ${mobileError}
-                                </div>
-                            </#if>
-                        </div>
-                    </div>
                     <button id="submitRegistration" class="btn btn-info my-4 btn-block" type="submit">Зарегестрироваться!</button>
                     <div>
                         <p>Регистрация через социальные сети</p>
