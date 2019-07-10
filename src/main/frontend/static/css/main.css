@@ -105,3 +105,36 @@ form input:hover {
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
 }
+
+.ordered-card {
+    min-width: 25rem;
+    max-width: 25rem;
+
+    min-height: 30rem;
+    max-height: 30rem;
+}
+.order-deal {
+    display: none;
+}
+
+form label {
+    display: inline-block;
+//width: 100px;
+}
+
+form div {
+//margin-bottom: 10px;
+}
+
+.error {
+    color: red;
+//margin-left: 5px;
+}
+
+label.error {
+    display: inline;
+}
+
+.pills-secondary .nav-link.active, .pills-secondary .show > .nav-link {
+    background-color: #3f51b5 !important;
+}

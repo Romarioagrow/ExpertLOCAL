@@ -1,6 +1,7 @@
 package expertshop.services;
 import expertshop.domain.Order;
 import expertshop.domain.OrderedProduct;
+import expertshop.domain.Product;
 import expertshop.domain.User;
 import expertshop.domain.dto.OrderContacts;
 import expertshop.repos.OrderRepo;
@@ -59,11 +60,12 @@ public class OrderService {
         else return new HashSet<>();
     }
 
-    /*public Integer addProductToOrder(String productID, User user)
+    public Integer addProductToOrder(String productID, User user)
     {
         Order order;
         ///Product product = productRepo.findByProductID(productID);///
         OrderedProduct orderedProduct = new OrderedProduct(); ///new OrderedProduct(productID);
+        Product product = productRepo.findByProductID(productID);
 
         if (user == null)
         {
@@ -75,11 +77,11 @@ public class OrderService {
                 order.setSessionUUID(getSessionID());
             }
             ///
-            orderedProduct.constructOrderedProduct(product, productID);///
+            orderedProduct.constructOrderedProduct(product);///
             order.addProductToOrder(orderedProduct);
 
-            *//*setOrderStats(getOrder, orderedProduct.getTotalPrice());
-            orderRepo.save(getOrder);*//*
+            setOrderStats(order, orderedProduct.getTotalPrice());
+            orderRepo.save(order);
         }
         else
         {
@@ -92,18 +94,18 @@ public class OrderService {
                 order.setUserID(user.getUserID());
             }
             ///
-            orderedProduct.constructOrderedProduct(product, productID); ///
+            orderedProduct.constructOrderedProduct(product); ///
             order.addProductToOrder(orderedProduct);
 
-            *//*setOrderStats(getOrder, orderedProduct.getTotalPrice());
-            orderRepo.save(getOrder);*//*
+            setOrderStats(order, orderedProduct.getTotalPrice());
+            orderRepo.save(order);
         }
 
         System.out.println("\n");
         log.info("Product with ID " + productID + " add to getOrder");
 
         return order.getProductsAmount();
-    }*/
+    }
 
     public Order removeProductFromOrder(User user, String orderedID)
     {

@@ -21,7 +21,7 @@ public class Order implements Serializable {
     @Id
     @Column(name = "order_id")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer orderID;
+    private Long orderID;
 
     @Column(name = "session_uuid")
     private String sessionUUID;

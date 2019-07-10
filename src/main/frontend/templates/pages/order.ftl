@@ -1,6 +1,5 @@
 <#import "../parts/template.ftl" as t>
 <#include "../parts/security.ftl">
-
 <@t.template>
     <div class="container">
         <div class="row">
@@ -19,23 +18,23 @@
                         <#list orderedProducts as product>
                             <div class="card ordered-card mb-4">
                                 <div class="view overlay">
-                                    <img class="card-img-top" src="${product.pic}" alt="Card image cap">
+                                    <img class="scale-pic" src="${product.pic}" alt="Card image cap">
                                     <a href="#!">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
                                     <h4 class="card-title">
-                                        <a href="http://localhost:8080/info/${product.productID}">${product.brand} ${product.model}</a>
-                                        <div class="mt-3">${product.type}, <strong><i id="total-price${product.getOrderedID?c}">${product.totalPrice}₽</i></strong></div>
+                                        <a href="http://localhost:8080/info/${product.productID}">${product.productName}</a>
+                                        <div class="mt-3">${product.productType}, <strong><i id="total-price${product.orderedID?c}">${product.totalPrice} ₽</i></strong></div>
                                     </h4>
                                     <p class="card-text" id="cart-text-buttons" name="cart-text-buttons">
-                                        <button type="button" onclick="changeAmount(this)" id="${product.getOrderedID?c}" name="product-less" value="${product.productID}" class="btn btn-outline-danger waves-effect">-</button>
-                                        <span class="badge badge-primary badge-pill" id="amount${product.getOrderedID?c}" name="${product.getOrderedID}">${product.amount}</span>
-                                        <button type="button" onclick="changeAmount(this)" id="${product.getOrderedID?c}" name="product-more" value="${product.productID}" class="btn btn-outline-success waves-effect">+</button>
+                                        <button type="button" onclick="changeAmount(this)" id="${product.orderedID?c}" name="product-less" value=" ${product.productID}" class="btn btn-outline-danger waves-effect">-</button>
+                                        <span class="badge badge-primary badge-pill" id="amount${product.orderedID?c}" name="${product.orderedID}">${product.totalAmount}</span>
+                                        <button type="button" onclick="changeAmount(this)" id="${product.orderedID?c}" name="product-more" value=" ${product.productID}" class="btn btn-outline-success waves-effect">+</button>
                                     </p>
                                 </div>
-                                <button type="submit" onclick="removeFromOrder(this)" class="btn btn-danger btn-md" name="remove-product" id="remove-product" value="${product.getOrderedID?c}">Удалить</button>
+                                <button type="submit" onclick="removeFromOrder(this)" class="btn btn-danger btn-md" name="remove-product" id="remove-product" value="${product.orderedID?c}">Удалить</button>
                             </div>
                         </#list>
                     <#else>
@@ -43,27 +42,27 @@
                         <a type="button" href="/" class="btn blue-gradient btn-lg btn-block">Вернуться за покупками</a>
                     </#if>
                 </div>
-                <ul class="list-group" id="bucket-products-rows" name="rows-layout" style="display: none">
+                <#--<ul class="list-group" id="bucket-products-rows" name="rows-layout" style="display: none">
                     <#if orderedProducts??>
                         <#list orderedProducts as product>
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <img class="ordered-product-img-line" src="${product.pic}" height="50" width="80"  alt="Card image cap">
                                 <strong>${product.type}</strong> ${product.brand} ${product.model}
 
-                                <button type="button" class="btn btn-outline-danger waves-effect" onclick="changeAmount(this)" id="${product.getOrderedID?c}" name="product-less" value="${product.productID}">-</button>
-                                <div id="amount${product.getOrderedID?c}" name="${product.getOrderedID}"><span class="badge badge-primary badge-pill">${product.amount}</span></div>
-                                <button type="button" class="btn btn-outline-success waves-effect" onclick="changeAmount(this)" id="${product.getOrderedID?c}" name="product-more" value="${product.productID}">+</button>
+                                <button type="button" class="btn btn-outline-danger waves-effect" onclick="changeAmount(this)" id="${product.orderedID?c}" name="product-less" value="${product.productID}">-</button>
+                                <div id="amount${product.orderedID?c}" name="${product.orderedID}"><span class="badge badge-primary badge-pill">${product.amount}</span></div>
+                                <button type="button" class="btn btn-outline-success waves-effect" onclick="changeAmount(this)" id="${product.orderedID?c}" name="product-more" value="${product.productID}">+</button>
 
-                                <strong><i id="total-price${product.getOrderedID}">${product.totalPrice} ₽</i></strong>
+                                <strong><i id="total-price${product.orderedID}">${product.totalPrice} ₽</i></strong>
 
-                                <button type="submit" onclick="removeFromOrder(this)" class="btn btn-danger btn-md" name="remove-product" id="remove-product" value="${product.getOrderedID?c}">Удалить</button>
+                                <button type="submit" onclick="removeFromOrder(this)" class="btn btn-danger btn-md" name="remove-product" id="remove-product" value="${product.orderedID?c}">Удалить</button>
                             </li>
                         </#list>
                     <#else>
                         <h3 style="margin-top: 4vh">Пока ничего нет...</h3>
                         <a type="button" href="/" class="btn blue-gradient btn-lg btn-block">Вернуться за покупками</a>
                     </#if>
-                </ul>
+                </ul>-->
             </div>
         </div>
         <#if order??>
@@ -230,37 +229,3 @@
         </div>
     </div>
 </@t.template>
-<style>
-    .ordered-card {
-        min-width: 20vw;
-        max-width: 20vw;
-
-        min-height: 50vh;
-        max-height: 80vw;
-    }
-    .order-deal {
-        display: none;
-    }
-
-    form label {
-        display: inline-block;
-    //width: 100px;
-    }
-
-    form div {
-    //margin-bottom: 10px;
-    }
-
-    .error {
-        color: red;
-    //margin-left: 5px;
-    }
-
-    label.error {
-        display: inline;
-    }
-
-    .pills-secondary .nav-link.active, .pills-secondary .show > .nav-link {
-        background-color: #3f51b5 !important;
-    }
-</style>

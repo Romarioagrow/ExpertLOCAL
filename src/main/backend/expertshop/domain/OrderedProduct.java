@@ -9,47 +9,34 @@ import java.util.Set;
 
 @Entity
 @Data
-//@EqualsAndHashCode(callSuper = true, exclude = "orders")
 @EqualsAndHashCode(exclude = "orders")
 @ToString(exclude = "orders")
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "ordered_product")
-/*@DiscriminatorValue("PRODUCT")
-@SuppressWarnings("PMD")*/
-public class OrderedProduct /*extends Product*/implements Serializable {
+public class OrderedProduct implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ordered_id")
-    private String orderedID;
+    private Long orderedID;
 
-    public String productID;
+    public String productID, productName, productType, pic;
 
-    /*@JoinColumn(modelName = "product_id")
-    private Integer productID;*/
-    //private Integer finalPrice;
-
-    @Column(name = "total_amount")
-    private Integer totalAmount;
-
-    @Column(name = "total_price")
-    private Integer totalPrice;
+    private Integer productPrice, totalPrice, bonus, totalBonus, totalAmount;
 
     @JsonIgnore
     @ManyToMany(mappedBy = "orderedProducts")
     private Set<Order> orders;
 
-
-
-    public void constructOrderedProduct(Product product, String productID) {/// constructor
-        /*this.setProductID (Integer.parseInt(productID));
-        this.setAmount    (1);
-        this.setBrand     (product.getBrand());
-        this.setModel     (product.getModel());
-        this.setType      (product.getProductParams().getType());
-        this.setPic       (product.getPic());
-        this.setFinalPrice     (product.getFinalPrice());
-        this.setTotalPrice(product.getFinalPrice());*/
+    public void constructOrderedProduct(Product product)
+    {
+        this.setProductID       (product.getProductID());
+        this.setTotalAmount     (1);
+        this.setProductName     (product.getOriginalName());
+        this.setProductType     (product.getSingleType());
+        this.setPic             (product.getOriginalPic());
+        this.setProductPrice    (product.getFinalPrice());
+        this.setTotalPrice      (product.getFinalPrice());
     }
 }
 

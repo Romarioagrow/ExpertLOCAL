@@ -1,6 +1,5 @@
 <#import "../parts/template.ftl" as t>
 <@t.template>
-
     <div class="container">
         <div class="row">
             <div class="col">
@@ -19,7 +18,7 @@
                     </#if>
                     <div class="form-row mb-4">
                         <div class="col">
-                            <input type="tel" id="mobile" name="mobile" required
+                            <input type="tel" value="" id="username" name="username" required
                                    placeholder="Ваш мобильный телефон"
                                    aria-describedby="registerMobile"
                                    class="form-control ${(usernameError??)?string('is-invalid','')}"
@@ -68,7 +67,7 @@
                     </div>
                     <div class="form-row mb-4">
                         <div class="col">
-                            <input type="email" id="username" name="username" required placeholder="E-mail"
+                            <input type="email" id="email" name="username" required placeholder="E-mail"
                                    class="form-control ${(emailError??)?string('is-invalid','')}">
                             <span class="form__error">Это поле должно содержать E-Mail в формате example@site.com</span>
                             <#if emailError??>
@@ -91,7 +90,7 @@
             </div>
         </div>
     </div>
-
+    <script src="/../lib/mobilemask.js"></script>
 </@t.template>
 <style>
     .form__error {
