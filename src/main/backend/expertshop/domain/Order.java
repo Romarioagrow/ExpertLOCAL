@@ -57,29 +57,28 @@ public class Order implements Serializable {
     }
 
     public void addProductToOrder(OrderedProduct orderedProduct) {
-        if (this.getOrderedProducts() == null) {
+        if (this.getOrderedProducts() == null)
+        {
             this.orderedProducts = new HashSet<>();
             orderedProducts.add(orderedProduct);
         }
         else this.orderedProducts.add(orderedProduct);
     }
 
-    /*public Integer getTotalOrderPrice() {
+    public Integer getTotalOrderPrice() {
         Integer totalPrice = 0;
         for (OrderedProduct product : orderedProducts) {
             totalPrice += product.getTotalPrice();
         }
-        log.info("Total finalPrice: " + getTotalPrice().toString());
         return totalPrice;
     }
 
     public Integer getTotalProductsAmount() {
-        Integer totalAmount = 0;
+        Integer orderedAmount = 0;
         for (OrderedProduct product : orderedProducts) {
-            totalAmount += product.getAmount();
+            orderedAmount += product.getOrderedAmount();
         }
-        log.info("Total amount: " + getTotalAmount().toString());
-        return totalAmount;
-    }*/
+        return orderedAmount;
+    }
 }
 

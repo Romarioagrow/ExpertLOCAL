@@ -5,7 +5,7 @@ import expertshop.domain.Product;
 import expertshop.domain.User;
 import expertshop.domain.dto.OrderContacts;
 import expertshop.repos.OrderRepo;
-import expertshop.repos.OrderedProductRepo;
+import expertshop.repos.OrderedRepo;
 import expertshop.repos.ProductRepo;
 
 import lombok.AllArgsConstructor;
@@ -20,10 +20,10 @@ import java.util.*;
 @Service
 @AllArgsConstructor
 public class OrderService {
-    private final MailService mailService;
-    private final OrderRepo orderRepo;
-    private final ProductRepo productRepo;
-    private final OrderedProductRepo orderedProductRepo;
+    private final MailService           mailService;
+    private final OrderRepo             orderRepo;
+    private final ProductRepo           productRepo;
+    private final OrderedRepo orderedRepo;
 
     public boolean checkUserOrder(User user) {
         return orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()) != null;
@@ -107,43 +107,48 @@ public class OrderService {
         return order.getProductsAmount();
     }
 
+    public Queue<Object> changeAmount(User user, Map<String, String> data)
+    {
+        OrderedProduct orderedProduct = orderedRepo.findByOrderedID(Long.valueOf(data.get("orderedID")));
+
+        if (data.get("action").contains("product-less")) {
+            if (orderedProduct.getOrderedAmount() > 1) orderedProduct.setOrderedAmount(orderedProduct.getOrderedAmount() - 1);
+            else return null;
+        }
+        else orderedProduct.setOrderedAmount(orderedProduct.getOrderedAmount() + 1);
+
+        orderedProduct.setTotalPrice(orderedProduct.getProductPrice() * orderedProduct.getOrderedAmount());
+        orderedRepo.save(orderedProduct);
+
+        Order order = resolveOrder(user);
+        order.setTotalPrice (order.getTotalOrderPrice());
+        order.setTotalAmount(order.getTotalProductsAmount());
+
+        orderRepo.save(order);
+        log.info("Order total price: " + order.getTotalPrice());
+        return packageOrderAndProduct(order, orderedProduct);
+    }
+    private Queue<Object> packageOrderAndProduct(Order order, OrderedProduct orderedProduct)
+    {
+        Queue<Object> orderAndProduct = new LinkedList<>();
+        orderAndProduct.add(order);
+        orderAndProduct.add(orderedProduct);
+        return orderAndProduct;
+    }
+
     public Order removeProductFromOrder(User user, String orderedID)
     {
-        OrderedProduct orderedProduct = orderedProductRepo.findByOrderedID(orderedID);
+        OrderedProduct orderedProduct = orderedRepo.findByOrderedID(Long.parseLong(orderedID));
 
         Order order = resolveOrder(user);
         order.getOrderedProducts().remove(orderedProduct);
 
-        /*getOrder.setTotalPrice     (getOrder.getTotalPrice()      - orderedProduct.getTotalPrice());
-        getOrder.setTotalAmount    (getOrder.getTotalAmount()     - orderedProduct.getAmount());
-        getOrder.setProductsAmount (getOrder.getProductsAmount()  - 1);*/
-
+        order.setTotalPrice     (order.getTotalPrice()      - orderedProduct.getTotalPrice());
+        order.setProductsAmount (order.getOrderedProducts().size());
+        order.setTotalAmount    (order.getTotalProductsAmount());
         orderRepo.save(order);
-        ///
-        orderedProductRepo.delete(orderedProduct);
+        orderedRepo.delete(orderedProduct);
         return order;
-    }
-
-    public Queue<Object> changeAmount(User user, Map<String, String> data)
-    {
-        /*OrderedProduct orderedProduct = orderedProductRepo.findByid(Integer.valueOf(data.get("orderedID")));
-
-        if (data.get("action").contains("product-less")) {
-            if (orderedProduct.getAmount() > 1) orderedProduct.setAmount(orderedProduct.getAmount() - 1);
-            else return null;
-        }
-        else orderedProduct.setAmount(orderedProduct.getAmount() + 1);
-
-        orderedProduct.setTotalPrice(orderedProduct.getFinalPrice() * orderedProduct.getAmount());
-        orderedProductRepo.save(orderedProduct);
-
-        Order getOrder = resolveOrder(user);
-        getOrder.setTotalPrice(getOrder.getTotalOrderPrice());
-        getOrder.setTotalAmount(getOrder.getTotalProductsAmount());
-
-        orderRepo.save(getOrder);*//*
-        return packageOrderAndProduct(getOrder, orderedProduct);*/
-        return null;
     }
 
     private void setOrderStats(Order order, Integer productTotalPrice)
@@ -160,14 +165,6 @@ public class OrderService {
             order.setProductsAmount (order.getProductsAmount()  + 1);
             order.setTotalAmount    (order.getTotalAmount()     + 1);
         }
-    }
-
-    private Queue<Object> packageOrderAndProduct(Order order, OrderedProduct orderedProduct)
-    {
-        Queue<Object> orderAndProduct = new LinkedList<>();
-        orderAndProduct.add(order);
-        orderAndProduct.add(orderedProduct);
-        return orderAndProduct;
     }
 
     public void confirmOrder(OrderContacts orderContacts, User user)

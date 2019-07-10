@@ -97,7 +97,7 @@
         color: red;
         text-align: left;
         font-size: 12px;
-        display: block;
+        /*display: block;*/
         margin-top: 6px;
         display: none;
     }

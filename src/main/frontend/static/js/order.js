@@ -51,8 +51,10 @@ function changeAmount(product) {
         action    : product.name
     };
 
-    let amountID     = '#amount'      + data.orderedID;
-    let totalPriceID = '#total-finalPrice' + data.orderedID;
+    console.log(data);
+
+    let amountID     = '#amount'            + data.orderedID;
+    let totalPriceID = '#total-finalPrice'  + data.orderedID;
 
     data = JSON.stringify(data);
 
@@ -67,16 +69,19 @@ function changeAmount(product) {
         {
             orderAndProduct = JSON.parse(JSON.stringify(orderAndProduct));
 
-            let order = orderAndProduct.responseJSON[0];
-            let orderedProduct = orderAndProduct.responseJSON[1];
+            const order             = orderAndProduct.responseJSON[0];
+            const orderedProduct    = orderAndProduct.responseJSON[1];
+
+            console.log(orderedProduct);
+            console.log(order);
 
             $(amountID).empty().append(
-                orderedProduct.amount
+                orderedProduct.orderedAmount
             );
             $(totalPriceID).empty().append(
                 (orderedProduct.totalPrice).toLocaleString('ru')+'₽'
             );
-            $('#order-finalPrice').empty().append(
+            $('#order-totalPrice').empty().append(
                 (order.totalPrice).toLocaleString('ru')+'₽'
             );
             $('#order-products').empty().append(
@@ -91,6 +96,7 @@ function changeAmount(product) {
 
 function removeFromOrder(button) {
     const productID = button.value;
+    console.log(productID);
 
     $.ajax({
         url: 'http://localhost:8080/order',
@@ -105,35 +111,35 @@ function removeFromOrder(button) {
             for (var item in order.orderedProducts)
             {
                 let product = order.orderedProducts[item];
-                	//сервер загружает на элемент данные а ajax обновляет
+                /// сервер загружает на элемент данные а ajax обновляет
                 $("#bucket-products").append
                 (
                     '<div class="card ordered-card mb-4">' +
                     '<div class="view overlay">' +
-                    '<img class="card-img-top" src="'+product.pic+'" alt="Card image cap">' +
+                    '<img class="scale-pic" src="'+product.pic+'" alt="Card image cap">' +
                     '<a href="#!">' +
                     '<div class="mask rgba-white-slight"></div>' +
                     '</a>' +
                     '</div>' +
                     '<div class="card-body">' +
                     '<h4 class="card-title">' +
-                    product.brand + ' ' + product.model +
-                    '<div class="mt-3">'+product.type+', <strong><i orderedID="total-finalPrice'+product.id+'">' + product.totalPrice + '₽' + '</i></strong></div>' +
+                    '<a href="http://localhost:8080/info/'+product.productID+'">'+product.productName+'</a>'+
+                    '<div class="mt-3">'+product.productType+', <strong><i orderedID="total-finalPrice'+product.orderedID+'">' + product.totalPrice + '₽' + '</i></strong></div>' +
                     '<div>' +
                     '</div>' +
                     '</h4>' +
                     '<p class="card-text">' +
-                    '<button type="button" onclick="changeAmount(this)" orderedID="'+product.id+'" modelName="product-less" value="'+product.productID+'" class="btn btn-outline-danger waves-effect">-</button>' +
-                    '<span class="badge badge-primary badge-pill" orderedID="amount'+product.id+'">'+(product.amount).toLocaleString('ru')+'</span>' +
-                    '<button type="button" onclick="changeAmount(this)" orderedID="'+product.id+'" modelName="product-more" value="'+product.productID+'" class="btn btn-outline-success waves-effect">+</button>' +
+                    '<button type="button" onclick="changeAmount(this)" id="'+product.orderedID+'" name="product-less" value="'+product.productID+'" class="btn btn-outline-danger waves-effect">-</button>' +
+                    '<span class="badge badge-primary badge-pill"       id="amount'+product.orderedID+'">'+(product.orderedAmount).toLocaleString('ru')+'</span>' +
+                    '<button type="button" onclick="changeAmount(this)" id="'+product.orderedID+'" name="product-more" value="'+product.productID+'" class="btn btn-outline-success waves-effect">+</button>' +
                     '</p>' +
                     '</div>' +
-                    '<button type="submit" onclick="removeFromOrder(this)" modelName="remove-product" class="btn btn-danger btn-md"  orderedID="remove-product" value="'+product.id+'">Удалить</button>' +
+                    '<button type="submit" onclick="removeFromOrder(this)" modelName="remove-product" class="btn btn-danger btn-md"  orderedID="remove-product" value="'+product.orderedID+'">Удалить</button>' +
                     '</div>'
                 );
             }
             
-            $('#order-finalPrice').empty().append(
+            $('#order-totalPrice').empty().append(
                 (order.totalPrice).toLocaleString('ru')+'₽'
             );
             $('#order-products').empty().append(

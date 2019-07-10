@@ -30,7 +30,7 @@
                                     </h4>
                                     <p class="card-text" id="cart-text-buttons" name="cart-text-buttons">
                                         <button type="button" onclick="changeAmount(this)" id="${product.orderedID?c}" name="product-less" value=" ${product.productID}" class="btn btn-outline-danger waves-effect">-</button>
-                                        <span class="badge badge-primary badge-pill" id="amount${product.orderedID?c}" name="${product.orderedID}">${product.totalAmount}</span>
+                                        <span class="badge badge-primary badge-pill" id="amount${product.orderedID?c}" name="${product.orderedID}">${product.orderedAmount}</span>
                                         <button type="button" onclick="changeAmount(this)" id="${product.orderedID?c}" name="product-more" value=" ${product.productID}" class="btn btn-outline-success waves-effect">+</button>
                                     </p>
                                 </div>
@@ -70,7 +70,7 @@
                 <div class="row">
                     <div class="col" id="order-deal-form">
                         <h3 class="mt-2" style="margin-bottom: 3vh">
-                            Заказ на сумму <strong id="order-price">${order.totalPrice}₽</strong>
+                            Заказ на сумму <strong id="order-totalPrice">${order.totalPrice} ₽</strong>
                             Товаров <b id="order-products">${order.productsAmount}</b>
                             Всего единиц <b id="order-amount">${order.totalAmount}</b>
                         </h3>
@@ -124,7 +124,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="md-form mb-0">
-                                                <input type="text" id="mobile" name="mobile" class="form-control" required>
+                                                <input type="text" id="username" name="username" class="form-control" required>
                                                 <label for="mobile" class="">Ваш телефон</label>
                                             </div>
                                         </div>
@@ -228,4 +228,5 @@
             </div>
         </div>
     </div>
+    <script src="/../lib/mobilemask.js"></script>
 </@t.template>
