@@ -17,6 +17,14 @@ function showRowsLayout() {
     document.getElementById("bucket-products-rows").style.display 	= "block";
 }
 
+function escapeRegExp(str) {
+    return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+}
+
+function replaceAll(str, find, replace) {
+    return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
+}
+
 function addToOrder(button) {
     const productID = button.value;
     console.log(productID);
@@ -31,7 +39,11 @@ function addToOrder(button) {
         complete: function(productsAmount)
         {
             console.log("Add product with ID " + productID);
-            var buttonID = '#addToOrderDiv'+productID;
+            var buttonID = '#addToOrderDiv' + productID;
+            buttonID = replaceAll(buttonID, ".", "");
+
+            console.log('Id блока кнопки ' + buttonID);
+
 
             $(buttonID).empty().append(
                 '<a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button>'
@@ -124,7 +136,7 @@ function removeFromOrder(button) {
                     '<div class="card-body">' +
                     '<h4 class="card-title">' +
                     '<a href="http://localhost:8080/info/'+product.productID+'">'+product.productName+'</a>'+
-                    '<div class="mt-3">'+product.productType+', <strong><i orderedID="total-finalPrice'+product.orderedID+'">' + product.totalPrice + '₽' + '</i></strong></div>' +
+                    '<div class="mt-3">'+product.productType+', <strong><i orderedID="total-finalPrice'+product.orderedID+'">' + (product.totalPrice).toLocaleString('ru') + ' ₽' + '</i></strong></div>' +
                     '<div>' +
                     '</div>' +
                     '</h4>' +
@@ -166,7 +178,7 @@ function removeFromOrder(button) {
     });
 }
 
-function displayOrderDeal() {
+function confirmOrderList() {
     document.getElementById("order-deal").style.display 	= "block";
     document.getElementById("order-button").style.display 	= "none";
     document.getElementById("edit-order").style.display 	= "block";
@@ -176,13 +188,13 @@ function displayOrderDeal() {
     }, 1000);
 
     ///
-    $("button[modelName='product-less']").each(function() {
+    $("button[name='product-less']").each(function() {
         this.disabled = true;
     });
-    $("button[modelName='product-more']").each(function() {
+    $("button[name='product-more']").each(function() {
         this.disabled = true;
     });
-    $("button[orderedID='remove-product']").each(function() {
+    $("button[name='remove-product']").each(function() {
         this.disabled = true;
     });
 }
@@ -192,13 +204,13 @@ function editOrder() {
     document.getElementById("edit-order").style.display 	= "none";
     document.getElementById("order-button").style.display 	= "block";
 
-    $("button[modelName='product-less']").each(function() {
+    $("button[name='product-less']").each(function() {
         this.disabled = false;
     });
-    $("button[modelName='product-more']").each(function() {
+    $("button[name='product-more']").each(function() {
         this.disabled = false;
     });
-    $("button[orderedID='remove-product']").each(function() {
+    $("button[name='remove-product']").each(function() {
         this.disabled = false;
     });
 }

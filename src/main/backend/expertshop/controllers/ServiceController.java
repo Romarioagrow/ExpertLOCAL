@@ -32,7 +32,7 @@ public class ServiceController {
     private final OrderService orderService;
 
     @PostMapping("/products/{category}/{reqType}")
-    public Page<Product> filterProducts
+    public LinkedList<Object>/*Page<Product>*/ filterProducts
             (@RequestBody Map<String, String> params,
              @PathVariable String reqType,
              @AuthenticationPrincipal User user,
@@ -40,7 +40,7 @@ public class ServiceController {
              @PageableDefault(sort = {"supplier"}, direction = Sort.Direction.ASC, size = 100) Pageable pageable)
     {
         String request = StringUtils.capitalize(reqType.replaceAll("_", " "));
-        return filterService.filterProducts(params, request, pageable);
+        return filterService.filterProducts(params, request, pageable, user);
     }
 
     @PostMapping("/search")

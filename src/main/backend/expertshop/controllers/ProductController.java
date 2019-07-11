@@ -39,23 +39,23 @@ public class ProductController {
         String request = requiredProduct.replaceAll("_", " ").toLowerCase();
         String[] path = {StringUtils.capitalize(category), StringUtils.capitalize(request)};
 
-        productService.getOrderedID(user, model);
+        //productService.getOrderedID(user, model);
 
         model.addAttribute("url",   url);
         model.addAttribute("path",  path);
         model.addAttribute("order", getOrder(user));
         model.addAttribute("page",  productService.findProducts(request, pageable, model));
+        model.addAttribute("orderedProductsID", productService.getOrderedID(user));
         return "pages/products";
     }
 
     @GetMapping("/info/{productID}")
     public String showProduct(Model model, @PathVariable String productID, @AuthenticationPrincipal User user)
     {
-        productService.getOrderedID(user, model);
-
         model.addAttribute("url", getCurrentURL(productID));
         model.addAttribute("order", getOrder(user));
         model.addAttribute("product", productRepo.findByProductID(productID));
+        model.addAttribute("orderedProductsID", productService.getOrderedID(user));
         return "pages/product";
     }
 

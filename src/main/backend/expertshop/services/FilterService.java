@@ -1,5 +1,6 @@
 package expertshop.services;
 import expertshop.domain.Product;
+import expertshop.domain.User;
 import expertshop.repos.ProductRepo;
 
 import lombok.AllArgsConstructor;
@@ -11,9 +12,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,8 +23,9 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class FilterService {
     private final ProductRepo productRepo;
+    private final ProductService productService;
 
-    public Page<Product> filterProducts(Map<String, String> filters, String request, Pageable pageable)
+    public LinkedList<Object>/*Page<Product>*/ filterProducts(Map<String, String> filters, String request, Pageable pageable, User user)
     {
         System.out.println();
         log.info("Request: " + request);
@@ -59,7 +59,17 @@ public class FilterService {
 
         int start = (int) pageable.getOffset();
         int end = (start + pageable.getPageSize()) > products.size() ? products.size() : (start + pageable.getPageSize());
-        return new PageImpl<>(products.subList(start, end), pageable, products.size());
+
+        Page page = new PageImpl<>(products.subList(start, end), pageable, products.size());
+        Set<String> orderedIDs = productService.getOrderedID(user);
+
+        LinkedList<Object> payload = new LinkedList<>();
+        payload.add(page);
+        payload.add(orderedIDs);
+
+        return payload;
+
+        //return new PageImpl<>(products.subList(start, end), pageable, products.size());
     }
 
     private List<Product> filterContainsParams(List<Product> products, Map.Entry<String, String> filter) {

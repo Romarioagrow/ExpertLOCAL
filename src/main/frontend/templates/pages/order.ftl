@@ -74,7 +74,7 @@
                             Товаров <b id="order-products">${order.productsAmount}</b>
                             Всего единиц <b id="order-amount">${order.totalAmount}</b>
                         </h3>
-                        <button onclick="displayOrderDeal()" id="order-button" type="button" class="btn btn-success btn-lg btn-block" style="margin-bottom: 5vh">Заказ подтверждаю!</button>
+                        <button onclick="confirmOrderList()" id="order-button" type="button" class="btn btn-success btn-lg btn-block" style="margin-bottom: 5vh">Заказ подтверждаю!</button>
                         <button onclick="editOrder()" id="edit-order" value="${order.orderID}" class="btn btn-indigo btn-lg btn-block mt-2" style="display: none">Изменить заказ!</button>
                     </div>
                 </div>
@@ -191,7 +191,7 @@
                                             <div class="col">
                                                 <div class="md-form">
                                                     <input type="text" id="city" name="city" class="form-control">
-                                                    <label for="city" class="">город</label>
+                                                    <label for="city" class="">Город</label>
                                                 </div>
                                             </div>
                                             <div class="col">
@@ -216,7 +216,6 @@
                                     </form>
                                 </div>
                             </div>
-
                             <#if order?has_content>
                                 <div class="text-center text-md-left">
                                     <button id="confirm-order" value="${order.orderID}" class="btn btn-primary btn-lg btn-block mt-2" style="background-color: #e52d00 !important;">Оформить заказ!</button>

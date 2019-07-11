@@ -1,11 +1,11 @@
 $(document).ready(function(){
-    $('#filter-button')         .on('click', collectFilters);
+    $('#filter-button')         .on('click', filterProducts);
 });
 $(document).ready(function(){
-    $('input[type="radio"]')    .on('change', collectFilters);
+    $('input[type="radio"]')    .on('change', filterProducts);
 });
 $(document).ready(function(){
-    $('input[type="checkbox"]') .on('change', collectFilters);
+    $('input[type="checkbox"]') .on('change', filterProducts);
 });
 
 function resolveURL() {
@@ -16,7 +16,7 @@ function resolveURL() {
     return url;
 }
 
-function collectFilters(e) {
+function filterProducts(e) {
     e.preventDefault();
     var filters = {};
 
@@ -61,9 +61,10 @@ function collectFilters(e) {
         headers: {'Content-Type': 'application/json'},
         complete: function(productsAndOrderedID)
         {
-            const response  = JSON.parse(JSON.stringify(productsAndOrderedID));
-            const products  = response.responseJSON.content;
-            const total     = response.responseJSON.totalElements;
+            const response   = JSON.parse(JSON.stringify(productsAndOrderedID));
+            const products   = response.responseJSON[0].content;
+            const total      = response.responseJSON[0].totalElements;
+            const orderedIDs = response.responseJSON[1];
 
             var currentPage = response.responseJSON.number;
             var nextPage = url+'?page='+currentPage+1;
@@ -88,27 +89,37 @@ function collectFilters(e) {
             for (var item in products)
             {
                 let product = products[item];
-                /*let displayParams = resolveDisplayType(product);
-                let orderButton = resolveOrderButton(product, orderedID);*/
-
-                var productCard = constructProductCard(product/*, displayParams, orderButton*/);
-
+                var productCard = constructProductCard(product, orderedIDs);
                 $("#products").append(productCard); ///load html block
             }
         }
     });
 }
 
-function constructProductCard(product/*, displayParams, orderButton*/) {
+function constructProductCard(product, orderedIDs) {
     const productName = product.singleType.concat(" ").concat(product.originalBrand).concat(" ").concat( product.modelName);
+
+    var buttonID = 'addToOrderDiv' + product.productID;
+    buttonID = replaceAll(buttonID, ".", "");
+    //console.log('button id Construct ' + buttonID);
+
+    let productButton;
+
+    if (orderedIDs.length !== 0 && orderedIDs.includes(product.productID))
+    {
+        productButton = '<a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>';
+    }
+    else
+    {
+        productButton = '<button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder'+product.productID+'" value="'+product.productID+'">В корзину</button>'
+    }
+
     return '<div class="card product-card">'+
         '<div class="view overlay">'+
-        /*<#if product.pic??>*/
         '<img class="img-fluid scale-pic" src="'+product.originalPic+'" alt="Product pic">'+
         '<a href="#">'+
         '<div class="mask rgba-white-slight"></div>'+
         '</a>'+
-        /*</#if>*/
         '</div>'+
         '<div class="card-body">'+
         '<h5 class="card-title">'+
@@ -121,32 +132,11 @@ function constructProductCard(product/*, displayParams, orderButton*/) {
         '<p class="card-text">'+
         '<strong><i>'+product.productType+'</i></strong>'+
         '</p>'+
-        '<h3><strong>'+(product.price).toLocaleString('ru')+' ₽</strong></h3>'+
-        '<div>'+
-        '<button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID}" value="${product.productID}">'+
-        'В корзину'+
-        '</button>'+
-        /*<#if orderedProductsID?? && orderedProductsID?seq_contains('${product.productID}')>
-            <a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
-        <#else>
-        <div id="addToOrderDiv${product.productID}">
-            <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID}" value="${product.productID}">
-            В корзину
-        </button>
-        </div>
-        </#if>*/
+        '<h3><strong>'+(product.finalPrice).toLocaleString('ru')+' ₽</strong></h3>'+
+        '<div id='+buttonID+'>'+
+        productButton +
         '</div>'+
         '</div>'+
         '</div>';
 }
 
-function resolveOrderButton(product, productsID) {
-    if (productsID.includes(product.productID.toString())) {
-        return '<br><a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>';
-    }
-    else return '<div orderedID="addToOrderDiv'+product.productID.toString()+'">'+
-        '<button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" modelName="addToOrder" orderedID="addToOrder'+product.productID+'" value="'+product.productID+'">'+
-        'В корзину'+
-        '</button>'+
-        '</div>';
-}

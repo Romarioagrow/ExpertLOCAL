@@ -68,28 +68,29 @@ public class ProductService {
         return searchedProducts;
     }
 
-    public void getOrderedID(User user, Model model)
+    public Set<String> getOrderedID(User user)
     {
         if (user != null && orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()) != null)
         {
             Order order = orderRepo.findByUserIDAndAcceptedFalse(user.getUserID());
-            collectID(order, model);
+            return collectID(order);
         }
         else if (orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID()) != null)
         {
             Order order = orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID());
-            collectID(order, model);
+            return collectID(order);
         }
-        else log.info("getOrder empty");
+        else log.info("Order empty");
+        return new HashSet<>();
     }
 
-    void collectID(Order order, Model model) {
+    Set<String> collectID(Order order) {
         Set<String> orderedProductsID = new HashSet<>();
 
         for (OrderedProduct product : order.getOrderedProducts())
-            orderedProductsID.add(product.getProductID().toString());
+            orderedProductsID.add(product.getProductID());
 
-        model.addAttribute("orderedProductsID", orderedProductsID);
+        return orderedProductsID;
     }
 }
 

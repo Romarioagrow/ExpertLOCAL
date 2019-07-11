@@ -26,13 +26,13 @@
                         <div id="carousel-thumb" class="product-page-pic carousel slide carousel-fade carousel-thumbnails" data-ride="carousel">
                             <div class="carousel-inner" role="listbox">
                                 <div class="carousel-item active">
-                                    <img class="d-block scale-pic " src="${product.originalPic}" alt="First slide" style="max-height: 15rem !important;">
+                                    <img class="d-block scale-pic " src="${product.originalPic}" alt="First slide"  style="max-height: 20rem !important;">
                                 </div>
                                 <div class="carousel-item">
-                                    <img class="d-block scale-pic" src="${product.originalPic}" alt="Second slide" style="max-height: 15rem !important;">
+                                    <img class="d-block scale-pic" src="${product.originalPic}" alt="Second slide"  style="max-height: 20rem !important;">
                                 </div>
                                 <div class="carousel-item">
-                                    <img class="d-block scale-pic" src="${product.originalPic}" alt="Third slide" style="max-height: 15rem !important;">
+                                    <img class="d-block scale-pic" src="${product.originalPic}" alt="Third slide"   style="max-height: 20rem !important;">
                                 </div>
                                 <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -43,7 +43,7 @@
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="sr-only">Next</span>
                             </a>
-                            <ol class="carousel-indicators">
+                            <#--<ol class="carousel-indicators">
                                 <li data-target="#carousel-thumb" data-slide-to="0" class="active">
                                     <img class="d-block scale-pic" src="${product.originalPic}" style="max-height: 5rem !important;">
                                 </li>
@@ -53,15 +53,24 @@
                                 <li data-target="#carousel-thumb" data-slide-to="2">
                                     <img class="d-block scale-pic" src="${product.originalPic}" style="max-height: 5rem !important;">
                                 </li>
-                            </ol>
+                            </ol>-->
                         </div>
                     </div>
                 </#if>
             </div>
             <div class="col price">
                 <h2><strong>${product.finalPrice} ₽</strong></h2>
-                <button type="button" class="btn btn-success waves-effect waves-light">Купить!</button>
-                <#if orderedProductsID??>
+                <#--<button type="button" class="btn btn-success waves-effect waves-light">Купить!</button>-->
+                <#if orderedProductsID?? && orderedProductsID?seq_contains('${product.productID}')>
+                    <a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
+                <#else>
+                    <div id="addToOrderDiv${product.productID?replace(".","")}">
+                        <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID}" value="${product.productID}">
+                            В корзину
+                        </button>
+                    </div>
+                </#if>
+                <#--<#if orderedProductsID??>
                     <#if orderedProductsID?seq_contains('${product.productID}')>
                         <br><a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
                     <#else>
@@ -77,7 +86,7 @@
                             В корзину
                         </button>
                     </div>
-                </#if>
+                </#if>-->
             </div>
         </div>
 
