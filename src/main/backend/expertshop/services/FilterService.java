@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -25,7 +24,7 @@ public class FilterService {
     private final ProductRepo productRepo;
     private final ProductService productService;
 
-    public LinkedList<Object>/*Page<Product>*/ filterProducts(Map<String, String> filters, String request, Pageable pageable, User user)
+    public LinkedList<Object> filterProducts(Map<String, String> filters, String request, Pageable pageable, User user)
     {
         System.out.println();
         log.info("Request: " + request);
@@ -66,17 +65,15 @@ public class FilterService {
         LinkedList<Object> payload = new LinkedList<>();
         payload.add(page);
         payload.add(orderedIDs);
-
-        return payload;
-
-        //return new PageImpl<>(products.subList(start, end), pageable, products.size());
+        return payload; /// payload();
     }
 
     private List<Product> filterContainsParams(List<Product> products, Map.Entry<String, String> filter) {
         String[] params = filter.getValue().split(resolveSplitter(filter.getKey()));
         log.info(Arrays.toString(params));
 
-        if (filter.getKey().contains("MultiParams")) {
+        if (filter.getKey().contains("MultiParams"))
+        {
             return products.stream().filter(product ->
             {
                 AtomicInteger matches = new AtomicInteger(0);
@@ -148,8 +145,8 @@ public class FilterService {
             boolean match = Pattern.compile(reg).matcher(annotation).find();
             log.info(match + Pattern.compile(reg).pattern());
 
-            if (match) return annotation.contains(extractName)  ? parseDouble(StringUtils.substringAfter(annotation, extractName).trim())           : 0;
-            return annotation.contains(extractName)             ? parseDouble(StringUtils.substringBetween(annotation, extractName, ";").trim())  : 0;
+            if (match) return annotation.contains(extractName)  ? parseDouble(StringUtils.substringAfter(annotation, extractName).trim())               : 0;
+            return annotation.contains(extractName)             ? parseDouble(StringUtils.substringBetween(annotation, extractName, ";").trim())   : 0;
         }
         return 0;
     }
@@ -161,61 +158,15 @@ public class FilterService {
 
     private List<Product> filterPrice(List<Product> products, Map.Entry<String, String> filter) {
         return filter.getKey().equals("sortmin") ?
-                products.stream().filter(product -> product.getPrice() >= Integer.parseInt(filter.getValue())).collect(Collectors.toList()):
-                products.stream().filter(product -> product.getPrice() <= Integer.parseInt(filter.getValue())).collect(Collectors.toList());
+                products.stream().filter(product -> product.getFinalPrice() >= Integer.parseInt(filter.getValue())).collect(Collectors.toList()):
+                products.stream().filter(product -> product.getFinalPrice() <= Integer.parseInt(filter.getValue())).collect(Collectors.toList());
     }
 
     private List<Product> filterBrands(List<Product> products, Map.Entry<String, String> filter) {
         String brands = String.join(",", filter.getValue());
         return products.stream().filter(product -> StringUtils.containsIgnoreCase(brands, product.getOriginalBrand())).collect(Collectors.toList());
     }
-
-    /// в filterComputeParams()
-    private List<Product> filterTvDiag  (List<Product> products, Map.Entry<String, String> filter) {
-        return products.stream().filter(product ->
-        {
-            if (product.getOriginalAnnotation().contains("Диагональ"))
-            {
-                String diag = StringUtils.substringBetween(product.getOriginalAnnotation(), "Диагональ:", ";").trim();
-                if (diag.contains(",")) diag = diag.replaceAll(",", ".");
-                double productDiag = Double.parseDouble(diag);
-
-                /// double computeParam = extractComputeParam();
-                /// filter.getKey.endWith("min") ?
-                return filter.getKey().equals("diagMin") ? Double.parseDouble(filter.getValue()) <= productDiag : Double.parseDouble(filter.getValue()) >= productDiag;
-            }
-            return false;
-        }).collect(Collectors.toList());
-    }
-    private List<Product> filterTvHZ    (List<Product> products, Map.Entry<String, String> filter) {
-        int hz = Integer.parseInt(filter.getValue());
-        return products.stream().filter(product ->
-        {
-            if (product.getOriginalAnnotation().contains("Индекс частоты обновления:")) ///checkParam()
-            {
-                int productHZ = Integer.parseInt(StringUtils.substringBetween(product.getOriginalAnnotation(), "Индекс частоты обновления:", ";").trim());
-                return filter.getKey().equals("hzMin") ? hz <= productHZ : hz >= productHZ;
-            }
-            return false;
-        }).collect(Collectors.toList());
-    }
-    private List<Product> filterTvResol (List<Product> products, Map.Entry<String, String> filter) {
-        String resolution = filter.getValue();
-        return products.stream().filter(product ->
-        {
-            if (product.getOriginalAnnotation().contains("Разрешение:"))
-            {
-                String productResol = StringUtils.substringBetween(product.getOriginalAnnotation(), "Разрешение", ";").trim();
-                productResol = StringUtils.substringBetween(productResol, "(", ")");
-                return resolution.contains(productResol);
-            }
-            return false;
-        }).collect(Collectors.toList());
-    }
 }
-
-
-
 
     /*private void sortProducts(List<Product> products, Map<String, String> params)
     {

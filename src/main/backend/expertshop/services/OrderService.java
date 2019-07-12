@@ -33,7 +33,7 @@ public class OrderService {
         return orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID()) != null;
     }
 
-    public Order getSessionOrder() 
+    public Order getSessionOrder()
     { ///
         Order sessionOrder = orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID());
         return (sessionOrder != null && sessionOrder.isAccepted()) ? null : sessionOrder;
@@ -63,8 +63,7 @@ public class OrderService {
     public Integer addProductToOrder(String productID, User user)
     {
         Order order;
-        ///Product product = productRepo.findByProductID(productID);///
-        OrderedProduct orderedProduct = new OrderedProduct(); ///new OrderedProduct(productID);
+        OrderedProduct orderedProduct = new OrderedProduct();
         Product product = productRepo.findByProductID(productID);
 
         if (user == null)
@@ -75,10 +74,12 @@ public class OrderService {
             {
                 order = new Order();
                 order.setSessionUUID(getSessionID());
+                order.setTotalBonus(product.getBonus());
             }
             ///
             orderedProduct.constructOrderedProduct(product);///
             order.addProductToOrder(orderedProduct);
+            order.setTotalBonus(order.extractTotalBonus());
 
             setOrderStats(order, orderedProduct.getTotalPrice());
             orderRepo.save(order);
@@ -92,17 +93,21 @@ public class OrderService {
                 log.info("NO ORDER, NEW ONE!");
                 order = new Order();
                 order.setUserID(user.getUserID());
+                order.setTotalBonus(product.getBonus());
             }
             ///
             orderedProduct.constructOrderedProduct(product); ///
             order.addProductToOrder(orderedProduct);
+            order.setTotalBonus(order.getTotalBonus() + product.getBonus());
 
             setOrderStats(order, orderedProduct.getTotalPrice());
+
             orderRepo.save(order);
         }
 
         System.out.println("\n");
         log.info("Product with ID " + productID + " add to getOrder");
+        log.info("Product bonus: " + product.getBonus());
 
         return order.getProductsAmount();
     }
@@ -112,19 +117,24 @@ public class OrderService {
         OrderedProduct orderedProduct = orderedRepo.findByOrderedID(Long.valueOf(data.get("orderedID")));
 
         if (data.get("action").contains("product-less")) {
-            if (orderedProduct.getOrderedAmount() > 1) orderedProduct.setOrderedAmount(orderedProduct.getOrderedAmount() - 1);
+            if (orderedProduct.getOrderedAmount() > 1) {
+                orderedProduct.setOrderedAmount(orderedProduct.getOrderedAmount() - 1);
+            }
             else return null;
         }
-        else orderedProduct.setOrderedAmount(orderedProduct.getOrderedAmount() + 1);
+        else {
+            orderedProduct.setOrderedAmount(orderedProduct.getOrderedAmount() + 1);
+        }
 
         orderedProduct.setTotalPrice(orderedProduct.getProductPrice() * orderedProduct.getOrderedAmount());
         orderedRepo.save(orderedProduct);
 
         Order order = resolveOrder(user);
-        order.setTotalPrice (order.getTotalOrderPrice());
-        order.setTotalAmount(order.getTotalProductsAmount());
-
+        order.setTotalPrice (order.extractTotalOrderPrice());
+        order.setTotalAmount(order.extractTotalProductsAmount());
+        order.setTotalBonus (order.extractTotalBonus());
         orderRepo.save(order);
+
         log.info("Order total price: " + order.getTotalPrice());
         return packageOrderAndProduct(order, orderedProduct);
     }
@@ -139,13 +149,13 @@ public class OrderService {
     public Order removeProductFromOrder(User user, String orderedID)
     {
         OrderedProduct orderedProduct = orderedRepo.findByOrderedID(Long.parseLong(orderedID));
-
         Order order = resolveOrder(user);
         order.getOrderedProducts().remove(orderedProduct);
 
         order.setTotalPrice     (order.getTotalPrice()      - orderedProduct.getTotalPrice());
         order.setProductsAmount (order.getOrderedProducts().size());
-        order.setTotalAmount    (order.getTotalProductsAmount());
+        order.setTotalAmount    (order.extractTotalProductsAmount());
+        order.setTotalBonus     (order.extractTotalBonus());
         orderRepo.save(order);
         orderedRepo.delete(orderedProduct);
         return order;

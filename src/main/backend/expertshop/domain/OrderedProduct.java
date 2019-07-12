@@ -35,6 +35,7 @@ public class OrderedProduct implements Serializable {
         this.setPic             (product.getOriginalPic());
         this.setProductPrice    (product.getFinalPrice());
         this.setTotalPrice      (product.getFinalPrice());
+        this.setBonus           (product.getBonus());
         this.setOrderedAmount   (1);
     }
 }

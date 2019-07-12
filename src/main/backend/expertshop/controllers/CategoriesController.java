@@ -31,7 +31,7 @@ public class CategoriesController {
     @GetMapping("/supplier")
     public String supplier()
     {
-        //productResolver.processProducts();
+        productResolver.processProducts();
         return "pages/supplier";
     }
     @PostMapping("/supplier")

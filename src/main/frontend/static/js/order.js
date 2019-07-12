@@ -44,13 +44,12 @@ function addToOrder(button) {
 
             console.log('Id блока кнопки ' + buttonID);
 
-
             $(buttonID).empty().append(
                 '<a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button>'
             );
 
             $("#productsAmount-Div").empty().append(
-            '<a orderedID="productAmount-Order" href="/order"><h5 style="color: black !important; margin-top: 1.5rem!important;">Товаров:  <span class="badge badge-primary">'+productsAmount.responseText+'</span></h5></a>'
+                '<a orderedID="productAmount-Order" href="/order"><h5 style="color: black !important; margin-top: 1.5rem!important;">Товаров:  <span class="badge badge-primary">'+productsAmount.responseText+'</span></h5></a>'
             )
         }
     });
@@ -65,8 +64,10 @@ function changeAmount(product) {
 
     console.log(data);
 
-    let amountID     = '#amount'            + data.orderedID;
-    let totalPriceID = '#total-finalPrice'  + data.orderedID;
+    let amountID        = '#amount'             + data.orderedID;
+    let totalPriceID    = '#total-price'        + data.orderedID;
+    let productBonusID  = '#productTotalBonus'  + data.orderedID;
+    let productPrAmID   = '#prAm'               + data.orderedID;
 
     data = JSON.stringify(data);
 
@@ -77,21 +78,33 @@ function changeAmount(product) {
         data: data,
         processData: false,
         headers: {'Content-Type': 'application/json'},
-        complete: function(orderAndProduct)
+        complete: function(payload)
         {
-            orderAndProduct = JSON.parse(JSON.stringify(orderAndProduct));
+            payload = JSON.parse(JSON.stringify(payload));
 
-            const order             = orderAndProduct.responseJSON[0];
-            const orderedProduct    = orderAndProduct.responseJSON[1];
+            const order             = payload.responseJSON[0];
+            const orderedProduct    = payload.responseJSON[1];
 
             console.log(orderedProduct);
             console.log(order);
 
+            var productBonus = 'Бонус за покупку: ' + (orderedProduct.bonus * orderedProduct.orderedAmount).toLocaleString('ru');
+
+            $(productPrAmID).empty().append(
+                orderedProduct.orderedAmount
+            );
             $(amountID).empty().append(
                 orderedProduct.orderedAmount
             );
             $(totalPriceID).empty().append(
-                (orderedProduct.totalPrice).toLocaleString('ru')+'₽'
+                (orderedProduct.totalPrice).toLocaleString('ru')+' ₽'
+            );
+            $(productBonusID).empty().append(
+                productBonus
+            );
+
+            $('#bonusAmount').empty().append(
+                (order.totalBonus).toLocaleString('ru')
             );
             $('#order-totalPrice').empty().append(
                 (order.totalPrice).toLocaleString('ru')+'₽'
@@ -123,6 +136,8 @@ function removeFromOrder(button) {
             for (var item in order.orderedProducts)
             {
                 let product = order.orderedProducts[item];
+                var productBonus = 'Бонус за покупку: ' + product.bonus * product.orderedAmount;
+
                 /// сервер загружает на элемент данные а ajax обновляет
                 $("#bucket-products").append
                 (
@@ -135,22 +150,26 @@ function removeFromOrder(button) {
                     '</div>' +
                     '<div class="card-body">' +
                     '<h4 class="card-title">' +
-                    '<a href="http://localhost:8080/info/'+product.productID+'">'+product.productName+'</a>'+
-                    '<div class="mt-3">'+product.productType+', <strong><i orderedID="total-finalPrice'+product.orderedID+'">' + (product.totalPrice).toLocaleString('ru') + ' ₽' + '</i></strong></div>' +
-                    '<div>' +
-                    '</div>' +
-                    '</h4>' +
+                    '<div class="mb-3">'+product.productType+'</div>'+
+                    '<a href="http://localhost:8080/info/'+product.productID+'">'+product.productName+'</a></h4>'+
+                    '<h4><strong><i id="total-price'+product.orderedID+'">'+(product.totalPrice).toLocaleString('ru') +' ₽</i></strong> за <span id="prAm'+product.orderedID+'">'+product.orderedAmount+'</span> шт.</h4>' +
+                    '<p id="productTotalBonus'+product.orderedID+'">' +
+                    productBonus +
+                    '</p>'+
                     '<p class="card-text">' +
                     '<button type="button" onclick="changeAmount(this)" id="'+product.orderedID+'" name="product-less" value="'+product.productID+'" class="btn btn-outline-danger waves-effect">-</button>' +
                     '<span class="badge badge-primary badge-pill"       id="amount'+product.orderedID+'">'+(product.orderedAmount).toLocaleString('ru')+'</span>' +
                     '<button type="button" onclick="changeAmount(this)" id="'+product.orderedID+'" name="product-more" value="'+product.productID+'" class="btn btn-outline-success waves-effect">+</button>' +
                     '</p>' +
                     '</div>' +
-                    '<button type="submit" onclick="removeFromOrder(this)" modelName="remove-product" class="btn btn-danger btn-md"  orderedID="remove-product" value="'+product.orderedID+'">Удалить</button>' +
+                    '<button type="submit" onclick="removeFromOrder(this)" class="btn btn-danger btn-md" name="remove-product" id="remove-product" value="'+product.orderedID+'">Удалить</button>' +
                     '</div>'
                 );
             }
-            
+
+            $('#bonusAmount').empty().append(
+                (order.totalBonus).toLocaleString('ru')
+            );
             $('#order-totalPrice').empty().append(
                 (order.totalPrice).toLocaleString('ru')+'₽'
             );
@@ -163,15 +182,15 @@ function removeFromOrder(button) {
             $('#productAmount-Order').empty().append(
                 '<a orderedID="productAmount-Order" href="/order" class="mt-4 mb-3"><h5 style="color: black !important;">Товаров:  <span class="badge badge-primary">'+order.productsAmount+'</span></h5></a>'
             );
-            
+
             if (order.productsAmount === 0)
             {
                 document.getElementById("order-deal-form").style.display   = "none";
                 document.getElementById("order-layout").style.display   = "none";
 
                 $('#bucket-products').empty().append(
-                '<h3 style="margin-top: 4vh">Товаров пока нет </h3>'+
-                '<a type="button" href="/" class="btn blue-gradient btn-lg btn-block">Вернуться за покупками</a>'
+                    '<h3 style="margin-top: 4vh">Товаров пока нет </h3>'+
+                    '<a type="button" href="/" class="btn blue-gradient btn-lg btn-block">Вернуться за покупками</a>'
                 )
             }
         }

@@ -101,7 +101,6 @@ function constructProductCard(product, orderedIDs) {
 
     var buttonID = 'addToOrderDiv' + product.productID;
     buttonID = replaceAll(buttonID, ".", "");
-    //console.log('button id Construct ' + buttonID);
 
     let productButton;
 
@@ -130,9 +129,9 @@ function constructProductCard(product, orderedIDs) {
         '</a>'+
         '</h5>'+
         '<p class="card-text">'+
-        '<strong><i>'+product.productType+'</i></strong>'+
-        '</p>'+
+        '<strong><i>'+product.productType+'</i></strong></p>'+
         '<h3><strong>'+(product.finalPrice).toLocaleString('ru')+' ₽</strong></h3>'+
+        '<p>Бонус: '+product.bonus+' ₽</p>'+
         '<div id='+buttonID+'>'+
         productButton +
         '</div>'+

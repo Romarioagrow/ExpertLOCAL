@@ -3,16 +3,16 @@
 <@t.template>
     <div class="container">
         <div class="row">
-            <h3 style="margin-top: 4vh">Ваш заказ</h3>
+            <h3 style="margin-top: 2rem; margin-bottom: 2rem">Ваш заказ</h3>
         </div>
         <div class="row" id="ordered-products">
             <div class="col">
-                <#if orderedProducts?has_content>
+                <#--<#if orderedProducts?has_content>
                     <div id="order-layout">
                         <button type="button" class="btn btn-light" name="cards-layout-inp">Cards</button>
                         <button type="button" class="btn btn-light" name="rows-layout-inp">Rows</button>
                     </div>
-                </#if>
+                </#if>-->
                 <div class="card-group" id="bucket-products" name="cards-layout">
                     <#if orderedProducts?has_content>
                         <#list orderedProducts as product>
@@ -25,9 +25,16 @@
                                 </div>
                                 <div class="card-body">
                                     <h4 class="card-title">
+                                        <div class="mb-3">${product.productType}</div>
                                         <a href="http://localhost:8080/info/${product.productID}">${product.productName}</a>
-                                        <div class="mt-3">${product.productType}, <strong><i id="total-price${product.orderedID?c}">${product.totalPrice} ₽</i></strong></div>
                                     </h4>
+                                    <h4>
+                                        <strong><i id="total-price${product.orderedID?c}">${product.totalPrice} ₽</i></strong> за <span id="prAm${product.orderedID?c}">${product.orderedAmount}</span> шт.
+                                    </h4>
+                                    <p id="productTotalBonus${product.orderedID?c}">
+                                        <#assign productBonus = product.bonus * product.orderedAmount>
+                                        Бонус за покупку: ${productBonus}
+                                    </p>
                                     <p class="card-text" id="cart-text-buttons" name="cart-text-buttons">
                                         <button type="button" onclick="changeAmount(this)" id="${product.orderedID?c}" name="product-less" value=" ${product.productID}" class="btn btn-outline-danger waves-effect">-</button>
                                         <span class="badge badge-primary badge-pill" id="amount${product.orderedID?c}" name="${product.orderedID}">${product.orderedAmount}</span>
@@ -69,11 +76,16 @@
             <#if order.totalAmount != 0>
                 <div class="row">
                     <div class="col" id="order-deal-form">
+                        <hr>
                         <h3 class="mt-2" style="margin-bottom: 3vh">
                             Заказ на сумму <strong id="order-totalPrice">${order.totalPrice} ₽</strong>
                             Товаров <b id="order-products">${order.productsAmount}</b>
                             Всего единиц <b id="order-amount">${order.totalAmount}</b>
                         </h3>
+                        <h5 style="margin-bottom: 3rem">
+                            За заказ будет начисленно <strong id="bonusAmount">${order.totalBonus}</strong> бонусов! <a href="http://localhost:8080/user/login">Войдите</a>, что бы получить скидку
+                        </h5>
+                        <hr>
                         <button onclick="confirmOrderList()" id="order-button" type="button" class="btn btn-success btn-lg btn-block" style="margin-bottom: 5vh">Заказ подтверждаю!</button>
                         <button onclick="editOrder()" id="edit-order" value="${order.orderID}" class="btn btn-indigo btn-lg btn-block mt-2" style="display: none">Изменить заказ!</button>
                     </div>
