@@ -1,7 +1,9 @@
 package expertshop.services;
 
+import expertshop.domain.Order;
 import expertshop.domain.User;
 import expertshop.domain.categories.Role;
+import expertshop.repos.OrderRepo;
 import expertshop.repos.UserRepo;
 import lombok.AllArgsConstructor;
 
@@ -12,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -20,15 +23,26 @@ import java.util.*;
 @Service
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
+    private final OrderRepo orderRepo;
     @Autowired
     private UserRepo userRepo;
-
     @Autowired
     private  PasswordEncoder passwordEncoder;
 
-    public boolean registerUser(User user)
+    /// ПОВТОРНАЯ ОТПРАВКА/ВЫВОД ВВЕДЕННЫХ ПОЛЕЙ ФОРМЫ
+    public boolean registerUser(User user, String sessionID, String passwordConfirm, Model model)
     {
-        if (userRepo.findByUsername(user.getUsername()) != null) {
+        if (userRepo.findByUsername(user.getUsername()) != null)
+        {
+            log.info("User already exists!");
+            model.addAttribute("message", "Пользователь уже существует!");
+            return false;
+        }
+
+        if (!user.getPassword().equals(passwordConfirm))
+        {
+            log.info("Passwords Match Error!");
+            model.addAttribute("message", "Пароли не совпадают!");
             return false;
         }
 
@@ -37,6 +51,12 @@ public class UserService implements UserDetailsService {
         user.setRoles(Collections.singleton(Role.USER));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
+
+        Order userOrder =  orderRepo.findBySessionUUIDAndAcceptedFalse(sessionID);
+        if (userOrder != null) {
+            userOrder.setUserID(user.getUserID());
+            orderRepo.save(userOrder);
+        }
 
         log.info("User " + user.getUsername() + " successfully registered!");
         return true;

@@ -17,14 +17,14 @@ public class MailService {
     @Value("${spring.mail.username}")
     private String mailFrom;
 
-    public void sendOrderDetail(StringBuilder orderList, Order order/*Integer orderID*/) {
+    public void sendOrderDetail(StringBuilder orderList, Order order) {
         SimpleMailMessage mail = new SimpleMailMessage();
         mail.setFrom(mailFrom);
-        mail.setTo("Lexx1994@gmail.com");
-        mail.setSubject("Заказ №"+order.getOrderID());
+        mail.setTo("Luke-94@list.ru");
+        mail.setSubject("Заказ №" + order.getOrderID());
         mail.setText(orderList.toString());
 
-        /// mailSender.send(mail);
+        mailSender.send(mail);
         log.info("Order №" + order.getOrderID() + " from " + order.getEmail() + " is accepted and send.");
     }
 

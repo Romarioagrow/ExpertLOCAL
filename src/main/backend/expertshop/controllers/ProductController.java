@@ -39,7 +39,7 @@ public class ProductController {
         String request = requiredProduct.replaceAll("_", " ").toLowerCase();
         String[] path = {StringUtils.capitalize(category), StringUtils.capitalize(request)};
 
-        //productService.getOrderedID(user, model);
+        log.info(orderService.getSessionID());
 
         model.addAttribute("url",   url);
         model.addAttribute("path",  path);

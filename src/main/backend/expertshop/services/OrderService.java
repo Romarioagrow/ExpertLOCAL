@@ -8,6 +8,7 @@ import expertshop.repos.OrderRepo;
 import expertshop.repos.OrderedRepo;
 import expertshop.repos.ProductRepo;
 
+import expertshop.repos.UserRepo;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 
@@ -20,10 +21,11 @@ import java.util.*;
 @Service
 @AllArgsConstructor
 public class OrderService {
-    private final MailService           mailService;
-    private final OrderRepo             orderRepo;
-    private final ProductRepo           productRepo;
-    private final OrderedRepo orderedRepo;
+    private final MailService   mailService;
+    private final OrderRepo     orderRepo;
+    private final ProductRepo   productRepo;
+    private final OrderedRepo   orderedRepo;
+    private final UserRepo      userRepo;
 
     public boolean checkUserOrder(User user) {
         return orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()) != null;
@@ -45,7 +47,7 @@ public class OrderService {
     }
 
     ///
-    private Order resolveOrder(User user) {
+    public Order resolveOrder(User user) {
         return user != null ? getUserOrder(user.getUserID()) : getSessionOrder();
     }
 
@@ -185,9 +187,9 @@ public class OrderService {
         {
             order = getSessionOrder();
 
-            order.setName   (orderContacts.getEmail());
-            order.setSurname(orderContacts.getSurname());
-            order.setMobile (orderContacts.getMobile());
+            order.setName   (orderContacts.getFirstName());
+            order.setSurname(orderContacts.getLastName());
+            order.setMobile (orderContacts.getUsername());
             order.setEmail  (orderContacts.getEmail());
 
             acceptOrder(order);
@@ -201,6 +203,8 @@ public class OrderService {
             order.setMobile (user.getEmail());
             order.setEmail  (user.getUsername());
 
+            user.setBonus(order.getTotalBonus());
+            userRepo.save(user);
             acceptOrder(order);
         }
     }
@@ -209,26 +213,26 @@ public class OrderService {
     {
         StringBuilder orderList = new StringBuilder();
 
-        /*for (OrderedProduct product : getOrder.getOrderedProducts())
+        for (OrderedProduct product : order.getOrderedProducts())
         {
             StringJoiner item = new StringJoiner (", ");
-            item    .add("\n" + product.getType() + " " + product.getBrand() + " " + product.getModel())
-                    .add("кол-во: " + product.getAmount().toString())
+            item    .add("\n" + product.getProductType() + " " + product.getProductName())
+                    .add("кол-во: " + product.getOrderedAmount().toString())
                     .add("итого \u20BD: " + product.getTotalPrice().toString())
                     .add("orderedID товара: " + product.getProductID().toString());
             orderList.append(item.toString());
-        }*/
+        }
 
         log.info(orderList.toString());
         mailService.sendOrderDetail(orderList, order);
-        mailService.sendEmailToCustomer(order, orderList);
+        //mailService.sendEmailToCustomer(order, orderList);
 
         order.setAccepted(true);
         orderRepo.save(order);
     }
 
     public Set<Order> showUserOrders(Long userID) {
-        return orderRepo.findOrdersByUserID(userID);
+        return orderRepo.findOrdersByUserIDAndAcceptedTrue(userID);
     }
 
     public String getSessionID() {

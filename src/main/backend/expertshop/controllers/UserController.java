@@ -10,15 +10,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Log
 @Controller
@@ -32,12 +27,15 @@ public class UserController {
     public String registrationPage(Model model) 
     {
         model.addAttribute("order", orderService.getSessionOrder());
+        model.addAttribute("sessionID", orderService.getSessionID());
         return "pages/registration";
     }
 
     @PostMapping("/registration")
-    public String addUser(@Valid User user, BindingResult validResult, Model model)
+    public String addUser(@Valid User user, BindingResult validResult, Model model, @RequestParam String sessionID, @RequestParam String passwordConfirm)
     {
+        model.addAttribute("sessionID", orderService.getSessionID());
+
         if (validResult.hasErrors())
         {
             Map<String, String> validErrors = ControllerService.getValidErrors(validResult);
@@ -47,27 +45,25 @@ public class UserController {
         }
         else
         {
-            if (!userService.registerUser(user))
-            {
-                log.info("User already exists!");
-                model.addAttribute("message", "User exists!");
+            if (!userService.registerUser(user, sessionID, passwordConfirm, model)) {
                 return "pages/registration";
             }
-            return "redirect:/user/login";
+            else return "redirect:/user/login";
+
         }
     }
 
     @GetMapping("/login")
-    public String loginPage(Model model) 
+    public String loginPage(Model model, @AuthenticationPrincipal User user)
     {
-        model.addAttribute("order", orderService.getSessionOrder());
+        model.addAttribute("order", orderService.resolveOrder(user));
         return "pages/login";
     }
 
     @GetMapping("/cabinet")
     public String userCabinet(Model model, @AuthenticationPrincipal User user) 
     {
-        model.addAttribute("order", orderService.getSessionOrder());
+        model.addAttribute("order", orderService.resolveOrder(user));
         model.addAttribute("orders", orderService.showUserOrders(user.getUserID()));
         return "pages/cabinet";
     }

@@ -13,16 +13,16 @@ public class OrderContacts {
     @NotBlank
     private String orderID;
 
-    @NotBlank(message = "modelName is mandatory")
-    private String name;
+    //@NotBlank(message = "firstName is mandatory")
+    private String firstName;
 
-    @NotBlank(message = "surname is mandatory")
-    private String surname;
+    //@NotBlank(message = "lastName is mandatory")
+    private String lastName;
 
-    @NotBlank(message = "email is mandatory")
-    private String mobile;
+    //@NotBlank(message = "username is mandatory")
+    private String username;
 
     @Email(message = "not an email!")
-    @NotBlank(message = "email is mandatory")
+    //@NotBlank(message = "email is mandatory")
     private String email;
 }

@@ -80,6 +80,7 @@ public class CategoriesController {
     public String getOrder(Model model, @AuthenticationPrincipal User user)
     {
         model.addAttribute("order", getOrder(user));
+        model.addAttribute("user", user);
         model.addAttribute("orderedProducts", orderService.showOrderedProducts(user));
         return "pages/order";
     }

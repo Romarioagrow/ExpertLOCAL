@@ -6,8 +6,8 @@ known = Session.SPRING_SECURITY_CONTEXT??
     user        = Session.SPRING_SECURITY_CONTEXT.authentication.principal
     firstName   = user.getFirstName()
     lastName    = user.getLastName()
-    mobile      = user.getMobile()
-    email       = user.getUsername()
+    email        = user.getEmail()
+    mobile      = user.getUsername()
 
     isAdmin     = user.isAdmin()
     isUser      = user.isUser()

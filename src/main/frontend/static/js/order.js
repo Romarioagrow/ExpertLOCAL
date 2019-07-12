@@ -242,12 +242,12 @@ $(document).ready(function() {
 });
 
 function acceptOrder() {
-    var name 	= $('#modelName').val();
-    var surname = $('#surname').val();
-    var mobile 	= $('#email').val();
-    var email 	= $('#email').val();
+    var firstName 	= $('#firstName').val();
+    var lastName    = $('#lastName').val();
+    var username 	= $('#username').val();
+    var email 	    = $('#email').val();
 
-    $(".error").remove();
+    /*$(".error").remove();
 
     function hasValidErrors(name, surname, mobile, email) {
         return name.length === 0 || surname.length === 0 || mobile.length === 0 || email.length === 0;
@@ -273,15 +273,17 @@ function acceptOrder() {
             $('#email').after('<span class="error">Введите номер в формате +7-999-666-14-88</span>');
         }
         return;
-    }
+    }*/
 
     var contacts = {
-        orderID : $('#confirm-order').val(),
-        name    : name,
-        surname : surname,
-        mobile  : mobile,
-        email   : email,
+        orderID     : $('#confirm-order').val(),
+        firstName   : firstName,
+        lastName    : lastName,
+        username    : username,
+        email       : email,
     };
+
+    console.log(contacts);
 
     contacts = JSON.stringify(contacts);
 

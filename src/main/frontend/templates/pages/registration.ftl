@@ -6,15 +6,16 @@
                 <div id="registration-error">
                 </div>
                 <form action="/user/registration" method="post" name="registration" id="registrationForm" class="text-center p-5">
+                    <input type="hidden" name="sessionID" id="sessionID" value="${sessionID}">
                     <p class="h4 mb-4">Регистрация</p>
-                    <#if userExists??>
-                    <div class="row">
-                        <div class="col">
-                            <div class="alert alert-danger" role="alert">
-                                Пользователь уже существует!
+                    <#if message??>
+                        <div class="row">
+                            <div class="col">
+                                <div class="alert alert-danger" role="alert">
+                                    ${message}
+                                </div>
                             </div>
                         </div>
-                    </div>
                     </#if>
                     <div class="form-row mb-4">
                         <div class="col">
@@ -22,7 +23,7 @@
                                    placeholder="Ваш мобильный телефон"
                                    aria-describedby="registerMobile"
                                    class="form-control ${(usernameError??)?string('is-invalid','')}"
-                                   <#--pattern="\+7(-\d{3}){2}-\d{4}"-->>
+                                    <#--pattern="\+7(-\d{3}){2}-\d{4}"-->>
                             <#--<span class="form__error">Это поле должно содержать формат</span>-->
                             <#if usernameError??>
                                 <div class="invalid-feedback">
@@ -40,9 +41,14 @@
                                     ${passwordError}
                                 </div>
                             </#if>
+                            <#if passwordsMatchError??>
+                                <div class="invalid-feedback">
+                                    Пароли не совпадают!
+                                </div>
+                            </#if>
                         </div>
                         <div class="col">
-                            <input type="password" id="registerPasswordConfirm" required class="form-control" placeholder="Повторите пароль" aria-describedby="registerPasswordConfirm">
+                            <input type="password" id="passwordConfirm" name="passwordConfirm" required class="form-control" placeholder="Повторите пароль" aria-describedby="registerPasswordConfirm">
                         </div>
                     </div>
                     <div class="form-row mb-4">
@@ -67,7 +73,7 @@
                     </div>
                     <div class="form-row mb-4">
                         <div class="col">
-                            <input type="email" id="email" name="username" required placeholder="E-mail"
+                            <input type="email" id="email" name="email" required placeholder="E-mail"
                                    class="form-control ${(emailError??)?string('is-invalid','')}">
                             <span class="form__error">Это поле должно содержать E-Mail в формате example@site.com</span>
                             <#if emailError??>

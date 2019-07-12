@@ -44,7 +44,7 @@
                                 <button type="submit" onclick="removeFromOrder(this)" class="btn btn-danger btn-md" name="remove-product" id="remove-product" value="${product.orderedID?c}">Удалить</button>
                             </div>
                         </#list>
-                        <#--fff-->
+                    <#--fff-->
                     <#else>
                         <h3 style="margin-top: 4vh">Товаров пока нет </h3>
                         <a type="button" href="/" class="btn blue-gradient btn-lg btn-block">Вернуться за покупками</a>
@@ -83,9 +83,18 @@
                             Товаров <b id="order-products">${order.productsAmount}</b>
                             Всего единиц <b id="order-amount">${order.totalAmount}</b>
                         </h3>
-                        <h5 style="margin-bottom: 3rem">
-                            За заказ будет начисленно <strong id="bonusAmount">${order.totalBonus}</strong> бонусов! <a href="http://localhost:8080/user/login">Войдите</a>, что бы получить скидку
-                        </h5>
+                        <#if !isUser>
+                            <h5 style="margin-bottom: 3rem">
+                                За заказ будет начисленно <strong id="bonusAmount">${order.totalBonus}</strong> бонусов! <a href="http://localhost:8080/user/login">Войдите</a>, что бы получить скидку
+                            </h5>
+                        <#else>
+                            <h5 style="margin-bottom: 1rem">
+                                За заказ будет начисленно <strong id="bonusAmount">${order.totalBonus}</strong> бонусов!
+                            </h5>
+                            <h5 style="margin-bottom: 3rem">
+                                Доступно бонусов: <strong>${user.bonus}</strong>
+                            </h5>
+                        </#if>
                         <hr>
                         <button onclick="confirmOrderList()" id="order-button" type="button" class="btn btn-success btn-lg btn-block" style="margin-bottom: 5vh">Заказ подтверждаю!</button>
                         <button onclick="editOrder()" id="edit-order" value="${order.orderID}" class="btn btn-indigo btn-lg btn-block mt-2" style="display: none">Изменить заказ!</button>
@@ -118,18 +127,18 @@
                     <div class="row">
                         <div class="col">
                             <div id="results"></div>
-                            <#if !isUser>
+                            <#if !isUser><#--${firstName??"val", ""}-->
                                 <form id="contact-session" name="contact-form" method="POST">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="md-form mb-0">
-                                                <input type="text" id="name" name="name" class="form-control" required>
+                                                <input type="text" id="firstName" name="firstName" class="form-control" required>
                                                 <label for="name" class="">Ваше имя</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="md-form mb-0">
-                                                <input type="text" id="surname" name="surname" class="form-control" required>
+                                                <input type="text" id="lastName" name="lastName" class="form-control" required>
                                                 <label for="family" class="">Ваша фамилия</label>
                                             </div>
                                         </div>
@@ -149,18 +158,18 @@
                                         </div>
                                     </div>
                                 </form>
-                            <#else>
-                                <form id="contact-user" name="contact-form" action="mail.php" method="POST" required>
+                            <#else><#--${firstName??"val", ""}-->
+                                <form id="contact-user" name="contact-form" method="POST" required>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="md-form mb-0">
-                                                <input type="text" id="name" name="name" class="form-control" value="${firstName}" required>
+                                                <input type="text" id="firstName" name="firstName" class="form-control" value="${firstName}" required>
                                                 <label for="name" class="">Ваше имя</label>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="md-form mb-0">
-                                                <input type="text" id="surname" name="surname" class="form-control" value="${lastName}" required>
+                                                <input type="text" id="lastName" name="lastName" class="form-control" value="${lastName}" required>
                                                 <label for="family" class="">Ваша фамилия</label>
                                             </div>
                                         </div>
@@ -168,7 +177,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="md-form mb-0">
-                                                <input type="text" id="mobile" name="mobile" class="form-control" value="${mobile}" required>
+                                                <input type="text" id="username" name="username" class="form-control" value="${mobile}" required>
                                                 <label for="mobile" class="">Ваш телефон</label>
                                             </div>
                                         </div>
