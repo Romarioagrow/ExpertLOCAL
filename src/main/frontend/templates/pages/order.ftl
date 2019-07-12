@@ -44,6 +44,7 @@
                                 <button type="submit" onclick="removeFromOrder(this)" class="btn btn-danger btn-md" name="remove-product" id="remove-product" value="${product.orderedID?c}">Удалить</button>
                             </div>
                         </#list>
+                        <#--fff-->
                     <#else>
                         <h3 style="margin-top: 4vh">Товаров пока нет </h3>
                         <a type="button" href="/" class="btn blue-gradient btn-lg btn-block">Вернуться за покупками</a>
