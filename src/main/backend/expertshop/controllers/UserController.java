@@ -49,7 +49,6 @@ public class UserController {
                 return "pages/registration";
             }
             else return "redirect:/user/login";
-
         }
     }
 

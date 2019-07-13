@@ -36,20 +36,22 @@ function addToOrder(button) {
         data: productID,
         processData: false,
         headers: {'Content-Type': 'application/json'},
-        complete: function(productsAmount)
+        complete: function(payload)
         {
-            console.log("Add product with ID " + productID);
+            console.info(payload);
+            const productsAmount = payload.responseJSON[0];
+            //console.log("Add product with ID " + productID);
+
             var buttonID = '#addToOrderDiv' + productID;
             buttonID = replaceAll(buttonID, ".", "");
-
-            console.log('Id блока кнопки ' + buttonID);
+            //console.log('Id блока кнопки ' + buttonID);
 
             $(buttonID).empty().append(
                 '<a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button>'
             );
 
             $("#productsAmount-Div").empty().append(
-                '<a orderedID="productAmount-Order" href="/order"><h5 style="color: black !important; margin-top: 1.5rem!important;">Товаров:  <span class="badge badge-primary">'+productsAmount.responseText+'</span></h5></a>'
+                '<a orderedID="productAmount-Order" href="/order"><h5 style="color: black !important; margin-top: 1.5rem!important;">Товаров:  <span class="badge badge-primary">'+productsAmount+'</span></h5></a>'
             )
         }
     });
@@ -84,6 +86,7 @@ function changeAmount(product) {
 
             const order             = payload.responseJSON[0];
             const orderedProduct    = payload.responseJSON[1];
+            const discount          = payload.responseJSON[2];
 
             console.log(orderedProduct);
             console.log(order);
@@ -103,6 +106,9 @@ function changeAmount(product) {
                 productBonus
             );
 
+            $('#total-discount').empty().append(
+                discount + '%'
+            );
             $('#bonusAmount').empty().append(
                 (order.totalBonus).toLocaleString('ru')
             );
@@ -128,9 +134,10 @@ function removeFromOrder(button) {
         type: 'DELETE',
         data: productID,
         headers: {'Content-Type': 'application/json'},
-        complete: function(orderResponse)
+        complete: function(payload)
         {
-            const order = JSON.parse(JSON.stringify(orderResponse)).responseJSON;
+            const order     = JSON.parse(JSON.stringify(payload)).responseJSON[0];
+            const discount  = JSON.parse(JSON.stringify(payload)).responseJSON[1];
 
             $("#bucket-products").empty();
             for (var item in order.orderedProducts)
@@ -167,6 +174,9 @@ function removeFromOrder(button) {
                 );
             }
 
+            $('#total-discount').empty().append(
+                discount + '%'
+            )
             $('#bonusAmount').empty().append(
                 (order.totalBonus).toLocaleString('ru')
             );
@@ -185,13 +195,10 @@ function removeFromOrder(button) {
 
             if (order.productsAmount === 0)
             {
-                document.getElementById("order-deal-form").style.display   = "none";
-                document.getElementById("order-layout").style.display   = "none";
+                document.getElementById("order-button").style.display   = "none";
+                document.getElementById("order-details").style.display  = "none";
+                document.getElementById("goToBuy").style.display        = "block";
 
-                $('#bucket-products').empty().append(
-                    '<h3 style="margin-top: 4vh">Товаров пока нет </h3>'+
-                    '<a type="button" href="/" class="btn blue-gradient btn-lg btn-block">Вернуться за покупками</a>'
-                )
             }
         }
     });
@@ -241,6 +248,44 @@ $(document).ready(function() {
     );
 });
 
+function applyDiscount(discount, bonus, orderID) {
+    data.push(discount, bonus, orderID);
+    data = JSON.stringify(data);
+
+    /*data = {
+        'discount' : discount,
+        'bonus'    : bonus
+    };*/
+    console.info(data);
+
+    $.ajax({
+        url: 'http://localhost:8080/order/discount',
+        type: 'POST',
+        dataType: 'json',
+        data: data,
+        processData: false,
+        headers: {'Content-Type': 'application/json'},
+        complete: function(payload)
+        {
+            /*console.info(payload);
+            const productsAmount = payload.responseJSON[0];
+            //console.log("Add product with ID " + productID);
+
+            var buttonID = '#addToOrderDiv' + productID;
+            buttonID = replaceAll(buttonID, ".", "");
+            //console.log('Id блока кнопки ' + buttonID);
+
+            $(buttonID).empty().append(
+                '<a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button>'
+            );
+
+            $("#productsAmount-Div").empty().append(
+                '<a orderedID="productAmount-Order" href="/order"><h5 style="color: black !important; margin-top: 1.5rem!important;">Товаров:  <span class="badge badge-primary">'+productsAmount+'</span></h5></a>'
+            )*/
+        }
+    });
+}
+
 function acceptOrder() {
     var firstName 	= $('#firstName').val();
     var lastName    = $('#lastName').val();
@@ -282,10 +327,14 @@ function acceptOrder() {
         username    : username,
         email       : email,
     };
-
     console.log(contacts);
-
     contacts = JSON.stringify(contacts);
+
+    console.log("Order accepted");
+    document.getElementById("order-deal").style.display = "none";
+    document.getElementById("edit-order").style.display = "none";
+    document.getElementById("new-order-button").style.display = "block";
+    document.getElementById("my-order-button").style.display  = "block";
 
     $.ajax({
         url:     "http://localhost:8080/order/confirm",
@@ -298,14 +347,7 @@ function acceptOrder() {
 
             if (response.length === 0)
             {
-                console.log("Order accepted");
-
-                document.getElementById("order-deal").style.display = "none";
-                document.getElementById("edit-order").style.display = "none";
-
-                document.getElementById("new-order-button").style.display = "block";
-                document.getElementById("my-order-button").style.display = "block";
-
+                /// ЗАМЕНИТЬ НА АЛЕРТ
                 $('#orderSuccess').html('<h3>Заказ подтвержден</h3>'+'');
             }
             else

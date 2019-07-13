@@ -28,6 +28,17 @@ public class CategoriesController {
     private final ProductRepo productRepo;
     private final ProductResolver productResolver;
 
+    /*ORDER*/
+    @GetMapping("/order")
+    public String getOrder(Model model, @AuthenticationPrincipal User user)
+    {
+        model.addAttribute("order", getOrder(user));
+        model.addAttribute("user", user);
+        model.addAttribute("orderedProducts", orderService.showOrderedProducts(user));
+        model.addAttribute("discount", orderService.calculateDiscount(user, getOrder(user)));
+        return "pages/order";
+    }
+
     @GetMapping("/supplier")
     public String supplier()
     {
@@ -41,7 +52,6 @@ public class CategoriesController {
         catalogParser.processFile(file);
         return "pages/supplier";
     }
-
     @GetMapping("/supplier/pics")
     public String checkProductPics()
     {
@@ -55,7 +65,6 @@ public class CategoriesController {
         model.addAttribute("order", getOrder(user));
         return "pages/catalog";
     }
-
     @GetMapping("/categories/{category}")
     public String showByCategories(Model model, @PathVariable String category, @AuthenticationPrincipal User user)
     {
@@ -65,7 +74,6 @@ public class CategoriesController {
         model.addAttribute("order", getOrder(user));
         return "pages/categories";
     }
-
     @GetMapping("/subcats/{req_subcategory}")
     public String showSubCategories( Model model, @PathVariable String req_subcategory, @AuthenticationPrincipal User user)
     {
@@ -76,14 +84,7 @@ public class CategoriesController {
         return "pages/products";
     }
 
-    @GetMapping("/order")
-    public String getOrder(Model model, @AuthenticationPrincipal User user)
-    {
-        model.addAttribute("order", getOrder(user));
-        model.addAttribute("user", user);
-        model.addAttribute("orderedProducts", orderService.showOrderedProducts(user));
-        return "pages/order";
-    }
+
 
     @GetMapping("/categories")
     public String categories() {

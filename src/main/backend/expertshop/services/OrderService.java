@@ -62,11 +62,12 @@ public class OrderService {
         else return new HashSet<>();
     }
 
-    public Integer addProductToOrder(String productID, User user)
+    public LinkedList<Integer>/*Integer*/ addProductToOrder(String productID, User user)
     {
         Order order;
         OrderedProduct orderedProduct = new OrderedProduct();
         Product product = productRepo.findByProductID(productID);
+        int discount = 0;
 
         if (user == null)
         {
@@ -101,22 +102,24 @@ public class OrderService {
             orderedProduct.constructOrderedProduct(product); ///
             order.addProductToOrder(orderedProduct);
             order.setTotalBonus(order.getTotalBonus() + product.getBonus());
-
             setOrderStats(order, orderedProduct.getTotalPrice());
-
             orderRepo.save(order);
+
+            discount = calculateDiscount(user, order);
         }
 
         System.out.println("\n");
         log.info("Product with ID " + productID + " add to getOrder");
         log.info("Product bonus: " + product.getBonus());
 
-        return order.getProductsAmount();
+        //return order.getProductsAmount();
+        return payload(order.getProductsAmount(), discount);
     }
 
-    public Queue<Object> changeAmount(User user, Map<String, String> data)
+    public LinkedList<Object> changeAmount(User user, Map<String, String> data)
     {
         OrderedProduct orderedProduct = orderedRepo.findByOrderedID(Long.valueOf(data.get("orderedID")));
+        int discount = 0;
 
         if (data.get("action").contains("product-less")) {
             if (orderedProduct.getOrderedAmount() > 1) {
@@ -137,30 +140,30 @@ public class OrderService {
         order.setTotalBonus (order.extractTotalBonus());
         orderRepo.save(order);
 
+        if (user != null) discount = calculateDiscount(user, order);
+
         log.info("Order total price: " + order.getTotalPrice());
-        return packageOrderAndProduct(order, orderedProduct);
-    }
-    private Queue<Object> packageOrderAndProduct(Order order, OrderedProduct orderedProduct)
-    {
-        Queue<Object> orderAndProduct = new LinkedList<>();
-        orderAndProduct.add(order);
-        orderAndProduct.add(orderedProduct);
-        return orderAndProduct;
+        //return packageOrderAndProduct(order, orderedProduct);
+        return payload(order, orderedProduct, discount);
     }
 
-    public Order removeProductFromOrder(User user, String orderedID)
+    public LinkedList<Object>/*Order*/ removeProductFromOrder(User user, String orderedID)
     {
         OrderedProduct orderedProduct = orderedRepo.findByOrderedID(Long.parseLong(orderedID));
         Order order = resolveOrder(user);
-        order.getOrderedProducts().remove(orderedProduct);
+        int discount = 0;
 
+        order.getOrderedProducts().remove(orderedProduct);
         order.setTotalPrice     (order.getTotalPrice()      - orderedProduct.getTotalPrice());
         order.setProductsAmount (order.getOrderedProducts().size());
         order.setTotalAmount    (order.extractTotalProductsAmount());
         order.setTotalBonus     (order.extractTotalBonus());
         orderRepo.save(order);
         orderedRepo.delete(orderedProduct);
-        return order;
+
+        if (user != null) discount = calculateDiscount(user, order);
+        return payload(order, discount);
+        //return order;
     }
 
     private void setOrderStats(Order order, Integer productTotalPrice)
@@ -191,7 +194,6 @@ public class OrderService {
             order.setSurname(orderContacts.getLastName());
             order.setMobile (orderContacts.getUsername());
             order.setEmail  (orderContacts.getEmail());
-
             acceptOrder(order);
         }
         else
@@ -217,9 +219,9 @@ public class OrderService {
         {
             StringJoiner item = new StringJoiner (", ");
             item    .add("\n" + product.getProductType() + " " + product.getProductName())
-                    .add("кол-во: " + product.getOrderedAmount().toString())
-                    .add("итого \u20BD: " + product.getTotalPrice().toString())
-                    .add("orderedID товара: " + product.getProductID().toString());
+                    .add("кол-во: "             + product.getOrderedAmount().toString())
+                    .add("итого \u20BD: "       + product.getTotalPrice().toString())
+                    .add("orderedID товара: "   + product.getProductID());
             orderList.append(item.toString());
         }
 
@@ -231,11 +233,59 @@ public class OrderService {
         orderRepo.save(order);
     }
 
+    public int calculateDiscount(User user, Order order) {
+        int discount = 0;
+        try {
+            if (user.getBonus() != null) {
+                int discountBonus = user.getBonus();
+                if (order != null && order.getTotalPrice() != 0) {
+                    int totalPrice = order.getTotalPrice();
+                    discount = 100 * discountBonus / totalPrice;
+
+                    if (discount >= 20) discount = 20;
+                    else if (discount == 0) discount = 1;
+
+                    log.info("Discount % " + discount);
+                    return discount;
+                }
+            }
+        }
+        catch (NullPointerException e) {
+            log.info(e.toString());
+        }
+        return discount;
+    }
+
+    private LinkedList<Integer> payload(Integer productsAmount, int discount) {
+        LinkedList<Integer> payload = new LinkedList<>();
+        payload.add(productsAmount);
+        payload.add(discount);
+        return payload;
+    }
+    private LinkedList<Object> payload(Order order, OrderedProduct orderedProduct, int discount) {
+        LinkedList<Object> payload = new LinkedList<>();
+        payload.add(order);
+        payload.add(orderedProduct);
+        payload.add(discount);
+        return payload;
+    }
+    private LinkedList<Object> payload(Order order, int discount) {
+        LinkedList<Object> payload = new LinkedList<>();
+        payload.add(order);
+        payload.add(discount);
+        return payload;
+    }
+
     public Set<Order> showUserOrders(Long userID) {
         return orderRepo.findOrdersByUserIDAndAcceptedTrue(userID);
     }
 
     public String getSessionID() {
         return RequestContextHolder.currentRequestAttributes().getSessionId();
+    }
+
+    public Order applyDiscount(String[] discountData) {
+        //Order order = discountData
+        return null;
     }
 }

@@ -31,6 +31,7 @@ public class ServiceController {
     private final ProductService productService;
     private final OrderService orderService;
 
+    /*PRODUCTS FILTERS*/
     @PostMapping("/products/{category}/{reqType}")
     public LinkedList<Object>/*Page<Product>*/ filterProducts
             (@RequestBody Map<String, String> params,
@@ -43,6 +44,7 @@ public class ServiceController {
         return filterService.filterProducts(params, request, pageable, user);
     }
 
+    /*PRODUCTS SEARCH*/
     @PostMapping("/search")
     public List<Product> searchProducts
             (@RequestBody String searchRequest)
@@ -50,25 +52,25 @@ public class ServiceController {
         return productService.searchProducts(searchRequest);
     }
 
+    /*ORDER*/
     @PostMapping("/order")
-    private Integer addProductToOrder
+    private LinkedList<Integer>/*Integer*/ addProductToOrder
             (@AuthenticationPrincipal User user, @RequestBody String productID)
     {
         return orderService.addProductToOrder(productID, user);
     }
-    @DeleteMapping("/order")
-    private Order removeProductFromOrder
-            (@AuthenticationPrincipal User user, @RequestBody String productID)
-    {
-        return orderService.removeProductFromOrder(user, productID);
-    }
     @PutMapping("/order")
-    private Queue<Object> changeAmount
+    private LinkedList<Object> changeAmount
             (@AuthenticationPrincipal User user, @RequestBody Map<String, String> data)
     {
         return orderService.changeAmount(user, data);
     }
-
+    @DeleteMapping("/order")
+    private LinkedList<Object>/*Order*/ removeProductFromOrder
+            (@AuthenticationPrincipal User user, @RequestBody String productID)
+    {
+        return orderService.removeProductFromOrder(user, productID);
+    }
     @PostMapping("/order/confirm")
     private Set<String> confirmOrder
             (@AuthenticationPrincipal User user, @Valid @RequestBody OrderContacts contacts, BindingResult validResult)
@@ -80,5 +82,9 @@ public class ServiceController {
             orderService.confirmOrder(contacts, user);
             return null;
         }
+    }
+    @PostMapping("/order/discount")
+    private Order applyDiscount(@RequestBody String[] discountData) {
+        return orderService.applyDiscount(discountData);
     }
 }

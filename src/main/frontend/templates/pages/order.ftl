@@ -1,129 +1,109 @@
 <#import "../parts/template.ftl" as t>
 <#include "../parts/security.ftl">
 <@t.template>
-    <div class="container">
-        <div class="row">
-            <h3 style="margin-top: 2rem; margin-bottom: 2rem">Ваш заказ</h3>
-        </div>
-        <div class="row" id="ordered-products">
-            <div class="col">
-                <#--<#if orderedProducts?has_content>
-                    <div id="order-layout">
-                        <button type="button" class="btn btn-light" name="cards-layout-inp">Cards</button>
-                        <button type="button" class="btn btn-light" name="rows-layout-inp">Rows</button>
-                    </div>
-                </#if>-->
-                <div class="card-group" id="bucket-products" name="cards-layout">
-                    <#if orderedProducts?has_content>
-                        <#list orderedProducts as product>
-                            <div class="card ordered-card mb-4">
-                                <div class="view overlay">
-                                    <img class="scale-pic" src="${product.pic}" alt="Card image cap">
-                                    <a href="#!">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <div class="mb-3">${product.productType}</div>
-                                        <a href="http://localhost:8080/info/${product.productID}">${product.productName}</a>
-                                    </h4>
-                                    <h4>
-                                        <strong><i id="total-price${product.orderedID?c}">${product.totalPrice} ₽</i></strong> за <span id="prAm${product.orderedID?c}">${product.orderedAmount}</span> шт.
-                                    </h4>
-                                    <p id="productTotalBonus${product.orderedID?c}">
-                                        <#assign productBonus = product.bonus * product.orderedAmount>
-                                        Бонус за покупку: ${productBonus}
-                                    </p>
-                                    <p class="card-text" id="cart-text-buttons" name="cart-text-buttons">
-                                        <button type="button" onclick="changeAmount(this)" id="${product.orderedID?c}" name="product-less" value=" ${product.productID}" class="btn btn-outline-danger waves-effect">-</button>
-                                        <span class="badge badge-primary badge-pill" id="amount${product.orderedID?c}" name="${product.orderedID}">${product.orderedAmount}</span>
-                                        <button type="button" onclick="changeAmount(this)" id="${product.orderedID?c}" name="product-more" value=" ${product.productID}" class="btn btn-outline-success waves-effect">+</button>
-                                    </p>
-                                </div>
-                                <button type="submit" onclick="removeFromOrder(this)" class="btn btn-danger btn-md" name="remove-product" id="remove-product" value="${product.orderedID?c}">Удалить</button>
-                            </div>
-                        </#list>
-                    <#--fff-->
-                    <#else>
-                        <h3 style="margin-top: 4vh">Товаров пока нет </h3>
-                        <a type="button" href="/" class="btn blue-gradient btn-lg btn-block">Вернуться за покупками</a>
-                    </#if>
-                </div>
-                <#--<ul class="list-group" id="bucket-products-rows" name="rows-layout" style="display: none">
-                    <#if orderedProducts??>
-                        <#list orderedProducts as product>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <img class="ordered-product-img-line" src="${product.pic}" height="50" width="80"  alt="Card image cap">
-                                <strong>${product.type}</strong> ${product.brand} ${product.model}
 
-                                <button type="button" class="btn btn-outline-danger waves-effect" onclick="changeAmount(this)" id="${product.orderedID?c}" name="product-less" value="${product.productID}">-</button>
-                                <div id="amount${product.orderedID?c}" name="${product.orderedID}"><span class="badge badge-primary badge-pill">${product.amount}</span></div>
-                                <button type="button" class="btn btn-outline-success waves-effect" onclick="changeAmount(this)" id="${product.orderedID?c}" name="product-more" value="${product.productID}">+</button>
-
-                                <strong><i id="total-price${product.orderedID}">${product.totalPrice} ₽</i></strong>
-
-                                <button type="submit" onclick="removeFromOrder(this)" class="btn btn-danger btn-md" name="remove-product" id="remove-product" value="${product.orderedID?c}">Удалить</button>
-                            </li>
-                        </#list>
-                    <#else>
-                        <h3 style="margin-top: 4vh">Пока ничего нет...</h3>
-                        <a type="button" href="/" class="btn blue-gradient btn-lg btn-block">Вернуться за покупками</a>
-                    </#if>
-                </ul>-->
-            </div>
-        </div>
+<div class="container-fluid">
+    <div class="row" style="margin-left: 10rem;">
         <#if order??>
-            <#if order.totalAmount != 0>
-                <div class="row">
-                    <div class="col" id="order-deal-form">
-                        <hr>
-                        <h3 class="mt-2" style="margin-bottom: 3vh">
-                            Заказ на сумму <strong id="order-totalPrice">${order.totalPrice} ₽</strong>
-                            Товаров <b id="order-products">${order.productsAmount}</b>
-                            Всего единиц <b id="order-amount">${order.totalAmount}</b>
-                        </h3>
-                        <#if !isUser>
-                            <h5 style="margin-bottom: 3rem">
-                                За заказ будет начисленно <strong id="bonusAmount">${order.totalBonus}</strong> бонусов! <a href="http://localhost:8080/user/login">Войдите</a>, что бы получить скидку
-                            </h5>
-                        <#else>
-                            <h5 style="margin-bottom: 1rem">
-                                За заказ будет начисленно <strong id="bonusAmount">${order.totalBonus}</strong> бонусов!
-                            </h5>
-                            <h5 style="margin-bottom: 3rem">
-                                Доступно бонусов: <strong>${user.bonus}</strong>
-                            </h5>
-                        </#if>
-                        <hr>
-                        <button onclick="confirmOrderList()" id="order-button" type="button" class="btn btn-success btn-lg btn-block" style="margin-bottom: 5vh">Заказ подтверждаю!</button>
-                        <button onclick="editOrder()" id="edit-order" value="${order.orderID}" class="btn btn-indigo btn-lg btn-block mt-2" style="display: none">Изменить заказ!</button>
-                    </div>
-                </div>
+            <#if !isUser>
+                <h3 style="margin-top: 2rem; margin-bottom: 2rem">Ваш заказ</h3>
+            <#else>
+                <h3 style="margin-top: 2rem; margin-bottom: 2rem">Ваш заказ, ${user.firstName}</h3>
             </#if>
+        <#else>
+            <h3 style="margin-top: 2rem">Товаров пока нет</h3>
         </#if>
-
-        <div class="row">
-            <div class="col">
-                <div id="orderSuccess"></div>
-                <div></div>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            <div class="card-group" id="bucket-products" name="cards-layout" style="margin-left: 10rem; width: 65rem;">
+                <#if orderedProducts?has_content>
+                    <#list orderedProducts as product>
+                        <div class="card ordered-card mb-4">
+                            <div class="view overlay">
+                                <img class="scale-pic" src="${product.pic}" alt="Card image cap">
+                                <a href="#!">
+                                    <div class="mask rgba-white-slight"></div>
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <div class="mb-3">${product.productType}</div>
+                                    <a href="http://localhost:8080/info/${product.productID}">${product.productName}</a>
+                                </h4>
+                                <h4>
+                                    <strong><i id="total-price${product.orderedID?c}">${product.totalPrice} ₽</i></strong> за <span id="prAm${product.orderedID?c}">${product.orderedAmount}</span> шт.
+                                </h4>
+                                <p id="productTotalBonus${product.orderedID?c}">
+                                    <#assign productBonus = product.bonus * product.orderedAmount>
+                                    Бонус за покупку: ${productBonus}
+                                </p>
+                                <p class="card-text" id="cart-text-buttons" name="cart-text-buttons">
+                                    <button type="button" onclick="changeAmount(this)" id="${product.orderedID?c}" name="product-less" value=" ${product.productID}" class="btn btn-outline-danger waves-effect">-</button>
+                                    <span class="badge badge-primary badge-pill" id="amount${product.orderedID?c}" name="${product.orderedID}">${product.orderedAmount}</span>
+                                    <button type="button" onclick="changeAmount(this)" id="${product.orderedID?c}" name="product-more" value=" ${product.productID}" class="btn btn-outline-success waves-effect">+</button>
+                                </p>
+                            </div>
+                            <button type="submit" onclick="removeFromOrder(this)" class="btn btn-danger btn-md" name="remove-product" id="remove-product" value="${product.orderedID?c}">Удалить</button>
+                        </div>
+                    </#list>
+                </#if>
+            </div>
+            <div>
+                <#if order?? && order.productsAmount != 0>
+                    <button onclick="confirmOrderList()" id="order-button" type="button" class="btn btn-success btn-lg btn-block"  style="margin-bottom: 3rem;margin-left: 10rem; width: 60rem;">Заказ подтверждаю!</button>
+                    <button onclick="editOrder()" id="edit-order" value="${order.orderID}" class="btn btn-indigo btn-lg btn-block mt-2" style="margin-bottom: 3rem;margin-left: 10rem; width: 60rem; display: none">Изменить заказ!</button>
+                <#else>
+                    <a type="button" href="/" class="btn blue-gradient btn-lg btn-block" style="margin-left: 10rem; width: 60rem;">Вернуться за покупками</a>
+                </#if>
+                <a type="button" id="goToBuy" href="/" class="btn blue-gradient btn-lg btn-block" style="margin-left: 10rem; width: 60rem; display: none">Вернуться за покупками</a>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <a href="/" id="new-order-button" type="button" class="btn btn-deep-purple btn-lg btn-block" style="margin-bottom: 5vh; display: none;">Новый заказ</a>
-            </div>
+        <div class="col-4">
+            <#if order??>
+                <#if order.totalAmount != 0>
+                    <div class="row">
+                        <div class="col" style="margin-top: -3rem;">
+                            <div id="order-details">
+                                <h3 class="mt-2" style="margin-bottom: 3vh">
+                                    Заказ на сумму <strong id="order-totalPrice">${order.totalPrice} ₽</strong>
+                                    <br class="mb-1">Товаров <b id="order-products">${order.productsAmount}</b>
+                                    <br class="mb-1">Всего единиц <b id="order-amount">${order.totalAmount}</b>
+                                </h3>
+                                <#if !isUser>
+                                    <h5 style="margin-bottom: 3rem">
+                                        За заказ будет начисленно <strong id="bonusAmount">${order.totalBonus}</strong> бонусов!
+                                        <br><a href="http://localhost:8080/user/login">Войдите</a>, что бы получить скидку
+                                    </h5>
+                                <#else>
+                                    <h5 style="margin-bottom: 1rem">
+                                        За заказ будет начисленно <strong id="bonusAmount">${order.totalBonus}</strong> бонусов!
+                                    </h5>
+                                <#--<h5 style="margin-bottom: 1rem">
+                                    Доступно бонусов: <strong>${user.bonus}</strong>, Ваша скидка - <strong id="total-discount">${discount}%</strong>
+                                </h5>
+                                <button type="button" onclick="applyDiscount()" class="btn btn-default btn-sm" style="margin-bottom: 3rem">Применить скидку!</button-->
+                                </#if>
+                            </div>
+                        </div>
+                    </div>
+                </#if>
+            </#if>
+        </div>
+    </div>
+    <div class="row order-deal" id="order-deal" style="width: 95rem;">
+        <div class="row" style="margin-left: 10rem; width: 95rem;">
             <#if isUser>
                 <div class="col">
-                    <a href="/user/cabinet" id="my-order-button" type="button" class="btn btn-elegant btn-lg btn-block" style="margin-bottom: 5vh; display: none;">Мои заказы</a>
+                    <h5 style="margin-bottom: 1rem">
+                        Доступно бонусов: <strong>${user.bonus}</strong>, Ваша скидка: <strong id="total-discount">${discount}%</strong>
+                    </h5>
+                    <button type="button" onclick="applyDiscount(${user.bonus}, ${discount}, ${order.orderID})" class="btn btn-default btn-sm" style="margin-bottom: 3rem">Применить скидку!</button
                 </div>
             </#if>
-        </div>
-
-        <div class="row order-deal" id="order-deal">
-            <div class="col mb-3" id="order-details">
-                <section class="mb-4">
-                    <h4 class="h4-responsive font-weight-bold text-center my-4" id="contact-info">Ваши контактные данные</h4>
+            <div class="col-8" id="order-details">
+                <section>
+                    <h4 class="h4-responsive font-weight-bold text-center" id="contact-info">Ваши контактные данные</h4>
                     <div class="row">
                         <div class="col">
                             <div id="results"></div>
@@ -190,9 +170,7 @@
                                     </div>
                                 </form>
                             </#if>
-
                             <h4 class="h4-responsive font-weight-bold text-center my-4">Способ получения товара</h4>
-
                             <ul class="nav md-pills pills-secondary">
                                 <li class="nav-item">
                                     <a class="nav-link active" data-toggle="tab" href="#panel11" role="tab">Самовывоз со склада</a>
@@ -207,7 +185,7 @@
                                 </div>
                                 <div class="tab-pane fade" id="panel12" role="tabpanel">
                                     <br>
-                                    <h3>Ваш адрес для доставки:</h3>
+                                    <h3>Адрес для доставки:</h3>
                                     <form id="self-delivery-block" name="contact-form" action="mail.php" method="POST">
                                         <div class="row">
                                             <div class="col">
@@ -240,7 +218,7 @@
                             </div>
                             <#if order?has_content>
                                 <div class="text-center text-md-left">
-                                    <button id="confirm-order" value="${order.orderID}" class="btn btn-primary btn-lg btn-block mt-2" style="background-color: #e52d00 !important;">Оформить заказ!</button>
+                                    <button id="confirm-order" value="${order.orderID}" class="btn btn-primary btn-lg btn-block mt-2" style="background-color: #e52d00 !important; width: 60rem; margin-bottom: 5rem">Оформить заказ!</button>
                                 </div>
                             </#if>
                         </div>
@@ -249,5 +227,50 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col">
+            <div id="orderSuccess"></div>
+            <div></div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <a href="/" id="new-order-button" type="button" class="btn btn-deep-purple btn-lg btn-block" style="margin-bottom: 5rem; background-color: #e42c00 !important; width: 30rem; display: none;">Новый заказ</a>
+        </div>
+        <#if isUser>
+            <div class="col">
+                <a href="/user/cabinet" id="my-order-button" type="button" class="btn btn-elegant btn-lg btn-block" style="margin-bottom: 5rem; width: 30rem; display: none;">Мои заказы</a>
+            </div>
+        </#if>
+    </div>
     <script src="/../lib/mobilemask.js"></script>
-</@t.template>
+    </@t.template>
+
+
+    <#--
+    <#if orderedProducts?has_content>
+        <div id="order-layout">
+            <button type="button" class="btn btn-light" name="cards-layout-inp">Cards</button>
+            <button type="button" class="btn btn-light" name="rows-layout-inp">Rows</button>
+        </div>
+    </#if>
+
+    <ul class="list-group" id="bucket-products-rows" name="rows-layout" style="display: none">
+        <#if orderedProducts??>
+            <#list orderedProducts as product>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <img class="ordered-product-img-line" src="${product.pic}" height="50" width="80"  alt="Card image cap">
+                    <strong>${product.type}</strong> ${product.brand} ${product.model}
+                    <button type="button" class="btn btn-outline-danger waves-effect" onclick="changeAmount(this)" id="${product.orderedID?c}" name="product-less" value="${product.productID}">-</button>
+                    <div id="amount${product.orderedID?c}" name="${product.orderedID}"><span class="badge badge-primary badge-pill">${product.amount}</span></div>
+                    <button type="button" class="btn btn-outline-success waves-effect" onclick="changeAmount(this)" id="${product.orderedID?c}" name="product-more" value="${product.productID}">+</button>
+                    <strong><i id="total-price${product.orderedID}">${product.totalPrice} ₽</i></strong>
+                    <button type="submit" onclick="removeFromOrder(this)" class="btn btn-danger btn-md" name="remove-product" id="remove-product" value="${product.orderedID?c}">Удалить</button>
+                </li>
+            </#list>
+        <#else>
+            <h3 style="margin-top: 4vh">Пока ничего нет...</h3>
+            <a type="button" href="/" class="btn blue-gradient btn-lg btn-block">Вернуться за покупками</a>
+        </#if>
+    </ul>
+    -->

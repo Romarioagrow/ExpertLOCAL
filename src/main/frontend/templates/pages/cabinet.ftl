@@ -37,7 +37,6 @@
                             </#list>
                         <#else>
                             <h3>Заказов пока нет</h3>
-                            <a type="button" href="/" class="btn blue-gradient btn-lg btn-block">Сделать заказ</a>
                         </#if>
                     </div>
                     <div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
@@ -47,6 +46,11 @@
                         Мои акции и бонусы
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <a type="button" href="/" class="btn btn-lg btn-block" style="margin-top: 3rem; background-color: #e42c00 !important; color: #e0e0e0">Новый заказ</a>
             </div>
         </div>
     </div>
