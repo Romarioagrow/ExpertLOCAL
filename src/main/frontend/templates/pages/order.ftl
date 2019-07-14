@@ -1,12 +1,8 @@
 <#import "../parts/template.ftl" as t>
 <#include "../parts/security.ftl">
 <@t.template>
-    <div>
-        <input type="hidden" value="" id="orderPriceHidden">
-        <input type="hidden" value="" id="userBonusHidden">
-    </div>
     <div class="container-fluid">
-        <div class="row" style="margin-left: 10rem;">
+        <#--<div class="row" style="margin-left: 10rem;">
             <#if order??>
                 <#if !isUser>
                     <h3 style="margin-top: 2rem; margin-bottom: 2rem">Ваш заказ</h3>
@@ -16,7 +12,7 @@
             <#else>
                 <h3 style="margin-top: 2rem">Товаров пока нет</h3>
             </#if>
-        </div>
+        </div>-->
         <div class="row">
             <div class="col-8">
                 <div class="card-group" id="bucket-products" name="cards-layout" style="margin-left: 10rem; width: 65rem;">
@@ -65,34 +61,138 @@
             <div class="col-4">
                 <#if order??>
                     <#if order.totalAmount != 0>
-                        <div class="row">
-                            <div class="col" style="margin-top: -3rem;">
-                                <div id="order-details">
-                                    <h3 class="mt-2" style="margin-bottom: 3vh">
+                        <div id="order-details">
+                            <div class="card chart-card" style="width: 30rem">
+                                <div class="card-body pb-0">
+                                    <h4 class="card-title">
+                                        <#if order??>
+                                            <#if !isUser>
+                                                Ваш заказ
+                                            <#else>
+                                                <strong>${user.firstName}</strong>, Ваш заказ
+                                            </#if>
+                                        <#else>
+                                            Товаров пока нет
+                                        </#if>
+                                    </h4>
+                                    <p class="card-text mb-4">
+                                        на сумму
+                                    </p>
+                                    <div class="d-flex justify-content-between">
+                                        <p class="display-4 align-self-end">
+                                            <#if !order.discountApplied>
+                                            <strong id="order-totalPrice">${order.totalPrice}</strong> <span style="font-weight: normal !important;">₽</span>
+                                            <#else>
+                                            <strong id="order-totalPrice" style="color: #00c851">${order.discountPrice}</strong> <span>₽</span>
+                                            </#if>
+                                        </p>
+                                        <p class="align-self-end pb-2">
+                                            <#if !order.discountApplied>
+                                                без учета скидки
+                                            <#else>
+                                                с учетом скидки
+                                            </#if>
+                                        </p>
+                                    </div>
+                                    <p class="h5 mb-4">
+                                        <#if !isUser>
+                                            <strong id="bonusAmount">${order.totalBonus}</strong> <span style="font-weight: normal !important;">бонусов будет зачисленно!</span>
+                                            <a href="http://localhost:8080/user/login">Войдите</a>, что бы получить скидку!
+                                        <#else>
+                                            <strong id="bonusAmount">${order.totalBonus}</strong> <span style="font-weight: normal !important;">бонусов будет зачисленно!</span>
+                                        </#if>
+                                    </p>
+                                    <hr>
+                                    <ul class="list-unstyled d-flex justify-content-start mb-0">
+                                        <li>Всего товаров</li>
+                                        <li>
+                                            <div class="chip ml-3">
+                                                <b id="order-products">${order.productsAmount}</b>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                    <ul class="list-unstyled d-flex justify-content-start mb-0">
+                                        <li>Общее количество</li>
+                                        <li>
+                                            <div class="chip ml-3">
+                                                <b id="order-amount">${order.totalAmount}</b>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <#if isUser>
+                                    <div class="rounded-bottom mdb-color lighten-3 text-center pt-3">
+                                        <ul class="list-unstyled list-inline font-small">
+                                            <p class="card-text">
+                                                <#assign bonusAvailable = user.bonus - order.bonusOff>
+                                                Доступно бонусов: <strong id="userBonusUpper">${bonusAvailable}</strong>
+                                            </p>
+                                        </ul>
+                                    </div>
+                                </#if>
+                            </div>
+
+                            <!-- Card -->
+                            <#--<div class="card">
+                                <div class="card-body">
+                                    <div h4 class="card-title">
+                                        <#if order??>
+                                            <#if !isUser>
+                                                Ваш заказ
+                                            <#else>
+                                                Ваш заказ, ${user.firstName}
+                                            </#if>
+                                        <#else>
+                                            Товаров пока нет
+                                        </#if>
+                                    </div>
+                                    <hr>
+                                    <p>
                                         <#if !order.discountApplied>
                                             Заказ на сумму <strong id="order-totalPrice">${order.totalPrice} ₽</strong>
                                         <#else>
                                             Заказ на сумму <strong id="order-totalPrice" style="color: #007e33">${order.discountPrice} ₽</strong>
                                         </#if>
-                                        <br class="mb-1">Товаров <b id="order-products">${order.productsAmount}</b>
-                                        <br class="mb-1">Всего единиц <b id="order-amount">${order.totalAmount}</b>
-                                    </h3>
+                                    </p>
+                                    <p>
+                                        <br>Товаров <b id="order-products">${order.productsAmount}</b>
+                                    </p>
+                                    <p class="card-text" >
+                                        <br>Всего единиц <b id="order-amount">${order.totalAmount}</b>
+                                    </p>
+
                                     <#if !isUser>
-                                        <h5 style="margin-bottom: 3rem">
+                                        <p class="card-text">
                                             За заказ будет начисленно <strong id="bonusAmount">${order.totalBonus}</strong> бонусов!
                                             <br><a href="http://localhost:8080/user/login">Войдите</a>, что бы получить скидку!
-                                        </h5>
+                                        </p>
                                     <#else>
-                                        <h5 style="margin-bottom: 1rem">
+                                        <p class="card-text" &lt;#&ndash;style="margin-bottom: 1rem"&ndash;&gt;>
                                             За заказ будет начисленно <strong id="bonusAmount">${order.totalBonus}</strong> бонусов!
-                                        </h5>
-                                        <h5 style="margin-bottom: 1rem">
+                                        </p>
+                                        <p class="card-text">
                                             <#assign bonusAvailable = user.bonus - order.bonusOff>
                                             Доступно бонусов: <strong id="userBonusUpper">${bonusAvailable}</strong>
-                                        </h5>
+                                        </p>
                                     </#if>
                                 </div>
-                            </div>
+                                <#if isUser>
+                                    <div class="rounded-bottom mdb-color lighten-3 text-center pt-3">
+                                        <ul class="list-unstyled list-inline font-small">
+
+                                            <p class="card-text">
+                                                <#assign bonusAvailable = user.bonus - order.bonusOff>
+                                                Доступно бонусов: <strong id="userBonusUpper">${bonusAvailable}</strong>
+                                            </p>
+
+                                            &lt;#&ndash;<li class="list-inline-item pr-2 white-text"><i class="far fa-clock pr-1"></i>05/10/2015</li>
+                                            <li class="list-inline-item pr-2"><a href="#" class="white-text"><i class="far fa-comments pr-1"></i>12</a></li>
+                                            <li class="list-inline-item pr-2"><a href="#" class="white-text"><i class="fab fa-facebook-f pr-1"> </i>21</a></li>
+                                            <li class="list-inline-item"><a href="#" class="white-text"><i class="fab fa-twitter pr-1"> </i>5</a></li>&ndash;&gt;
+                                        </ul>
+                                    </div>
+                                </#if>
+                            </div>-->
                         </div>
                     </#if>
                 </#if>

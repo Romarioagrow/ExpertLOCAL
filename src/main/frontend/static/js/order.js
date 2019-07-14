@@ -99,7 +99,7 @@ function changeAmount(product) {
                 orderedProduct.orderedAmount
             );
             $(totalPriceID).empty().append(
-                (orderedProduct.totalPrice).toLocaleString('ru')+' ₽'
+                (orderedProduct.totalPrice).toLocaleString('ru')
             );
             $(productBonusID).empty().append(
                 productBonus
@@ -112,7 +112,7 @@ function changeAmount(product) {
                 (order.totalBonus).toLocaleString('ru')
             );
             $('#order-totalPrice').empty().append(
-                (order.totalPrice).toLocaleString('ru')+'₽'
+                (order.totalPrice).toLocaleString('ru')
             );
             $('#order-products').empty().append(
                 order.productsAmount
@@ -158,7 +158,7 @@ function removeFromOrder(button) {
                     '<h4 class="card-title">' +
                     '<div class="mb-3">'+product.productType+'</div>'+
                     '<a href="http://localhost:8080/info/'+product.productID+'">'+product.productName+'</a></h4>'+
-                    '<h4><strong><i id="total-price'+product.orderedID+'">'+(product.totalPrice).toLocaleString('ru') +' ₽</i></strong> за <span id="prAm'+product.orderedID+'">'+product.orderedAmount+'</span> шт.</h4>' +
+                    '<h4><strong><i id="total-price'+product.orderedID+'">'+(product.totalPrice).toLocaleString('ru') +'</i></strong> за <span id="prAm'+product.orderedID+'">'+product.orderedAmount+'</span> шт.</h4>' +
                     '<p id="productTotalBonus'+product.orderedID+'">' +
                     productBonus +
                     '</p>'+
@@ -180,7 +180,7 @@ function removeFromOrder(button) {
                 (order.totalBonus).toLocaleString('ru')
             );
             $('#order-totalPrice').empty().append(
-                (order.totalPrice).toLocaleString('ru')+'₽'
+                (order.totalPrice).toLocaleString('ru')
             );
             $('#order-products').empty().append(
                 order.productsAmount
@@ -255,8 +255,6 @@ function applyDiscount(bonus, discount, orderID) {
     };
     data = JSON.stringify(data);
 
-    /*set hidden*/
-
     $.ajax({
         url: 'http://localhost:8080/order/discount',
         type: 'POST',
@@ -275,17 +273,14 @@ function applyDiscount(bonus, discount, orderID) {
             (
                 '<h5 style="margin-bottom: 1rem">Ваша скидка '+order.discountPercent+'%!</h5>'
             );
-            /*1 ВЫ ПРИМЕНЛИ СКИДКУ В 15%! applyDiscount discountApplied*/
 
             $('#order-totalPrice').empty().append(
-                '<span style="color: #007e33">'+(order.discountPrice).toLocaleString('ru')+'₽</span>'
+                '<span style="color: #007e33">'+(order.discountPrice).toLocaleString('ru')+'</span>'
             );
-            /*2 ЗАКАЗ НА СУММУ */
 
             $('#userBonusUpper').empty().append(
-                (user.bonus - order.bonusOff).toLocaleString('ru')+'₽'
+                (user.bonus - order.bonusOff).toLocaleString('ru')
             );
-            /*3 ДОСТУПНО БОНУСОВ */
         }
     });
 }
@@ -335,14 +330,13 @@ function acceptOrder() {
     contacts = JSON.stringify(contacts);
 
     console.log("Order accepted");
-    document.getElementById("order-deal").style.display = "none";
-    document.getElementById("edit-order").style.display = "none";
-
+    document.getElementById("order-deal").style.display  = "none";
+    document.getElementById("edit-order").style.display  = "none";
     document.getElementById("orderLoader").style.display = "block";
     /*ОБНОВЛЯТЬ ИНФОРМАЦИЮ О БОНУСАХ*/
     $.ajax({
-        url:     "http://localhost:8080/order/confirm",
-        type:     "POST",
+        url:  "http://localhost:8080/order/confirm",
+        type: "POST",
         data: contacts,
         headers: {'Content-Type': 'application/json'},
         success: function(response)
@@ -377,7 +371,9 @@ function acceptOrder() {
         },
         error: function(response) {
             document.getElementById("orderLoader").style.display = "none";
-            $('#results').html('Ошибка. Данные не отправлены.');
+            $('#orderStatus').html(
+                '<div class="alert alert-danger" role="alert" style="width: 60rem;margin-left: -1rem;">Ошибка, данные не отправленны!</div>'
+            );
         }
     });
 }
