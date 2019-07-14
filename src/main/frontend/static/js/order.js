@@ -270,7 +270,7 @@ function applyDiscount(bonus, discount, orderID) {
             const user  = payload.responseJSON[1];
 
             $('#applyDiscount').empty().append(
-                '<h4 className="card-title font-weight-bold" style="margin-bottom: 2rem">Ваша скидка '+order.discountPercent+'%!</strong></h4>'
+                '<h4 className="card-title font-weight-bold" style="margin-bottom: 2rem">Ваша скидка <strong style="color: #00c851">'+order.discountPercent+'%</strong></h4>'
             );
             $('#order-totalPrice').empty().append(
                 '<span style="color: #007e33">'+(order.discountPrice).toLocaleString('ru')+'</span>'

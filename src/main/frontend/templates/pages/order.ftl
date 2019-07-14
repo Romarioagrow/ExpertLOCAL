@@ -98,7 +98,7 @@
                                     <p class="h5 mb-4">
                                         <#if !isUser>
                                             <strong id="bonusAmount">${order.totalBonus}</strong> <span style="font-weight: normal !important;">бонусов будет зачисленно!</span>
-                                            <a href="http://localhost:8080/user/login">Войдите</a>, что бы получить скидку!
+                                            <br class="mb-2"><a href="http://localhost:8080/user/login">Войдите</a>, что бы получить скидку!
                                         <#else>
                                             <strong id="bonusAmount">${order.totalBonus}</strong> <span style="font-weight: normal !important;">бонусов будет зачисленно!</span>
                                         </#if>
@@ -187,7 +187,7 @@
                                 </div>
                             <#else>
                                 <h4 class="card-title font-weight-bold" style="margin-bottom: 2rem">
-                                    Ваша скидка <strong>${order.discountPercent}%!</strong>
+                                    Ваша скидка <strong style="color: #00c851">${order.discountPercent}%</strong>
                                 </h4>
                             </#if>
                         </#if>
@@ -197,7 +197,7 @@
                                     <p class="h4 mb-4" id="contact-info">Ваши контактные данные</p>
                                 </div>
                             </div>
-                            <div class="row" style="width: 60rem;">
+                            <div class="row mb-2" style="width: 60rem;">
                                 <div class="col-md-6">
                                     <div class="md-form">
                                         <input type="text" id="firstName" name="firstName" class="form-control" <#if isUser>value="${firstName}"</#if> required>
@@ -211,7 +211,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-2">
                                 <div class="col-md-6">
                                     <div class="md-form">
                                         <input type="text" id="username" name="username" class="form-control" <#if isUser>value="${mobile}"</#if>  required>
