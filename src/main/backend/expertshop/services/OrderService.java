@@ -182,6 +182,68 @@ public class OrderService {
         }
     }
 
+    public int calculateDiscount(User user, Order order) {
+        int discount = 0;
+        try {
+            if (user.getBonus() != null)
+            {
+                int discountBonus = user.getBonus();
+                if (discountBonus == 0)
+                {
+                    return discount;
+                }
+                else if (order != null && order.getTotalPrice() != 0)
+                {
+                    int totalPrice = order.getTotalPrice();
+                    discount = 100 * discountBonus / totalPrice;
+
+                    if (discount >= 20) discount = 20;
+                    else if (discount == 0) discount = 1;
+
+                    log.info("Discount % " + discount);
+                    return discount;
+                }
+            }
+        }
+        catch (NullPointerException e) {
+            log.warning(e.toString());
+        }
+        return discount;
+    }
+
+    public LinkedList<Object> applyDiscount(Map<String, String> discountData, User user) {
+        log.info(discountData.toString());
+
+        Order order = orderRepo.findByOrderID(Long.parseLong(discountData.get("orderID")));
+        int bonusOff = Integer.parseInt(discountData.get("bonus"));
+        int discountPercent = Integer.parseInt(discountData.get("discount"));
+
+        if (discountPercent == 0) {
+            return null;
+        }
+        else if (discountPercent < 20)
+        {
+            order.setDiscountPrice(order.getTotalPrice() - bonusOff);
+            //user.setBonus(user.getBonus() - bonusOff);
+            order.setTotalDiscount(discountPercent);
+            order.setBonusOff(bonusOff);
+        }
+        else if (discountPercent == 20)
+        {
+            int bonusOffPart = order.getTotalPrice() * discountPercent / 100;
+            order.setDiscountPrice(order.getTotalPrice() - bonusOffPart);
+            order.setTotalDiscount(bonusOffPart);
+            order.setBonusOff(bonusOffPart);
+            //user.setBonus(user.getBonus() - bonusOffPart);
+        }
+        order.setDiscountPercent(discountPercent);
+        order.setDiscountApplied(true);
+
+        userRepo.save(user);
+        orderRepo.save(order);
+        return payload(order, user);
+    }
+
     public void confirmOrder(OrderContacts orderContacts, User user)
     {
         Order order;
@@ -205,12 +267,16 @@ public class OrderService {
             order.setMobile (user.getEmail());
             order.setEmail  (user.getUsername());
 
-            user.setBonus(order.getTotalBonus());
+            int bonusOff;
+            if (order.getBonusOff() == null) bonusOff = 0;
+            else bonusOff = order.getBonusOff();
+
+            user.setBonus(user.getBonus() - bonusOff);
+            user.setBonus(user.getBonus() + order.getTotalBonus());
             userRepo.save(user);
             acceptOrder(order);
         }
     }
-
     private void acceptOrder(Order order)
     {
         StringBuilder orderList = new StringBuilder();
@@ -231,29 +297,7 @@ public class OrderService {
 
         order.setAccepted(true);
         orderRepo.save(order);
-    }
-
-    public int calculateDiscount(User user, Order order) {
-        int discount = 0;
-        try {
-            if (user.getBonus() != null) {
-                int discountBonus = user.getBonus();
-                if (order != null && order.getTotalPrice() != 0) {
-                    int totalPrice = order.getTotalPrice();
-                    discount = 100 * discountBonus / totalPrice;
-
-                    if (discount >= 20) discount = 20;
-                    else if (discount == 0) discount = 1;
-
-                    log.info("Discount % " + discount);
-                    return discount;
-                }
-            }
-        }
-        catch (NullPointerException e) {
-            log.info(e.toString());
-        }
-        return discount;
+        log.fine("Order " + order.getOrderID() + " is accepted!");
     }
 
     private LinkedList<Integer> payload(Integer productsAmount, int discount) {
@@ -269,12 +313,13 @@ public class OrderService {
         payload.add(discount);
         return payload;
     }
-    private LinkedList<Object> payload(Order order, int discount) {
+    private LinkedList<Object> payload(Order order, Object discount) {
         LinkedList<Object> payload = new LinkedList<>();
         payload.add(order);
         payload.add(discount);
         return payload;
     }
+
 
     public Set<Order> showUserOrders(Long userID) {
         return orderRepo.findOrdersByUserIDAndAcceptedTrue(userID);
@@ -284,8 +329,5 @@ public class OrderService {
         return RequestContextHolder.currentRequestAttributes().getSessionId();
     }
 
-    public Order applyDiscount(String[] discountData) {
-        //Order order = discountData
-        return null;
-    }
+
 }

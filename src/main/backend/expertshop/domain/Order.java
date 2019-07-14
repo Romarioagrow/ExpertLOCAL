@@ -7,7 +7,6 @@ import lombok.extern.java.Log;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -39,18 +38,21 @@ public class Order implements Serializable {
     private Boolean accepted        = false;
     private Boolean confirmed       = false;
     private Boolean completed       = false;
+    private Boolean discountApplied = false;
 
     private Integer totalPrice      = 0;
     private Integer productsAmount  = 0;
     private Integer totalAmount     = 0;
+    private Integer totalDiscount   = 0;
+    private Integer totalBonus, bonusOff      = 0; /// bonusOff @Column(name = "discount")
+
+    private Integer discountPercent, discountPrice;
 
     private String name;
     private String surname;
     private String mobile;
     private String email;
     private String address;
-
-    private Integer totalBonus = 0;
 
     @Column(name = "open_date")
     private LocalDateTime orderOpenDate = LocalDateTime.now();
@@ -75,7 +77,6 @@ public class Order implements Serializable {
         }
         return totalPrice;
     }
-
     public Integer extractTotalProductsAmount() {
         Integer orderedAmount = 0;
         for (OrderedProduct product : orderedProducts) {
@@ -83,7 +84,6 @@ public class Order implements Serializable {
         }
         return orderedAmount;
     }
-
     public Integer extractTotalBonus() {
         int totalBonus = 0;
         for (OrderedProduct product : orderedProducts) {

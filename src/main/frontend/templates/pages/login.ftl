@@ -14,20 +14,20 @@
                         </div>
                     </#if>
                     <form action="/user/login" method="post" class="text-center mt-5">
-                        <p class="h4 mb-4">Вход в личный кабинет</p>
+                        <h2 class="mb-4">Вход в личный кабинет</h2>
                         <input type="text" id="username" name="username" class="form-control mb-4" placeholder="Номер телефона">
                         <input type="password" id="password" name="password" class="form-control mb-4" placeholder="Пароль">
 
                         <button class="btn btn-elegant btn-block my-4" type="submit">Войти</button>
-                        <p>Зашли впервые?
-                            <a href="/user/registration">Зарегистрируйтесь</a>
-                        </p>
-                        <div>
-                            <p>Через социальные сети</p>
+                        <h2>Зашли впервые?
+                            <h3><a href="/user/registration">Зарегистрируйтесь</a></h3>
+                        </h2>
+                        <#--<div style="margin-left: 45rem;">
+                            <h3>Через социальные сети</h3>
                             <button type="button" class="btn btn-gplus"><i class="fab pr-1"></i> Google </button>
                             <button type="button" class="btn btn-so"><i class="fab pr-1"></i>Yandex</button>
                             <button type="button" class="btn btn-li"><i class="fab pr-1"></i>Mail.ru</button>
-                        </div>
+                        </div>-->
                     </form>
                 </div>
             </div>

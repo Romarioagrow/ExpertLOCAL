@@ -34,11 +34,11 @@ public class ServiceController {
     /*PRODUCTS FILTERS*/
     @PostMapping("/products/{category}/{reqType}")
     public LinkedList<Object>/*Page<Product>*/ filterProducts
-            (@RequestBody Map<String, String> params,
-             @PathVariable String reqType,
-             @AuthenticationPrincipal User user,
-             @PathVariable String category,
-             @PageableDefault(sort = {"supplier"}, direction = Sort.Direction.ASC, size = 100) Pageable pageable)
+    (@RequestBody Map<String, String> params,
+     @PathVariable String reqType,
+     @AuthenticationPrincipal User user,
+     @PathVariable String category,
+     @PageableDefault(sort = {"supplier"}, direction = Sort.Direction.ASC, size = 100) Pageable pageable)
     {
         String request = StringUtils.capitalize(reqType.replaceAll("_", " "));
         return filterService.filterProducts(params, request, pageable, user);
@@ -47,15 +47,15 @@ public class ServiceController {
     /*PRODUCTS SEARCH*/
     @PostMapping("/search")
     public List<Product> searchProducts
-            (@RequestBody String searchRequest)
+    (@RequestBody String searchRequest)
     {
         return productService.searchProducts(searchRequest);
     }
 
     /*ORDER*/
     @PostMapping("/order")
-    private LinkedList<Integer>/*Integer*/ addProductToOrder
-            (@AuthenticationPrincipal User user, @RequestBody String productID)
+    private LinkedList<Integer> addProductToOrder
+    (@AuthenticationPrincipal User user, @RequestBody String productID)
     {
         return orderService.addProductToOrder(productID, user);
     }
@@ -66,7 +66,7 @@ public class ServiceController {
         return orderService.changeAmount(user, data);
     }
     @DeleteMapping("/order")
-    private LinkedList<Object>/*Order*/ removeProductFromOrder
+    private LinkedList<Object> removeProductFromOrder
             (@AuthenticationPrincipal User user, @RequestBody String productID)
     {
         return orderService.removeProductFromOrder(user, productID);
@@ -78,13 +78,14 @@ public class ServiceController {
         if (validResult.hasErrors()) {
             return ControllerService.getValidErrorsSet(validResult);
         }
-        else {
+        else
+        {
             orderService.confirmOrder(contacts, user);
             return null;
         }
     }
     @PostMapping("/order/discount")
-    private Order applyDiscount(@RequestBody String[] discountData) {
-        return orderService.applyDiscount(discountData);
+    private LinkedList<Object> applyDiscount(@RequestBody Map<String, String> discountData, @AuthenticationPrincipal User user) {
+        return orderService.applyDiscount(discountData, user);
     }
 }

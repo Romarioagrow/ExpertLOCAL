@@ -29,7 +29,7 @@ public class UserService implements UserDetailsService {
     @Autowired
     private  PasswordEncoder passwordEncoder;
 
-    /// ПОВТОРНАЯ ОТПРАВКА/ВЫВОД ВВЕДЕННЫХ ПОЛЕЙ ФОРМЫ
+    /// ПОВТОРНАЯ ОТПРАВКА/ВЫВОД ВВЕДЕННЫХ ПОЛЕЙ ФОРМЫ!!!
     public boolean registerUser(User user, String sessionID, String passwordConfirm, Model model)
     {
         if (userRepo.findByUsername(user.getUsername()) != null)

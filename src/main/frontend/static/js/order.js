@@ -29,6 +29,14 @@ function addToOrder(button) {
     const productID = button.value;
     console.log(productID);
 
+    var buttonID = '#addToOrderDiv' + productID;
+    buttonID = replaceAll(buttonID, ".", "");
+    //console.log('Id блока кнопки ' + buttonID);
+
+    $(buttonID).empty().append(
+        '<a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button>'
+    );
+
     $.ajax({
         url: 'http://localhost:8080/order',
         type: 'POST',
@@ -40,15 +48,6 @@ function addToOrder(button) {
         {
             console.info(payload);
             const productsAmount = payload.responseJSON[0];
-            //console.log("Add product with ID " + productID);
-
-            var buttonID = '#addToOrderDiv' + productID;
-            buttonID = replaceAll(buttonID, ".", "");
-            //console.log('Id блока кнопки ' + buttonID);
-
-            $(buttonID).empty().append(
-                '<a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button>'
-            );
 
             $("#productsAmount-Div").empty().append(
                 '<a orderedID="productAmount-Order" href="/order"><h5 style="color: black !important; margin-top: 1.5rem!important;">Товаров:  <span class="badge badge-primary">'+productsAmount+'</span></h5></a>'
@@ -248,15 +247,15 @@ $(document).ready(function() {
     );
 });
 
-function applyDiscount(discount, bonus, orderID) {
-    data.push(discount, bonus, orderID);
+function applyDiscount(bonus, discount, orderID) {
+    data = {
+        'bonus'     : bonus,
+        'discount'  : discount,
+        'orderID'   : orderID
+    };
     data = JSON.stringify(data);
 
-    /*data = {
-        'discount' : discount,
-        'bonus'    : bonus
-    };*/
-    console.info(data);
+    /*set hidden*/
 
     $.ajax({
         url: 'http://localhost:8080/order/discount',
@@ -267,21 +266,26 @@ function applyDiscount(discount, bonus, orderID) {
         headers: {'Content-Type': 'application/json'},
         complete: function(payload)
         {
-            /*console.info(payload);
-            const productsAmount = payload.responseJSON[0];
-            //console.log("Add product with ID " + productID);
+            console.info(payload);
 
-            var buttonID = '#addToOrderDiv' + productID;
-            buttonID = replaceAll(buttonID, ".", "");
-            //console.log('Id блока кнопки ' + buttonID);
+            const order = payload.responseJSON[0];
+            const user  = payload.responseJSON[1];
 
-            $(buttonID).empty().append(
-                '<a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button>'
+            $('#applyDiscount').empty().append
+            (
+                '<h5 style="margin-bottom: 1rem">Ваша скидка '+order.discountPercent+'%!</h5>'
             );
+            /*1 ВЫ ПРИМЕНЛИ СКИДКУ В 15%! applyDiscount discountApplied*/
 
-            $("#productsAmount-Div").empty().append(
-                '<a orderedID="productAmount-Order" href="/order"><h5 style="color: black !important; margin-top: 1.5rem!important;">Товаров:  <span class="badge badge-primary">'+productsAmount+'</span></h5></a>'
-            )*/
+            $('#order-totalPrice').empty().append(
+                '<span style="color: #007e33">'+(order.discountPrice).toLocaleString('ru')+'₽</span>'
+            );
+            /*2 ЗАКАЗ НА СУММУ */
+
+            $('#userBonusUpper').empty().append(
+                (user.bonus - order.bonusOff).toLocaleString('ru')+'₽'
+            );
+            /*3 ДОСТУПНО БОНУСОВ */
         }
     });
 }
@@ -292,33 +296,33 @@ function acceptOrder() {
     var username 	= $('#username').val();
     var email 	    = $('#email').val();
 
-    /*$(".error").remove();
-
-    function hasValidErrors(name, surname, mobile, email) {
-        return name.length === 0 || surname.length === 0 || mobile.length === 0 || email.length === 0;
+    $(".error").remove();
+    function hasValidErrors(firstName, lastName, username, email) {
+        return firstName.length === 0 || lastName.length === 0 || username.length === 0 || email.length === 0;
     }
-
-    if (hasValidErrors(name, surname, mobile, email)) {
-        if (name.length < 1) {
-            $('#modelName').after('<span class="error">Введите имя</span>');
+    if (hasValidErrors(firstName, lastName, username, email)) {
+        if (firstName.length < 2) {
+            $('#firstName').after('<span class="error">Введите имя</span>');
         }
-        if (surname.length < 1) {
-            $('#surname').after('<span class="error">Введите фамилию</span>');
+        if (lastName.length < 2) {
+            $('#lastName').after('<span class="error">Введите фамилию</span>');
         }
         if (email.length < 1) {
             $('#email').after('<span class="error">Введите e-mail</span>');
-        } else {
+        }
+        else
+        {
             var regEx = /^[A-Z0-9][A-Z0-9._%+-]{0,63}@(?:[A-Z0-9-]{1,63}.){1,125}[A-Z]{2,63}$/;
             var validEmail = regEx.test(email);
             if (!validEmail) {
                 $('#email').after('<span class="error">Введите корректный e-mail</span>');
             }
         }
-        if (mobile.length < 8) {
-            $('#email').after('<span class="error">Введите номер в формате +7-999-666-14-88</span>');
+        if (username.length < 8) {
+            $('#username').after('<span class="error">Введите номер в формате +7-999-666-14-88</span>');
         }
         return;
-    }*/
+    }
 
     var contacts = {
         orderID     : $('#confirm-order').val(),
@@ -333,9 +337,9 @@ function acceptOrder() {
     console.log("Order accepted");
     document.getElementById("order-deal").style.display = "none";
     document.getElementById("edit-order").style.display = "none";
-    document.getElementById("new-order-button").style.display = "block";
-    document.getElementById("my-order-button").style.display  = "block";
 
+    document.getElementById("orderLoader").style.display = "block";
+    /*ОБНОВЛЯТЬ ИНФОРМАЦИЮ О БОНУСАХ*/
     $.ajax({
         url:     "http://localhost:8080/order/confirm",
         type:     "POST",
@@ -344,18 +348,35 @@ function acceptOrder() {
         success: function(response)
         {
             console.log(response);
-
+            document.getElementById("orderLoader").style.display  = "none";
             if (response.length === 0)
             {
-                /// ЗАМЕНИТЬ НА АЛЕРТ
-                $('#orderSuccess').html('<h3>Заказ подтвержден</h3>'+'');
+                $('#orderStatus').html
+                (
+                    '<div class="alert alert-success" role="alert" style="width: 60rem;margin-left: -1rem;">' +
+                    '        <h4 class="alert-heading">Ваш заказ принят!</h4>' +
+                    '        <p>Username, ваш заказ на сумму 25 148 ₽ принят!</p>' +
+                    '        <p class="mb-0">Ваш заказ можно будет забрать после подтверждения готовности заказа!</p>' +
+                    ' </div>'
+                );
+                document.getElementById("new-order-button").style.display = "block";
+                document.getElementById("my-order-button").style.display  = "block";
             }
             else
             {
-                $('#orderSuccess').html('<h3>Данные не верны!</h3>'+'');
+                var validErrors = response.toString();
+                validErrors = validErrors.replace(",", "<br>");
+
+                document.getElementById("order-deal").style.display = "block";
+                document.getElementById("edit-order").style.display = "block";
+                $('#orderStatus').html
+                (
+                    '<div class="alert alert-danger" role="alert" style="width: 60rem;margin-left: -1rem;">'+validErrors+'</div>'
+                );
             }
         },
         error: function(response) {
+            document.getElementById("orderLoader").style.display = "none";
             $('#results').html('Ошибка. Данные не отправлены.');
         }
     });
