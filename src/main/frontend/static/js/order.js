@@ -278,6 +278,7 @@ function applyDiscount(bonus, discount, orderID) {
             $('#userBonusUpper').empty().append(
                 (user.bonus - order.bonusOff).toLocaleString('ru')
             );
+            /**/
         }
     });
 }
