@@ -62,6 +62,7 @@ public class UserController {
     @GetMapping("/cabinet")
     public String userCabinet(Model model, @AuthenticationPrincipal User user) 
     {
+        model.addAttribute("user", user);
         model.addAttribute("order", orderService.resolveOrder(user));
         model.addAttribute("orders", orderService.showUserOrders(user.getUserID()));
         return "pages/cabinet";

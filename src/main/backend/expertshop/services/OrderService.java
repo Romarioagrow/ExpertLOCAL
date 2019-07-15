@@ -27,41 +27,6 @@ public class OrderService {
     private final OrderedRepo   orderedRepo;
     private final UserRepo      userRepo;
 
-    public boolean checkUserOrder(User user) {
-        return orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()) != null;
-    }
-
-    private boolean checkSessionOrder() {
-        return orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID()) != null;
-    }
-
-    public Order getSessionOrder()
-    { ///
-        Order sessionOrder = orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID());
-        return (sessionOrder != null && sessionOrder.isAccepted()) ? null : sessionOrder;
-    }
-
-    ///
-    public Order getUserOrder(Long userID) {
-        return orderRepo.findByUserIDAndAcceptedFalse(userID);
-    }
-
-    ///
-    public Order resolveOrder(User user) {
-        return user != null ? getUserOrder(user.getUserID()) : getSessionOrder();
-    }
-
-    public Set<OrderedProduct> showOrderedProducts(User user)
-    {
-        if (user != null && checkUserOrder(user)) {
-            return orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()).getOrderedProducts();
-        }
-        else if (checkSessionOrder()) {
-            return orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID()).getOrderedProducts();
-        }
-        else return new HashSet<>();
-    }
-
     public LinkedList<Integer> addProductToOrder(String productID, User user)
     {
         Order order;
@@ -353,5 +318,39 @@ public class OrderService {
         return RequestContextHolder.currentRequestAttributes().getSessionId();
     }
 
+    public boolean checkUserOrder(User user) {
+        return orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()) != null;
+    }
+
+    private boolean checkSessionOrder() {
+        return orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID()) != null;
+    }
+
+    public Order getSessionOrder()
+    { ///
+        Order sessionOrder = orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID());
+        return (sessionOrder != null && sessionOrder.isAccepted()) ? null : sessionOrder;
+    }
+
+    ///
+    public Order getUserOrder(Long userID) {
+        return orderRepo.findByUserIDAndAcceptedFalse(userID);
+    }
+
+    ///
+    public Order resolveOrder(User user) {
+        return user != null ? getUserOrder(user.getUserID()) : getSessionOrder();
+    }
+
+    public Set<OrderedProduct> showOrderedProducts(User user)
+    {
+        if (user != null && checkUserOrder(user)) {
+            return orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()).getOrderedProducts();
+        }
+        else if (checkSessionOrder()) {
+            return orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID()).getOrderedProducts();
+        }
+        else return new HashSet<>();
+    }
 
 }

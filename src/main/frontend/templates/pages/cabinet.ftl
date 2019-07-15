@@ -13,7 +13,92 @@
         </div>
         <div class="row mt-3">
             <div class="col">
-                <ul class="nav nav-tabs nav-justified md-tabs indigo" style="background-color: #e52d00 !important;" id="myTabJust" role="tablist">
+                <ul class="nav md-pills pills-secondary">
+                    <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#panel1" role="tab">Бонусы и заказы</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#panel2" role="tab">Акции и скидки</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="tab" href="#panel3" role="tab">Личная информация</a>
+                    </li>
+                </ul>
+                <div class="tab-content pt-0">
+                    <div class="tab-pane fade in show active" id="panel1" role="tabpanel">
+                        <div style="width: 60rem;">
+                            <h3 style="margin-top: 1rem">
+                                <span>Доступно бонусов: <strong>${user.bonus}</strong></span>
+                            </h3>
+                            <h3 style="margin-top: 2rem">Заказы</h3>
+                            <div class="card-desk">
+                                <#if orders?has_content>
+                                    <#list orders as order>
+                                        <div class="card" style="margin-bottom: 1rem">
+                                            <div class="card-body">
+                                                <h4 class="card-title font-weight-bold">
+                                                    <#assign
+                                                    date = order.orderOpenDate.toString()
+                                                    time = date?substring(11, 16)
+                                                    date = date?substring(0, 10)
+                                                    date = date?replace("-", ".")
+                                                    >
+                                                    <a>Заказ №${order.orderID?c} от ${date} ${time}</a>
+                                                </h4>
+                                                <p class="mb-2">
+                                                    На сумму
+                                                    <#if order.discountApplied>
+                                                        <strong>${order.discountPrice}</strong> ₽ с учетом скидки
+                                                    <#else>
+                                                        <strong>${order.totalPrice}</strong> ₽ без учета скидки
+                                                    </#if>
+                                                </p>
+                                                <div class="card-desk">
+                                                    <#if order.orderedProducts?has_content>
+                                                        <#list order.orderedProducts as product>
+                                                            <div class="card">
+                                                                <div class="card-body">
+                                                                    <p class="card-text">
+                                                                        <span style="color: #e42c00">${product.productType}</span> <strong style="color: #0d0d0d">${product.productName}</strong>
+                                                                    </p>
+                                                                    <p class="card-text">
+                                                                        Количество:  <strong style="color: #0d0d0d">${product.orderedAmount}</strong>, Цена: <strong style="color: #0d0d0d">${product.totalPrice}</strong> ₽
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </#list>
+                                                    </#if>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </#list>
+                                </#if>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="panel2" role="tabpanel">
+                        <div class="card" style="width: 60 rem; height: 40rem">
+                            <div class="card-body pb-3">
+                                <p>
+                                    222 акции
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="panel3" role="tabpanel">
+                        <div class="card" style="width: 60 rem; height: 40rem">
+                            <div class="card-body pb-3">
+                                <p>
+                                    333 данные
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <#--<ul class="nav nav-tabs nav-justified md-tabs indigo" style="background-color: #e52d00 !important;" id="myTabJust" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
                            aria-selected="true">Мои заказы</a>
@@ -45,12 +130,12 @@
                     <div class="tab-pane fade" id="contact-just" role="tabpanel" aria-labelledby="contact-tab-just">
                         Мои акции и бонусы
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <a type="button" href="/" class="btn btn-lg btn-block" style="margin-top: 3rem; background-color: #e42c00 !important; color: #e0e0e0">Новый заказ</a>
+                <a type="button" href="/" class="btn btn-lg btn-block" style="margin-bottom: 3rem; background-color: #e42c00 !important; color: #e0e0e0">Новый заказ</a>
             </div>
         </div>
     </div>
