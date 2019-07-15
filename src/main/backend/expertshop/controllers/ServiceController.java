@@ -88,4 +88,8 @@ public class ServiceController {
     private LinkedList<Object> applyDiscount(@RequestBody Map<String, String> discountData, @AuthenticationPrincipal User user) {
         return orderService.applyDiscount(discountData, user);
     }
+    @PutMapping("/order/discount")
+    private LinkedList<Object> dropDiscount(@AuthenticationPrincipal User user, @RequestBody String orderID) {
+        return orderService.dropDiscount(orderID, user);
+    }
 }

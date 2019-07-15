@@ -52,7 +52,7 @@
                 <div>
                     <#if order?? && order.productsAmount != 0>
                         <button onclick="confirmOrderList()" id="order-button" type="button" class="btn btn-success btn-lg btn-block"  style="margin-bottom: 3rem;margin-left: 10rem; width: 60rem;">Заказ подтверждаю!</button>
-                        <button onclick="editOrder()" id="edit-order" value="${order.orderID}" class="btn btn-indigo btn-lg btn-block mt-2" style="margin-bottom: 3rem;margin-left: 10rem; width: 60rem; display: none">Изменить заказ!</button>
+                        <button onclick="editOrder(${order.orderID?c})" id="edit-order" value="${order.orderID?c}" class="btn btn-indigo btn-lg btn-block mt-2" style="margin-bottom: 3rem;margin-left: 10rem; width: 60rem; display: none">Изменить заказ!</button>
                     <#else>
                         <a type="button" href="/" class="btn blue-gradient btn-lg btn-block" style="margin-left: 10rem; width: 60rem;">Вернуться за покупками</a>
                     </#if>
@@ -84,10 +84,10 @@
                                             <#if !order.discountApplied>
                                                 <strong id="order-totalPrice">${order.totalPrice}</strong> <span style="font-weight: normal !important;">₽</span>
                                             <#else>
-                                                <strong id="order-totalPrice" style="color: #00c851">${order.discountPrice}</strong> <span>₽</span>
+                                                <strong id="order-totalPrice" style="color: #007e33">${order.discountPrice}</strong> <span>₽</span>
                                             </#if>
                                         </p>
-                                        <p class="align-self-end pb-2">
+                                        <p class="align-self-end pb-2" id="discountInfo">
                                             <#if !order.discountApplied>
                                                 без учета скидки
                                             <#else>
@@ -137,7 +137,6 @@
                 </#if>
             </div>
         </div>
-
         <#--HIDDEN-->
         <div class="row" style="margin-left: 10rem;width: 60rem;">
             <div class="col">
@@ -170,7 +169,6 @@
             </#if>
         </div>
         <#--///HIDDEN-->
-
         <div class="row order-deal" id="order-deal" style="margin-bottom: 5rem">
             <div class="col">
                 <div class="card chart-card" style="width: 60rem; margin-left: 10rem">
@@ -186,9 +184,11 @@
                                     <hr>
                                 </div>
                             <#else>
-                                <h4 class="card-title font-weight-bold" style="margin-bottom: 2rem">
-                                    Ваша скидка <strong style="color: #00c851">${order.discountPercent}%</strong>
-                                </h4>
+                                <div id="applyDiscount">
+                                    <h4 class="card-title font-weight-bold" style="margin-bottom: 2rem">
+                                        Ваша скидка <strong style="color: #00c851">${order.discountPercent}%</strong>
+                                    </h4>
+                                </div>
                             </#if>
                         </#if>
                         <form id="contact-user" name="contact-form" method="POST" required>
@@ -285,178 +285,7 @@
                     </div>
                 </div>
             </div>
-
-            <#--<div class="col">
-                <div class="preloader-wrapper big active" id="orderLoader" style="margin-left: 10rem; display: none">
-                    <div class="spinner-layer spinner-red-only">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="gap-patch">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="circle-clipper right">
-                            <div class="circle"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>-->
         </div>
-        <#--<div class="row" style="margin-left: 10rem;width: 60rem;">
-            <div class="col">
-                <div id="orderStatus"></div>
-            </div>
-        </div>-->
-        <#--<div class="row">
-            <div class="col">
-                <a href="/" id="new-order-button" type="button" class="btn btn-deep-purple btn-lg btn-block" style="margin-bottom: 5rem; margin-left: 10rem; background-color: #e42c00 !important; width: 30rem; display: none;">Новый заказ</a>
-            </div>
-            <#if isUser>
-                <div class="col">
-                    <a href="/user/cabinet" id="my-order-button" type="button" class="btn btn-elegant btn-lg btn-block" style="margin-bottom: 5rem; margin-left: -17.2rem; width: 30rem; display: none;">Мои заказы</a>
-                </div>
-            </#if>
-        </div>-->
-        <#--<div class="row order-deal" id="order-deal" &lt;#&ndash;style="margin-left: 10rem; width: 95rem;"&ndash;&gt;>
-            <div class="col-8" id="order-details" style="margin-left: 10rem; width: 95rem;">
-                <#if isUser && user.bonus !=0 && order??>
-                    <div class="col">
-                        <div id="applyDiscount">
-                            <#if !order.discountApplied>
-                                <h5 style="margin-bottom: 1rem">
-                                    Доступно бонусов: <strong>${user.bonus}</strong>, Ваша скидка: <strong id="total-discount">${discount}%</strong>
-                                </h5>
-                                <button type="button" onclick="applyDiscount(${user.bonus?c}, ${discount?c}, ${order.orderID?c})" class="btn btn-default btn-sm" style="margin-bottom: 3rem">Применить скидку!</button
-                            <#else>
-                                <h5 style="margin-bottom: 1rem">Ваша скидка ${order.discountPercent}%!</h5>
-                            </#if>
-                        </div>
-                    </div>
-                </#if>
-                <section>-->
-        <#-- <h4 class="h4-responsive font-weight-bold text-center" id="contact-info">Ваши контактные данные</h4>
-         <div class="row">
-             <div class="col">
-                 <div id="results"></div>
-                 <#if !isUser>&lt;#&ndash;${firstName??"val", ""}&ndash;&gt;
-                     <form id="contact-session" name="contact-form" method="POST">
-                         <div class="row" style="width: 60rem;">
-                             <div class="col-md-6">
-                                 <div class="md-form mb-0">
-                                     <input type="text" id="firstName" name="firstName" class="form-control" required>
-                                     <label for="name" class="">Ваше имя</label>
-                                 </div>
-                             </div>
-                             <div class="col-md-6">
-                                 <div class="md-form mb-0">
-                                     <input type="text" id="lastName" name="lastName" class="form-control" required>
-                                     <label for="family" class="">Ваша фамилия</label>
-                                 </div>
-                             </div>
-                         </div>
-                         <div class="row" style="width: 60rem;">
-                             <div class="col-md-6">
-                                 <div class="md-form mb-0">
-                                     <input type="text" id="username" name="username" class="form-control" required>
-                                     <label for="mobile" class="">Ваш телефон</label>
-                                 </div>
-                             </div>
-                             <div class="col-md-6">
-                                 <div class="md-form mb-0">
-                                     <input type="email" id="email" name="email" class="form-control" required>
-                                     <label for="email" class="">Ваш e-mail</label>
-                                 </div>
-                             </div>
-                         </div>
-                     </form>
-                 <#else>&lt;#&ndash;${firstName??"val", ""}&ndash;&gt;
-                     <form id="contact-user" name="contact-form" method="POST" required>
-                         <div class="row" style="width: 60rem;">
-                             <div class="col-md-6">
-                                 <div class="md-form mb-0">
-                                     <input type="text" id="firstName" name="firstName" class="form-control" value="${firstName}" required>
-                                     <label for="name" class="">Ваше имя</label>
-                                 </div>
-                             </div>
-                             <div class="col-md-6">
-                                 <div class="md-form mb-0">
-                                     <input type="text" id="lastName" name="lastName" class="form-control" value="${lastName}" required>
-                                     <label for="family" class="">Ваша фамилия</label>
-                                 </div>
-                             </div>
-                         </div>
-                         <div class="row" style="width: 60rem;">
-                             <div class="col-md-6">
-                                 <div class="md-form mb-0">
-                                     <input type="text" id="username" name="username" class="form-control" value="${mobile}" required>
-                                     <label for="mobile" class="">Ваш телефон</label>
-                                 </div>
-                             </div>
-                             <div class="col-md-6">
-                                 <div class="md-form mb-0">
-                                     <input type="email" id="email" name="email" class="form-control" value="${email}" required>
-                                     <label for="email" class="">Ваш e-mail</label>
-                                 </div>
-                             </div>
-                         </div>
-                     </form>
-                 </#if>-->
-        <#--<h4 class="h4-responsive font-weight-bold text-center my-4">Способ получения товара</h4>-->
-        <#--<ul class="nav md-pills pills-secondary">
-            <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#panel11" role="tab">Самовывоз со склада</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#panel12" role="tab">Доставка курьером</a>
-            </li>
-        </ul>
-        <div class="tab-content pt-0">
-            <div class="tab-pane fade in show active" id="panel11" role="tabpanel">
-                <br><h5>Заберите ваш заказ со склада по адресу: город Чебаркуль, Ленина 32</h5>
-            </div>
-            <div class="tab-pane fade" id="panel12" role="tabpanel">
-                <br>
-                <h3>Адрес для доставки:</h3>
-                <form id="self-delivery-block" name="contact-form" action="mail.php" method="POST">
-                    <div class="row">
-                        <div class="col">
-                            <div class="md-form">
-                                <input type="text" id="city" name="city" class="form-control">
-                                <label for="city" class="">Город</label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="md-form">
-                                <input type="text" id="street" name="street" class="form-control">
-                                <label for="street" class="">Улица</label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="md-form">
-                                <input type="email" id="house" name="house" class="form-control">
-                                <label for="house" class="">Дом</label>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="md-form">
-                                <input type="email" id="apartment" name="apartment" class="form-control">
-                                <label for="apartment" class="">Квартира</label>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>-->
-        <#--<#if order?has_content>
-            <div class="text-center text-md-left">
-                <button id="confirm-order" value="${order.orderID}" class="btn btn-primary btn-lg btn-block mt-2" style="background-color: #e52d00 !important; width: 60rem; margin-bottom: 5rem">Оформить заказ!</button>
-            </div>
-        </#if>-->
-    </div>
-    </div>
-    </section>
-    </div>
-    </div>
     </div>
     <script src="/../lib/mobilemask.js"></script>
 </@t.template>

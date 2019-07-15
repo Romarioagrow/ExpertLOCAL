@@ -62,7 +62,7 @@ public class OrderService {
         else return new HashSet<>();
     }
 
-    public LinkedList<Integer>/*Integer*/ addProductToOrder(String productID, User user)
+    public LinkedList<Integer> addProductToOrder(String productID, User user)
     {
         Order order;
         OrderedProduct orderedProduct = new OrderedProduct();
@@ -98,13 +98,18 @@ public class OrderService {
                 order.setUserID(user.getUserID());
                 order.setTotalBonus(product.getBonus());
             }
-            ///
+
+            if (order.getDiscountApplied()) {
+                order = dropDiscountParams(order);
+            }
+
             orderedProduct.constructOrderedProduct(product); ///
+
             order.addProductToOrder(orderedProduct);
             order.setTotalBonus(order.getTotalBonus() + product.getBonus());
             setOrderStats(order, orderedProduct.getTotalPrice());
-            orderRepo.save(order);
 
+            orderRepo.save(order);
             discount = calculateDiscount(user, order);
         }
 
@@ -242,6 +247,26 @@ public class OrderService {
         userRepo.save(user);
         orderRepo.save(order);
         return payload(order, user);
+    }
+
+    public LinkedList<Object> dropDiscount(String orderID, User user) {
+        Order order = orderRepo.findByOrderID(Long.valueOf(orderID));
+
+        if (order.getDiscountApplied())
+        {
+            //order = dropDiscountParams(order);
+            return payload(dropDiscountParams(order), user);
+        }
+        return null;
+    }
+    Order dropDiscountParams(Order order) {
+        order.setDiscountApplied  (false);
+        order.setDiscountPrice    (0);
+        order.setTotalDiscount    (0);
+        order.setDiscountPercent  (0);
+        order.setBonusOff         (0);
+        orderRepo.save(order);
+        return order;
     }
 
     public void confirmOrder(OrderContacts orderContacts, User user)

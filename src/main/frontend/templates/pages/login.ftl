@@ -20,7 +20,7 @@
 
                         <button class="btn btn-elegant btn-block my-4" type="submit">Войти</button>
                         <h2>Зашли впервые?
-                            <h3><a href="/user/registration">Зарегистрируйтесь</a></h3>
+                            <h3><a href="/user/registration">Зарегистрируйтесь!</a></h3>
                         </h2>
                         <#--<div style="margin-left: 45rem;">
                             <h3>Через социальные сети</h3>

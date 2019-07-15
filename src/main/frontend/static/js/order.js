@@ -5,26 +5,6 @@ $(document).ready(function(){
     $('button[modelName="rows-layout-inp"]').on('click', showRowsLayout);
 });
 
-function showCardsLayout() {
-    console.log('cards');
-    document.getElementById("bucket-products").style.display      = "flex";
-    document.getElementById("bucket-products-rows").style.display = "none";
-}
-
-function showRowsLayout() {
-    console.log('rows');
-    document.getElementById("bucket-products").style.display 	    = "none";
-    document.getElementById("bucket-products-rows").style.display 	= "block";
-}
-
-function escapeRegExp(str) {
-    return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
-}
-
-function replaceAll(str, find, replace) {
-    return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
-}
-
 function addToOrder(button) {
     const productID = button.value;
     console.log(productID);
@@ -224,7 +204,7 @@ function confirmOrderList() {
     });
 }
 
-function editOrder() {
+function editOrder(orderID) {
     document.getElementById("order-deal").style.display 	= "none";
     document.getElementById("edit-order").style.display 	= "none";
     document.getElementById("order-button").style.display 	= "block";
@@ -238,6 +218,51 @@ function editOrder() {
     $("button[name='remove-product']").each(function() {
         this.disabled = false;
     });
+
+    console.log(orderID);
+    $.ajax({
+        url: 'http://localhost:8080/order/discount',
+        type: 'PUT',
+        dataType: 'json',
+        data: orderID.toString(),
+        processData: false,
+        headers: {'Content-Type': 'application/json'},
+        complete: function(payload)
+        {
+            console.info(payload);
+            /*ЦЕНА*/
+            if (payload !== null)
+            {
+                const order = payload.responseJSON[0];
+                const user  = payload.responseJSON[1];
+
+                let discountPercent = 100 * user.bonus / order.totalPrice;
+                if (discountPercent > 20) discountPercent = 20;
+                discountPercent = parseInt(discountPercent, 10);
+
+                $('#applyDiscount').empty().append(
+                    '<h4 class="card-title font-weight-bold">Доступно бонусов: <strong>'+user.bonus+'</strong>, Ваша скидка: <strong id="total-discount">'+discountPercent+'%</strong></h4>'+
+                    '<a type="button" onclick="applyDiscount('+user.bonus+','+discountPercent+','+order.orderID+')" class="btn btn-sm btn-unique" style="margin-bottom: 3rem">Применить скидку!</a><hr>'
+                );
+
+                $('#discountInfo').empty().append(
+                    'без учета скидки'
+                );
+                $('#order-totalPrice').empty().append(
+                    '<span style="color: #222222;">'+(order.totalPrice).toLocaleString('ru')+'</span>'
+                );
+                $('#userBonusUpper').empty().append(
+                    (user.bonus).toLocaleString('ru')
+                );
+
+
+
+                /*ДОСТУПНО БОНУСОВ*/
+            }
+        }
+    });
+
+
 }
 $(document).ready(function() {
     $("#confirm-order").click(
@@ -269,8 +294,12 @@ function applyDiscount(bonus, discount, orderID) {
             const order = payload.responseJSON[0];
             const user  = payload.responseJSON[1];
 
+            let discountPercent = 100 * user.bonus / order.totalPrice;
+            if (discountPercent > 20) discountPercent = 20;
+            discountPercent = parseInt(discountPercent, 10);
+
             $('#applyDiscount').empty().append(
-                '<h4 className="card-title font-weight-bold" style="margin-bottom: 2rem">Ваша скидка <strong style="color: #00c851">'+order.discountPercent+'%</strong></h4>'
+                '<h4 className="card-title font-weight-bold" style="margin-bottom: 2rem">Ваша скидка <strong style="color: #00c851">'+discountPercent+'%</strong></h4>'
             );
             $('#order-totalPrice').empty().append(
                 '<span style="color: #007e33">'+(order.discountPrice).toLocaleString('ru')+'</span>'
@@ -278,7 +307,9 @@ function applyDiscount(bonus, discount, orderID) {
             $('#userBonusUpper').empty().append(
                 (user.bonus - order.bonusOff).toLocaleString('ru')
             );
-            /**/
+            $('#discountInfo').empty().append(
+                'с учетом скидки'
+            );
         }
     });
 }
@@ -390,5 +421,22 @@ $(document).ready(function() {
     });
 });
 
+function showCardsLayout() {
+    console.log('cards');
+    document.getElementById("bucket-products").style.display      = "flex";
+    document.getElementById("bucket-products-rows").style.display = "none";
+}
 
+function showRowsLayout() {
+    console.log('rows');
+    document.getElementById("bucket-products").style.display 	    = "none";
+    document.getElementById("bucket-products-rows").style.display 	= "block";
+}
+
+function escapeRegExp(str) {
+    return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+}
+function replaceAll(str, find, replace) {
+    return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
+}
 
