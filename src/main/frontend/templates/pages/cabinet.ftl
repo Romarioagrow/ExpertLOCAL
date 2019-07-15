@@ -30,6 +30,7 @@
                             <h3 style="margin-top: 1rem">
                                 <span>Доступно бонусов: <strong>${user.bonus}</strong></span>
                             </h3>
+                            <#---->
                             <h3 style="margin-top: 2rem">Заказы</h3>
                             <div class="card-desk">
                                 <#if orders?has_content>
