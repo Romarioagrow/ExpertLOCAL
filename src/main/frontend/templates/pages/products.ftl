@@ -43,7 +43,7 @@
                         <label class="btn btn-secondary active">
                             <input type="radio" name="sort_options" id="option1" value="lowest" autocomplete="off" checked> Дешевле
                         </label>
-                        <label class="btn btn-secondary">
+                        <label class="btn btn-secondary" >
                             <input type="radio" name="sort_options" id="option2" value="highest" autocomplete="off"> Дороже
                         </label>
                         <label class="btn btn-secondary">
@@ -102,5 +102,11 @@
             </div>
         </div>
     </div>
+    <style>
+        .btn-secondary {
+            background-color: #6d7175 !important;
+        }
+    </style>
 </@t.template>
+
 

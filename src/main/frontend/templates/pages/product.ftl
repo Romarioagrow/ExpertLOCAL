@@ -1,6 +1,6 @@
 <#import "../parts/template.ftl" as t>
 <@t.template>
-    <div class="container">
+    <div class="container" style="margin-top: 5rem">
         <div class="row mt-2">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">

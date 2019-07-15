@@ -1,7 +1,7 @@
 <#import "../parts/template.ftl" as t>
 <@t.template>
     <h2>
-        <div class="container">
+        <div class="container" style="margin-top: 5rem">
             <div class="row justify-content-center">
                 <div class="col-6">
                     <#if wrongNameOrPass??>

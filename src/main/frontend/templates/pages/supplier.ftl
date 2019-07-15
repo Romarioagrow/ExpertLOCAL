@@ -2,7 +2,7 @@
 <#include "../parts/security.ftl">
 
 <@t.template>
-    <div class="container">
+    <div class="container" style="margin-top: 5rem">
         <div class="row">
             <div class="col">
                 <h1>База товаров</h1>

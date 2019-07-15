@@ -8,8 +8,18 @@ form input:hover {
     background-color: #e5e5e5;
 }
 
+.btn-secondary {
+    background-color: #6d7175 !important;
+}
+.filter-button:hover {
+    color: #fff;
+    background-color: #e52d00 !important;
+    border-color: #e52d00;
+}
 .filter-button {
-    margin-top: 1vh !important;
+    margin-top: 0.5rem !important;
+    background-color: #343a40 !important;
+    color: #fdfefe !important;
 }
 .filter-filed {
     margin-bottom: 1vh;
@@ -138,3 +148,4 @@ label.error {
 .pills-secondary .nav-link.active, .pills-secondary .show > .nav-link {
     background-color: #3f51b5 !important;
 }
+

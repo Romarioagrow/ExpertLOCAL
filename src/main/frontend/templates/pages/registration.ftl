@@ -1,6 +1,6 @@
 <#import "../parts/template.ftl" as t>
 <@t.template>
-    <div class="container">
+    <div class="container" style="margin-top: 5rem">
         <div class="row">
             <div class="col">
                 <div id="registration-error">

@@ -1,6 +1,6 @@
 <#import "../parts/template.ftl" as t>
 <@t.template>
-    <div class="container hello-list mt-5">
+    <div class="container hello-list" style="margin-top: 5rem">
         <div class="row discount">
             <div class="col mb-3">
             </div>
@@ -662,9 +662,6 @@
     </div>
 </@t.template>
 <style>
-    a {
-        color: #0d0d0d !important;
-    }
     a:hover {
         color: #e52d00 !important;
     }

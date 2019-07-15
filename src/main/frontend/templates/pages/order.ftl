@@ -1,7 +1,7 @@
 <#import "../parts/template.ftl" as t>
 <#include "../parts/security.ftl">
 <@t.template>
-    <div class="container-fluid">
+    <div class="container-fluid" style="margin-top: 5rem">
         <#--<div class="row" style="margin-left: 10rem;">
             <#if order??>
                 <#if !isUser>

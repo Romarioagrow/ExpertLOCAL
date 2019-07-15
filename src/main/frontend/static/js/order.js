@@ -30,7 +30,7 @@ function addToOrder(button) {
             const productsAmount = payload.responseJSON[0];
 
             $("#productsAmount-Div").empty().append(
-                '<a orderedID="productAmount-Order" href="/order"><h5 style="color: black !important; margin-top: 1.5rem!important;">Товаров:  <span class="badge badge-primary">'+productsAmount+'</span></h5></a>'
+                '<a class="nav-link js-scroll-trigger" id="productAmount-Order" href="/order">Товаров:  <span class="badge badge-primary">'+productsAmount+'</span></a>'
             )
         }
     });
@@ -168,9 +168,10 @@ function removeFromOrder(button) {
             $('#order-amount').empty().append(
                 order.totalAmount
             );
-            $('#productAmount-Order').empty().append(
-                '<a orderedID="productAmount-Order" href="/order" class="mt-4 mb-3"><h5 style="color: black !important;">Товаров:  <span class="badge badge-primary">'+order.productsAmount+'</span></h5></a>'
+            $("#productsAmount-Div").empty().append(
+                '<a class="nav-link js-scroll-trigger" id="productAmount-Order" href="/order">Товаров:  <span class="badge badge-primary">'+order.productsAmount+'</span></a>'
             );
+
 
             if (order.productsAmount === 0)
             {
@@ -254,10 +255,6 @@ function editOrder(orderID) {
                 $('#userBonusUpper').empty().append(
                     (user.bonus).toLocaleString('ru')
                 );
-
-
-
-                /*ДОСТУПНО БОНУСОВ*/
             }
         }
     });

@@ -22,11 +22,16 @@ import java.io.IOException;
 @Controller
 @AllArgsConstructor
 public class CategoriesController {
-    private final ProductService productService;
-    private final OrderService orderService;
-    private final CatalogParser catalogParser;
-    private final ProductRepo productRepo;
-    private final ProductResolver productResolver;
+    private final ProductService    productService;
+    private final OrderService      orderService;
+    private final CatalogParser     catalogParser;
+    private final ProductRepo       productRepo;
+    private final ProductResolver   productResolver;
+
+    @GetMapping("/test")
+    public String test() {
+        return "pages/page";
+    }
 
     /*ORDER*/
     @GetMapping("/order")

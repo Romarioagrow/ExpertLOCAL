@@ -30,16 +30,23 @@ function searchProducts(e) {
             document.getElementById("display-result").style.display = "block";
             $("#display-result").empty();
 
-            console.log('Found products: ' + response.responseJSON.length);
+            let found = response.responseJSON.length;
+            console.log('Found products: ' + found);
 
-            response.responseJSON.forEach(product => $("#display-result").append
-            (
-                '<div class="one-product" style="margin-top: 3px!important;">'                      +
-                '<a href="http://localhost:8080/products/info/'+product.productID+'">'              +
-                product.singleType + " " + product.originalName                                     +
-                '</a>'                                                                              +
-                '</div>'
-            ));
+            if (found !== undefined)
+            {
+                response.responseJSON.forEach(product => $("#display-result").append
+                (
+                    '<p><a href="http://localhost:8080/products/info/'+product.productID+'">'        +
+                    ''+product.singleType + ' ' + product.originalName+'</a></p>'
+                ));
+            }
+            else
+            {
+                $("#display-result").append(
+                    '<p>Ничего не нашлось!</p>'
+                );
+            }
         }
     });
 }

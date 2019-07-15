@@ -1,5 +1,5 @@
 <div>
-    <button class="btn btn-secondary btn-block filter-button"
+    <button class="btn <#----> btn-block filter-button"
             type="button" data-toggle="collapse" data-target="#filter1" aria-expanded="false"><span>Цена и бренды</span>
     </button>
     <div class="collapse show" id="filter1">
@@ -33,13 +33,13 @@
 
 <#if url?contains("телевизоры")>
     <div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-type" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-type" aria-expanded="false">
             <span>Тип телевизора</span>
         </button>
         <div class="collapse" id="tv-type">
-            <div class="card card-body filter-filed">
+            <div class="card card-body filter-filed" >
                 <div class="md-form input-group">
-                    <div class="container">
+                    <div class="container" style="background-color: #f0f4f9">
                         <div class="row">
                             <div class="col">
                                 <div class="custom-control custom-checkbox">
@@ -78,12 +78,12 @@
             </div>
         </div>
 
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-filter1" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-filter1" aria-expanded="false">
             <span>Характеристики экрана</span>
         </button>
         <div class="collapse" id="tv-filter1">
             <div class="card card-body filter-filed">
-                <div class="md-form input-group">
+                <div class="md-form input-group" style="background-color: #f0f4f9">
                     <div class="input-group-prepend">
                         <span class="input-group-text md-addon">Диагональ</span>
                     </div>
@@ -96,7 +96,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="md-form input-group">
+                <div class="md-form input-group" style="background-color: #f0f4f9">
                     <div class="input-group-prepend">
                         <span class="input-group-text md-addon">Разрешение экрана</span>
                     </div>
@@ -127,7 +127,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="md-form input-group">
+                <div class="md-form input-group" style="background-color: #f0f4f9">
                     <div class="input-group-prepend">
                         <span class="input-group-text md-addon">Частота обновления экрана</span>
                     </div>
@@ -144,7 +144,7 @@
         </div>
     </div>
     <div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-filter2" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-filter2" aria-expanded="false">
             Особенности TV
         </button>
         <div class="collapse" id="tv-filter2">
@@ -170,7 +170,7 @@
 
 <#if url?contains("кабели_тв")>
     <div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tvCables1" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#tvCables1" aria-expanded="false">
             <span>Тип кабеля</span>
         </button>
         <div class="collapse" id="tvCables1">
@@ -192,7 +192,7 @@
             </div>
         </div>
 
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tvCables2" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#tvCables2" aria-expanded="false">
             <span>Разъемы</span>
         </button>
         <div class="collapse" id="tvCables2">
@@ -242,7 +242,7 @@
             </div>
         </div>
 
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tvCables3" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#tvCables3" aria-expanded="false">
             <span>Длинна кабеля</span>
         </button>
         <div class="collapse" id="tvCables3">
@@ -280,7 +280,7 @@
 
 <#if url?contains("кронштейны_тв")>
     <div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-brackets1" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-brackets1" aria-expanded="false">
             <span>Тип кронштейна</span>
         </button>
         <div class="collapse" id="tv-brackets1">
@@ -348,7 +348,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-brackets2" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-brackets2" aria-expanded="false">
             <span>Нагрузка и габариты</span>
         </button>
         <div class="collapse" id="tv-brackets2">
@@ -399,7 +399,7 @@
 
 <#if url?contains("музыкальные_центры")>
     <div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-brackets1" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-brackets1" aria-expanded="false">
             <span>Тип музыкального центра</span>
         </button>
         <div class="collapse" id="tv-brackets1">
@@ -466,7 +466,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-brackets2" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-brackets2" aria-expanded="false">
             <span>Акустика и звук</span>
         </button>
         <div class="collapse" id="tv-brackets2">
@@ -511,7 +511,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-brackets3" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-brackets3" aria-expanded="false">
             <span>Особенности музыкального центра</span>
         </button>
         <div class="collapse" id="tv-brackets3">
@@ -569,7 +569,7 @@
 
 <#if url?contains("телемебель")>
     <div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-mebel1" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-mebel1" aria-expanded="false">
             <span>Тип мебели</span>
         </button>
         <div class="collapse" id="tv-mebel1">
@@ -599,7 +599,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-mebel2" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-mebel2" aria-expanded="false">
             <span>Габариты и нагрузка</span>
         </button>
         <div class="collapse" id="tv-mebel2">
@@ -700,7 +700,7 @@
 
 <#if url?contains("lll")>
     <div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-mebel1" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-mebel1" aria-expanded="false">
             <span>Тип мебели</span>
         </button>
         <div class="collapse" id="tv-mebel1">
@@ -723,7 +723,7 @@
 
 <#if url?contains("холодильники")>
     <div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#fridge1" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#fridge1" aria-expanded="false">
             <span>Тип холодильника</span>
         </button>
         <div class="collapse" id="fridge1">
@@ -782,7 +782,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#fridge2" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#fridge2" aria-expanded="false">
             <span>Габариты</span>
         </button>
         <div class="collapse" id="fridge2">
@@ -834,7 +834,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#fridge3" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#fridge3" aria-expanded="false">
             <span>Морозильная камера и NoFrost</span>
         </button>
         <div class="collapse" id="fridge3">
@@ -891,7 +891,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#fridge4" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#fridge4" aria-expanded="false">
             <span>Объемы камер</span>
         </button>
         <div class="collapse" id="fridge4">
@@ -943,7 +943,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#fridge5" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#fridge5" aria-expanded="false">
             <span>Энергопотребление</span>
         </button>
         <div class="collapse" id="fridge5">
@@ -981,7 +981,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#fridge6" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#fridge6" aria-expanded="false">
             <span>Цвет</span>
         </button>
         <div class="collapse" id="fridge6">
@@ -1063,7 +1063,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#fridge7" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#fridge7" aria-expanded="false">
             <span>Особенности холодильника</span>
         </button>
         <div class="collapse" id="fridge7">
@@ -1102,7 +1102,7 @@
 </#if>
 <#if url?contains("морозильники")>
     <div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#freezer1" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#freezer1" aria-expanded="false">
             <span>Тип морозильника</span>
         </button>
         <div class="collapse" id="freezer1">
@@ -1125,7 +1125,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#freezer2" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#freezer2" aria-expanded="false">
             <span>Объем и габариты</span>
         </button>
         <div class="collapse" id="freezer2">
@@ -1192,7 +1192,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#fridge5" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#fridge5" aria-expanded="false">
             <span>Энергопотребление</span>
         </button>
         <div class="collapse" id="fridge5">
@@ -1234,7 +1234,7 @@
 </#if>
 <#if url?contains("электрические_плиты")>
     <div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
             <span>Тип варочной поверхности</span>
         </button>
         <div class="collapse" id="group1">
@@ -1260,7 +1260,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group2" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group2" aria-expanded="false">
             <span>Количество конфорок</span>
         </button>
         <div class="collapse" id="group2">
@@ -1292,7 +1292,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group3" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group3" aria-expanded="false">
             <span>Габариты</span>
         </button>
         <div class="collapse" id="group3">
@@ -1314,7 +1314,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group4" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group4" aria-expanded="false">
             <span>Цвет</span>
         </button>
         <div class="collapse" id="group4">
@@ -1364,7 +1364,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group5" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group5" aria-expanded="false">
             <span>Особенности плиты</span>
         </button>
         <div class="collapse" id="group5">
@@ -1391,7 +1391,7 @@
 </#if>
 <#if url?contains("газовые_плиты")>
     <div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
             <span>Варочная панель</span>
         </button>
         <div class="collapse" id="group1">
@@ -1442,7 +1442,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group2" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group2" aria-expanded="false">
             <span>Конфорки</span>
         </button>
         <div class="collapse" id="group2">
@@ -1487,7 +1487,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group3" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group3" aria-expanded="false">
             <span>Духовка</span>
         </button>
         <div class="collapse" id="group3">
@@ -1526,7 +1526,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="group4" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="group4" aria-expanded="false">
             <span>Габариты</span>
         </button>
         <div class="collapse" id="group4">
@@ -1578,7 +1578,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group5" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group5" aria-expanded="false">
             <span>Цвет</span>
         </button>
         <div class="collapse" id="group5">
@@ -1626,7 +1626,7 @@
 </#if>
 <#if url?contains("микроволновые_печи")>
     <div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
             <span>Тип печи</span>
         </button>
         <div class="collapse" id="group1">
@@ -1655,7 +1655,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group2" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group2" aria-expanded="false">
             <span>Управление и кнопки</span>
         </button>
         <div class="collapse" id="group2">
@@ -1730,7 +1730,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group3" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group3" aria-expanded="false">
             <span>Мощность и объем</span>
         </button>
         <div class="collapse" id="group3">
@@ -1767,7 +1767,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group4" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group4" aria-expanded="false">
             <span>Внутреннее покрытие камеры</span>
         </button>
         <div class="collapse" id="group4">
@@ -1790,7 +1790,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group6" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group6" aria-expanded="false">
             <span>Цвет</span>
         </button>
         <div class="collapse" id="group6">
@@ -1824,7 +1824,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group5" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group5" aria-expanded="false">
             <span>Особенности</span>
         </button>
         <div class="collapse" id="group5">
@@ -1845,7 +1845,7 @@
 </#if>
 <#if url?contains("электрические_чайники")>
     <div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
             <span>Тип и материал</span>
         </button>
         <div class="collapse" id="group1">
@@ -1926,7 +1926,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group2" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group2" aria-expanded="false">
             <span>Мощность и объем</span>
         </button>
         <div class="collapse" id="group2">
@@ -1963,7 +1963,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group6" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group6" aria-expanded="false">
             <span>Цвет</span>
         </button>
         <div class="collapse" id="group6">
@@ -2064,7 +2064,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group5" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group5" aria-expanded="false">
             <span>Особенности</span>
         </button>
         <div class="collapse" id="group5">
@@ -2091,7 +2091,7 @@
 </#if>
 <#if url?contains("стиральные_машины")>
     <div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
             <span>Загрузка белья</span>
         </button>
         <div class="collapse" id="group1">
@@ -2132,7 +2132,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group2" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group2" aria-expanded="false">
             <span>Отжим</span>
         </button>
         <div class="collapse" id="group2">
@@ -2152,7 +2152,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group3" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group3" aria-expanded="false">
             <span>Габариты</span>
         </button>
         <div class="collapse" id="group3">
@@ -2189,7 +2189,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group4" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group4" aria-expanded="false">
             <span>Особенности</span>
         </button>
         <div class="collapse" id="group4">
@@ -2240,7 +2240,7 @@
 </#if>
 <#if url?contains("пылесосы")>
     <div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
             <span>Тип пылесоса</span>
         </button>
         <div class="collapse" id="group1">
@@ -2282,7 +2282,7 @@
             </div>
         </div>
 
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group2" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group2" aria-expanded="false">
             <span>Пылесборник</span>
         </button>
         <div class="collapse" id="group2">
@@ -2324,7 +2324,7 @@
             </div>
         </div>
 
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group3" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group3" aria-expanded="false">
             <span>Мощность пылесоса</span>
         </button>
         <div class="collapse" id="group3">
@@ -2362,7 +2362,7 @@
             </div>
         </div>
 
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group4" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group4" aria-expanded="false">
             <span>Особенности</span>
         </button>
         <div class="collapse" id="group4">
@@ -2413,7 +2413,7 @@
 </#if>
 <#if url?contains("утюги")>
     <div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
             <span>Мощность</span>
         </button>
         <div class="collapse" id="group1">
@@ -2432,7 +2432,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group" aria-expanded="false">
             <span>Материал подошвы</span>
         </button>
         <div class="collapse" id="group">
@@ -2467,7 +2467,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group10" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group10" aria-expanded="false">
             <span>Особенности утюга</span>
         </button>
         <div class="collapse" id="group10">
@@ -2530,7 +2530,7 @@
 </#if>
 <#if url?contains("швейные_машины")>
     <div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
             <span>Тип машины</span>
         </button>
         <div class="collapse" id="group1">
@@ -2559,7 +2559,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group2" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group2" aria-expanded="false">
             <span>Тип челнока</span>
         </button>
         <div class="collapse" id="group2">
@@ -2594,7 +2594,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group3" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group3" aria-expanded="false">
             <span>Выполнение петли</span>
         </button>
         <div class="collapse" id="group3">
@@ -2623,7 +2623,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group4" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group4" aria-expanded="false">
             <span>Количество швейных операций</span>
         </button>
         <div class="collapse" id="group4">
@@ -2642,7 +2642,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group10" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group10" aria-expanded="false">
             <span>Особенности</span>
         </button>
         <div class="collapse" id="group10">
@@ -2688,7 +2688,7 @@
 
 <#if url?contains("встраиваемые_духовые_шкафы")>
     <div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
             <span>Тип духовки</span>
         </button>
         <div class="collapse" id="group1">
@@ -2717,7 +2717,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group66" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group66" aria-expanded="false">
             <span>Количество режимов</span>
         </button>
         <div class="collapse" id="group66">
@@ -2736,7 +2736,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group55" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group55" aria-expanded="false">
             <span>Объем духовки</span>
         </button>
         <div class="collapse" id="group55">
@@ -2755,7 +2755,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group14" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group14" aria-expanded="false">
             <span>Внутреннее покрытие</span>
         </button>
         <div class="collapse" id="group14">
@@ -2790,7 +2790,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group13" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group13" aria-expanded="false">
             <span>Переключатели</span>
         </button>
         <div class="collapse" id="group13">
@@ -2825,7 +2825,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#fridge55" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#fridge55" aria-expanded="false">
             <span>Энергопотребление</span>
         </button>
         <div class="collapse" id="fridge55">
@@ -2863,7 +2863,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group11" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group11" aria-expanded="false">
             <span>Очистка духовки</span>
         </button>
         <div class="collapse" id="group11">
@@ -2928,7 +2928,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group40" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group40" aria-expanded="false">
             <span>Габариты</span>
         </button>
         <div class="collapse" id="group40">
@@ -2995,7 +2995,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group10" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group10" aria-expanded="false">
             <span>Особенности</span>
         </button>
         <div class="collapse" id="group10">
@@ -3030,7 +3030,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#fridge55" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#fridge55" aria-expanded="false">
             <span>Цвет</span>
         </button>
         <div class="collapse" id="fridge55">
@@ -3078,7 +3078,7 @@
 </#if>
 <#if url?contains("встраиваемые_варочные_панели")>
     <div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group11" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group11" aria-expanded="false">
             <span>Тип варочной поверхности</span>
         </button>
         <div class="collapse" id="group11">
@@ -3107,7 +3107,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group1" aria-expanded="false">
             <span>Конфорки</span>
         </button>
         <div class="collapse" id="group1">
@@ -3201,7 +3201,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group33" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group33" aria-expanded="false">
             <span>Тип управления</span>
         </button>
         <div class="collapse" id="group33">
@@ -3224,7 +3224,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group40" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group40" aria-expanded="false">
             <span>Габариты</span>
         </button>
         <div class="collapse" id="group40">
@@ -3291,7 +3291,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group" aria-expanded="false">
             <span>Цвет и материал</span>
         </button>
         <div class="collapse" id="group">
@@ -3384,7 +3384,7 @@
                 </div>
             </div>
         </div>
-        <button class="btn btn-secondary btn-block filter-button" type="button" data-toggle="collapse" data-target="#group10" aria-expanded="false">
+        <button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#group10" aria-expanded="false">
             <span>Особенности</span>
         </button>
         <div class="collapse" id="group10">
