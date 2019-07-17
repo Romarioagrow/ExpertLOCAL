@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h3>База товаров</h3>
-                        <form method="post" enctype="multipart/form-data">
+                        <form method="post" action="/supplier/parse-catalog" enctype="multipart/form-data">
                             <div class="form-group">
                                 <div class="custom-file">
                                     <input type="file" name="file" id="customFile">
@@ -15,9 +15,15 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Загрузить!</button>
+                                <button type="submit" class="btn btn-danger btn-lg">Загрузить товары!</button>
                             </div>
                         </form>
+                        <form method="post" action="/supplier/match-products">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success btn-lg">Обработать товары!</button>
+                            </div>
+                        </form>
+
                     </div>
                 </div>
             </div>

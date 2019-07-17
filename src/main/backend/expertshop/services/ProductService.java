@@ -43,7 +43,7 @@ public class ProductService {
     {
         log.info("Request " + request);
 
-        Page<Product> page = productRepo.findByProductGroupEqualsIgnoreCaseAndSupplier(request, "1RBT", pageable);
+        Page<Product> page = productRepo.findByProductGroupEqualsIgnoreCase(request, pageable);
 
         if (page.getTotalElements() == 0) 
         {
@@ -60,8 +60,8 @@ public class ProductService {
     {
         log.info("Search request: " + searchRequest);
 
-        List<Product> searchedProducts = productRepo.findBySupplier("1RBT").stream()
-                .filter(product -> StringUtils.containsIgnoreCase(product.getOriginalName(), searchRequest))
+        List<Product> searchedProducts = productRepo.findAllByProductGroupIsNotNull().stream()
+                .filter(product -> StringUtils.containsIgnoreCase(product.getFullName(), searchRequest))
                 .collect(Collectors.toList());
         log.info("Products found: " + searchedProducts.size());
 

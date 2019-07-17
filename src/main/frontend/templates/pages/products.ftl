@@ -69,16 +69,20 @@
                                             <strong>
                                                 ${product.singleType}
                                                 ${product.originalBrand?capitalize}
-                                                ${product.modelName}
+                                                ${product.modelName!''}
                                             </strong>
                                         </a>
                                     </h5>
                                     <p class="card-text">
-                                        <strong><i>${product.productType}</i></strong>
+                                        <#if product.productType??>
+                                            <strong><i>${product.productType}</i></strong>
+                                        <#else>
+                                            <strong><i>${product.originalType}</i></strong>
+                                        </#if>
                                     </p>
-                                    <h3><strong>${product.finalPrice} ₽</strong></h3>
+                                    <h3><strong>${product.finalPrice!''} ₽</strong></h3>
                                     <p>
-                                        Бонус: ${product.bonus} ₽
+                                        Бонус: ${product.bonus!''} ₽
                                     </p>
                                     <div>
                                         <#if orderedProductsID?? && orderedProductsID?seq_contains('${product.productID}')>

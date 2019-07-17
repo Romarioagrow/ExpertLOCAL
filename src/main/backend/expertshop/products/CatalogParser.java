@@ -58,7 +58,7 @@ public class CatalogParser {
                 {
                     String productAmount          = line[6];
                     String productPrice           = line[7];
-                    log.info("Updating file" + line[3]);
+                    log.info("Updating file: " + line[3]);
 
                     if (checkProductForUpdate(productID, productAmount, productPrice))
                     {
@@ -70,7 +70,7 @@ public class CatalogParser {
                 else
                 {
                     createProductFromRBT(line);
-                    log.info("Creating new file" + line[3]);
+                    log.info("Creating new file: " + line[3]);
                     countAdd++;
                 }
             }
@@ -95,8 +95,8 @@ public class CatalogParser {
                 if (productAlreadyExists(productID))
                 {
                     String productAmount = line[7] + line[8];
-                    String productPrice  = line[11];
-                    log.info("Updating product " + line[6]);
+                    String productPrice  = line[13];
+                    log.info("Updating product: " + line[6]);
 
                     if (checkProductForUpdate(productID, productAmount, productPrice))
                     {
@@ -104,10 +104,11 @@ public class CatalogParser {
                     }
                     else  updateProductDate(productID);
                     countUpdate++;
-                } else
+                }
+                else
                 {
                     createProductFromRUSBT(line);
-                    log.info("Creating new product" + line[6]);
+                    log.info("Creating new product: " + line[6]);
                     countAdd++;
                 }
             }
@@ -117,7 +118,7 @@ public class CatalogParser {
     }
 
     private boolean correctLineR(String[] line) {
-        return !line[0].equals("Код товара") & !line[0].isEmpty() & !line[0].startsWith(";") & !line[5].isEmpty() & !line[13].contains("Цена со скидкой");
+        return !line[6].contains("Уценка") && !line[3].contains("УЦЕНКА") && !line[0].contains("Код товара") & !line[0].isEmpty() & !line[0].startsWith(";") & !line[5].isEmpty() & !line[13].contains("Цена со скидкой");
     }
 
     private void createProductFromRBT(String[] line) {
@@ -195,7 +196,7 @@ public class CatalogParser {
     }
 
     private boolean lineIsCorrect(String[] line) {
-        return !line[0].equals("Код товара") & !line[0].equals(";")      & !line[0].contains("г. Челябинск") &
+        return !line[3].isEmpty() && !line[0].equals("Код товара") & !line[0].equals(";") & !line[0].contains("г. Челябинск") &
                 !line[0].contains("8(351)")   & !line[0].startsWith(".")  & !line[0].startsWith(" ");
     }
 

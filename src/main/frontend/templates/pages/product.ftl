@@ -6,7 +6,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/products/groups/${product.productGroup}">${product.productGroup}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">${product.productType}</li>
-                    <li class="breadcrumb-item active" aria-current="page">${product.typeBrand}</li>
+                    <li class="breadcrumb-item active" aria-current="page">${product.groupBrand}</li>
                 </ol>
             </nav>
         </div>
@@ -96,7 +96,13 @@
                 <h3>Параметры товара</h3>
                 <table class="table table table-borderless w-30">
                     <thead>
-                    <tr>${product.formattedAnnotation}</tr>
+                    <tr>
+                        <#if product.formattedAnnotation??>
+                            ${product.formattedAnnotation}
+                        <#else>
+                            ${product.originalAnnotation}
+                        </#if>
+                    </tr>
                     </thead>
                     <tbody>
                     <#--${product.fullInfo}

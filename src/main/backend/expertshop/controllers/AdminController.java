@@ -2,6 +2,7 @@ package expertshop.controllers;
 
 import expertshop.domain.User;
 import expertshop.products.CatalogParser;
+import expertshop.products.ProductMatcher;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,21 +24,28 @@ import java.io.IOException;
 @PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
     private final CatalogParser catalogParser;
+    private final ProductMatcher productMatcher;
 
     @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public String supplier()
     {
-        //productResolver.processProducts();
         return "pages/supplier";
     }
 
-    @PostMapping
-    /*@PreAuthorize("hasAuthority('ROLE_ADMIN')")*/
+    @PostMapping("/parse-catalog")
     public String loadCSV (@RequestParam("file") MultipartFile file, Model model, @AuthenticationPrincipal User user) throws IOException
     {
-        log.info(file.getOriginalFilename());
+        log.fine("PARSING FILE: " + file.getOriginalFilename());
         catalogParser.processFile(file);
+        return "pages/supplier";
+    }
+
+    @PostMapping("/match-products")
+    public String matchProducts()
+    {
+        log.fine("PRODUCT MATCHER RUNNING!");
+        productMatcher.matchProducts();
         return "pages/supplier";
     }
 

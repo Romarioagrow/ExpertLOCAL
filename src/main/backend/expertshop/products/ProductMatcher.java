@@ -7,84 +7,16 @@ import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 @Log
 @Service
 @AllArgsConstructor
 public class ProductMatcher {
     private final ProductRepo productRepo;
+    static int matchCounter = 0;
 
-    private void matchProduct(String alias, String productGroup, double coefficient, String single, String productCategory, Product product)
-    {
-        String[] matches = alias.split(",");
-        String type = product.getOriginalType();
-        String supp = product.getSupplier();
-
-        for (String match : matches)
-        {
-            if ((supp.equals("1RBT") & StringUtils.startsWithIgnoreCase(type, match.trim())) || (supp.equals("2RUSBT") && (StringUtils.startsWithIgnoreCase(product.getRType(), match.trim()) || StringUtils.startsWithIgnoreCase(product.getRName(), match.trim()))))
-            {
-                product.setProductGroup(productGroup);
-                product.setSingleType(single);
-                product.setProductCategory(productCategory);
-
-                int originalPrice   = Integer.parseInt(StringUtils.deleteWhitespace(product.getOriginalPrice().trim()));
-                int finalPrice      = (int) (originalPrice * coefficient);
-                int bonus           = finalPrice * 3 / 100;
-
-                product.setFinalPrice(roundPrice(finalPrice));
-                product.setBonus(roundBonus(bonus));
-                productRepo.save(product);
-
-                System.out.println();
-                log.info("Product: "        + product.getOriginalName());
-                log.info("ProductGroup: "   + product.getProductGroup());
-                log.info("Original price: " + originalPrice);
-                log.info("Coefficient: "    + coefficient);
-                log.info("finalPrice "      + product.getFinalPrice());
-                log.info("bonus "           + product.getBonus() );
-                return;
-            }
-        }
-    }
-    private int roundPrice(int finalPrice) {
-        String val = String.valueOf(finalPrice);
-        if (finalPrice > 0 && finalPrice <= 10)
-        {
-            return 10;
-        }
-        else if (finalPrice > 10 && finalPrice < 1000)
-        {
-            val = val.substring(0, val.length()-1).concat("9");
-            return Integer.parseInt(val);
-        }
-        else if (finalPrice > 1000)
-        {
-            val = val.substring(0, val.length()-2).concat("90");
-            return Integer.parseInt(val);
-        }
-        else return finalPrice;
-    }
-    private Integer roundBonus(int bonus) {
-        String val = String.valueOf(bonus);
-        if (bonus > 0 && bonus <= 10)
-        {
-            return 10;
-        }
-        else
-        {
-            val = val.substring(0, val.length()-1).concat("0");
-            return Integer.parseInt(val);
-        }
-    }
-
-    public void processProducts()
+    public void matchProducts()
     {
         List<Product> products = productRepo.findAll();
 
@@ -92,7 +24,7 @@ public class ProductMatcher {
         {
             try
             {
-                //if (product.getProductGroup() == null)
+                if (productValidToMatch(product))
                 {
                     /*АВТОТОВАРЫ*/
                     matchProduct("10.01, Акустика"									, "Автоакустика"						,1.18	, "Автоакустика"						, "Автотовары"					, product);
@@ -192,7 +124,7 @@ public class ProductMatcher {
                     matchProduct("01.15, Хлебопечи"												, "Хлебопечи"				            ,1.15				, "Хлебопечь"							, "Кухонная техника"			    , product);
                     matchProduct("15.15.02, Кастрюля"											    , "Кастрюли"				            ,1.35				, "Кастрюля"							, "Кухонная техника"			    , product);
                     matchProduct("01.04, Посудомоечная машина"									    , "Посудомоечные машины"	            ,1.15				, "Посудомоечная машина"				, "Кухонная техника"			    , product);
-                    matchProduct("07.05.01, 07.05.02, 07.05.03, 07.05.05, 07.05.05, Вытяжка каминная, Вытяжка козырьковая, "				, "Вытяжки"					            ,1.15              , "Вытяжка"				            , "Кухонная техника"			    , product);
+                    matchProduct("07.05.01, 07.05.02, 07.05.03, 07.05.05, 07.05.05, Вытяжка каминная, Вытяжка козырьковая,"				, "Вытяжки"					            ,1.15              , "Вытяжка"				            , "Кухонная техника"			    , product);
                     matchProduct("01.09, Соковыжималка"				                                            , "Соковыжималки"			            ,1.18		        , "Соковыжималка"				        , "Кухонная техника"			    , product);
                     matchProduct("01.10, Мясорубка"				                                            , "Мясорубки"			                ,1.20		        , "Мясорубка"				            , "Кухонная техника"			    , product);
                     matchProduct("01.12.01"				                                        , "Фритюрницы"			                ,1.20		        , "Фритюрница"				        , "Кухонная техника"			    , product);
@@ -224,23 +156,186 @@ public class ProductMatcher {
                     matchProduct("10.10, Музыкальные центры"										, "Музыкальные центры"		            ,1.15				, "Музыкальный центр"					, "Теле-Видео-Аудио"			    , product);
                     matchProduct("15.02.07, Телемебель"											, "Телемебель"				            ,1.40				, "Телемебель"						, "Теле-Видео-Аудио"			    , product);
                     matchProduct("10.17.01, Синтезаторы и цифровые фортепьяно"					    , "Музыкальные инструменты"	            ,1.15				, "Музыкальный инструмент"			, "Теле-Видео-Аудио"			    , product);
+
                 }
+                else warningProduct(product);
             }
             catch (NullPointerException exp) {
                 log.info("NullPointer at: " + product.getOriginalName());
                 exp.printStackTrace();
             }
         }
+        log.info("Total matches: " + matchCounter);
     }
 
+    private void matchProduct(String alias, String productGroup, double coefficient, String single, String productCategory, Product product)
+    {
+        String[] matches = alias.split(",");
+        String supp = product.getSupplier();
 
+        for (String match : matches)
+        {
+            try
+            {
+                if ((supp.equals("1RBT") && StringUtils.startsWithIgnoreCase(product.getOriginalType(), match.trim())))
+                {
+                    String brand = product.getOriginalBrand();
 
+                    product.setProductGroup(productGroup);
+                    product.setSingleType(single);
+                    product.setProductCategory(productCategory);
 
+                    String model        = StringUtils.substringAfter(product.getOriginalName().toUpperCase(), brand.toUpperCase()).trim();
+                    String fullName     = product.getSingleType().concat(" ").concat(StringUtils.capitalize(brand.toLowerCase())).concat(" ").concat(model);
+                    String type         = resolveProductType(product.getOriginalType());
+                    String groupBrand   = single.concat(" ").concat(StringUtils.capitalize(brand.toLowerCase()));
+                    String formAnno     = formatAnnotation(product.getOriginalAnnotation());
 
+                    int finalPrice      = roundPrice(Integer.parseInt(StringUtils.deleteWhitespace(product.getOriginalPrice())));
+                    int productBonus    = matchBonus(finalPrice);
 
+                    product.setModelName(model);
+                    product.setProductType(type);
+                    product.setGroupBrand(groupBrand);
+                    product.setFullName(fullName);
+                    product.setFinalPrice(finalPrice);
+                    product.setBonus(productBonus);
+                    product.setFormattedAnnotation(formAnno);
+                    productRepo.save(product);
 
+                    System.out.println();
+                    log.info("Product: "        + product.getOriginalName());
+                    log.info("Model: "          + product.getModelName());
+                    log.info("FullName: "       + product.getFullName());
+                    log.info("ProductGroup: "   + product.getProductGroup());
+                    log.info("Single: "         + product.getSingleType());
+                    log.info("Price: "          + product.getFinalPrice());
+                    log.info("Bonus: "          + product.getBonus());
 
-    public void resolveDuplicates(String request)
+                    matchCounter++;
+                    return;
+                }
+                else if ((supp.equals("2RUS-BT") && (StringUtils.startsWithIgnoreCase(product.getRType(), match.trim()) || StringUtils.startsWithIgnoreCase(product.getRName(), match.trim()))))
+                {
+                    product.setProductGroup(productGroup);
+                    product.setSingleType(single);
+                    product.setProductCategory(productCategory);
+
+                    String originalBrand = product.getOriginalBrand().toUpperCase();
+                    String originalName  = product.getRName().toUpperCase();
+
+                    if (originalName.contains(", ") && originalName.contains(originalBrand))
+                    {
+
+                        String annotation   = StringUtils.substringAfter(originalName,", ");
+                        String model        = StringUtils.substringBetween(originalName, originalBrand, ",").trim();
+                        String name         = StringUtils.capitalize(originalBrand.toLowerCase()).concat(" ").concat(model);//StringUtils.capitalize(originalBrand.concat(" ").concat(model).toLowerCase());
+                        String fullName     = product.getSingleType().concat(" ").concat(StringUtils.capitalize(originalBrand.toLowerCase())).concat(" ").concat(model);
+                        String groupBrand   = single.concat(" ").concat(StringUtils.capitalize(originalBrand.toLowerCase()));
+                        int finalPrice      = roundPrice((int) Double.parseDouble(StringUtils.deleteWhitespace(product.getOriginalPrice()).replaceAll(",", ".")));
+                        int productBonus    = matchBonus(finalPrice);
+
+                        product.setOriginalName(name);
+                        product.setOriginalAnnotation(annotation);
+                        product.setModelName(model);
+                        product.setFullName(fullName);
+                        product.setGroupBrand(groupBrand);
+                        product.setProductType(product.getOriginalType()); /// resolveTypeName();
+                        product.setFinalPrice(finalPrice);
+                        product.setBonus(productBonus);
+                        productRepo.save(product);
+
+                        System.out.println();
+                        log.info("OrNAME: " + originalName);
+                        log.info("NAME: " + product.getOriginalName());
+                        log.info("FULL NAME: " + product.getFullName());
+                        log.info("MODEL: " + product.getModelName());
+                        log.info("ANNO: " + product.getOriginalAnnotation());
+                        log.info("PRICE: " + product.getFinalPrice());
+                        log.info("BONUS: "  + product.getBonus());
+
+                        matchCounter++;
+                        return;
+                    }
+                }
+            }
+            catch (NullPointerException e) {
+                System.out.println();
+                log.warning("NULL EXP " + product.getOriginalName());
+                e.printStackTrace();
+            }
+            catch (NumberFormatException e) {
+                System.out.println();
+                log.warning("NUMBER EXP " + product.getOriginalPrice());
+            }
+        }
+    }
+
+    private int roundPrice(int finalPrice) {
+        String val = String.valueOf(finalPrice);
+        if (finalPrice > 0 && finalPrice <= 10) {
+            return 10;
+        }
+        else if (finalPrice > 10 && finalPrice < 1000)
+        {
+            val = val.substring(0, val.length()-1).concat("9");
+            return Integer.parseInt(val);
+        }
+        else if (finalPrice > 1000)
+        {
+            val = val.substring(0, val.length()-2).concat("90");
+            return Integer.parseInt(val);
+        }
+        else return finalPrice;
+    }
+    private Integer matchBonus(int price)
+    {
+        int bonus = price * 3 / 100;
+        String val = String.valueOf(bonus);
+        if (bonus > 0 && bonus <= 10) {
+            return 10;
+        }
+        else
+        {
+            val = val.substring(0, val.length()-1).concat("0");
+            return Integer.parseInt(val);
+        }
+    }
+
+    private boolean productValidToMatch(Product product) {
+        return product.getProductGroup() == null && !product.getOriginalBrand().isEmpty() && (product.getOriginalName().toUpperCase()).contains(product.getOriginalBrand().toUpperCase());
+    }
+
+    private void warningProduct(Product product) {
+        System.out.println();
+        log.warning("INCORRECT PRODUCT: " + product.getOriginalName());
+        log.warning("BRAND: " + product.getOriginalBrand());
+        log.warning("EMPTY GROUP: " + (product.getProductGroup() == null));
+    }
+
+    public String formatAnnotation(String anno)
+    {
+        if (!anno.isEmpty() && anno.contains(";")) {
+            return anno.replaceAll(";", "<br>");
+        }
+        return null;
+    }
+
+    public String resolveProductType(String originalType)
+    {
+        if (originalType.contains(" ") && originalType.contains("_")) {
+            return StringUtils.substringAfter(originalType, "_");
+        }
+        else if (originalType.contains("_")) {
+            return StringUtils.substringAfter(originalType, "_");
+        }
+        else if (originalType.contains(" ")) {
+            return StringUtils.substringAfter(originalType, " ");
+        }
+        return originalType;
+    }
+}
+    /*public void resolveDuplicates(String request)
     {
         List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCase(request);
         products.sort(Comparator.comparing(Product::getModelName));
@@ -253,26 +348,11 @@ public class ProductMatcher {
                 findDuplicates(products, modelName);
             }
         }
-    }
+    }*/
 
-    public void formatAnnotation() {
-        List<Product> products = productRepo.findAll();
-        products.forEach(product ->
-        {
-            String origAnno = product.getOriginalAnnotation();
-            if (product.getFormattedAnnotation() == null)
-            {
-                if (!origAnno.isEmpty() && origAnno.contains(";"))
-                {
-                    product.setFormattedAnnotation(origAnno.replaceAll(";", "<br>"));
-                    productRepo.save(product);
-                    log.info(product.productID);
-                }
-            }
-        });
-    }
 
-    public void findDuplicates(List<Product> products, String modelName)
+
+    /*public void findDuplicates(List<Product> products, String modelName)
     {
         List<Product> duplicates = products.stream()
                 .filter(product -> StringUtils.containsIgnoreCase(product.getOriginalName(), modelName) || StringUtils.containsIgnoreCase(product.getModelName(), modelName))
@@ -287,9 +367,9 @@ public class ProductMatcher {
             log.info("Size: " + duplicates.size());
             duplicates.forEach(product -> log.info(product.getModelName() + "; " + product.getSupplier() + "; " + product.getPrice()));
         }
-    }
+    }*/
 
-    public void showModelName(String request)
+    /*public void showModelName(String request)
     {
         List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCase(request);
         products.sort(Comparator.comparing(Product::getModelName));
@@ -303,47 +383,11 @@ public class ProductMatcher {
                 log.info(product.getOriginalName());
             }
         });
-    }
+    }*/
 
-    public void clearModelName(String request)
-    {
-        //List<Product> products = productRepo.findAllByModelNameNotNull();
-        List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCase(request);
-        //products.sort(Comparator.comparing(Product::getModelName));
 
-        ///тв, ресиверы, кронштейныТВ, телемебель, музыкальные_центры
-        Pattern pattern = Pattern.compile("[а-яёА-ЯЁ()]+");
-        String[] notBrands = {"ORION", "Electriclight"};
 
-        products.forEach(product ->
-        {
-            if (product.getModelName() != null && !Arrays.asList(notBrands).contains(product.getOriginalBrand()))
-            {
-                String modelName = product.getModelName();
-                Matcher match = pattern.matcher(modelName);
-                if (match.find())
-                {
-                    System.out.println();
-                    log.info(product.getSupplier() + ": " + product.getOriginalName());
-
-                    modelName = modelName.replaceAll(pattern.pattern(), "");
-
-                    ///REGEX
-                    if (modelName.contains(" ")) modelName = modelName.replaceAll(" ", "");
-                    if (modelName.contains(".")) modelName = modelName.replaceAll(".", "");
-
-                    product.setModelName(modelName);
-
-                    productRepo.save(product);
-
-                    log.info(product.getModelName());
-                }
-            }
-            else log.info("NO ModelName for " + product.getOriginalName());
-        });
-    }
-
-    private boolean checkBrandAndGroup(Product product) {
+    /*private boolean checkBrandAndGroup(Product product) {
         return !product.getOriginalBrand().isEmpty() && product.getProductGroup() != null;
     }
 
@@ -359,7 +403,7 @@ public class ProductMatcher {
 
         });
 
-        /*
+        *//*
         List<Product> products2 = productRepo.findBySupplier("2RUS-BT");
         for (Product product : products2)
         {
@@ -390,10 +434,10 @@ public class ProductMatcher {
                 trimModelNameAfterBrand(product);
             }
         });
-        */
-    }
+        *//*
+    }*/
 
-    private void trimModelNameAfterBrand(Product product)
+    /*private void trimModelNameAfterBrand(Product product)
     {
         try
         {
@@ -410,10 +454,10 @@ public class ProductMatcher {
             log.info("NULL at " + product.getOriginalName());
             e.printStackTrace();
         }
-    }
+    }*/
 
 
-    public void resolveOriginalPrice() {
+    /*public void resolveOriginalPrice() {
         List<Product> products= productRepo.findAll();
         for (Product product : products)
         {
@@ -431,46 +475,20 @@ public class ProductMatcher {
                 exp.printStackTrace();
             }
         }
-    }
+    }*/
 
-    public void resolveTypeBrand() {
+    /*public void resolveTypeBrand() {
         List<Product> products = productRepo.findAll();
         products.forEach(product ->
         {
             if (product.getSingleType() != null)
             {
                 String typeBrand = product.getSingleType().concat(" ").concat(StringUtils.capitalize(product.getOriginalBrand().toLowerCase()));
-                product.setTypeBrand(typeBrand);
+                product.setGroupBrand(typeBrand);
                 productRepo.save(product);
             }
         });
-    }
+    }*/
 
-    public void resolveProductType()
-    {
-        List<Product> products = productRepo.findAll();
-        products.forEach(product ->
-        {
-            if (product.getProductType() == null)
-            {
-                String origType = product.getOriginalType();
-                if (origType.contains(" ") && origType.contains("_"))
-                {
-                    product.setProductType(StringUtils.substringAfter(product.getOriginalType(), "_"));
-                }
-                else if (origType.contains("_"))
-                {
-                    product.setProductType(StringUtils.substringAfter(product.getOriginalType(), "_"));
-                }
-                else if (origType.contains(" "))
-                {
-                    product.setProductType(StringUtils.substringAfter(product.getOriginalType(), " "));
-                }
 
-                productRepo.save(product);
-                log.info(product.getProductType());
-            }
-        });
-    }
-}
 

@@ -25,7 +25,6 @@ public class CategoriesController {
     private final ProductService    productService;
     private final OrderService      orderService;
     private final ProductRepo       productRepo;
-    private final ProductMatcher productResolver;
 
     /*ORDER*/
     @GetMapping("/order")
