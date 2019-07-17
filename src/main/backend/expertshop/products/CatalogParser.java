@@ -8,18 +8,13 @@ import expertshop.services.ProductService;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 
-import org.jsoup.HttpStatusException;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.ConnectException;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -37,30 +32,15 @@ public class CatalogParser {
         {
             try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream())))
             {
-                if (fileRBT(file)) parseRBT(file, bufferedReader);
+                if (fileRBT(file))
+                    parseRBT(file, bufferedReader);
+                else parseRUSBT(file, bufferedReader);
             }
-            catch (Exception exp) {
-                log.info("Something wrong!");
+            catch (IOException exp) {
+                exp.getStackTrace();
             }
-            /*parseFile(file);*/
         }
     }
-
-    /*private void parseFile(MultipartFile file)
-    {
-        *//*
-        FileWriter fw = new FileWriter("filename.txt", Charset.forName("utf-8"));
-        InputStream inputStream = file.getInputStream();
-        *//*
-
-        try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream())))
-        {
-            if (fileRBT(file)) parseRBT(file, bufferedReader);
-        }
-        catch (Exception exp) {
-            log.info("Something wrong!");
-        }
-    }*/
 
     private void parseRBT(MultipartFile file, BufferedReader bufferedReader) throws IOException {
         log.info("\nParsing RBT file: " + file.getOriginalFilename());
@@ -84,7 +64,7 @@ public class CatalogParser {
                     {
                         updateProductStats(productID, productAmount, productPrice);
                     }
-                    else updateProductAvailable(productID);
+                    else updateProductDate(productID);
                     countUpdate++;
                 }
                 else
@@ -95,33 +75,49 @@ public class CatalogParser {
                 }
             }
             else log.info("!!! Пропуск некоректной строки " + file.getOriginalFilename());
+        }
+        log.info("Products add: " + countAdd);
+        log.info("Products updated: " + countUpdate);
+    }
+    private void parseRUSBT(MultipartFile file, BufferedReader bufferedReader) throws IOException
+    {
+        log.info("Parsing RUS_BT file: " + file.getOriginalFilename());
 
-            /*if (incorrectLineRBT(line)) log.info("!!! Пропуск некоректной строки " + file.getOriginalFilename());
-            else
+        int countAdd = 0, countUpdate = 0;
+        String[] line;
+        CSVReader reader = new CSVReader(bufferedReader, ';');
+
+        while ((line = reader.readNext()) != null)
+        {
+            if (correctLineR(line))
             {
-                String productID        = line[0];
+                String productID = line[5];
                 if (productAlreadyExists(productID))
                 {
-                    String productAmount    = line[6];
-                    String productPrice     = line[7];
-                    log.info("Updating file" + line[3]);
+                    String productAmount = line[7] + line[8];
+                    String productPrice  = line[11];
+                    log.info("Updating product " + line[6]);
 
                     if (checkProductForUpdate(productID, productAmount, productPrice))
                     {
                         updateProductStats(productID, productAmount, productPrice);
-                        countUpdate++;
                     }
-                    else updateProductAvailable(productID);
-                }
-                else
+                    else  updateProductDate(productID);
+                    countUpdate++;
+                } else
                 {
-                    createProductFromRBT(line);
+                    createProductFromRUSBT(line);
+                    log.info("Creating new product" + line[6]);
                     countAdd++;
                 }
-            }*/
+            }
         }
         log.info("Products add: " + countAdd);
         log.info("Products updated: " + countUpdate);
+    }
+
+    private boolean correctLineR(String[] line) {
+        return !line[0].equals("Код товара") & !line[0].isEmpty() & !line[0].startsWith(";") & !line[5].isEmpty() & !line[13].contains("Цена со скидкой");
     }
 
     private void createProductFromRBT(String[] line) {
@@ -143,6 +139,27 @@ public class CatalogParser {
         product.setOriginalPic(line[10]);
         productRepo.save(product);
     }
+    private void createProductFromRUSBT(String[] line) {
+        Product product = new Product();
+        product.setProductID(line[5]);
+
+        product.setOriginalCategory(line[0].concat("; ").concat(line[1]));
+        product.setOriginalType(line[3]);
+
+        product.setOriginalBrand(line[4]);
+        product.setOriginalName(line[6]);
+        product.setOriginalAnnotation(StringUtils.substringAfter(line[6], line[4]));
+        product.setOriginalAmount(line[7]+line[8]);
+        product.setOriginalPrice(line[13]);
+
+        product.setSupplier("2RUS-BT");
+        product.setUpdate(LocalDate.now());
+
+        product.setOriginalPic(line[17]);
+        product.setRType(line[3]);
+        product.setRName(line[6]);
+        productRepo.save(product);
+    }
 
     private boolean productAlreadyExists(String productID) {
         return productRepo.findByProductID(productID) != null;
@@ -158,7 +175,7 @@ public class CatalogParser {
         log.info("Updating " + productID);
     }
 
-    private void updateProductAvailable(String productID) {
+    private void updateProductDate(String productID) {
         Product product = productRepo.findByProductID(productID);
         product.setUpdate(LocalDate.now());
         productRepo.save(product);
@@ -173,16 +190,28 @@ public class CatalogParser {
     private boolean fileRBT(MultipartFile file) {
         return Objects.requireNonNull(file.getOriginalFilename()).contains("СП2");
     }
+    private boolean fileRUSBT(MultipartFile file) {
+        return Objects.requireNonNull(file.getOriginalFilename()).contains("RUSBT");
+    }
 
     private boolean lineIsCorrect(String[] line) {
         return !line[0].equals("Код товара") & !line[0].equals(";")      & !line[0].contains("г. Челябинск") &
-               !line[0].contains("8(351)")   & !line[0].startsWith(".")  & !line[0].startsWith(" ");
+                !line[0].contains("8(351)")   & !line[0].startsWith(".")  & !line[0].startsWith(" ");
     }
 
     private boolean incorrectLineRBT(String[] line) {
         return line[0].equals("Код товара")     || line[0].equals(";")      || line[0].contains("г. Челябинск")
                 || line[0].contains("8(351)")   || line[0].startsWith(".")  || line[0].startsWith(" ");
     }
+    private boolean incorrectLineRUSBT(String[] line)
+    {
+        return line[0].equals("Код товара") || line[0].isEmpty() || line[0].startsWith(";") || line[5].isEmpty()
+                || line[13].contains("Цена со скидкой");
+    }
+
+
+
+
 
     /*
     private void parseRUSBT(MultipartFile file, BufferedReader bufferedReader) throws IOException

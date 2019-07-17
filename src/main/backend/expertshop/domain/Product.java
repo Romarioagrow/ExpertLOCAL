@@ -1,4 +1,5 @@
 package expertshop.domain;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -91,6 +92,13 @@ public class Product implements Serializable {
 
     @Column(name = "formatted_annotation", length = 20000)
     private String formattedAnnotation;
+
+    @JsonIgnore
+    private String rType;
+
+    @JsonIgnore
+    @Column(length = 20000)
+    private String rName;
 }
 
 

@@ -45,10 +45,11 @@ public class FilterService {
                 else if (condition.startsWith("Comp-")) {
                     products = filterComputeParams (products, filter);
                 }
+                /// ОТДЕЛЬНЫЙ CASE
                 else switch (condition) {
                         case "sortmin", "sortmax"   -> products = filterPrice   (products, filter);
                         case "brand"                -> products = filterBrands  (products, filter);
-                }
+                    }
             }
             catch (NullPointerException e) {
                 e.printStackTrace();
@@ -76,7 +77,32 @@ public class FilterService {
         {
             return products.stream().filter(product ->
             {
-                AtomicInteger matches = new AtomicInteger(0);
+                if (product.getSupplier().equals("1RBT")) ///checkSupp()
+                {
+                    AtomicInteger matches = new AtomicInteger(0);
+                    for (String val : params)
+                    {
+                        String param = val.replaceAll("[\\[\\]]", "").trim();
+
+                        if (product.getOriginalAnnotation().contains(param) || product.getProductType().contains(param))
+                        {
+                            System.out.println();
+                            log.info("FILTER: " + param);
+                            log.info("RESULT: " + product.getOriginalAnnotation());
+                            matches.getAndIncrement();
+                        }
+                    }
+                    return matches.get() == params.length;
+                }
+                else return false;
+
+            }).collect(Collectors.toList());
+        }
+        /// В ОТДЕЛЬНЫЙ МЕТОД
+        else return products.stream().filter(product ->
+        {
+            if (product.getSupplier().equals("1RBT")) ///checkSupp()
+            {
                 for (String val : params)
                 {
                     String param = val.replaceAll("[\\[\\]]", "").trim();
@@ -86,27 +112,12 @@ public class FilterService {
                         System.out.println();
                         log.info("FILTER: " + param);
                         log.info("RESULT: " + product.getOriginalAnnotation());
-                        matches.getAndIncrement();
+                        return true;
                     }
                 }
-                return matches.get() == params.length;
-            }).collect(Collectors.toList());
-        }
-        else return products.stream().filter(product ->
-        {
-            for (String val : params)
-            {
-                String param = val.replaceAll("[\\[\\]]", "").trim();
-
-                if (product.getOriginalAnnotation().contains(param) || product.getProductType().contains(param))
-                {
-                    System.out.println();
-                    log.info("FILTER: " + param);
-                    log.info("RESULT: " + product.getOriginalAnnotation());
-                    return true;
-                }
+                return false;
             }
-            return false;
+            else return false;
         }).collect(Collectors.toList());
     }
     private String resolveSplitter(String key) {

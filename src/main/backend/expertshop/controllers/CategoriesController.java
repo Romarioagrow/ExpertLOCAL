@@ -1,7 +1,7 @@
 package expertshop.controllers;
 import expertshop.domain.Order;
 import expertshop.domain.User;
-import expertshop.products.ProductResolver;
+import expertshop.products.ProductMatcher;
 import expertshop.repos.ProductRepo;
 import expertshop.products.CatalogParser;
 import expertshop.services.OrderService;
@@ -24,14 +24,8 @@ import java.io.IOException;
 public class CategoriesController {
     private final ProductService    productService;
     private final OrderService      orderService;
-    private final CatalogParser     catalogParser;
     private final ProductRepo       productRepo;
-    private final ProductResolver   productResolver;
-
-    @GetMapping("/test")
-    public String test() {
-        return "pages/page";
-    }
+    private final ProductMatcher productResolver;
 
     /*ORDER*/
     @GetMapping("/order")
@@ -44,25 +38,6 @@ public class CategoriesController {
         return "pages/order";
     }
 
-    @GetMapping("/supplier")
-    public String supplier()
-    {
-        productResolver.processProducts();
-        return "pages/supplier";
-    }
-    @PostMapping("/supplier")
-    public String loadCSV (@RequestParam("file") MultipartFile file, Model model, @AuthenticationPrincipal User user) throws IOException {
-        log.info(file.getOriginalFilename());
-
-        catalogParser.processFile(file);
-        return "pages/supplier";
-    }
-    @GetMapping("/supplier/pics")
-    public String checkProductPics()
-    {
-        ///catalogParser.checkProductPics();
-        return "pages/supplier";
-    }
 
     @GetMapping("/")
     public String showAll(Model model, @AuthenticationPrincipal User user) {
