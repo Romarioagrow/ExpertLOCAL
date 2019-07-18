@@ -15,12 +15,22 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-danger btn-lg">Загрузить товары!</button>
+                                <button type="submit" class="btn btn-success btn-lg">Загрузить товары!</button>
                             </div>
                         </form>
                         <form method="post" action="/supplier/match-products">
                             <div class="form-group">
-                                <button type="submit" class="btn btn-success btn-lg">Обработать товары!</button>
+                                <button type="submit" class="btn btn-warning btn-lg">Обработать товары!</button>
+                            </div>
+                        </form>
+                        <form method="post" action="/supplier/match-models">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-danger btn-lg">Match models!</button>
+                            </div>
+                        </form>
+                        <form method="post" action="/supplier/match-duplicates">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-dark btn-lg">Match duplicates!</button>
                             </div>
                         </form>
 

@@ -1,6 +1,7 @@
 package expertshop.repos;
 import expertshop.domain.Product;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -15,25 +16,23 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     /*Page<Product> findByOriginalTypeContainingOrOriginalGroupContainingOrOriginalNameContaining(String type, String group, String name, Pageable pageable);*/
 
     Page<Product> findByOriginalTypeContainingOrOriginalNameContaining(String type, String name, Pageable pageable);
-
     Page<Product> findByProductGroupEqualsIgnoreCase(String productGroup, Pageable pageable);
-
     Page<Product> findByProductGroupEqualsIgnoreCaseAndSupplier(String productGroup, String supplier, Pageable pageable);
 
+    //List<Product> findAllBySupplierAndProductGroupIsNotNull
+    List<Product> findByProductCategoryAndSupplierAndProductGroupIsNotNull(String cat, String supp);
+    List<Product> findByProductGroup(String group);
+    List<Product> findByProductGroupAndSupplier(String group, String sup);
+    List<Product> findByShortNameStartingWith(String s);
+    List<Product> findByShortNameEquals(String s);
+
     List<Product> findAllByProductGroupIsNotNull();
-
     List<Product> findProductsByProductGroupEqualsIgnoreCase(String productGroup);
-
     List<Product> findBySupplier(String supplier);
-
     List<Product> findBySupplierAndProductGroupIsNotNull(String supplier);
-
     List<Product> findProductsByProductGroupEqualsIgnoreCaseAndSupplier(String productGroup, String supplier);
-
     List<Product> findByModelNameIgnoreCaseOrOriginalNameIgnoreCase(String modelName, String origName);
-
     List<Product> findAllByModelNameNotNull();
-
     List<Product> findByModelNameStartsWithIgnoreCase(String modelName);
 
     /*List<Product> findByOriginalGroup(String group);*/

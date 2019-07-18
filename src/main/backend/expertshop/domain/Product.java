@@ -57,6 +57,8 @@ public class Product implements Serializable {
     @JsonIgnore
     @Column(length = 20000)
     private String rName;
+
+    private String shortName, shortSearchName;
 }
 
 

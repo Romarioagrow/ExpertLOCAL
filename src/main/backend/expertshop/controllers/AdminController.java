@@ -34,7 +34,7 @@ public class AdminController {
     }
 
     @PostMapping("/parse-catalog")
-    public String loadCSV (@RequestParam("file") MultipartFile file, Model model, @AuthenticationPrincipal User user) throws IOException
+    public String loadCSV(@RequestParam("file") MultipartFile file, Model model, @AuthenticationPrincipal User user) throws IOException
     {
         log.fine("PARSING FILE: " + file.getOriginalFilename());
         catalogParser.processFile(file);
@@ -48,6 +48,21 @@ public class AdminController {
         productMatcher.matchProducts();
         return "pages/supplier";
     }
+
+    @PostMapping("/match-models")
+    public String matchModels()
+    {
+        productMatcher.matchModels();
+        return "pages/supplier";
+    }
+
+    @PostMapping("/match-duplicates")
+    public String matchDuplicates()
+    {
+        productMatcher.resolveDuplicates();
+        return "pages/supplier";
+    }
+
 
     @GetMapping("/supplier/pics")
     public String checkProductPics()

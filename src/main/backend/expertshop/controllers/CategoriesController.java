@@ -37,7 +37,6 @@ public class CategoriesController {
         return "pages/order";
     }
 
-
     @GetMapping("/")
     public String showAll(Model model, @AuthenticationPrincipal User user) {
         model.addAttribute("url", "");
@@ -47,7 +46,7 @@ public class CategoriesController {
     @GetMapping("/categories/{category}")
     public String showByCategories(Model model, @PathVariable String category, @AuthenticationPrincipal User user)
     {
-        log.info("Category: " + category);
+        //log.info("Category: " + category);
 
         model.addAttribute("url", category);
         model.addAttribute("order", getOrder(user));
@@ -56,14 +55,11 @@ public class CategoriesController {
     @GetMapping("/subcats/{req_subcategory}")
     public String showSubCategories( Model model, @PathVariable String req_subcategory, @AuthenticationPrincipal User user)
     {
-        log.info("Category: " + req_subcategory);
-
+        //log.info("Category: " + req_subcategory);
         model.addAttribute("url", req_subcategory);
         model.addAttribute("order", getOrder(user));
         return "pages/products";
     }
-
-
 
     @GetMapping("/categories")
     public String categories() {

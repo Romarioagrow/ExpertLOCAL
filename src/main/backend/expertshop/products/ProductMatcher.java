@@ -7,7 +7,10 @@ import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Log
 @Service
@@ -52,7 +55,7 @@ public class ProductMatcher {
                     matchProduct("05.08"															                , "Массажеры"							,1.22	            , "Массажер"							, "Приборы персонального ухода"	, product);
                     matchProduct("05.11, Маникюрные наборы"														, "Маникюрные наборы"					,1.22              , "Маникюрный набор"					, "Приборы персонального ухода"	, product);
                     matchProduct("Машинки для стрижки"															    , "Машинки для стрижки"					,1.22              , "Машинка для стрижки"				, "Приборы персонального ухода"	, product);
-                    matchProduct("Плойки"															                , "Плойки"					            ,1.22              , "Плойка"					            , "Приборы персонального ухода"	, product);
+                    matchProduct("05.02.01, Плойки"															    , "Плойки"					            ,1.22              , "Плойка"					            , "Приборы персонального ухода"	, product);
 
                     /*КЛИМАТИЧЕСКАЯ ТЕХНИКА*/
                     matchProduct("04.01, Кондиционеры"											                    , "Кондиционеры"						,1.15	            , "Кондиционер"						, "Климатическая техника"		    , product);
@@ -168,6 +171,110 @@ public class ProductMatcher {
         log.info("Total matches: " + matchCounter);
     }
 
+    public void matchModels()
+    {
+        /*ОБРАБОТКА МОДЕЛЕЙ ДЛЯ ТВ*/
+        List<Product> products = productRepo.findAllByModelNameNotNull();
+        products.forEach(product ->
+        {
+            String modelName = product.getModelName();
+            Pattern pattern = Pattern.compile("^[\\w\\W\\s?]+ [А-ЯA-Z\\W?]{3,20}$");
+            Matcher matcher = pattern.matcher(modelName);
+
+            String shortModel;
+            String brand = StringUtils.capitalize(product.getOriginalBrand().toLowerCase()).concat(" ");
+
+
+            if (matcher.matches())
+            {
+                shortModel = StringUtils.substringBeforeLast(modelName, " ").replaceAll(" ", "").replaceAll("-", "");
+            }
+            else shortModel = modelName.replaceAll(" ", "").replaceAll("-", "");
+
+            String shortSearch = product.getSingleType().concat(brand).concat(shortModel).replaceAll(" ", "");
+            product.setShortSearchName(shortSearch);
+            product.setShortName(brand.concat(shortModel));
+            productRepo.save(product);
+
+            System.out.println();
+            log.info("Model Name for: " + product.getFullName());
+            log.info("Supp: "           + product.getSupplier());
+            log.info("BRAND: "          + product.getOriginalBrand());
+            log.info("FULL MODEL: "     + product.getFullName());
+            log.info("SHORT MODEL: "    + product.getShortName());
+            log.info("SHORT SEARCH: "   + product.getShortSearchName());
+        });
+    }
+
+    public void resolveDuplicates()
+    {   /*ДУБЛИКАТЫ ДЛЯ ТВ*/
+        List<Product> products = productRepo.findBySupplierAndProductGroupIsNotNull("1RBT");//findAllByModelNameNotNull();//findBySupplierAndProductGroupIsNotNull("1RBT");//findAllByModelNameNotNull();//findByProductGroupAndSupplier("Телевизоры", "1RBT");
+        products.sort(Comparator.comparing(Product::getModelName));
+
+        products.forEach(product ->
+        {
+            List<Product> products1 = productRepo.findByShortNameEquals(product.getShortName());
+            if (products1.size() > 1)
+            {
+                System.out.println();
+                log.info("DUPLICATES FOR RBT: " + product.getOriginalName());
+                products1.forEach(product1 ->
+                {
+                    if (product1.getSupplier().equals("2RUS-BT"))
+                    {
+                        //log.info(product1.getSupplier());
+                        log.info(product1.getOriginalName() + "; " + product1.getSupplier());
+                    }
+                });
+                log.info("//////////////////////////////");
+            }
+        });
+
+            //productRepo.save(product);
+
+            /*System.out.println();
+            log.info("Model Name for: " + product.getFullName());
+            log.info("Supp: "           + product.getSupplier());
+            log.info("FULL MODEL: "     + modelName);
+            log.info("SHORT MODEL: "    + product.getShortName());*/
+
+            ///ОБРЕЗАТЬ СТРОКУ ДО СЛЕША, если больше одного
+            /*if (modelName.contains("/") && StringUtils.countMatches(modelName, "/") > 1)
+            {
+                String shortModel = StringUtils.substringBefore(modelName, "/");
+                product.setShortName(shortModel);
+                productRepo.save(product);
+
+                System.out.println();
+                log.info("Full Name: " + product.getFullName());
+                log.info("Full Model: " + modelName);
+                log.info("Short model: " + shortModel);
+            }*/
+
+
+        /*for (Product product : products)
+        {
+            String modelName = product.getModelName();
+            if (modelName != null)
+            {
+
+                List<Product> duplicates = products.stream()
+                        .filter(product -> StringUtils.containsIgnoreCase(product.getOriginalName(), modelName) || StringUtils.containsIgnoreCase(product.getModelName(), modelName))
+                        .collect(Collectors.toList());
+
+                if (duplicates.size() > 1)
+                {
+                    duplicates.sort(Comparator.comparing(Product::getModelName));
+
+                    System.out.println();
+                    log.info("MODEL: " + modelName);
+                    log.info("Size: " + duplicates.size());
+                    duplicates.forEach(product -> log.info(product.getModelName() + "; " + product.getSupplier() + "; " + product.getPrice()));
+                }
+            }
+        }*/
+    }
+
     private void matchProduct(String alias, String productGroup, double coefficient, String single, String productCategory, Product product)
     {
         String[] matches = alias.split(",");
@@ -191,7 +298,7 @@ public class ProductMatcher {
                     String groupBrand   = single.concat(" ").concat(StringUtils.capitalize(brand.toLowerCase()));
                     String formAnno     = formatAnnotation(product.getOriginalAnnotation());
 
-                    int finalPrice      = roundPrice(Integer.parseInt(StringUtils.deleteWhitespace(product.getOriginalPrice())));
+                    int finalPrice      = roundPrice(coefficient, Integer.parseInt(StringUtils.deleteWhitespace(product.getOriginalPrice())));
                     int productBonus    = matchBonus(finalPrice);
 
                     product.setModelName(model);
@@ -232,7 +339,7 @@ public class ProductMatcher {
                         String name         = StringUtils.capitalize(originalBrand.toLowerCase()).concat(" ").concat(model);//StringUtils.capitalize(originalBrand.concat(" ").concat(model).toLowerCase());
                         String fullName     = product.getSingleType().concat(" ").concat(StringUtils.capitalize(originalBrand.toLowerCase())).concat(" ").concat(model);
                         String groupBrand   = single.concat(" ").concat(StringUtils.capitalize(originalBrand.toLowerCase()));
-                        int finalPrice      = roundPrice((int) Double.parseDouble(StringUtils.deleteWhitespace(product.getOriginalPrice()).replaceAll(",", ".")));
+                        int finalPrice      = roundPrice(coefficient, (int) Double.parseDouble(StringUtils.deleteWhitespace(product.getOriginalPrice()).replaceAll(",", ".")));
                         int productBonus    = matchBonus(finalPrice);
 
                         product.setOriginalName(name);
@@ -266,13 +373,16 @@ public class ProductMatcher {
             }
             catch (NumberFormatException e) {
                 System.out.println();
-                log.warning("NUMBER EXP " + product.getOriginalPrice());
+                log.warning("NUMBER EXP " + product.getOriginalPrice() + " " + product.getFullName());
             }
         }
     }
 
-    private int roundPrice(int finalPrice) {
+    private int roundPrice(double coefficient, int price)
+    {
+        int finalPrice = (int) (price * coefficient);
         String val = String.valueOf(finalPrice);
+
         if (finalPrice > 0 && finalPrice <= 10) {
             return 10;
         }
@@ -292,6 +402,7 @@ public class ProductMatcher {
     {
         int bonus = price * 3 / 100;
         String val = String.valueOf(bonus);
+
         if (bonus > 0 && bonus <= 10) {
             return 10;
         }
