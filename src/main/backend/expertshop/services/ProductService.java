@@ -55,6 +55,7 @@ public class ProductService {
         return page;
     }
 
+    /**/
     public List<Product> searchProducts(String searchRequest)
     {
         log.info("Search request: " + searchRequest);
