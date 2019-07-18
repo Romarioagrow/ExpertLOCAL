@@ -45,8 +45,7 @@ public class Product implements Serializable {
 
     private Integer finalPrice, bonus;
 
-    @Column(name = "duplicate")
-    private Boolean isDuplicate = false;
+    private Boolean isDuplicate, hasDuplicates;
 
     @Column(name = "formatted_annotation", length = 20000)
     private String formattedAnnotation;

@@ -9,8 +9,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Log
 @Service
@@ -211,26 +214,80 @@ public class ProductMatcher {
         List<Product> products = productRepo.findBySupplierAndProductGroupIsNotNull("1RBT");//findAllByModelNameNotNull();//findBySupplierAndProductGroupIsNotNull("1RBT");//findAllByModelNameNotNull();//findByProductGroupAndSupplier("Телевизоры", "1RBT");
         products.sort(Comparator.comparing(Product::getModelName));
 
+        AtomicInteger count = new AtomicInteger();
         products.forEach(product ->
         {
-            List<Product> products1 = productRepo.findByShortNameEquals(product.getShortName());
-            if (products1.size() > 1)
+            List<Product> duplicates = productRepo.findByShortNameEquals(product.getShortName());
+            if (duplicates.size() > 1)
             {
-                System.out.println();
-                log.info("DUPLICATES FOR RBT: " + product.getOriginalName());
-                products1.forEach(product1 ->
+                /*System.out.println();
+                log.info("DUPLICATES FOR RBT: " + product.getOriginalName());*/
+
+                /*duplicates.forEach(product1 ->
                 {
                     if (product1.getSupplier().equals("2RUS-BT"))
                     {
-                        //log.info(product1.getSupplier());
+                        log.info(product1.getOriginalName() + "; " + product1.getSupplier());
+                        count.getAndIncrement();
+                    }
+                });*/
+
+                duplicates = duplicates.stream().filter(duplicate -> duplicate.getSupplier().equals("2RUS-BT")).collect(Collectors.toList());
+
+                if (duplicates.size() >= 1)
+                {
+                    duplicates.sort(Comparator.comparing(Product::getFinalPrice));
+
+                    System.out.println();
+                    log.info("DUPLICATES FOR RBT PRODUCT: " + product.getFullName() + " " + product.getFinalPrice());
+                    duplicates.forEach(duplicate -> log.info(duplicate.getOriginalName() + " " + duplicate.getFinalPrice()));
+                    count.getAndIncrement();
+
+                    Product productOriginal = duplicates.stream().findFirst().get();
+                    log.info("!!!ПЕРВЫЙ " + productOriginal.getFullName() + " " + productOriginal.getFinalPrice());
+
+                    if (product.getFinalPrice() > productOriginal.getFinalPrice())
+                    {
+                        productOriginal.setFormattedAnnotation(product.getFormattedAnnotation());
+                        productOriginal.setOriginalPic(product.getOriginalPic());
+                        productOriginal.setHasDuplicates(true);
+                        product.setIsDuplicate(true);
+                        productRepo.save(product);
+                        productRepo.save(productOriginal);
+
+                        duplicates.stream().skip(1).forEach(duplicate ->
+                        {
+                            duplicate.setIsDuplicate(true);
+                            productRepo.save(duplicate);
+                        });
+                        log.info("||| FIRST " + productOriginal.getSupplier() + " " + productOriginal.getFullName()+ " " + productOriginal.getFinalPrice());
+                    }
+                    else
+                    {
+                        product.setHasDuplicates(true);
+                        duplicates.forEach(duplicate ->
+                        {
+                            duplicate.setIsDuplicate(true);
+                            productRepo.save(duplicate);
+                        });
+                        log.info("||| FIRST " + product.getSupplier() + " " + product.getFullName()+ " " + product.getFinalPrice());
+
+                    }
+                }
+
+                /*products1.forEach(product1 ->
+                {
+                    if (product1.getSupplier().equals("2RUS-BT"))
+                    {
                         log.info(product1.getOriginalName() + "; " + product1.getSupplier());
                     }
-                });
-                log.info("//////////////////////////////");
+                });*/
+                //log.info("//////////////////////////////");
             }
         });
+        log.info(count.toString());
 
-            //productRepo.save(product);
+        //productRepo.save(product);
 
             /*System.out.println();
             log.info("Model Name for: " + product.getFullName());
@@ -238,7 +295,7 @@ public class ProductMatcher {
             log.info("FULL MODEL: "     + modelName);
             log.info("SHORT MODEL: "    + product.getShortName());*/
 
-            ///ОБРЕЗАТЬ СТРОКУ ДО СЛЕША, если больше одного
+        ///ОБРЕЗАТЬ СТРОКУ ДО СЛЕША, если больше одного
             /*if (modelName.contains("/") && StringUtils.countMatches(modelName, "/") > 1)
             {
                 String shortModel = StringUtils.substringBefore(modelName, "/");

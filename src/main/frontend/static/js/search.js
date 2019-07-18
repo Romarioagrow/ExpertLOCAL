@@ -38,7 +38,7 @@ function searchProducts(e) {
                 response.responseJSON.forEach(product => $("#display-result").append
                 (
                     '<p><a href="http://localhost:8080/products/info/'+product.productID+'">'        +
-                    ''+product.singleType + ' ' + product.originalName+'</a></p>'
+                    ''+product.singleType + ' ' + product.originalName +'<strong>'+'         '+product.finalPrice+'₽</strong></a></p>'
                 ));
             }
             else

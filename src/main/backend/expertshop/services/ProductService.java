@@ -45,7 +45,7 @@ public class ProductService {
 
         Page<Product> page = productRepo.findByProductGroupEqualsIgnoreCase(request, pageable);
 
-        if (page.getTotalElements() == 0) 
+        if (page.getTotalElements() == 0)
         {
             page = findOriginalProducts(request, pageable);
         }
@@ -54,7 +54,6 @@ public class ProductService {
         //log.info("Products found: " + page.getTotalElements() + " on " + page.getTotalPages() + " pages!");
         return page;
     }
-
 
     public List<Product> searchProducts(String searchRequest)
     {
@@ -65,8 +64,15 @@ public class ProductService {
         List<Product> searchedProducts = productRepo.findAllByProductGroupIsNotNull().stream()
                 .filter(product -> StringUtils.containsIgnoreCase(product.getShortSearchName(), search))
                 .collect(Collectors.toList());
-        log.info("Products found: " + searchedProducts.size());
 
+        if (searchedProducts.size() == 0)
+        {
+            searchedProducts = productRepo.findAllByProductGroupIsNotNull().stream()
+                    .filter(product -> StringUtils.containsIgnoreCase(product.getOriginalName(), searchRequest))
+                    .collect(Collectors.toList());
+        }
+
+        log.info("Products found: " + searchedProducts.size());
         return searchedProducts;
     }
 
