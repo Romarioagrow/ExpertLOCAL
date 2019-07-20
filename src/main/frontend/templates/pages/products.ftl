@@ -85,14 +85,18 @@
                                         Бонус: ${product.bonus!''} ₽
                                     </p>
                                     <div>
-                                        <#if orderedProductsID?? && orderedProductsID?seq_contains('${product.productID}')>
-                                            <a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
+                                        <#if product.isAvailable??>
+                                            <#if orderedProductsID?? && orderedProductsID?seq_contains('${product.productID}')>
+                                                <a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
+                                            <#else>
+                                                <div id="addToOrderDiv${product.productID?replace(".","")}">
+                                                    <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID}" value="${product.productID}">
+                                                        В корзину
+                                                    </button>
+                                                </div>
+                                            </#if>
                                         <#else>
-                                            <div id="addToOrderDiv${product.productID?replace(".","")}">
-                                                <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID}" value="${product.productID}">
-                                                    В корзину
-                                                </button>
-                                            </div>
+                                            <button type="button" class="btn btn-warning btn-rounded" disabled>Нет в наличии!</button>
                                         </#if>
                                     </div>
                                 </div>

@@ -41,8 +41,6 @@ public class ProductService {
 
     public Page<Product> findProducts(String request, Pageable pageable, Model model)
     {
-        //log.info("Request " + request);
-
         Page<Product> page = productRepo.findByProductGroupEqualsIgnoreCase(request, pageable);
 
         if (page.getTotalElements() == 0)
@@ -51,18 +49,16 @@ public class ProductService {
         }
 
         model.addAttribute("total", page.getTotalElements());
-        //log.info("Products found: " + page.getTotalElements() + " on " + page.getTotalPages() + " pages!");
         return page;
     }
 
-    /**/
     public List<Product> searchProducts(String searchRequest)
     {
         log.info("Search request: " + searchRequest);
         String search = searchRequest.replaceAll(" ", "").replaceAll("-", "");
         log.info(search);
 
-        List<Product> searchedProducts = productRepo.findAllByProductGroupIsNotNull().stream()
+        List<Product> searchedProducts = productRepo.findAllByProductGroupIsNotNullAndIsDuplicateIsNull().stream()
                 .filter(product -> StringUtils.containsIgnoreCase(product.getShortSearchName(), search))
                 .collect(Collectors.toList());
 

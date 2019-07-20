@@ -22,7 +22,14 @@ form input:hover {
     color: #fdfefe !important;
 }
 .filter-filed {
-    margin-bottom: 1vh;
+    margin-bottom: 1rem;
+}
+
+.form-check-label {
+    color: #2f2f2f !important;
+}
+.custom-control-label {
+    color: #2f2f2f !important;
 }
 
 .flex-container {

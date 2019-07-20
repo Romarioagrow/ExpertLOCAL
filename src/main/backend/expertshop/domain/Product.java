@@ -45,7 +45,7 @@ public class Product implements Serializable {
 
     private Integer finalPrice, bonus;
 
-    private Boolean isDuplicate, hasDuplicates;
+    private Boolean isDuplicate, hasDuplicates, isAvailable;
 
     @Column(name = "formatted_annotation", length = 20000)
     private String formattedAnnotation;
@@ -57,7 +57,7 @@ public class Product implements Serializable {
     @Column(length = 20000)
     private String rName;
 
-    private String shortName, shortSearchName;
+    private String shortModel, shortName, shortSearchName;
 }
 
 

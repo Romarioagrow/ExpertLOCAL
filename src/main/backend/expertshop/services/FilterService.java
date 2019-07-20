@@ -73,6 +73,7 @@ public class FilterService {
         String[] params = filter.getValue().split(resolveSplitter(filter.getKey()));
         log.info(Arrays.toString(params));
 
+        //paramRus
         if (filter.getKey().contains("MultiParams"))
         {
             return products.stream().filter(product ->

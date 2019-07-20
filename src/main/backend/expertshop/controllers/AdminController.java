@@ -33,33 +33,29 @@ public class AdminController {
         return "pages/supplier";
     }
 
-    @PostMapping("/parse-catalog")
+    @PostMapping("/updateDB")
     public String loadCSV(@RequestParam("file") MultipartFile file, Model model, @AuthenticationPrincipal User user) throws IOException
     {
-        log.fine("PARSING FILE: " + file.getOriginalFilename());
-        catalogParser.processFile(file);
+        productMatcher.updateProductDB(file);
         return "pages/supplier";
     }
 
     @PostMapping("/match-products")
     public String matchProducts()
     {
-        log.fine("PRODUCT MATCHER RUNNING!");
-        productMatcher.matchProducts();
+        //productMatcher.matchProducts();
         return "pages/supplier";
     }
-
     @PostMapping("/match-models")
     public String matchModels()
     {
-        productMatcher.matchModels();
+        //productMatcher.resolveShortModel();
         return "pages/supplier";
     }
-
     @PostMapping("/match-duplicates")
     public String matchDuplicates()
     {
-        productMatcher.resolveDuplicates();
+        //productMatcher.resolveDuplicates();
         return "pages/supplier";
     }
 

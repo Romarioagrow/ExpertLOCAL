@@ -4,16 +4,16 @@
         <div class="row mt-2">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/products/groups/${product.productGroup}">${product.productGroup}</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">${product.productType}</li>
-                    <li class="breadcrumb-item active" aria-current="page">${product.groupBrand}</li>
+                    <li class="breadcrumb-item"><a href="/products/groups/${product.productGroup?lower_case}"><span style="font-size: 20px !important;">${product.productGroup}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page"><span style="font-size: 20px !important;">${product.groupBrand}</span></li>
+                    <li class="breadcrumb-item active" aria-current="page"><span style="font-size: 20px !important;">${product.productType}</li>
                 </ol>
             </nav>
         </div>
         <div class="row">
             <div class="col">
                 <h2>
-                    ${product.singleType}
+                    <span style="color: #e52d00;">${product.singleType}</span>
                     ${product.originalBrand?capitalize}
                     ${product.modelName}
                 </h2>
@@ -23,7 +23,7 @@
             <div class="col-7">
                 <#if product.originalPic??>
                     <div class="product-page-pic">
-                        <div id="carousel-thumb" class="product-page-pic carousel slide carousel-fade carousel-thumbnails" data-ride="carousel">
+                        <div id="carousel-thumb" class="product-page-pic carousel slide carousel-fade carousel-thumbnails" data-ride="carousel" style="margin-left: -10rem;">
                             <div class="carousel-inner" role="listbox">
                                 <div class="carousel-item active">
                                     <img class="d-block scale-pic " src="${product.originalPic}" alt="First slide"  style="max-height: 20rem !important;">
@@ -59,17 +59,21 @@
                 </#if>
             </div>
             <div class="col price">
-                <h2><strong>${product.finalPrice} ₽</strong></h2>
-                <#--<button type="button" class="btn btn-success waves-effect waves-light">Купить!</button>-->
-                <#if orderedProductsID?? && orderedProductsID?seq_contains('${product.productID}')>
-                    <a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
-                <#else>
-                    <div id="addToOrderDiv${product.productID?replace(".","")}">
-                        <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID}" value="${product.productID}">
-                            В корзину
-                        </button>
+                <div class="card">
+                    <div class="card-body">
+                        <h2><strong>${product.finalPrice} ₽</strong></h2>
+                        <#--<button type="button" class="btn btn-success waves-effect waves-light">Купить!</button>-->
+                        <#if orderedProductsID?? && orderedProductsID?seq_contains('${product.productID}')>
+                            <a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
+                        <#else>
+                            <div id="addToOrderDiv${product.productID?replace(".","")}">
+                                <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID}" value="${product.productID}">
+                                    В корзину
+                                </button>
+                            </div>
+                        </#if>
                     </div>
-                </#if>
+                </div>
                 <#--<#if orderedProductsID??>
                     <#if orderedProductsID?seq_contains('${product.productID}')>
                         <br><a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
@@ -92,22 +96,26 @@
 
         <div class="row">
             <div class="col">
-                <hr>
-                <h3>Параметры товара</h3>
-                <table class="table table table-borderless w-30">
-                    <thead>
-                    <tr>
-                        <#if product.formattedAnnotation??>
-                            ${product.formattedAnnotation}
-                        <#else>
-                            ${product.originalAnnotation}
-                        </#if>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <#--${product.fullInfo}
-                    &lt;#&ndash;<#include "../parts/product-info.ftl">&ndash;&gt;
-                    </tbody>-->
+                <div class="card" style="margin-bottom: 2rem">
+                    <div class="card-body">
+                        <hr>
+                        <h3>Параметры товара</h3>
+                        <table class="table table table-borderless w-30">
+                            <thead>
+                            <tr>
+                                <#if product.formattedAnnotation??>
+                                    ${product.formattedAnnotation}
+                                <#else>
+                                    ${product.originalAnnotation}
+                                </#if>
+                            </tr>
+                            </thead>
+                            <tbody>
+                    </div>
+                </div>
+                <#--${product.fullInfo}
+                &lt;#&ndash;<#include "../parts/product-info.ftl">&ndash;&gt;
+                </tbody>-->
                 </table>
             </div>
         </div>

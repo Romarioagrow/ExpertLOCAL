@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h3>База товаров</h3>
-                        <form method="post" action="/supplier/parse-catalog" enctype="multipart/form-data">
+                        <form method="post" action="/supplier/updateDB" enctype="multipart/form-data">
                             <div class="form-group">
                                 <div class="custom-file">
                                     <input type="file" name="file" id="customFile">
@@ -15,22 +15,22 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-success btn-lg">Загрузить товары!</button>
+                                <button type="submit" class="btn btn-success btn-lg btn-block">Обновить базу!</button>
                             </div>
                         </form>
                         <form method="post" action="/supplier/match-products">
                             <div class="form-group">
-                                <button type="submit" class="btn btn-warning btn-lg">Обработать товары!</button>
+                                <button type="submit" class="btn btn-secondary btn-sm secc">Обработать товары!</button>
                             </div>
                         </form>
                         <form method="post" action="/supplier/match-models">
                             <div class="form-group">
-                                <button type="submit" class="btn btn-danger btn-lg">Match models!</button>
+                                <button type="submit" class="btn btn-secondary btn-sm secc">Match models!</button>
                             </div>
                         </form>
                         <form method="post" action="/supplier/match-duplicates">
                             <div class="form-group">
-                                <button type="submit" class="btn btn-dark btn-lg">Match duplicates!</button>
+                                <button type="submit" class="btn btn-secondary btn-sm secc">Match duplicates!</button>
                             </div>
                         </form>
 
@@ -52,6 +52,10 @@
                 </div>
             </div>
         </div>
-
     </div>
 </@t.template>
+<style>
+    .secc {
+        width: 15rem !important;
+    }
+</style>
