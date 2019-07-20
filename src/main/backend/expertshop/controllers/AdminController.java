@@ -37,13 +37,14 @@ public class AdminController {
     public String loadCSV(@RequestParam("file") MultipartFile file, Model model, @AuthenticationPrincipal User user) throws IOException
     {
         productMatcher.updateProductDB(file);
+        //catalogParser.parseBase(file);
         return "pages/supplier";
     }
 
     @PostMapping("/match-products")
     public String matchProducts()
     {
-        //productMatcher.matchProducts();
+        productMatcher.trimBigBase();
         return "pages/supplier";
     }
     @PostMapping("/match-models")
@@ -55,7 +56,7 @@ public class AdminController {
     @PostMapping("/match-duplicates")
     public String matchDuplicates()
     {
-        //productMatcher.resolveDuplicates();
+        productMatcher.findInBigBase();
         return "pages/supplier";
     }
 

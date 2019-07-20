@@ -1,6 +1,8 @@
 package expertshop.products;
 
 import expertshop.domain.Product;
+import expertshop.domain.ProductBase;
+import expertshop.repos.BaseRepo;
 import expertshop.repos.ProductRepo;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
@@ -8,7 +10,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -20,9 +21,45 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 public class ProductMatcher {
+    private final BaseRepo      baseRepo;
     private final ProductRepo   productRepo;
     private final CatalogParser catalogParser;
     static int matchCounter = 0;
+
+    public void findInBigBase() {
+        List<Product> products = productRepo.findAllByModelNameNotNull();
+        AtomicInteger count = new AtomicInteger();
+        products.forEach(product -> {
+            ProductBase productBase = baseRepo.findFirstByShortModelEquals(product.getShortModel());
+            if (productBase != null) {
+                System.out.println();
+                log.info("FOR PRODUCT " + product.getFullName());
+                log.info("FOUND MATCH " + productBase.getFullName());
+                product.setFullAnnotation(productBase.getAnnotation());
+                product.setPics(product.getPics());
+                if (product.getSupplier().startsWith("2")) {
+                    String pic = StringUtils.substringBefore(productBase.getPics(), " ");
+                    product.setOriginalPic(pic);
+                }
+                productRepo.save(product);
+                count.getAndIncrement();
+            }
+        });
+        log.info(count.toString());
+    }
+
+    public void trimBigBase() {
+        List<ProductBase> bases = baseRepo.findAll();
+
+        bases.forEach(productBase -> {
+            String model = StringUtils.substringAfter(productBase.getFullName(), productBase.getBrand()).trim().toUpperCase();
+            String brand = productBase.getBrand().toLowerCase();
+            String shortModel = brand.concat(model).replaceAll("\\W", "");
+            productBase.setShortModel(shortModel);
+            baseRepo.save(productBase);
+            log.info(productBase.getShortModel());
+        });
+    }
 
     /// СОБРАТЬ ВСЕ ИСКЛЮЧЕНИЯ ЗДЕСЬ
     public void updateProductDB(MultipartFile file)
@@ -36,7 +73,6 @@ public class ProductMatcher {
         catch (NullPointerException | NumberFormatException e) {
             e.printStackTrace();
         }
-
     }
 
     public void matchProducts()
@@ -276,18 +312,17 @@ public class ProductMatcher {
         Matcher matcher = pattern.matcher(modelName);
 
         String shortModel;
-        String brand = StringUtils.capitalize(product.getOriginalBrand().toLowerCase()).concat(" ");
+        String brand = product.getOriginalBrand().toLowerCase();
 
         if (matcher.matches())
         {
-            shortModel = StringUtils.substringBeforeLast(modelName, " ").replaceAll(" ", "").replaceAll("-", "");
+            shortModel = StringUtils.substringBeforeLast(modelName, " ").replaceAll("\\W", "");
         }
-        else shortModel = modelName.replaceAll(" ", "").replaceAll("-", "");
+        else shortModel = modelName.replaceAll("\\W", "");
 
-        String shortSearch = product.getSingleType().concat(brand).concat(shortModel).replaceAll(" ", "");
+        String shortSearch = product.getSingleType().concat(brand).concat(shortModel).replaceAll("\\W", "");
         product.setShortSearchName(shortSearch);
         product.setShortModel(brand.concat(shortModel));
-        //product.setShortName();
         productRepo.save(product);
     }
 

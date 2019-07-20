@@ -4,6 +4,8 @@ import expertshop.domain.Product;
 import expertshop.domain.ProductBase;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ProductBaseRepo extends JpaRepository<ProductBase, String> {
+public interface BaseRepo extends JpaRepository<ProductBase, String> {
     ProductBase findFirstByModelNameContaining(String modelName);
+
+    ProductBase findFirstByShortModelEquals(String shortModel);
 }

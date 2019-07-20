@@ -57,6 +57,12 @@ public class Product implements Serializable {
     @Column(length = 20000)
     private String rName;
 
+    @Column(length = 20000)
+    private String fullAnnotation;
+
+    @Column(length = 20000)
+    private String pics;
+
     private String shortModel, shortName, shortSearchName;
 }
 

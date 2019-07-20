@@ -1,7 +1,8 @@
 package expertshop.products;
 import com.opencsv.CSVReader;
 import expertshop.domain.Product;
-import expertshop.repos.ProductBaseRepo;
+import expertshop.domain.ProductBase;
+import expertshop.repos.BaseRepo;
 import expertshop.repos.ProductRepo;
 import expertshop.services.ProductService;
 
@@ -16,8 +17,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Log
 @Service
@@ -25,7 +28,7 @@ import java.util.Objects;
 public class CatalogParser {
     private final ProductService productService;
     private final ProductRepo productRepo;
-    private final ProductBaseRepo baseRepo;
+    private final BaseRepo baseRepo;
 
     public void parseProducts(MultipartFile file)
     {
@@ -366,23 +369,19 @@ public class CatalogParser {
     }
     */
 
-    /*
-    private void parseBase(MultipartFile file) throws IOException
+
+    public void parseBase(MultipartFile file)
     {
         try {
-            *//*InputStream inputStream = file.getInputStream();*//*
+            //*InputStream inputStream = file.getInputStream();*//*
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream()));
             CSVReader reader = new CSVReader(bufferedReader, ';');
 
             String[] line;
-            List<ProductBase> products = new ArrayList<>();
-
+            int count = 0;
             while ((line = reader.readNext()) != null)
             {
-                if (line[0].equals("Категория")
-                ){
-                    log.info("!!! Пропуск первой строки");
-                }
+                if (line[0].equals("Категория")) log.info("!!! Пропуск первой строки");
                 else
                 {
                     ProductBase product = new ProductBase();
@@ -390,46 +389,35 @@ public class CatalogParser {
 
                     String productBrand = line[13];
 
-                    try {
-                        product.setCategory(line[0]);
-                        product.setSubCategory(line[1]);
+                    product.setCategory(line[0]);
+                    product.setSubCategory(line[1]);
 
-                        if (line[2].isEmpty()) {
-                            product.setProductGroup(line[1]);
-                        }
-                        else product.setProductGroup(line[2]);
+                    if (line[2].isEmpty())  product.setProductGroup(line[1]);
+                    else product.setProductGroup(line[2]);
 
-                        product.setArticul(line[3]);
-                        product.setArticulModification(line[4]);
-                        product.setFullName(line[5]);
-                        product.setFullCategory(line[6]);
-                        product.setPrice(line[7]);
-                        product.setAnnotation(line[11]);
-                        product.setBrand(line[13]);
-                        product.setPics(line[18]);
-                        product.setParamsHTML(line[19]);
+                    product.setArticul(line[3]);
+                    product.setArticulModification(line[4]);
+                    product.setFullName(line[5]);
+                    product.setFullCategory(line[6]);
+                    product.setPrice(line[7]);
+                    product.setAnnotation(line[11]);
+                    product.setBrand(line[13]);
+                    product.setPics(line[18]);
+                    product.setParamsHTML(line[19]);
 
-                        String trim = trimProductName(line[5], line[13]);
-                        String finalName = removeAllSpacesAfterBrand(trim, productBrand);
-                        product.setModelName(finalName);
-
-                        products.add(product);
-                        //log.info(product.getFullName());
-                        baseRepo.save(product);
-                    }
-                    catch (ArrayIndexOutOfBoundsException e) {
-                        //log.info("EXP!");
-                    }
+                    log.info(product.getFullName());
+                    baseRepo.save(product);
+                    count++;
 
                 }
             }
-            log.info("Products add: " + products.size());
+            log.info("Products add: " + count);
         }
-        catch (Exception exp) {
+        catch (IOException | ArrayIndexOutOfBoundsException exp) {
             log.info("Something went wrong with Base!");
         }
     }
-    */
+
 
     /*
     private String parsePicFromHTML(String link) throws IOException
