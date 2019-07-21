@@ -40,15 +40,13 @@ public class FilterService {
                 {
                     String key = StringUtils.substringBefore(fltr, ":").trim();
                     String val = StringUtils.substringAfter(fltr, ":").trim();
-                    if (!key.isEmpty() && !val.contains("-") && !val.contains("нет"))
+                    if (!key.isEmpty() && !val.startsWith("-") && !val.startsWith("нет") && !val.startsWith("0") && !key.startsWith("количество шт в кор") && !key.startsWith("количество шт в уп"))
                     {
                         if (filters.get(key) != null)
                         {
                             TreeSet<String> vals = filters.get(key);
-                            //if (!vals.contains(val)) {
-                                vals.add(val);
-                                filters.put(key, vals);
-                            //}
+                            vals.add(val);
+                            filters.put(key, vals);
                         }
                         else filters.putIfAbsent(key, new TreeSet<>(Collections.singleton(val)));
                     }
@@ -61,9 +59,6 @@ public class FilterService {
         LinkedList<Object> payload = new LinkedList<>();
         payload.add(brands);
         payload.add(filters);
-
-        //brands.forEach(log::info);
-
         return payload;
     }
 

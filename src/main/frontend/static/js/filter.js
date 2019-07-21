@@ -12,6 +12,17 @@ $(document).ready(function(){
     displayBrands()
 });
 
+function escapeRegExp(str) {
+    return str.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+}
+function replaceAll(str, find, replace) {
+    return str.replace(new RegExp(escapeRegExp(find), 'g'), replace);
+}
+
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
 function displayBrands() {
     const url = resolveURL();
     const request = url.substring(url.lastIndexOf("/")+1);
@@ -26,7 +37,7 @@ function displayBrands() {
         headers: {'Content-Type': 'application/json'},
         complete: function(response)
         {
-            const brands = response.responseJSON[0];
+            const brands  = response.responseJSON[0];
             const filters = response.responseJSON[1];
 
             console.log(brands);
@@ -52,74 +63,91 @@ function displayBrands() {
                 );
             }
 
-            for (var key in filters) {
+            for (var key in filters)
+            {
                 if (filters.hasOwnProperty(key))
                 {
-                    let filter = key.replace(" ", "");
-                    $('#filters').append(
-                        '<button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#'+filter+'" aria-expanded="false">' +
-                        '         <span>'+key+'</span>' +
-                        '</button>' +
-                        '        <div class="collapse" id="'+filter+'">' +
-                        '            <div class="card card-body filter-filed" >' +
-                        '                <div class="md-form input-group">' +
-                        '                    <div class="container">' +
-                        '                        <div class="row">' +
-                        '                            <div class="col">' +
-                        '                                <div class="custom-control custom-checkbox">' +
-                        '                                    <input type="checkbox" class="form-check-input" name="Cont-tvType" id="ЖК" value="Тип: ЖК">' +
-                        '                                    <label class="custom-control-label" for="ЖК">Param</label>' +
-                        '                                </div>' +
-                        '                            </div>' +
-                        '                        </div>' +
-                        '                    </div>' +
-                        '                </div>' +
-                        '            </div>' +
-                        '        </div>'
-                    );
+                    let filter = replaceAll(key," ","").replace("(","").replace(")","");
+                    var onlyDigits = /^\d+[,]?\d*$/g.exec(filters[key][0]);
+
+                    if (filters[key].includes("есть") || filters[key].includes("да"))
+                    {
+                        document.getElementById("featButton").style.display = "block";
+
+                        let val = filters[key];
+                        $('#feat-element').append(
+                            '<div class="custom-control custom-checkbox">' +
+                            '<input type="checkbox" class="form-check-input" name="Cont-MultiParams-'+key+'" id="'+filter+'" value="'+key+': '+val+'">' +
+                            '<label class="custom-control-label" for="'+filter+'">'+key+'</label>' +
+                            '</div>'
+                        );
+                    }
+                    else if (onlyDigits)
+                    {
+                        console.log(filters[key]);
+                        for (let i = 0; i < filters[key].length; i++) {
+                            filters[key][i] = parseFloat(filters[key][i].replace(",","."))
+                        }
+                        console.log(filters[key].sort(function(a,b) { return a - b;}));
+
+                        let min = filters[key][0];
+                        let max = filters[key][filters[key].length-1];
+
+                        $('#filters').append(
+                            '<button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#'+filter+'" aria-expanded="false">' +
+                            '            <span>'+key+'</span>' +
+                            '</button>' +
+                            '        <div class="collapse" id="'+filter+'">' +
+                            '           <div class="card"><div class="card-body">'+
+                            '            <div class="md-form input-group">' +
+                            '                <div class="container">' +
+                            '                    <div class="row">' +
+                            '                        <div class="col-5">' +
+                            '                            <input type="text" class="form-control" id="Comp-Min-'+key+'" placeholder="От '+min+'">' +
+                            '                        </div>' +
+                            '                        <div class="col-5">' +
+                            '                            <input type="text" class="form-control" id="Comp-Max-'+key+'" placeholder="До '+max+'">' +
+                            '                        </div>' +
+                            '                    </div>' +
+                            '                </div>' +
+                            '                </div>' +
+                            '                </div>' +
+                            '            </div>' +
+                            '        </div>'
+                        );
+                    }
+                    else
+                    {
+                        let vals = '';
+                        for (let i = 0; i < filters[key].length; i++)
+                        {
+                            id = replaceAll(filters[key][i], " ", "");
+                            vals+=
+                                '<div class="row">' +
+                                '<div class="col">' +
+                                '<input type="checkbox" class="form-check-input" name="Cont-'+filter+'" id="'+id+'" value="'+key+': '+filters[key][i]+'">' +
+                                '<label class="custom-control-label" for="'+id+'">'+filters[key][i].capitalize().replace(",",", ")+'</label>' +
+                                '</div>' +
+                                '</div>'
+                        }
+
+                        $('#filters').append(
+                            '<button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#'+filter+'" aria-expanded="false">' +
+                            '         <span>'+key+'</span>' +
+                            '</button>' +
+                            '        <div class="collapse" id="'+filter+'">' +
+                            '            <div class="card card-body filter-filed" >' +
+                            '                <div class="md-form input-group">' +
+                            '                    <div class="container">' +
+                                                    vals +
+                            '                    </div>' +
+                            '                </div>' +
+                            '            </div>' +
+                            '        </div>'
+                        );
+                    }
                 }
             }
-
-            /*$(filter).each(function()
-            {
-
-                $('#filters').append(
-                    '<button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-type" aria-expanded="false">\n' +
-                    '            <span>Тип телевизора</span>\n' +
-                    '        </button>\n' +
-                    '        <div class="collapse" id="tv-type">\n' +
-                    '            <div class="card card-body filter-filed" >\n' +
-                    '                <div class="md-form input-group">\n' +
-                    '                    <div class="container" style="background-color: #f0f4f9">\n' +
-                    '                        <div class="row">\n' +
-                    '                            <div class="col">\n' +
-                    '                                <div class="custom-control custom-checkbox">\n' +
-                    '                                    <input type="checkbox" class="form-check-input" name="Cont-tvType" id="ЖК" value="Тип: ЖК">\n' +
-                    '                                    <label class="custom-control-label" for="ЖК">ЖК</label>\n' +
-                    '                                </div>\n' +
-                    '                            </div>\n' +
-                    '                        </div>\n' +
-                    '                    </div>\n' +
-                    '                </div>\n' +
-                    '            </div>\n' +
-                    '        </div>'
-                );
-
-            });*/
-
-            /*$(brands).each(function()
-            {
-                //console.log('KOK ' + this);
-                $('#brands-view').append(
-                    '<div class="row">' +
-                    '        <div class="col-6">' +
-                    '            <input type="checkbox" name="brand" class="form-check-input" id="'+this+'" value="'+this+'">' +
-                    '            <label class="form-check-label" for="'+this+'">'+this+'</label>' +
-                    '        </div>' +
-                    '</div>'
-                );
-
-            });*/
         }
     });
 }

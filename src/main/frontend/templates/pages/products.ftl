@@ -65,22 +65,20 @@
 
                     <form method="get" name="filters" id="filters">
 
-                        <#--<button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#feat1" aria-expanded="false" style="display: none">
+                        <button class="btn  btn-block filter-button" id="featButton" type="button" data-toggle="collapse" data-target="#feat1" aria-expanded="false" style="display: none">
                             Особенности
                         </button>
                         <div class="collapse" id="feat1">
                             <div class="card card-body filter-filed">
                                 <div class="form-group" id="feat-element">
-                                    &lt;#&ndash;<div class="custom-control custom-checkbox">
+                                    <#--<div class="custom-control custom-checkbox">
                                         <input type="checkbox" class="form-check-input" name="Cont-MultiParams-tvParams" id="SmartTV" value="Smart TV: есть">
                                         <label class="custom-control-label" for="SmartTV">SmartTV</label>
-                                    </div>&ndash;&gt;
+                                    </div>-->
                                 </div>
                             </div>
-                        </div>-->
+                        </div>
                         <#--<#include "../parts/filters.ftl">-->
-
-
                     </form>
                 </div>
             </div>
