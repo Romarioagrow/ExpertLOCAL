@@ -77,7 +77,7 @@ function displayBrands() {
                         let val = filters[key];
                         $('#feat-element').append(
                             '<div class="custom-control custom-checkbox">' +
-                            '<input type="checkbox" class="form-check-input" name="Cont-MultiParams-'+key+'" id="'+filter+'" value="'+key+': '+val+'">' +
+                            '<input type="checkbox" onclick="filterProducts()" class="form-check-input" name="Cont-MultiParams-'+key+'" id="'+filter+'" value="'+key+': '+val+';">' +
                             '<label class="custom-control-label" for="'+filter+'">'+key+'</label>' +
                             '</div>'
                         );
@@ -94,7 +94,7 @@ function displayBrands() {
                         let max = filters[key][filters[key].length-1];
 
                         $('#filters').append(
-                            '<button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#'+filter+'" aria-expanded="false">' +
+                            '<button class="btn btn-block filter-button" type="button" data-toggle="collapse" data-target="#'+filter+'" aria-expanded="false">' +
                             '            <span>'+key+'</span>' +
                             '</button>' +
                             '        <div class="collapse" id="'+filter+'">' +
@@ -125,14 +125,14 @@ function displayBrands() {
                             vals+=
                                 '<div class="row">' +
                                 '<div class="col">' +
-                                '<input type="checkbox" class="form-check-input" name="Cont-'+filter+'" id="'+id+'" value="'+key+': '+filters[key][i]+'">' +
+                                '<input type="checkbox" onclick="filterProducts()" class="form-check-input" name="Cont-'+filter+'" id="'+id+'" value="'+key+': '+filters[key][i]+';">' +
                                 '<label class="custom-control-label" for="'+id+'">'+filters[key][i].capitalize().replace(",",", ")+'</label>' +
                                 '</div>' +
                                 '</div>'
                         }
 
                         $('#filters').append(
-                            '<button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#'+filter+'" aria-expanded="false">' +
+                            '<button class="btn btn-block filter-button" type="button" data-toggle="collapse" data-target="#'+filter+'" aria-expanded="false">' +
                             '         <span>'+key+'</span>' +
                             '</button>' +
                             '        <div class="collapse" id="'+filter+'">' +
@@ -160,8 +160,8 @@ function resolveURL() {
     return url;
 }
 
-function filterProducts(e) {
-    e.preventDefault();
+function filterProducts() {
+    //e.preventDefault();
     var filters = {};
 
     $('input:checkbox:checked').each(function()

@@ -32,7 +32,7 @@
         <div class="row mb-3">
             <div class="col-3 marker1 filters-col" style="margin-top: -9rem;">
                 <div class="marker2">
-                    <button class="btn <#----> btn-block filter-button"
+                    <button class="btn btn-block filter-button"
                             type="button" data-toggle="collapse" data-target="#filter1" aria-expanded="false"><span>Цена и бренды</span>
                     </button>
                     <div class="collapse show" id="filter1">
@@ -56,29 +56,21 @@
                                 </div>
                                 <div class="form-check">
                                     <div class="container" id="brands-view">
-                                        <#--<#include "../parts/brands.ftl">-->
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                     <form method="get" name="filters" id="filters">
-
                         <button class="btn  btn-block filter-button" id="featButton" type="button" data-toggle="collapse" data-target="#feat1" aria-expanded="false" style="display: none">
                             Особенности
                         </button>
                         <div class="collapse" id="feat1">
                             <div class="card card-body filter-filed">
                                 <div class="form-group" id="feat-element">
-                                    <#--<div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="form-check-input" name="Cont-MultiParams-tvParams" id="SmartTV" value="Smart TV: есть">
-                                        <label class="custom-control-label" for="SmartTV">SmartTV</label>
-                                    </div>-->
                                 </div>
                             </div>
                         </div>
-                        <#--<#include "../parts/filters.ftl">-->
                     </form>
                 </div>
             </div>

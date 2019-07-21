@@ -27,7 +27,7 @@ public class FilterService {
     public LinkedList<Object> displayBrand(String productGroup)
     {
         Set<String> brands = new TreeSet<>();
-        Map<String, TreeSet<String>> filters = new HashMap<>();
+        Map<String, TreeSet<String>> filters = new TreeMap<>();
 
         List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCase(productGroup);
         products.forEach(product ->
@@ -40,7 +40,7 @@ public class FilterService {
                 {
                     String key = StringUtils.substringBefore(fltr, ":").trim();
                     String val = StringUtils.substringAfter(fltr, ":").trim();
-                    if (!key.isEmpty() && !val.startsWith("-") && !val.startsWith("нет") && !val.startsWith("0") && !key.startsWith("количество шт в кор") && !key.startsWith("количество шт в уп"))
+                    if (!key.isEmpty() && !val.startsWith("-") && !val.startsWith("нет") && !val.startsWith("0") && !key.startsWith("количество шт в"))
                     {
                         if (filters.get(key) != null)
                         {
