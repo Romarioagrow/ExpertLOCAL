@@ -22,8 +22,8 @@
                     <span class="input-group-text md-addon">Бренды</span>
                 </div>
                 <div class="form-check">
-                    <div class="container">
-                        <#include "../parts/brands.ftl">
+                    <div class="container" id="brands-view">
+                        <#--<#include "../parts/brands.ftl">-->
                     </div>
                 </div>
             </div>

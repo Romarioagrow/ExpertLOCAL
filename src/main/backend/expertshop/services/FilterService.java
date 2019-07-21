@@ -24,6 +24,49 @@ public class FilterService {
     private final ProductRepo productRepo;
     private final ProductService productService;
 
+    public LinkedList<Object> displayBrand(String productGroup)
+    {
+        Set<String> brands = new TreeSet<>();
+        Map<String, TreeSet<String>> filters = new HashMap<>();
+
+        List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCase(productGroup);
+        products.forEach(product ->
+        {
+            brands.add(StringUtils.capitalize(product.getOriginalBrand().toLowerCase()));
+
+            if (product.getSupplier().equals("1RBT")) {
+                String[] filtrs = product.getOriginalAnnotation().split(";");
+                for (String fltr : filtrs)
+                {
+                    String key = StringUtils.substringBefore(fltr, ":").trim();
+                    String val = StringUtils.substringAfter(fltr, ":").trim();
+                    if (!key.isEmpty() && !val.contains("-") && !val.contains("нет"))
+                    {
+                        if (filters.get(key) != null)
+                        {
+                            TreeSet<String> vals = filters.get(key);
+                            //if (!vals.contains(val)) {
+                                vals.add(val);
+                                filters.put(key, vals);
+                            //}
+                        }
+                        else filters.putIfAbsent(key, new TreeSet<>(Collections.singleton(val)));
+                    }
+                }
+            }
+        });
+        System.out.println();
+        filters.forEach((s, strings) -> log.info(s + " " + strings.toString()));
+
+        LinkedList<Object> payload = new LinkedList<>();
+        payload.add(brands);
+        payload.add(filters);
+
+        //brands.forEach(log::info);
+
+        return payload;
+    }
+
     public LinkedList<Object> filterProducts(Map<String, String> filters, String request, Pageable pageable, User user)
     {
         System.out.println();

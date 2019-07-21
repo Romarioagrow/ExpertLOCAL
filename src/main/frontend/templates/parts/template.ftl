@@ -4,13 +4,13 @@
     <head>
         <meta charset="UTF-8">
         <title>Expert Store</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <link rel="stylesheet" href="/../css/mdb.min.css" >
-        <link rel="stylesheet" href="/../css/main.css">
-        <link rel="stylesheet" href="/../css/service.css">
-        <link rel="stylesheet" href="/../css/main-menu.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"/>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+        <link rel="stylesheet" href="/../css/mdb.min.css"/>
+        <link rel="stylesheet" href="/../css/main.css"/>
+        <link rel="stylesheet" href="/../css/service.css"/>
+        <link rel="stylesheet" href="/../css/main-menu.css"/>
         <!-- Bootstrap core CSS -->
         <#--<link href="/..vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">-->
         <!-- Custom styles for this template -->

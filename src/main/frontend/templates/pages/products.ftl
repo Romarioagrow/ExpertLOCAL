@@ -32,8 +32,55 @@
         <div class="row mb-3">
             <div class="col-3 marker1 filters-col" style="margin-top: -9rem;">
                 <div class="marker2">
+                    <button class="btn <#----> btn-block filter-button"
+                            type="button" data-toggle="collapse" data-target="#filter1" aria-expanded="false"><span>Цена и бренды</span>
+                    </button>
+                    <div class="collapse show" id="filter1">
+                        <div class="card card-body filter-filed">
+                            <div class="md-form input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text md-addon">Цена</span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-5">
+                                        <input type="text" class="form-control" id="sortmin" placeholder="От ₽">
+                                    </div>
+                                    <div class="col-5">
+                                        <input type="text" class="form-control" id="sortmax" placeholder="До ₽">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="md-form input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text md-addon">Бренды</span>
+                                </div>
+                                <div class="form-check">
+                                    <div class="container" id="brands-view">
+                                        <#--<#include "../parts/brands.ftl">-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <form method="get" name="filters" id="filters">
-                        <#include "../parts/filters.ftl">
+
+                        <#--<button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#feat1" aria-expanded="false" style="display: none">
+                            Особенности
+                        </button>
+                        <div class="collapse" id="feat1">
+                            <div class="card card-body filter-filed">
+                                <div class="form-group" id="feat-element">
+                                    &lt;#&ndash;<div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="form-check-input" name="Cont-MultiParams-tvParams" id="SmartTV" value="Smart TV: есть">
+                                        <label class="custom-control-label" for="SmartTV">SmartTV</label>
+                                    </div>&ndash;&gt;
+                                </div>
+                            </div>
+                        </div>-->
+                        <#--<#include "../parts/filters.ftl">-->
+
+
                     </form>
                 </div>
             </div>

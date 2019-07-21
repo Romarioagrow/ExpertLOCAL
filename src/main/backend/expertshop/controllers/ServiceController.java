@@ -33,42 +33,50 @@ public class ServiceController {
 
     /*PRODUCTS FILTERS*/
     @PostMapping("/products/{category}/{reqType}")
-    public LinkedList<Object>/*Page<Product>*/ filterProducts
-    (@RequestBody Map<String, String> params,
-     @PathVariable String reqType,
-     @AuthenticationPrincipal User user,
-     @PathVariable String category,
-     @PageableDefault(sort = {"supplier"}, direction = Sort.Direction.ASC, size = 100) Pageable pageable)
-    {
+    public LinkedList<Object> filterProducts(
+            @RequestBody Map<String, String> params,
+            @PathVariable String reqType,
+            @AuthenticationPrincipal User user,
+            @PathVariable String category,
+            @PageableDefault(sort = {"supplier"}, direction = Sort.Direction.ASC, size = 100) Pageable pageable
+    ){
         String request = StringUtils.capitalize(reqType.replaceAll("_", " "));
         return filterService.filterProducts(params, request, pageable, user);
     }
 
+    @PostMapping("/brands")
+    public LinkedList<Object> displayBrands(
+            @RequestBody String productGroup
+    ){
+        productGroup = productGroup.replaceAll("_", " ");
+        return filterService.displayBrand(productGroup);
+    }
+
     /*PRODUCTS SEARCH*/
     @PostMapping("/search")
-    public List<Product> searchProducts
-    (@RequestBody String searchRequest)
-    {
+    public List<Product> searchProducts(
+            @RequestBody String searchRequest
+    ){
         return productService.searchProducts(searchRequest);
     }
 
     /*ORDER*/
     @PostMapping("/order")
-    private LinkedList<Integer> addProductToOrder
-    (@AuthenticationPrincipal User user, @RequestBody String productID)
-    {
+    private LinkedList<Integer> addProductToOrder(
+            @AuthenticationPrincipal User user, @RequestBody String productID
+    ){
         return orderService.addProductToOrder(productID, user);
     }
     @PutMapping("/order")
-    private LinkedList<Object> changeAmount
-            (@AuthenticationPrincipal User user, @RequestBody Map<String, String> data)
-    {
+    private LinkedList<Object> changeAmount(
+            @AuthenticationPrincipal User user, @RequestBody Map<String, String> data
+    ){
         return orderService.changeAmount(user, data);
     }
     @DeleteMapping("/order")
-    private LinkedList<Object> removeProductFromOrder
-            (@AuthenticationPrincipal User user, @RequestBody String productID)
-    {
+    private LinkedList<Object> removeProductFromOrder(
+            @AuthenticationPrincipal User user, @RequestBody String productID
+    ){
         return orderService.removeProductFromOrder(user, productID);
     }
     @PostMapping("/order/confirm")

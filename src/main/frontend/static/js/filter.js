@@ -8,6 +8,122 @@ $(document).ready(function(){
     $('input[type="checkbox"]') .on('change', filterProducts);
 });
 
+$(document).ready(function(){
+    displayBrands()
+});
+
+function displayBrands() {
+    const url = resolveURL();
+    const request = url.substring(url.lastIndexOf("/")+1);
+    console.log(request);
+
+    $.ajax({
+        url: 'http://localhost:8080/brands/',
+        type: 'POST',
+        dataType: 'json',
+        data: request,
+        processData: false,
+        headers: {'Content-Type': 'application/json'},
+        complete: function(response)
+        {
+            const brands = response.responseJSON[0];
+            const filters = response.responseJSON[1];
+
+            console.log(brands);
+            console.log(filters);
+
+            $('#brands-view').empty();
+
+            for (let i = 0; i < brands.length; i+=2) {
+                let first = brands[i];
+                let second = brands[i+1];
+
+                $('#brands-view').append(
+                    '<div class="row">' +
+                    '        <div class="col-6">' +
+                    '            <input type="checkbox" name="brand" class="form-check-input" id="'+first+'" value="'+first+'">' +
+                    '            <label class="form-check-label" for="'+first+'">'+first+'</label>' +
+                    '        </div>' +
+                    '        <div class="col-6">' +
+                    '            <input type="checkbox" name="brand" class="form-check-input" id="'+second+'" value="'+second+'">' +
+                    '            <label class="form-check-label" for="'+second+'">'+second+'</label>' +
+                    '        </div>' +
+                    '    </div>'
+                );
+            }
+
+            for (var key in filters) {
+                if (filters.hasOwnProperty(key))
+                {
+                    let filter = key.replace(" ", "");
+                    $('#filters').append(
+                        '<button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#'+filter+'" aria-expanded="false">' +
+                        '         <span>'+key+'</span>' +
+                        '</button>' +
+                        '        <div class="collapse" id="'+filter+'">' +
+                        '            <div class="card card-body filter-filed" >' +
+                        '                <div class="md-form input-group">' +
+                        '                    <div class="container">' +
+                        '                        <div class="row">' +
+                        '                            <div class="col">' +
+                        '                                <div class="custom-control custom-checkbox">' +
+                        '                                    <input type="checkbox" class="form-check-input" name="Cont-tvType" id="ЖК" value="Тип: ЖК">' +
+                        '                                    <label class="custom-control-label" for="ЖК">Param</label>' +
+                        '                                </div>' +
+                        '                            </div>' +
+                        '                        </div>' +
+                        '                    </div>' +
+                        '                </div>' +
+                        '            </div>' +
+                        '        </div>'
+                    );
+                }
+            }
+
+            /*$(filter).each(function()
+            {
+
+                $('#filters').append(
+                    '<button class="btn  btn-block filter-button" type="button" data-toggle="collapse" data-target="#tv-type" aria-expanded="false">\n' +
+                    '            <span>Тип телевизора</span>\n' +
+                    '        </button>\n' +
+                    '        <div class="collapse" id="tv-type">\n' +
+                    '            <div class="card card-body filter-filed" >\n' +
+                    '                <div class="md-form input-group">\n' +
+                    '                    <div class="container" style="background-color: #f0f4f9">\n' +
+                    '                        <div class="row">\n' +
+                    '                            <div class="col">\n' +
+                    '                                <div class="custom-control custom-checkbox">\n' +
+                    '                                    <input type="checkbox" class="form-check-input" name="Cont-tvType" id="ЖК" value="Тип: ЖК">\n' +
+                    '                                    <label class="custom-control-label" for="ЖК">ЖК</label>\n' +
+                    '                                </div>\n' +
+                    '                            </div>\n' +
+                    '                        </div>\n' +
+                    '                    </div>\n' +
+                    '                </div>\n' +
+                    '            </div>\n' +
+                    '        </div>'
+                );
+
+            });*/
+
+            /*$(brands).each(function()
+            {
+                //console.log('KOK ' + this);
+                $('#brands-view').append(
+                    '<div class="row">' +
+                    '        <div class="col-6">' +
+                    '            <input type="checkbox" name="brand" class="form-check-input" id="'+this+'" value="'+this+'">' +
+                    '            <label class="form-check-label" for="'+this+'">'+this+'</label>' +
+                    '        </div>' +
+                    '</div>'
+                );
+
+            });*/
+        }
+    });
+}
+
 function resolveURL() {
     var url = decodeURI(document.URL);
     if (url.includes("?")) {
