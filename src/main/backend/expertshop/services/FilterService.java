@@ -34,7 +34,8 @@ public class FilterService {
         {
             brands.add(StringUtils.capitalize(product.getOriginalBrand().toLowerCase()));
 
-            if (product.getSupplier().equals("1RBT")) {
+            if (product.getSupplier().equals("1RBT"))
+            {
                 String[] filtrs = product.getOriginalAnnotation().split(";");
                 for (String fltr : filtrs)
                 {

@@ -35,10 +35,10 @@ function displayBrands() {
         data: request,
         processData: false,
         headers: {'Content-Type': 'application/json'},
-        complete: function(response)
+        complete: function(payload)
         {
-            const brands  = response.responseJSON[0];
-            const filters = response.responseJSON[1];
+            const brands  = payload.responseJSON[0];
+            const filters = payload.responseJSON[1];
 
             console.log(brands);
             console.log(filters);
@@ -77,7 +77,7 @@ function displayBrands() {
                         let val = filters[key];
                         $('#feat-element').append(
                             '<div class="custom-control custom-checkbox">' +
-                            '<input type="checkbox" onclick="filterProducts()" class="form-check-input" name="Cont-MultiParams-'+key+'" id="'+filter+'" value="'+key+': '+val+';">' +
+                            '<input type="checkbox" onclick="filterProducts()" class="form-check-input" name="Cont-MultiParams-'+key+'" id="'+filter+'" value="'+key+': '+val+'">' +
                             '<label class="custom-control-label" for="'+filter+'">'+key+'</label>' +
                             '</div>'
                         );

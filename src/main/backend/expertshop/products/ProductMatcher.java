@@ -29,15 +29,20 @@ public class ProductMatcher {
     public void findInBigBase() {
         List<Product> products = productRepo.findAllByModelNameNotNull();
         AtomicInteger count = new AtomicInteger();
-        products.forEach(product -> {
+        products.forEach(product ->
+        {
             ProductBase productBase = baseRepo.findFirstByShortModelEquals(product.getShortModel());
-            if (productBase != null) {
+            if (productBase != null)
+            {
                 System.out.println();
                 log.info("FOR PRODUCT " + product.getFullName());
                 log.info("FOUND MATCH " + productBase.getFullName());
+
                 product.setFullAnnotation(productBase.getAnnotation());
                 product.setPics(product.getPics());
-                if (product.getSupplier().startsWith("2")) {
+
+                if (product.getSupplier().startsWith("2"))
+                {
                     String pic = StringUtils.substringBefore(productBase.getPics(), " ");
                     product.setOriginalPic(pic);
                 }
@@ -79,11 +84,10 @@ public class ProductMatcher {
     {
         log.finest("MATCH PRODUCTS METHOD!");
         List<Product> products = productRepo.findAllByProductGroupIsNull();
+        log.info(products.size() + "");
 
         for (Product product : products)
         {
-            //try
-
             if (productValidToMatch(product))
             {
                 /*АВТОТОВАРЫ*/
@@ -94,7 +98,7 @@ public class ProductMatcher {
 
                 /*ИНСТРУМЕНТЫ ДЛЯ ДОМА*/
                 /// ПЕРЕРАСПРЕДЕЛИТЬ ГРУППЫ ДРЕЛИ БОЛЬШИЕ - ШУРУПОВЕРТЫ
-                matchProduct("06.01.01, 06.01.02, 06.01.03, 06.01.05, Шуруповерты"				                , "Шуруповерты/Дрели"					,1.16	            , "Дрель-Шуруповерт"					, "Инструменты для дома"		    , product);
+                matchProduct("06.01.01, 06.01.02, 06.01.03, 06.01.05, Шуруповерты"				                , "Дрели-Шуруповерты"					,1.16	            , "Дрель-Шуруповерт"					, "Инструменты для дома"		    , product);
                 matchProduct("06.02, Шлифовальные машины"										                , "Шлифовальные машины"					,1.16	            , "Шлифовальная машина"				, "Инструменты для дома"		    , product);
                 matchProduct("06.06.08, Сварочные аппараты"									                , "Сварочное оборудование"				,1.16	            , "Сварочный аппарат"					, "Инструменты для дома"		    , product);
                 matchProduct("06.01.06, Перфораторы"											                , "Перфораторы"							,1.16	            , "Перфоратор"						, "Инструменты для дома"		    , product);
@@ -115,6 +119,7 @@ public class ProductMatcher {
                 matchProduct("05.02.01, Плойки"															    , "Плойки"					            ,1.22              , "Плойка"					            , "Приборы персонального ухода"	, product);
 
                 /*КЛИМАТИЧЕСКАЯ ТЕХНИКА*/
+                matchProduct("Термометры, Термометр"											                , "Термометры"						    ,1.15	            , "Термометр"						    , "Климатическая техника"		    , product);
                 matchProduct("04.01, Кондиционеры"											                    , "Кондиционеры"						,1.15	            , "Кондиционер"						, "Климатическая техника"		    , product);
                 matchProduct("04.05, Водонагреватели"											                , "Водонагреватели"						,1.20	            , "Водонагреватель"					, "Климатическая техника"		    , product);
                 ////+
@@ -157,22 +162,23 @@ public class ProductMatcher {
                 matchProduct("15.25.04, Портативная акустика"													, "Bluetooth колонки"					,1.15	            , "Bluetooth колонка"					, "Гаджеты"						, product);
                 matchProduct("15.25.02.02"													                    , "VR системы"							,1.15	            , "VR система"						, "Гаджеты"						, product);
 
-
                 /*ТЕХНИКА ДЛЯ ДОМА*/
-                matchProduct("03.01.02, Центрифуги"						                                    , "Центрифуги"		                    ,1.13				, "Центрифуга"					, "Техника для дома"			    , product);
-                matchProduct("03.01, Ст/м."										                            , "Стиральные машины"		            ,1.13				, "Стиральная машина"					, "Техника для дома"			    , product);
+                matchProduct("03.01.02, Центрифуги"						                                    , "Сушильные машины"		            ,1.13				, "Сушильная машина"					, "Техника для дома"			    , product);
+                matchProduct("03.01.01, 03.01.03, Ст/м."										                , "Стиральные машины"		            ,1.13				, "Стиральная машина"					, "Техника для дома"			    , product);
                 matchProduct("03.02.01, Пылесосы"												                , "Пылесосы"				            ,1.18				, "Пылесос"							, "Техника для дома" 			    , product);
                 matchProduct("03.03.01, Утюги"												                    , "Утюги"					            ,1.20				, "Утюг"								, "Техника для дома"			    , product);
                 matchProduct("03.07, 03.08, Шв. машины, Оверлоки"									            , "Швейные машины"			            ,1.18				, "Швейная машина"					, "Техника для дома"			    , product);
-                matchProduct("03.03.02, 03.03.03, 03.03.04, Отпариватели, Ручные отпариватели"					, "Пароочистители"			            ,1.20				, "Пароочиститель"						, "Техника для дома"			    , product);
+                matchProduct("03.03.02, 03.03.03, 03.03.04, Отпариватели, Ручные отпариватели"					, "Отпариватели"			            ,1.20				, "Отпариватель"						, "Техника для дома"			    , product);
 
                 /*КУХОННАЯ ТЕХНИКА*/
+                matchProduct("Тостеры"											                                , "Тостеры"	                            ,1.15				, "Тостер"						, "Кухонная техника"			    , product);
+                matchProduct("15.01.27.03"											                            , "Кулеры"	                            ,1.15				, "Кулер"						, "Кухонная техника"			    , product);
                 matchProduct("01.01.02, Холод."											                    , "Холодильники"	                    ,1.15				, "Холодильник"						, "Кухонная техника"			    , product);
                 matchProduct("01.01.03, Мороз."											                    , "Морозильники"	                    ,1.15				, "Морозильник"						, "Кухонная техника"			    , product);
                 matchProduct("01.02.01, 01.02.02, Плита эл."						                            , "Электрические плиты"		            ,1.17				, "Эликтрическая плита"				, "Кухонная техника"			    , product);
                 matchProduct("01.02.03, Плитки эл. настольные"						                            , "Электрические плитки"	            ,1.17				, "Эликтрическая плитка"				, "Кухонная техника"			    , product);
                 matchProduct("01.03.04, Плитки газ. настольные"						                        , "Газовые плитки"			            ,1.17			    , "Газовая плитка"				    , "Кухонная техника"			    , product);
-                matchProduct("01.03.01, 01.03.02, Плита газ."						                    , "Газовые плиты"			            ,1.17				, "Газовая плита"						, "Кухонная техника"			    , product);
+                matchProduct("01.03.01, 01.03.02, Плита газ."						                            , "Газовые плиты"			            ,1.17				, "Газовая плита"						, "Кухонная техника"			    , product);
                 matchProduct("01.03.03, Комбинированная плита, Плита газ./эл"						            , "Комбинированные плиты"	            ,1.17				, "Комбинированная плита"				, "Кухонная техника"			    , product);
                 matchProduct("01.05, Микр. печи"							                                    , "Микроволновые печи"		            ,1.18				, "Микроволновая печь"				, "Кухонная техника"			    , product);
                 matchProduct("01.18, Чайники эл"							                                    , "Электрические чайники"	            ,1.20				, "Электрический чайник"				, "Кухонная техника"			    , product);
@@ -186,7 +192,6 @@ public class ProductMatcher {
                 matchProduct("01.04, Посудомоечная машина"									                    , "Посудомоечные машины"	            ,1.15				, "Посудомоечная машина"				, "Кухонная техника"			    , product);
                 matchProduct("07.05.01, 07.05.02, 07.05.03, 07.05.05, 07.05.05, Вытяжка каминная, Вытяжка козырьковая,", "Вытяжки"					    ,1.15              , "Вытяжка"				            , "Кухонная техника"			    , product);
                 matchProduct("01.09, Соковыжималка"				                                            , "Соковыжималки"			            ,1.18		        , "Соковыжималка"				        , "Кухонная техника"			    , product);
-                matchProduct("01.10, Мясорубка"				                                                , "Мясорубки"			                ,1.20		        , "Мясорубка"				            , "Кухонная техника"			    , product);
                 matchProduct("01.12.01"				                                                        , "Фритюрницы"			                ,1.20		        , "Фритюрница"				        , "Кухонная техника"			    , product);
                 matchProduct("01.12.02, Мультиварка"				                                            , "Мультиварки"			                ,1.20		        , "Мультиварка"				        , "Кухонная техника"			    , product);
                 matchProduct("01.13, Пароварки"				                                                , "Пароварки"			                ,1.20		        , "Пароварка"				            , "Кухонная техника"			    , product);
@@ -208,6 +213,7 @@ public class ProductMatcher {
                 matchProduct("07.06, Посудомоечные машины встраиваемые"						                , "Встраиваемые посудомоечные машины"	,1.15	            , "Встраиваемая посудомоечная машина"	, "Встраиваемая техника"		    , product);
 
                 /*ТЕЛЕ-ВИДЕО-АУДИО*/
+                matchProduct("10.11.02"												                        , "Магнитофоны"				            ,1.13				, "Магнитофон"						, "Теле-Видео-Аудио"			    , product);
                 matchProduct("02.02, LED Телевизор"												            , "Телевизоры"				            ,1.13				, "Телевизор"							, "Теле-Видео-Аудио"			    , product);
                 matchProduct("15.02.17.01, 15.02.18.01, TV-тюнер"	                                            , "Ресиверы для тв"			            ,1.25				, "Цифровой ресивер"					, "Теле-Видео-Аудио"			    , product);
                 matchProduct("15.08.24.03, 15.02.08, 15.02.09, 15.02.10"		                                , "Кабели ТВ"				            ,1.90				, "ТВ кабель"							, "Теле-Видео-Аудио"			    , product);
@@ -231,8 +237,8 @@ public class ProductMatcher {
         {
             String annotation, model, name, fullName, groupBrand, type, formAnno;
 
-            try {
-
+            try
+            {
                 if ((supp.equals("1RBT") && StringUtils.startsWithIgnoreCase(product.getOriginalType(), match.trim())))
                 {
                     String brand = product.getOriginalBrand();
@@ -275,7 +281,13 @@ public class ProductMatcher {
                     if (originalName.contains(", ") && originalName.contains(originalBrand))
                     {
                         annotation   = StringUtils.substringAfter(originalName,", ");
-                        model        = StringUtils.substringBetween(originalName, originalBrand, ",").trim();
+
+                        if ((StringUtils.substringAfter(originalName, originalBrand).contains(","))) {
+
+                             model   = StringUtils.substringBetween(originalName, originalBrand, ",").trim();
+                        }
+                        else model   = StringUtils.substringAfter(originalName, originalBrand).trim();
+
                         name         = StringUtils.capitalize(originalBrand.toLowerCase()).concat(" ").concat(model);//StringUtils.capitalize(originalBrand.concat(" ").concat(model).toLowerCase());
                         fullName     = product.getSingleType().concat(" ").concat(StringUtils.capitalize(originalBrand.toLowerCase())).concat(" ").concat(model);
                         groupBrand   = single.concat(" ").concat(StringUtils.capitalize(originalBrand.toLowerCase()));
@@ -300,6 +312,7 @@ public class ProductMatcher {
                 }
             }
             catch (NullPointerException e) {
+                log.warning("NULL at " + product.getOriginalName());
                 e.printStackTrace();
             }
         }

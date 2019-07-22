@@ -23,7 +23,7 @@
                                 <button type="submit" class="btn btn-secondary btn-sm secc">Обработать товары!</button>
                             </div>
                         </form>
-                        <form method="post" action="/supplier/match-models">
+                        <#--<form method="post" action="/supplier/match-models">
                             <div class="form-group">
                                 <button type="submit" class="btn btn-secondary btn-sm secc">Match models!</button>
                             </div>
@@ -32,7 +32,7 @@
                             <div class="form-group">
                                 <button type="submit" class="btn btn-secondary btn-sm secc">Match duplicates!</button>
                             </div>
-                        </form>
+                        </form>-->
 
                     </div>
                 </div>
