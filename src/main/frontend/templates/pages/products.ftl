@@ -77,13 +77,13 @@
             <div class="col-9 marker3">
                 <div class="mt-2 marker2">
                     <div class="btn-group btn-group-toggle" data-toggle="buttons" id="sorting">
-                        <label class="btn btn-secondary active">
+                        <label class="btn btn-secondary btn-sm active">
                             <input type="radio" name="sort_options" id="option1" value="lowest" autocomplete="off" checked> Дешевле
                         </label>
-                        <label class="btn btn-secondary" >
+                        <label class="btn btn-secondary btn-sm" >
                             <input type="radio" name="sort_options" id="option2" value="highest" autocomplete="off"> Дороже
                         </label>
-                        <label class="btn btn-secondary">
+                        <label class="btn btn-secondary btn-sm">
                             <input type="radio" name="sort_options" id="option3" value="alphabet"  autocomplete="off"> По алфавиту
                         </label>
                     </div>

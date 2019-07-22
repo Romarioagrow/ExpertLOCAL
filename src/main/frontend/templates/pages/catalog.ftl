@@ -5,17 +5,15 @@
             <div class="col mb-3">
             </div>
         </div>
-        <div class="row mb-3">
+        <div class="row mb-3" style="margin-top: 1rem;">
             <div class="col">
-                <h1>Каталог товаров</h1>
+                <h1 style="margin-left: 1rem;">Каталог товаров</h1>
             </div>
         </div>
         <div class="row">
             <div class="col">
-                <div class="card">
+                <div class="card" style="width: 95rem; margin-left: 1rem;">
                     <div class="card-body">
-
-
                         <ul class="nav md-pills pills-secondary">
                             <li class="nav-item">
                                 <a class="nav-link active" data-toggle="tab" href="#panel1" role="tab">Теле-видео-аудио</a>
@@ -36,23 +34,23 @@
                                 <a class="nav-link" data-toggle="tab" href="#panel6" role="tab">Приборы персонального ухода</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#panel7" role="tab">Компьютеры и оргтехника</a>
+                                <a class="nav-link" data-toggle="tab" href="#panel7" role="tab">Цифровые устройства</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#panel8" role="tab">Автотовары</a>
+                                <a class="nav-link" data-toggle="tab" href="#panel8" role="tab">Компьютеры и оргтехника</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#panel9" role="tab">Инструменты для дома</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#panel10" role="tab">Гаджеты</a>
+                                <a class="nav-link" data-toggle="tab" href="#panel10" role="tab">Автотовары</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#panel11" role="tab">Гаджеты</a>
                             </li>
-                            <li class="nav-item">
+                            <#--<li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#panel12" role="tab">Гаджеты</a>
-                            </li>
+                            </li>-->
                         </ul>
                     </div>
                 </div>
@@ -442,25 +440,6 @@
                         </div>
                     </div>
                     <#---->
-                    <#-- <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_духовые_шкафы">
-                         <span class="badge badge-light">Встраиваемые духовые шкафы</span>
-                     </a>
-                     <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_варочные_панели">
-                         <span class="badge badge-light">Варочные панели</span>
-                     </a>
-                     <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_вытяжки">
-                         <span class="badge badge-light">Вытяжки</span>
-                     </a>
-                     <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_холодильники">
-                         <span class="badge badge-light">Встраиваемые холодильники</span>
-                     </a>
-                     <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_СВЧ">
-                         <span class="badge badge-light">Встраиваемые микроволновые печи</span>
-                     </a>
-                     <a class="catalogue-info__subcategory" href="/products/встраеваемая_техника/встраиваемые_посудомоечные_машины">
-                         <span class="badge badge-light">Встраиваемые посудомоечные машины</span>
-                     </a>-->
-
                     <div class="tab-pane fade" id="panel4" role="tabpanel">
                         <div class="card-deck">
                             <div class="card catalog-card">
@@ -607,115 +586,104 @@
                         <div class="card-deck">
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/shipchs.jpg" alt="Card image cap">
                                     <a href="/products/приборы_персонального_ухода/щипцы_для_волос">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">щипцы_для_волос</h4>
+                                    <h4 class="card-title">Щипцы для волос</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/stylers.jpg" alt="Card image cap">
                                     <a href="/products/приборы_персонального_ухода/стайлеры">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">стайлеры</h4>
+                                    <h4 class="card-title">Cтайлеры</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/fens.jpg" alt="Card image cap">
                                     <a href="/products/приборы_персонального_ухода/фены">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">фены</h4>
+                                    <h4 class="card-title">Фены</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/trimmers.jpg" alt="Card image cap">
                                     <a href="/products/приборы_персонального_ухода/триммеры_для_бритья">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">триммеры_для_бритья</h4>
+                                    <h4 class="card-title">Триммеры для бритья</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
-                                    <a href="/products/приборы_персонального_ухода/кондиционеры">
+                                    <img class="img-fluid scale-pic" src="/../img/razors.jpg" alt="Card image cap">
+                                    <a href="/products/приборы_персонального_ухода/станки_для_бритья">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">Кондиционеры</h4>
+                                    <h4 class="card-title">Бритвенные станки</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
-                                    <a href="/products/приборы_персонального_ухода/бритвы">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">бритвы</h4>
-                                </div>
-                            </div>
-                            <div class="card catalog-card">
-                                <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/epliators.jpg" alt="Card image cap">
                                     <a href="/products/приборы_персонального_ухода/эпиляторы">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">эпиляторы</h4>
+                                    <h4 class="card-title">Эпиляторы</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/massagers.jpg" alt="Card image cap">
                                     <a href="/products/приборы_персонального_ухода/массажеры">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">массажеры</h4>
+                                    <h4 class="card-title">Массажеры</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/vesi.jpg" alt="Card image cap">
                                     <a href="/products/приборы_персонального_ухода/напольные_весы">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">напольные весы</h4>
+                                    <h4 class="card-title">Напольные весы</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/nogotochki.jpg" alt="Card image cap">
                                     <a href="/products/приборы_персонального_ухода/маникюрные_наборы">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">маникюрные наборы</h4>
+                                    <h4 class="card-title">Маникюрные наборы</h4>
                                 </div>
                             </div>
-                            <div class="card catalog-card">
+                            <#--<div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
                                     <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
                                     <a href="/products/приборы_персонального_ухода/медицинские_приборы">
@@ -723,9 +691,9 @@
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">медицинские_приборы</h4>
+                                    <h4 class="card-title">Медицинские приборы</h4>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                     <#---->
@@ -733,122 +701,122 @@
                         <div class="card-deck">
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/smartphones.jpg" alt="Card image cap">
                                     <a href="/products/цифровые_устройства/смартфоны">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">смартфоны</h4>
+                                    <h4 class="card-title">Смартфоны</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/mobiles.jpg" alt="Card image cap">
                                     <a href="/products/цифровые_устройства/сотовые_телефоны">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">сотовые_телефоны</h4>
+                                    <h4 class="card-title">Сотовые телефоны</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/tablets.jpg" alt="Card image cap">
                                     <a href="/products/цифровые_устройства/планшеты">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">планшеты</h4>
+                                    <h4 class="card-title">Планшеты</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/photo.png" alt="Card image cap">
                                     <a href="/products/цифровые_устройства/фотоаппараты">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">фотоаппараты</h4>
+                                    <h4 class="card-title">Фотоаппараты</h4>
                                 </div>
                             </div><div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/video.jpg" alt="Card image cap">
                                     <a href="/products/цифровые_устройства/видеокамеры">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">видеокамеры</h4>
+                                    <h4 class="card-title">Видеокамеры</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/naushniki.jpg" alt="Card image cap">
                                     <a href="/products/цифровые_устройства/наушники_и_гарнитуры">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">наушники_и_гарнитуры</h4>
+                                    <h4 class="card-title">Наушники</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/powerbanks.jpg" alt="Card image cap">
                                     <a href="/products/цифровые_устройства/внешние_аккумуляторы">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">внешние_аккумуляторы</h4>
+                                    <h4 class="card-title">Внешние аккумуляторы</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/ebook.jpeg" alt="Card image cap">
                                     <a href="/products/цифровые_устройства/электронные_книги">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">электронные_книги</h4>
+                                    <h4 class="card-title">Электронные книги</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/microSD.jpg" alt="Card image cap">
                                     <a href="/products/цифровые_устройства/карты_памяти_microSD">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">карты_памяти_microSD</h4>
+                                    <h4 class="card-title">Карты памяти microSD</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/mp3.jpg" alt="Card image cap">
                                     <a href="/products/цифровые_устройства/MP3_плееры">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">MP3_плееры</h4>
+                                    <h4 class="card-title">MP3 плееры</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/chehli.jpg" alt="Card image cap">
                                     <a href="/products/цифровые_устройства/чехлы_для_телефонов">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">чехлы_для_телефонов</h4>
+                                    <h4 class="card-title">Чехлы для телефонов</h4>
                                 </div>
                             </div>
                         </div>
@@ -858,84 +826,84 @@
                         <div class="card-deck">
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/notebooks.jpg" alt="Card image cap">
                                     <a href="/products/компьютеры_и_орг_техника/ноутбуки">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">ноутбуки</h4>
+                                    <h4 class="card-title">Ноутбуки</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/pc.jpg" alt="Card image cap">
                                     <a href="/products/компьютеры_и_орг_техника/готовые_ПК">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">готовые_ПК</h4>
+                                    <h4 class="card-title">Готовые ПК</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/monitors.jpg" alt="Card image cap">
                                     <a href="/products/компьютеры_и_орг_техника/мониторы">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">мониторы</h4>
+                                    <h4 class="card-title">Мониторы</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/printers.jpg" alt="Card image cap">
                                     <a href="/products/компьютеры_и_орг_техника/принтеры">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">принтеры</h4>
+                                    <h4 class="card-title">Принтеры</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/keyboards.png" alt="Card image cap">
                                     <a href="/products/компьютеры_и_орг_техника/клавиатуры">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">клавиатуры</h4>
+                                    <h4 class="card-title">Клавиатуры</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/mouses.jpg" alt="Card image cap">
                                     <a href="/products/компьютеры_и_орг_техника/мыши">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">мыши</h4>
+                                    <h4 class="card-title">Мыши</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/hardEXT.jpg" alt="Card image cap">
                                     <a href="/products/компьютеры_и_орг_техника/внешние_жесткие_диски">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">внешние_жесткие_диски</h4>
+                                    <h4 class="card-title">Внешние жесткие диски</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/routers.jpg" alt="Card image cap">
                                     <a href="/products/компьютеры_и_орг_техника/роутеры_и_сетевое_оборудование">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
@@ -946,57 +914,35 @@
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/setfilters.jpg" alt="Card image cap">
                                     <a href="/products/компьютеры_и_орг_техника/сетевые_фильтры">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">сетевые_фильтры</h4>
+                                    <h4 class="card-title">Сетевые фильтры</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
-                                    <a href="/products/компьютеры_и_орг_техника/сетевые_фильтры">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">сетевые_фильтры</h4>
-                                </div>
-                            </div>
-                            <div class="card catalog-card">
-                                <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
-                                    <a href="/products/компьютеры_и_орг_техника/сетевые_фильтры">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">сетевые_фильтры</h4>
-                                </div>
-                            </div>
-                            <div class="card catalog-card">
-                                <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/usbflash.jpg" alt="Card image cap">
                                     <a href="/products/компьютеры_и_орг_техника/flash_карты">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">flash_карты</h4>
+                                    <h4 class="card-title">USB карты</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/compkreslo.jpg" alt="Card image cap">
                                     <a href="/products/компьютеры_и_орг_техника/кресла">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">кресла</h4>
+                                    <h4 class="card-title">Кресла</h4>
                                 </div>
                             </div>
                         </div>
@@ -1006,7 +952,7 @@
                         <div class="card-deck">
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/drelshurup.jpg" alt="Card image cap">
                                     <a href="/products/инструменты_для_дома/дрели-шуруповерты">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
@@ -1017,29 +963,29 @@
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/perforator.jpg" alt="Card image cap">
                                     <a href="/products/инструменты_для_дома/перфораторы">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">перфораторы</h4>
+                                    <h4 class="card-title">Перфораторы</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/svarka.jpeg" alt="Card image cap">
                                     <a href="/products/инструменты_для_дома/сварочное_оборудование">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">сварочное_оборудование</h4>
+                                    <h4 class="card-title">Сварочное оборудование</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/electropila.jpg" alt="Card image cap">
                                     <a href="/products/инструменты_для_дома/электропилы">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
@@ -1050,35 +996,35 @@
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/lobziki.jpg" alt="Card image cap">
                                     <a href="/products/инструменты_для_дома/лобзики">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">лобзики</h4>
+                                    <h4 class="card-title">Лобзики</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/shlifovka.jpg" alt="Card image cap">
                                     <a href="/products/инструменты_для_дома/шлифовальные_машины">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">шлифовальные_машины</h4>
+                                    <h4 class="card-title">Шлифовальные машины</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/derevoobrabat.jpg" alt="Card image cap">
                                     <a href="/products/инструменты_для_дома/деревообрабатывающие_станки">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">деревообрабатывающие_станки</h4>
+                                    <h4 class="card-title">Деревообрабатывающие станки</h4>
                                 </div>
                             </div>
                         </div>
@@ -1088,84 +1034,84 @@
                         <div class="card-deck">
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/avtomagnitola.jpg" alt="Card image cap">
                                     <a href="/products/автотовары/автомагнитолы">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">автомагнитолы</h4>
+                                    <h4 class="card-title">Автомагнитолы</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/navigator.png" alt="Card image cap">
                                     <a href="/products/автотовары/навигаторы">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">навигаторы</h4>
+                                    <h4 class="card-title">Навигаторы</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/vidioreg.jpg" alt="Card image cap">
                                     <a href="/products/автотовары/видеорегистраторы">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">видеорегистраторы</h4>
+                                    <h4 class="card-title">Видеорегистраторы</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/radar.jpg" alt="Card image cap">
                                     <a href="/products/автотовары/радар_детекторы">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">радар_детекторы</h4>
+                                    <h4 class="card-title">Радар детекторы</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/avtoacustica.jpg" alt="Card image cap">
                                     <a href="/products/автотовары/автоакустика">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">автоакустика</h4>
+                                    <h4 class="card-title">Автоакустика</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/sub.jpg" alt="Card image cap">
                                     <a href="/products/автотовары/сабвуферы_для_авто">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">сабвуферы_для_авто</h4>
+                                    <h4 class="card-title">Сабвуферы для авто</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/avtousil.jpg" alt="Card image cap">
                                     <a href="/products/автотовары/усилители">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">усилители</h4>
+                                    <h4 class="card-title">Усилители</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/avtozukpodkl.jpg" alt="Card image cap">
                                     <a href="/products/автотовары/комплекты_подключения_автозвука">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
@@ -1177,107 +1123,72 @@
                         </div>
                     </div>
                     <#---->
-                    <#-- &lt;#&ndash;<a class="catalogue-info__subcategory" href="/products/гаджеты/">
-                                <span class="badge badge-light">Колонки с голосовым помощником</span>
-                            </a>&ndash;&gt;
-                            <a class="catalogue-info__subcategory" href="/products/">
-                                <span class="badge badge-light">Bluetooth колонки</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/гаджеты/">
-                                <span class="badge badge-light">Умные часы</span>
-                            </a>
-                            &lt;#&ndash;<a class="catalogue-info__subcategory" href="/products/гаджеты/">
-                                <span class="badge badge-light">Фитнес браслеты</span>
-                            </a>
-                            <a class="catalogue-info__subcategory" href="/products/гаджеты/">
-                                <span class="badge badge-light">Детские часы</span>
-                            </a>&ndash;&gt;
-                            <a class="catalogue-info__subcategory" href="/products/гаджеты/">
-                                <span class="badge badge-light">Очки виртуальной реальности</span>
-                            </a>-->
                     <div class="tab-pane fade" id="panel11" role="tabpanel">
                         <div class="card-deck">
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/bluetoothaudio.jpg" alt="Card image cap">
                                     <a href="/products/гаджеты/bluetooth-колонки">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">bluetooth-колонки</h4>
+                                    <h4 class="card-title">Bluetooth колонки</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/goloskolonka.jpg" alt="Card image cap">
                                     <a href="/products/гаджеты/колонки_с_голосовым_помощником">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">колонки_с_голосовым_помощником</h4>
+                                    <h4 class="card-title">Голосовые помощники</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/smartwatch.jpg" alt="Card image cap">
                                     <a href="/products/гаджеты/умные_часы">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">умные_часы</h4>
+                                    <h4 class="card-title">Умные часы</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/fitness.jpg" alt="Card image cap">
                                     <a href="/products/гаджеты/фитнес-браслеты">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">фитнес браслеты</h4>
+                                    <h4 class="card-title">Фитнес браслеты</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/kidswatch.jpg" alt="Card image cap">
                                     <a href="/products/гаджеты/детские_часы">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">детские_часы</h4>
+                                    <h4 class="card-title">Детские часы</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
+                                    <img class="img-fluid scale-pic" src="/../img/vr.jpg" alt="Card image cap">
                                     <a href="/products/гаджеты/VR_системы">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">VR_системы</h4>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="tab-pane fade" id="panel12" role="tabpanel">
-                        <div class="card-deck">
-                            <div class="card catalog-card">
-                                <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
-                                    <a href="/products/инструменты_для_дома/дрели-шуруповерты">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">Дрели-Шуруповерты</h4>
+                                    <h4 class="card-title">VR системы</h4>
                                 </div>
                             </div>
                         </div>
@@ -1443,10 +1354,6 @@
     .discount {
         max-height: 5rem;
     }*/
-    .badge-light {
-        font-size: 1rem;
-        margin-bottom: 0.5rem;
-    }
 </style>
 
 
