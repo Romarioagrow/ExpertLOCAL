@@ -34,6 +34,7 @@
                     <#if !isUser>
                         <a class="nav-link js-scroll-trigger" href="/user/login">Войти</a>
                     <#else>
+                        <i class="fas fa-user-tie"></i>
                         <a class="nav-link js-scroll-trigger" href="/user/cabinet">Личный кабинет</a>
                     </#if>
                 </li>

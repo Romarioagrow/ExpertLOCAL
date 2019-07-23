@@ -12,41 +12,41 @@
         </div>
         <div class="row">
             <div class="col">
-                <div class="card" style="width: 95rem; margin-left: 1rem;">
-                    <div class="card-body">
+                <div class="card" style="width: 95rem; margin-left: 1rem; padding: -1.5rem !important;" >
+                    <div class="card-body" >
                         <ul class="nav md-pills pills-secondary">
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#panel1" role="tab">Теле-видео-аудио</a>
+                                <a class="nav-link <#if url?contains("теле-видео-аудио")>active</#if>" data-toggle="tab" href="#panel1" role="tab">Теле-видео-аудио</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#panel2" role="tab">Кухонная техника</a>
+                                <a class="nav-link <#if url?contains("кухонная_техника")>active</#if>" data-toggle="tab" href="#panel2" role="tab">Кухонная техника</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#panel3" role="tab">Техника для дома</a>
+                                <a class="nav-link <#if url?contains("техника_для_дома")>active</#if>" data-toggle="tab" href="#panel3" role="tab">Техника для дома</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#panel4" role="tab">Встраиваемая техника</a>
+                                <a class="nav-link <#if url?contains("встраеваемая_техника")>active</#if>" data-toggle="tab" href="#panel4" role="tab">Встраиваемая техника</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#panel5" role="tab">Климатическая техника</a>
+                                <a class="nav-link <#if url?contains("климатическая_техника")>active</#if>" data-toggle="tab" href="#panel5" role="tab">Климатическая техника</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#panel6" role="tab">Приборы персонального ухода</a>
+                                <a class="nav-link <#if url?contains("приборы_персонального_ухода")>active</#if>" data-toggle="tab" href="#panel6" role="tab">Приборы персонального ухода</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#panel7" role="tab">Цифровые устройства</a>
+                                <a class="nav-link <#if url?contains("цифровые_устройства")>active</#if>" data-toggle="tab" href="#panel7" role="tab">Цифровые устройства</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#panel8" role="tab">Компьютеры и оргтехника</a>
+                                <a class="nav-link <#if url?contains("компьютеры_и_орг_техника")>active</#if>" data-toggle="tab" href="#panel8" role="tab">Компьютеры и оргтехника</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#panel9" role="tab">Инструменты для дома</a>
+                                <a class="nav-link <#if url?contains("инструменты_для_дома")>active</#if>" data-toggle="tab" href="#panel9" role="tab">Инструменты для дома</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#panel10" role="tab">Автотовары</a>
+                                <a class="nav-link <#if url?contains("автотовары")>active</#if>" data-toggle="tab" href="#panel10" role="tab">Автотовары</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#panel11" role="tab">Гаджеты</a>
+                                <a class="nav-link <#if url?contains("гаджеты")>active</#if>" data-toggle="tab" href="#panel11" role="tab">Гаджеты</a>
                             </li>
                             <#--<li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#panel12" role="tab">Гаджеты</a>
@@ -56,7 +56,7 @@
                 </div>
 
                 <div class="tab-content pt-0" style="margin-top: 2rem">
-                    <div class="tab-pane fade in show active" id="panel1" role="tabpanel">
+                    <div class="tab-pane fade <#if url?contains("теле-видео-аудио")>in show active</#if>" id="panel1" role="tabpanel">
                         <div class="card-deck">
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
@@ -173,7 +173,7 @@
                         </div>
                     </div>
                     <#---->
-                    <div class="tab-pane fade" id="panel2" role="tabpanel">
+                    <div class="tab-pane fade <#if url?contains("кухонная_техника")>in show active</#if>" id="panel2" role="tabpanel">
                         <h2>Крупная кухонная техника</h2>
                         <div class="card-deck">
                             <div class="card catalog-card">
@@ -369,7 +369,7 @@
                         </div>
                     </div>
                     <#---->
-                    <div class="tab-pane fade" id="panel3" role="tabpanel">
+                    <div class="tab-pane fade <#if url?contains("техника_для_дома")>in show active</#if>" id="panel3" role="tabpanel">
                         <div class="card-deck">
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
@@ -440,7 +440,7 @@
                         </div>
                     </div>
                     <#---->
-                    <div class="tab-pane fade" id="panel4" role="tabpanel">
+                    <div class="tab-pane fade <#if url?contains("встраеваемая_техника")>in show active</#if>" id="panel4" role="tabpanel">
                         <div class="card-deck">
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
@@ -511,7 +511,7 @@
                         </div>
                     </div>
                     <#---->
-                    <div class="tab-pane fade" id="panel5" role="tabpanel">
+                    <div class="tab-pane fade <#if url?contains("климатическая_техника")>in show active</#if>" id="panel5" role="tabpanel">
                         <div class="card-deck">
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
@@ -582,7 +582,7 @@
                         </div>
                     </div>
                     <#---->
-                    <div class="tab-pane fade" id="panel6" role="tabpanel">
+                    <div class="tab-pane fade <#if url?contains("приборы_персонального_ухода")>in show active</#if>" id="panel6" role="tabpanel">
                         <div class="card-deck">
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
@@ -636,7 +636,7 @@
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">Бритвенные станки</h4>
+                                    <h4 class="card-title">Бртивы</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
@@ -697,7 +697,7 @@
                         </div>
                     </div>
                     <#---->
-                    <div class="tab-pane fade" id="panel7" role="tabpanel">
+                    <div class="tab-pane fade <#if url?contains("цифровые_устройства")>in show active</#if>" id="panel7" role="tabpanel">
                         <div class="card-deck">
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
@@ -822,7 +822,7 @@
                         </div>
                     </div>
                     <#---->
-                    <div class="tab-pane fade" id="panel8" role="tabpanel">
+                    <div class="tab-pane fade <#if url?contains("компьютеры_и_орг_техника")>in show active</#if>" id="panel8" role="tabpanel">
                         <div class="card-deck">
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
@@ -934,7 +934,7 @@
                                     <h4 class="card-title">USB карты</h4>
                                 </div>
                             </div>
-                            <div class="card catalog-card">
+                            <#--<div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
                                     <img class="img-fluid scale-pic" src="/../img/compkreslo.jpg" alt="Card image cap">
                                     <a href="/products/компьютеры_и_орг_техника/кресла">
@@ -944,11 +944,11 @@
                                 <div class="card-body">
                                     <h4 class="card-title">Кресла</h4>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                     <#---->
-                    <div class="tab-pane fade" id="panel9" role="tabpanel">
+                    <div class="tab-pane fade <#if url?contains("инструменты_для_дома")>in show active</#if>" id="panel9" role="tabpanel">
                         <div class="card-deck">
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
@@ -1016,7 +1016,7 @@
                                     <h4 class="card-title">Шлифовальные машины</h4>
                                 </div>
                             </div>
-                            <div class="card catalog-card">
+                            <#--<div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
                                     <img class="img-fluid scale-pic" src="/../img/derevoobrabat.jpg" alt="Card image cap">
                                     <a href="/products/инструменты_для_дома/деревообрабатывающие_станки">
@@ -1026,11 +1026,11 @@
                                 <div class="card-body">
                                     <h4 class="card-title">Деревообрабатывающие станки</h4>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                     <#---->
-                    <div class="tab-pane fade" id="panel10" role="tabpanel">
+                    <div class="tab-pane fade <#if url?contains("автотовары")>in show active</#if>" id="panel10" role="tabpanel">
                         <div class="card-deck">
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
@@ -1043,7 +1043,7 @@
                                     <h4 class="card-title">Автомагнитолы</h4>
                                 </div>
                             </div>
-                            <div class="card catalog-card">
+                            <#--<div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
                                     <img class="img-fluid scale-pic" src="/../img/navigator.png" alt="Card image cap">
                                     <a href="/products/автотовары/навигаторы">
@@ -1053,7 +1053,7 @@
                                 <div class="card-body">
                                     <h4 class="card-title">Навигаторы</h4>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
                                     <img class="img-fluid scale-pic" src="/../img/vidioreg.jpg" alt="Card image cap">
@@ -1087,7 +1087,7 @@
                                     <h4 class="card-title">Автоакустика</h4>
                                 </div>
                             </div>
-                            <div class="card catalog-card">
+                            <#--<div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
                                     <img class="img-fluid scale-pic" src="/../img/sub.jpg" alt="Card image cap">
                                     <a href="/products/автотовары/сабвуферы_для_авто">
@@ -1119,16 +1119,16 @@
                                 <div class="card-body">
                                     <h4 class="card-title">Подключение автозвука</h4>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                     <#---->
-                    <div class="tab-pane fade" id="panel11" role="tabpanel">
+                    <div class="tab-pane fade <#if url?contains("гаджеты")>in show active</#if>" id="panel11" role="tabpanel">
                         <div class="card-deck">
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
                                     <img class="img-fluid scale-pic" src="/../img/bluetoothaudio.jpg" alt="Card image cap">
-                                    <a href="/products/гаджеты/bluetooth-колонки">
+                                    <a href="/products/гаджеты/bluetooth_колонки">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
@@ -1136,7 +1136,7 @@
                                     <h4 class="card-title">Bluetooth колонки</h4>
                                 </div>
                             </div>
-                            <div class="card catalog-card">
+                            <#--<div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
                                     <img class="img-fluid scale-pic" src="/../img/goloskolonka.jpg" alt="Card image cap">
                                     <a href="/products/гаджеты/колонки_с_голосовым_помощником">
@@ -1146,7 +1146,7 @@
                                 <div class="card-body">
                                     <h4 class="card-title">Голосовые помощники</h4>
                                 </div>
-                            </div>
+                            </div>-->
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
                                     <img class="img-fluid scale-pic" src="/../img/smartwatch.jpg" alt="Card image cap">
@@ -1161,7 +1161,7 @@
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
                                     <img class="img-fluid scale-pic" src="/../img/fitness.jpg" alt="Card image cap">
-                                    <a href="/products/гаджеты/фитнес-браслеты">
+                                    <a href="/products/гаджеты/фитнес_браслеты">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>
@@ -1348,12 +1348,6 @@
     ul {
         list-style: none;
     }
-    /*.popular {
-        min-height: 15rem;
-    }
-    .discount {
-        max-height: 5rem;
-    }*/
 </style>
 
 

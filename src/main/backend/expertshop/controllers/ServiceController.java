@@ -1,5 +1,4 @@
 package expertshop.controllers;
-import expertshop.domain.Order;
 import expertshop.domain.Product;
 import expertshop.domain.User;
 import expertshop.domain.dto.OrderContacts;
@@ -11,12 +10,10 @@ import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,7 +46,7 @@ public class ServiceController {
             @RequestBody String productGroup
     ){
         productGroup = productGroup.replaceAll("_", " ");
-        return filterService.displayBrand(productGroup);
+        return filterService.resolveFilters(productGroup);
     }
 
     /*PRODUCTS SEARCH*/

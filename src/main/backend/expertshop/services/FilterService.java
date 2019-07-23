@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jsoup.internal.StringUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +25,7 @@ public class FilterService {
     private final ProductRepo productRepo;
     private final ProductService productService;
 
-    public LinkedList<Object> displayBrand(String productGroup)
+    public LinkedList<Object> resolveFilters(String productGroup)
     {
         Set<String> brands = new TreeSet<>();
         Map<String, TreeSet<String>> filters = new TreeMap<>();
@@ -54,6 +55,20 @@ public class FilterService {
                 }
             }
         });
+        products.forEach(product -> {
+            if (product.getSupplier().startsWith("2")) {
+                String[] filtrs = product.getOriginalAnnotation().split(";");
+                for (String fltr : filtrs) {
+                    for (Map.Entry<String, TreeSet<String>> entry : filters.entrySet()) {
+                        if (StringUtils.containsIgnoreCase(entry.getKey().replaceAll(" ", ""), fltr.replaceAll(" ", ""))) {
+                            System.out.println();
+                            log.info("RBT KEY " + entry.getKey());
+                            log.info("RUS PARAM " + fltr);
+                        }
+                    }
+                }
+            }
+        });
         System.out.println();
         filters.forEach((s, strings) -> log.info(s + " " + strings.toString()));
 
@@ -67,7 +82,7 @@ public class FilterService {
     {
         System.out.println();
         log.info("Request: " + request);
-        log.info("Received filters:");
+        //log.info("Received filters");
         filters.forEach((key, filter) -> log.info(key + " " + filter));
 
         List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCase(request);
@@ -84,7 +99,6 @@ public class FilterService {
                 else if (condition.startsWith("Comp-")) {
                     products = filterComputeParams (products, filter);
                 }
-                /// ОТДЕЛЬНЫЙ CASE
                 else switch (condition) {
                         case "sortmin", "sortmax"   -> products = filterPrice   (products, filter);
                         case "brand"                -> products = filterBrands  (products, filter);
@@ -94,18 +108,22 @@ public class FilterService {
                 e.printStackTrace();
             }
         }
-        log.info("Product after filter " + products.size());
+        if (products != null)
+        {
+            log.info("Product after filter " + products.size());
 
-        int start = (int) pageable.getOffset();
-        int end = (start + pageable.getPageSize()) > products.size() ? products.size() : (start + pageable.getPageSize());
+            int start = (int) pageable.getOffset();
+            int end = (start + pageable.getPageSize()) > products.size() ? products.size() : (start + pageable.getPageSize());
 
-        Page page = new PageImpl<>(products.subList(start, end), pageable, products.size());
-        Set<String> orderedIDs = productService.getOrderedID(user);
+            Page page = new PageImpl<>(products.subList(start, end), pageable, products.size());
+            Set<String> orderedIDs = productService.getOrderedID(user);
 
-        LinkedList<Object> payload = new LinkedList<>();
-        payload.add(page);
-        payload.add(orderedIDs);
-        return payload; /// payload();
+            LinkedList<Object> payload = new LinkedList<>();
+            payload.add(page);
+            payload.add(orderedIDs);
+            return payload; /// payload();
+        }
+        return null;
     }
 
     private List<Product> filterContainsParams(List<Product> products, Map.Entry<String, String> filter) {
@@ -168,43 +186,37 @@ public class FilterService {
     }
 
     private List<Product> filterComputeParams(List<Product> products, Map.Entry<String, String> filter) {
+        String filterKey = StringUtils.substringBefore(filter.getKey(), ";");
+        int check = Integer.parseInt(StringUtils.substringAfter(filter.getKey(), ";"));
         double computeFilter = Double.parseDouble(filter.getValue());
-        return products.stream().filter(product ->
+
+        if ((filterKey.contains("Min") && computeFilter >= check) || (filterKey.contains("Max") && computeFilter <= check))
         {
-            if (!product.getOriginalAnnotation().isEmpty())
+            return products.stream().filter(product ->
             {
-                double computeParam  = extractComputeParam(product, filter);
-                log.info("Result: " + computeParam);
-                if (computeParam != 0) return StringUtils.contains(filter.getKey(), "Min") ? computeFilter <= computeParam : computeFilter >= computeParam;
+                if (!product.getOriginalAnnotation().isEmpty())
+                {
+                    double computeParam  = extractComputeParam(product, filterKey);
+
+                    if (computeParam == 0)          return false;
+                    if (filterKey.contains("Min"))  return computeFilter <= computeParam;
+                    else                            return computeFilter >= computeParam;
+                }
                 return false;
-            }
-            return false;
-        }).collect(Collectors.toList());
+            }).collect(Collectors.toList());
+        }
+        return null;
     }
-    private double extractComputeParam(Product product, Map.Entry<String, String> filter) {
-        String key = filter.getKey();
+    private double extractComputeParam(Product product, String filterKey) {
         String annotation = product.getOriginalAnnotation();
-        String extractName = StringUtils.substringAfterLast(key, "-");
+        String keyName    = StringUtils.substringAfterLast(filterKey, "-");
 
-        System.out.println();
-        log.info("KEY: " + key);
-        log.info("EXTRACT NAME: " + extractName);
-
-        if (!annotation.contains(extractName.concat(" -")))
+        if (annotation.contains(keyName))
         {
-            String reg = "^.*"+extractName.concat(" ")+"[0-9]{1,2}([,.][0-9]{1,2})?$";
-            boolean match = Pattern.compile(reg).matcher(annotation).find();
-            log.info(match + Pattern.compile(reg).pattern());
-
-            if (match) return annotation.contains(extractName)  ? parseDouble(StringUtils.substringAfter(annotation, extractName).trim())               : 0;
-            return annotation.contains(extractName)             ? parseDouble(StringUtils.substringBetween(annotation, extractName, ";").trim())   : 0;
+            String compVal = StringUtils.substringBetween(annotation, keyName.concat(": "), ";").replaceAll(",", ".");
+            return !compVal.contains("-") ? Double.parseDouble(compVal) : 0;
         }
         return 0;
-    }
-
-    private double parseDouble(String checkingDouble) {
-        if (checkingDouble.contains(",")) return Double.parseDouble(checkingDouble.replaceAll(",", "."));
-        return Double.parseDouble(checkingDouble);
     }
 
     private List<Product> filterPrice(List<Product> products, Map.Entry<String, String> filter) {

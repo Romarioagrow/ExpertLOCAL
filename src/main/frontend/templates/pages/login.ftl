@@ -14,14 +14,33 @@
                         </div>
                     </#if>
                     <form action="/user/login" method="post" class="text-center mt-5">
-                        <h2 class="mb-4">Вход в личный кабинет</h2>
-                        <input type="text" id="username" name="username" class="form-control mb-4" placeholder="Номер телефона">
-                        <input type="password" id="password" name="password" class="form-control mb-4" placeholder="Пароль">
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="mb-4">Вход в личный кабинет</p>
+                                <div class="modal-body mx-3">
+                                    <div class="md-form">
+                                        <div class="md-form mb-5">
+                                            <i class="fas fa-phone prefix grey-text" style="margin-left: -14.5rem;"></i>
+                                            <input type="text" id="username" name="username" class="form-control">
+                                            <label data-error="wrong" data-success="right" for="username">Номер телефона</label>
+                                        </div>
+                                        <div class="md-form">
+                                            <i class="fas fa-lock prefix grey-text" style="margin-left: -14.5rem;"></i>
+                                            <input type="password" id="password" name="password" class="form-control">
+                                            <label data-error="wrong" data-success="right" for="password">Пароль</label>
+                                        </div>
+                                    </div>
+                                </div>
 
-                        <button class="btn btn-elegant btn-block my-4" type="submit">Войти</button>
-                        <h2>Зашли впервые?
-                            <h3><a href="/user/registration">Зарегистрируйтесь!</a></h3>
-                        </h2>
+                                <#--<input type="text" id="username" name="username" class="form-control mb-4" placeholder="Номер телефона">
+                                <input type="password" id="password" name="password" class="form-control mb-4" placeholder="Пароль">-->
+
+                                <button class="btn btn-primary btn-block my-4" type="submit" style="background-color: #e52d00 !important;">Войти</button>
+                                <p style="font-size: 1.5rem !important;">Зашли впервые?
+                                    <p style="font-size: 1.5rem !important;"><a href="/user/registration">Зарегистрируйтесь!</a></p>
+                                </p>
+                            </div>
+                        </div>
                         <#--<div style="margin-left: 45rem;">
                             <h3>Через социальные сети</h3>
                             <button type="button" class="btn btn-gplus"><i class="fab pr-1"></i> Google </button>

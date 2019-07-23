@@ -3,13 +3,12 @@
 
 <@t.template>
     <div class="container-fluid">
-        <div class="row mt-2">
-            <div class="col-3"></div>
-            <div class="col-4">
+        <div class="row" style="margin-top: 6rem; margin-left: 27.5rem">
+            <div class="col">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/"><strong>Каталог</strong></a></li>
-                        <li class="breadcrumb-item"><a href="/categories/${path[0]}"><strong>${path[0]}</strong></a></li>
+                        <li class="breadcrumb-item"><a href="/categories/${path[0]?lower_case}"><strong>${path[0]?replace("_"," ")}</strong></a></li>
                         <li class="breadcrumb-item disabled" style="color: #7a7979;">${path[1]}</li>
                     </ol>
                 </nav>
@@ -43,10 +42,11 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-5">
-                                        <input type="text" class="form-control" id="sortmin" placeholder="От ₽">
+                                        <input type="text" onkeyup="filterProducts()" class="form-control" id="sortmin" placeholder="От ₽">
                                     </div>
+
                                     <div class="col-5">
-                                        <input type="text" class="form-control" id="sortmax" placeholder="До ₽">
+                                        <input type="text" onkeyup="filterProducts()" class="form-control" id="sortmax" placeholder="До ₽">
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
                                     <h5 class="card-title">
                                         <a href="/products/info/${product.productID}">
                                             <strong>
-                                                ${product.singleType}
+                                                ${product.singleType!''}
                                                 ${product.originalBrand?capitalize}
                                                 ${product.modelName!''}
                                             </strong>

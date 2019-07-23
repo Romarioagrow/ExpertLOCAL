@@ -1,12 +1,12 @@
-$(document).ready(function(){
+/*$(document).ready(function(){
     $('#filter-button')         .on('click', filterProducts);
 });
 $(document).ready(function(){
     $('input[type="radio"]')    .on('change', filterProducts);
-});
-$(document).ready(function(){
-    $('input[type="checkbox"]') .on('change', filterProducts);
-});
+});*/
+/*$(document).ready(function(){
+    $('input[type="text"]') .on('keyup', filterProducts);
+});*/
 
 $(document).ready(function(){
     displayBrands()
@@ -103,10 +103,10 @@ function displayBrands() {
                             '                <div class="container">' +
                             '                    <div class="row">' +
                             '                        <div class="col-5">' +
-                            '                            <input type="text" class="form-control" id="Comp-Min-'+key+'" placeholder="От '+min+'">' +
+                            '                            <input type="text" onkeyup="filterProducts()" class="form-control" name="'+min+'" id="Comp-Min-'+key+';'+min+'" placeholder="От '+min+'">' +
                             '                        </div>' +
                             '                        <div class="col-5">' +
-                            '                            <input type="text" class="form-control" id="Comp-Max-'+key+'" placeholder="До '+max+'">' +
+                            '                            <input type="text" onkeyup="filterProducts()" class="form-control" name="'+max+'" id="Comp-Max-'+key+';'+max+'" placeholder="До '+max+'">' +
                             '                        </div>' +
                             '                    </div>' +
                             '                </div>' +
@@ -161,7 +161,6 @@ function resolveURL() {
 }
 
 function filterProducts() {
-    //e.preventDefault();
     var filters = {};
 
     $('input:checkbox:checked').each(function()

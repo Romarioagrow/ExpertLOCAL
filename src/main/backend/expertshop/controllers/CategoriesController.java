@@ -39,20 +39,24 @@ public class CategoriesController {
 
     @GetMapping("/")
     public String showAll(Model model, @AuthenticationPrincipal User user) {
-        model.addAttribute("url", "");
+        model.addAttribute("url", "теле-видео-аудио");
         model.addAttribute("order", getOrder(user));
+        return "pages/catalog";
+    }
+    @GetMapping("/categories")
+    public String categories() {
         return "pages/catalog";
     }
     @GetMapping("/categories/{category}")
     public String showByCategories(Model model, @PathVariable String category, @AuthenticationPrincipal User user)
     {
-        //log.info("Category: " + category);
-
         model.addAttribute("url", category);
         model.addAttribute("order", getOrder(user));
-        return "pages/categories";
+        log.info(category);
+        return "pages/catalog";
     }
-    @GetMapping("/subcats/{req_subcategory}")
+
+    /*@GetMapping("/subcats/{req_subcategory}")
     public String showSubCategories( Model model, @PathVariable String req_subcategory, @AuthenticationPrincipal User user)
     {
         //log.info("Category: " + req_subcategory);
@@ -60,16 +64,10 @@ public class CategoriesController {
         model.addAttribute("order", getOrder(user));
         return "pages/products";
     }
-
-    @GetMapping("/categories")
-    public String categories() {
-        return "redirect:/hello";
-    }
-
     @GetMapping("/subcats")
     public String subCategories() {
         return "redirect:/hello";
-    }
+    }*/
 
     private Order getOrder(User user) {
         return user != null ? orderService.getUserOrder(user.getUserID()) : orderService.getSessionOrder();

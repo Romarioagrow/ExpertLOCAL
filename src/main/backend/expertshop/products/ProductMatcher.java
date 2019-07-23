@@ -26,6 +26,29 @@ public class ProductMatcher {
     private final CatalogParser catalogParser;
     static int matchCounter = 0;
 
+    public void resolveAnnotation() {
+        List<Product> products = productRepo.findAllByModelNameNotNull();
+        products.forEach(product -> {
+            String anno = product.getOriginalAnnotation();
+
+            if (product.getSupplier().startsWith("2")) {
+                if (anno.contains("ULTRA HD (2160P)")) anno = anno.replaceAll("ULTRA HD (2160P)", "Разрешение: 3840x2160 (4K UHD)");
+                else if (anno.contains("FULL HD (1080P)")) anno = anno.replaceAll("ULTRA HD (2160P)", "Разрешение: 1920x1080 (Full HD)");
+                else if (anno.contains("HD (720P)")) anno = anno.replaceAll("ULTRA HD (2160P)", "Разрешение: 1366x768 (HD Ready)");
+                anno = anno.replaceAll(", ", "; ");
+            }
+
+            if (!anno.endsWith(";")) {
+                anno = anno.concat(";");
+            }
+
+            product.setOriginalAnnotation(anno);
+            productRepo.save(product);
+
+            log.info(product.getSupplier() + " " + product.getOriginalAnnotation());
+        });
+    }
+
     public void findInBigBase() {
         List<Product> products = productRepo.findAllByModelNameNotNull();
         AtomicInteger count = new AtomicInteger();
@@ -95,6 +118,7 @@ public class ProductMatcher {
                 matchProduct("10.02, Автомагнитолы"											                , "Автомагнитолы"						,1.18	            , "Автомагнитола"						, "Автотовары"					, product);
                 matchProduct("15.10.04.03, Видеорегистраторы"									                , "Видеорегистраторы"					,1.25	            , "Видеорегистратор"					, "Автотовары"					, product);
                 matchProduct("15.10.04.01"													                    , "Радар детекторы"						,1.18	            , "Радар детектор"					, "Автотовары"					, product);
+                matchProduct("Автоусилитель"													                , "Автоусилители"						,1.18	            , "Автоусилитель"					    , "Автотовары"					, product);
 
                 /*ИНСТРУМЕНТЫ ДЛЯ ДОМА*/
                 /// ПЕРЕРАСПРЕДЕЛИТЬ ГРУППЫ ДРЕЛИ БОЛЬШИЕ - ШУРУПОВЕРТЫ
@@ -103,6 +127,7 @@ public class ProductMatcher {
                 matchProduct("06.06.08, Сварочные аппараты"									                , "Сварочное оборудование"				,1.16	            , "Сварочный аппарат"					, "Инструменты для дома"		    , product);
                 matchProduct("06.01.06, Перфораторы"											                , "Перфораторы"							,1.16	            , "Перфоратор"						, "Инструменты для дома"		    , product);
                 matchProduct("06.03, Пила электрическая"														, "Электропилы"							,1.16	            , "Электропила"						, "Инструменты для дома"		    , product);
+                matchProduct("06.03.02_Лобзики"														        , "Лобзики"							    ,1.16	            , "Электролобзик"						, "Инструменты для дома"		    , product);
 
                 /*ПРИБОРЫ ПЕРСОНАЛЬНОГО УХОДА*/
                 //15.05.01.05 Бритвенные станки!(1.5)
@@ -161,6 +186,8 @@ public class ProductMatcher {
                 matchProduct("15.25.01, Умные спортивные часы"								                    , "Умные часы"							,1.15	            , "Умные часы"						, "Гаджеты"						, product);
                 matchProduct("15.25.04, Портативная акустика"													, "Bluetooth колонки"					,1.15	            , "Bluetooth колонка"					, "Гаджеты"						, product);
                 matchProduct("15.25.02.02"													                    , "VR системы"							,1.15	            , "VR система"						, "Гаджеты"						, product);
+                matchProduct("15.25.01.02"													                    , "Фитнес браслеты"						,1.15	            , "Фитнес браслет"					, "Гаджеты"						, product);
+                matchProduct("15.25.01.03"													                    , "Детские часы"						,1.15	            , "Детские часы"						, "Гаджеты"						, product);
 
                 /*ТЕХНИКА ДЛЯ ДОМА*/
                 matchProduct("03.01.02, Центрифуги"						                                    , "Сушильные машины"		            ,1.13				, "Сушильная машина"					, "Техника для дома"			    , product);
@@ -241,6 +268,7 @@ public class ProductMatcher {
             {
                 if ((supp.equals("1RBT") && StringUtils.startsWithIgnoreCase(product.getOriginalType(), match.trim())))
                 {
+                    /// matchRBT()
                     String brand = product.getOriginalBrand();
 
                     product.setProductGroup(productGroup);
@@ -271,6 +299,7 @@ public class ProductMatcher {
                 }
                 else if ((supp.equals("2RUS-BT") && (StringUtils.startsWithIgnoreCase(product.getRType(), match.trim()) || StringUtils.startsWithIgnoreCase(product.getRName(), match.trim()))))
                 {
+                    ///matchR
                     product.setProductGroup(productGroup);
                     product.setSingleType(single);
                     product.setProductCategory(productCategory);
@@ -284,7 +313,7 @@ public class ProductMatcher {
 
                         if ((StringUtils.substringAfter(originalName, originalBrand).contains(","))) {
 
-                             model   = StringUtils.substringBetween(originalName, originalBrand, ",").trim();
+                            model   = StringUtils.substringBetween(originalName, originalBrand, ",").trim();
                         }
                         else model   = StringUtils.substringAfter(originalName, originalBrand).trim();
 
