@@ -103,10 +103,10 @@ function displayBrands() {
                             '                <div class="container">' +
                             '                    <div class="row">' +
                             '                        <div class="col-5">' +
-                            '                            <input type="text" onkeyup="filterProducts()" class="form-control" name="'+min+'" id="Comp-Min-'+key+';'+min+'" placeholder="От '+min+'">' +
+                            '                            <input type="text" onkeyup="filterProducts()" class="form-control" name="'+min+'" id="Comp-Min-'+key+';'+min+'/'+max+'" placeholder="От '+min+'">' +
                             '                        </div>' +
                             '                        <div class="col-5">' +
-                            '                            <input type="text" onkeyup="filterProducts()" class="form-control" name="'+max+'" id="Comp-Max-'+key+';'+max+'" placeholder="До '+max+'">' +
+                            '                            <input type="text" onkeyup="filterProducts()" class="form-control" name="'+max+'" id="Comp-Max-'+key+';'+min+'/'+max+'" placeholder="До '+max+'">' +
                             '                        </div>' +
                             '                    </div>' +
                             '                </div>' +

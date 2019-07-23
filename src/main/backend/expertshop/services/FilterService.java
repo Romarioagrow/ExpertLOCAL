@@ -81,7 +81,7 @@ public class FilterService {
     public LinkedList<Object> filterProducts(Map<String, String> filters, String request, Pageable pageable, User user)
     {
         System.out.println();
-        log.info("Request: " + request);
+        //log.info("Request: " + request);
         //log.info("Received filters");
         filters.forEach((key, filter) -> log.info(key + " " + filter));
 
@@ -187,10 +187,13 @@ public class FilterService {
 
     private List<Product> filterComputeParams(List<Product> products, Map.Entry<String, String> filter) {
         String filterKey = StringUtils.substringBefore(filter.getKey(), ";");
-        int check = Integer.parseInt(StringUtils.substringAfter(filter.getKey(), ";"));
+
+        double checkMin = Double.parseDouble(StringUtils.substringBetween(filter.getKey(), ";","/"));
+        double checkMax = Double.parseDouble(StringUtils.substringAfter(filter.getKey(), "/"));
+        //double check = Double.parseDouble(StringUtils.substringAfter(filter.getKey(), ";"));
         double computeFilter = Double.parseDouble(filter.getValue());
 
-        if ((filterKey.contains("Min") && computeFilter >= check) || (filterKey.contains("Max") && computeFilter <= check))
+        if (computeFilter >= checkMin && computeFilter <= checkMax/*(filterKey.contains("Min") && (computeFilter >= checkMin && computeFilter <= checkMax)) || (filterKey.contains("Max") && (computeFilter <= check))*/)
         {
             return products.stream().filter(product ->
             {
