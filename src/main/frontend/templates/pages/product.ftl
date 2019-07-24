@@ -103,7 +103,7 @@
                         <table class="table table table-borderless w-30">
                             <thead>
                             <tr>
-                                <#if product.formattedAnnotation??>
+                                <#if product.formattedAnnotation?has_content>
                                     ${product.formattedAnnotation}
                                 <#else>
                                     ${product.originalAnnotation}

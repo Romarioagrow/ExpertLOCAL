@@ -30,27 +30,20 @@ public class ProductService {
     private final ProductRepo productRepo;
     private final OrderRepo orderRepo;
 
-    /*public Page<Product> findOriginalProducts(String request, Pageable pageable, Model model) {
-        Page<Product> products = productRepo.findByOriginalTypeContainingOrOriginalGroupContainingOrOriginalNameContaining(request, request, request, pageable);
-        model.addAttribute("total", products.getTotalElements());
-        return products;
-    }*/
-
-    public Page<Product> findOriginalProducts(String request, Pageable pageable) {
-        return productRepo.findByOriginalTypeContainingOrOriginalNameContaining(request, request, pageable);
-    }
-
     public Page<Product> findProducts(String request, Pageable pageable, Model model)
     {
-        Page<Product> page = productRepo.findByProductGroupEqualsIgnoreCase(request, pageable);
+        Page<Product> page = productRepo.findByProductGroupEqualsIgnoreCaseAndIsAvailableTrue(request, pageable);
 
-        if (page.getTotalElements() == 0)
-        {
+        if (page.getTotalElements() == 0){
             page = findOriginalProducts(request, pageable);
         }
 
         model.addAttribute("total", page.getTotalElements());
         return page;
+    }
+
+    public Page<Product> findOriginalProducts(String request, Pageable pageable) {
+        return productRepo.findByOriginalTypeContainingOrOriginalNameContaining(request, request, pageable);
     }
 
     public List<Product> searchProducts(String searchRequest)

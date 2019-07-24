@@ -43,9 +43,9 @@
                 <div class="card" >
                     <div class="card-body">
                         <h3>Парсер картинок RUS</h3>
-                        <form method="get" action="/supplier/pics">
+                        <form method="POST" action="/supplier/pics">
                             <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Загрузить картинки!</button>
+                                <button type="submit" class="btn btn-primary">Спарсить картинки!</button>
                             </div>
                         </form>
                     </div>

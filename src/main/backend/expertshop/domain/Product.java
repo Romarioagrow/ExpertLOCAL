@@ -64,6 +64,8 @@ public class Product implements Serializable {
     private String pics;
 
     private String shortModel, shortName, shortSearchName;
+
+    private String linkR;
 }
 
 

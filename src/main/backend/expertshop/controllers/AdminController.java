@@ -59,11 +59,10 @@ public class AdminController {
         return "pages/supplier";
     }*/
 
-
-    @GetMapping("/supplier/pics")
+    @PostMapping("/pics")
     public String checkProductPics()
     {
-        ///catalogParser.checkProductPics();
+        catalogParser.parsePicRUS();
         return "pages/supplier";
     }
 }

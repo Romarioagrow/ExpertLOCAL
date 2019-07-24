@@ -16,11 +16,15 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     /*Page<Product> findByOriginalTypeContainingOrOriginalGroupContainingOrOriginalNameContaining(String type, String group, String name, Pageable pageable);*/
 
     Page<Product> findByOriginalTypeContainingOrOriginalNameContaining(String type, String name, Pageable pageable);
+
     Page<Product> findByProductGroupEqualsIgnoreCase(String productGroup, Pageable pageable);
+    Page<Product> findByProductGroupEqualsIgnoreCaseAndIsAvailableTrue(String productGroup, Pageable pageable);
+
     Page<Product> findByProductGroupEqualsIgnoreCaseAndSupplier(String productGroup, String supplier, Pageable pageable);
 
     //List<Product> findAllBySupplierAndProductGroupIsNotNull
     List<Product> findByProductGroupEqualsIgnoreCase(String group);
+    List<Product> findBySupplierAndProductGroupIsNotNullAndLinkRIsNotNull(String sup);
 
     List<Product> findByProductCategoryAndSupplierAndProductGroupIsNotNull(String cat, String supp);
     List<Product> findByProductGroup(String group);

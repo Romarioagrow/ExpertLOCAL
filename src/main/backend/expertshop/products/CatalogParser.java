@@ -10,17 +10,23 @@ import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jsoup.HttpStatusException;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.ConnectException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Log
 @Service
@@ -30,7 +36,8 @@ public class CatalogParser {
     private final ProductRepo productRepo;
     private final BaseRepo baseRepo;
 
-    public void parseProducts(MultipartFile file)
+    public void
+    parseProducts(MultipartFile file)
     {
         if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty())
         {
@@ -39,6 +46,7 @@ public class CatalogParser {
                 if (fileRBT(file))  parseRBT(file, bufferedReader);
                 else                parseRUSBT(file, bufferedReader);
 
+                productRepo.findAllByProductGroupIsNotNull().forEach(product -> {product.setIsAvailable(false); productRepo.save(product);});
                 for (Product product : productRepo.findAllByProductGroupIsNotNull()) {
                     if (product.getUpdate().toString().equals(LocalDate.now().toString())) {
                         product.setIsAvailable(true);
@@ -177,7 +185,7 @@ public class CatalogParser {
         product.setOriginalAmount(line[7]+line[8]);
         product.setOriginalPrice(line[13]);
 
-        product.setOriginalPic(line[17]);
+        product.setLinkR(line[17]);
         product.setRType(line[3]);
         product.setRName(line[6]);
 
@@ -235,145 +243,9 @@ public class CatalogParser {
                 || line[13].contains("Цена со скидкой");
     }
 
-
-
-
-
-    /*
-    private void parseRUSBT(MultipartFile file, BufferedReader bufferedReader) throws IOException
-    {
-        log.info("Parsing RUS_BT file: " + file.getOriginalFilename());
-
-        int countAdd = 0, countUpdate = 0;
-        String[] line;
-        CSVReader reader = new CSVReader(bufferedReader, ';');
-
-        while ((line = reader.readNext()) != null)
-        {
-            if (incorrectLineRUSBT(line))
-            {
-                log.info("!!! Пропуск некоректной строки " + file.getOriginalFilename());
-            }
-            else
-            {
-                if (productAlreadyExists(line[5]))
-                {
-                    log.info(line[5] + " File already exists");
-                    if (differentParams(line[5],line[7]+line[8], line[13]))
-                    {
-                        updateProductStatsAndDate(line[5], line[7]+line[8], line[13]);
-                        countUpdate++;
-                    }
-                }
-                else
-                {
-                    Product product = new Product();
-                    product.setProductID(line[5]);
-
-                    product.setOriginalCategory(line[0]);
-                    *//*product.setOriginalSubCategory(line[1]);
-                    product.setOriginalGroup(line[2]);*//*
-                    product.setOriginalType(line[3]);
-
-                    product.setOriginalBrand(line[4]);
-                    product.setOriginalName(line[6]);
-                    product.setOriginalAnnotation("n/a");
-                    product.setOriginalAmount(line[7]+line[8]);
-                    product.setOriginalPrice(line[13]);
-
-                    product.setSupplier("2RUS-BT");
-                    product.setUpdate(LocalDate.now());
-
-                    product.setOriginalPic(line[17]);
-
-                    countAdd++;
-                    productRepo.save(product);
-                }
-            }
-        }
-        log.info("Products add: " + countAdd);
-        log.info("Products updated: " + countUpdate);
-    }
-
-    private void parseMTRADE(MultipartFile file, BufferedReader bufferedReader) throws IOException
-    {
-        log.info("\nParsing M_TRADE file: " + file.getOriginalFilename());
-
-        int countAdd = 0, countUpdate = 0;
-        String[] line;
-        CSVReader reader = new CSVReader(bufferedReader, ';');
-
-        while ((line = reader.readNext()) != null)
-        {
-            if (incorrectLineMTRADE(line))
-            {
-                log.info("!!! Пропуск некоректной строки " + file.getOriginalFilename());
-            }
-            else
-            {
-                if (productAlreadyExists(line[0]))
-                {
-                    log.info(line[0] + " File already exists");
-                    if (differentParams(line[0], line[8], line[7]))
-                    {
-                        updateProductStatsAndDate(line[0], line[8], line[7]);
-                        countUpdate++;
-                    }
-                }
-                else {
-                    Product product = new Product();
-
-                    product.setProductID(line[0]);
-
-                    product.setOriginalCategory(line[1]);
-                    *//*product.setOriginalSubCategory("n/a");
-                    product.setOriginalGroup(line[2]);*//*
-                    product.setOriginalType(line[4]);
-
-                    product.setOriginalBrand(line[3]);
-                    product.setOriginalName(line[5]);
-                    product.setOriginalAnnotation(line[6]);
-                    product.setOriginalAmount(line[8]);
-                    product.setOriginalPrice(line[7]);
-
-                    product.setSupplier("3M-TRADE");
-                    product.setUpdate(LocalDate.now());
-
-                    countAdd++;
-                    productRepo.save(product);
-                }
-            }
-        }
-        log.info("Products add: " + countAdd);
-        log.info("Products updated: " + countUpdate);
-
-    private boolean fileMTRADE(MultipartFile file) {
-        return Objects.requireNonNull(file.getOriginalFilename()).contains("Доставка");
-    }
-    private boolean fileRUSBT(MultipartFile file) {
-        return Objects.requireNonNull(file.getOriginalFilename()).contains("RUSBT");
-    }
-    }*/
-
-
-    /*
-    private boolean incorrectLineRUSBT(String[] line)
-    {
-        return line[0].equals("Код товара") || line[0].isEmpty() || line[0].startsWith(";") || line[5].isEmpty()
-                || line[13].contains("Цена со скидкой");
-    }
-
-    private boolean incorrectLineMTRADE(String[] line)
-    {
-        return (line[0].equals("Код товара") || line[0].startsWith("ПРАЙС") || line[0].isEmpty() || line[0].startsWith(";") || line[0].equals("КОД") || line[0].startsWith(" "));
-    }
-    */
-
-
     public void parseBase(MultipartFile file)
     {
         try {
-            //*InputStream inputStream = file.getInputStream();*//*
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream()));
             CSVReader reader = new CSVReader(bufferedReader, ';');
 
@@ -386,12 +258,9 @@ public class CatalogParser {
                 {
                     ProductBase product = new ProductBase();
                     product.setProductID(UUID.randomUUID().toString());
-
                     String productBrand = line[13];
-
                     product.setCategory(line[0]);
                     product.setSubCategory(line[1]);
-
                     if (line[2].isEmpty())  product.setProductGroup(line[1]);
                     else product.setProductGroup(line[2]);
 
@@ -404,7 +273,6 @@ public class CatalogParser {
                     product.setBrand(line[13]);
                     product.setPics(line[18]);
                     product.setParamsHTML(line[19]);
-
                     log.info(product.getFullName());
                     baseRepo.save(product);
                     count++;
@@ -418,43 +286,86 @@ public class CatalogParser {
         }
     }
 
-
-    /*
-    private String parsePicFromHTML(String link) throws IOException
+    public void parsePicRUS()
     {
-        if (!link.isEmpty() && !link.equals("В ячейке нет гиперссылки!")) {
+        /*productRepo.findBySupplier("2RUS-BT").forEach(product -> {
+            if (product.getOriginalPic().startsWith("http://rusbt.ru/catalog")) {
+                product.setLinkR(product.getOriginalPic());
+                product.setOriginalPic(null);
+            }
+            else if (!product.getOriginalPic().startsWith("http://magazilla")) {
+                product.setOriginalPic(null);
+            }
+            productRepo.save(product);
+        });*/
+
+        AtomicInteger count = new AtomicInteger();
+        AtomicInteger count404 = new AtomicInteger();
+        List<Product> list = productRepo.findBySupplierAndProductGroupIsNotNullAndLinkRIsNotNull("2RUS-BT");
+
+        list.forEach(product ->
+        {
+            String link = product.getLinkR();
             try {
-                String pic;
-                Document page = Jsoup.connect(link).get();
+                if (!link.isEmpty() && !link.startsWith("http://magazilla")) {
 
-                Elements pics = page.select("img");
+                    String pic;
+                    Document page = Jsoup.connect(link).get();
 
-                for (Element picElement : pics)
-                {
-                    String picSrc = picElement.attr("src");
-                    log.info(picSrc);
+                    Elements pics = page.select("img");
 
-                    if (picSrc.startsWith("/upload"))
+                    for (Element picElement : pics)
                     {
-                        pic = "http://rusbt.ru".concat(picSrc);
-                        log.info("ПОЛНАЯ ССЫЛКА ДЛЯ БД " + pic);
-                        return pic;
+                        String picSrc = picElement.attr("src");
+
+                        if (picSrc.startsWith("/upload"))
+                        {
+                            System.out.println();
+                            log.info(picSrc);
+                            log.info(link);
+
+                            pic = "http://rusbt.ru".concat(picSrc);
+                            if (product.getOriginalPic() == null) product.setOriginalPic(pic);
+                            else
+                            {
+                                if (product.getPics() == null) product.setPics(pic);
+                                else product.setPics(product.getPics().concat(";").concat(pic));
+                            }
+                            productRepo.save(product);
+                            log.info("ПОЛНАЯ ССЫЛКА ДЛЯ " + product.getOriginalName() + ": " + pic);
+                            count.getAndIncrement();
+                        }
+                        else log.info("Нет изображения товара на сайте!");
                     }
-                    else log.info("Нет изображения товара на сайте!");
+
+                    Elements anno = page.select("props_top");
+                    product.setFormattedAnnotation(anno.html());
+                    productRepo.save(product);
                 }
-                return "no pic";
+                else log.info("ССЫЛКА ОТСУТСТВУЕТ!");
+                System.out.println();
+                log.info(count + " products from " + list.size());
             }
             catch (HttpStatusException exp) {
                 log.info("EXP Page is empty");
+                count404.getAndIncrement();
+                exp.printStackTrace();
             }
             catch (ConnectException exp) {
                 log.info("Connection timed out");
+                exp.printStackTrace();
             }
-        }
-        else log.info("ССЫЛКА ОТСУТСТВУЕТ!");
-        return "NO PIC";
+            catch (IOException | NullPointerException exp) {
+                log.info("Exception");
+                exp.printStackTrace();
+            }
+        });
+        System.out.println();
+        log.info("Всего товаров: "      + list.size());
+        log.info("Успешно скачано: "    + count);
+        log.info("404 на сайте: "       + count404);
     }
-    */
+
 
     ///!!!
     /*
