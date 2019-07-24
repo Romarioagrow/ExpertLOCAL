@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -96,6 +97,24 @@ public class ProductService {
             orderedProductsID.add(product.getProductID());
 
         return orderedProductsID;
+    }
+
+    public int[] getMinMaxPrice(String request) {
+        List<Product> prices = productRepo.findByProductGroupEqualsIgnoreCase(request);
+        if (prices.size() != 0)
+        {
+            log.info(request);
+            log.info(prices.size()+"");
+
+            prices.sort(Comparator.comparingInt(Product::getFinalPrice));
+            int min = prices.stream().findFirst().get().getFinalPrice();
+
+            prices.sort(Comparator.comparingInt(Product::getFinalPrice).reversed());
+            int max = prices.stream().findFirst().get().getFinalPrice();
+
+            return new int[]{min, max};
+        }
+        return null;
     }
 }
 

@@ -67,7 +67,7 @@
                                 </div>
                                 <div class="card-body">
                                     <h4 class="card-title">Телевизоры</h4>
-                                    <p class="card-text">
+                                    <#--<p class="card-text">
                                         <a href="/products/теле-видео-аудио/телевизоры">
                                             <span class="badge badge-dark">Full HD</span>
                                         </a>
@@ -77,7 +77,7 @@
                                         <a href="/products/теле-видео-аудио/телевизоры">
                                             <span class="badge badge-dark">Smart TV</span>
                                         </a>
-                                    </p>
+                                    </p>-->
                                 </div>
                             </div>
                             <div class="card catalog-card">

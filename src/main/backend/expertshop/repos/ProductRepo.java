@@ -20,6 +20,8 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     Page<Product> findByProductGroupEqualsIgnoreCaseAndSupplier(String productGroup, String supplier, Pageable pageable);
 
     //List<Product> findAllBySupplierAndProductGroupIsNotNull
+    List<Product> findByProductGroupEqualsIgnoreCase(String group);
+
     List<Product> findByProductCategoryAndSupplierAndProductGroupIsNotNull(String cat, String supp);
     List<Product> findByProductGroup(String group);
     List<Product> findByProductGroupAndSupplier(String group, String sup);

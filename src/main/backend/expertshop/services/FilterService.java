@@ -100,7 +100,7 @@ public class FilterService {
                     products = filterComputeParams (products, filter);
                 }
                 else switch (condition) {
-                        case "sortmin", "sortmax"   -> products = filterPrice   (products, filter);
+                        case "sortmin", "sortmax"   -> products = filterPrice   (products, filter, request);
                         case "brand"                -> products = filterBrands  (products, filter);
                     }
             }
@@ -111,6 +111,8 @@ public class FilterService {
         if (products != null)
         {
             log.info("Product after filter " + products.size());
+
+            sortProducts(products, filters);
 
             int start = (int) pageable.getOffset();
             int end = (start + pageable.getPageSize()) > products.size() ? products.size() : (start + pageable.getPageSize());
@@ -188,12 +190,11 @@ public class FilterService {
     private List<Product> filterComputeParams(List<Product> products, Map.Entry<String, String> filter) {
         String filterKey = StringUtils.substringBefore(filter.getKey(), ";");
 
-        double checkMin = Double.parseDouble(StringUtils.substringBetween(filter.getKey(), ";","/"));
-        double checkMax = Double.parseDouble(StringUtils.substringAfter(filter.getKey(), "/"));
-        //double check = Double.parseDouble(StringUtils.substringAfter(filter.getKey(), ";"));
+        double checkMin      = Double.parseDouble(StringUtils.substringBetween(filter.getKey(), ";","/"));
+        double checkMax      = Double.parseDouble(StringUtils.substringAfter(filter.getKey(), "/"));
         double computeFilter = Double.parseDouble(filter.getValue());
 
-        if (computeFilter >= checkMin && computeFilter <= checkMax/*(filterKey.contains("Min") && (computeFilter >= checkMin && computeFilter <= checkMax)) || (filterKey.contains("Max") && (computeFilter <= check))*/)
+        if (computeFilter >= checkMin && computeFilter <= checkMax)
         {
             return products.stream().filter(product ->
             {
@@ -201,9 +202,8 @@ public class FilterService {
                 {
                     double computeParam  = extractComputeParam(product, filterKey);
 
-                    if (computeParam == 0)          return false;
-                    if (filterKey.contains("Min"))  return computeFilter <= computeParam;
-                    else                            return computeFilter >= computeParam;
+                    if (computeParam == 0) return false;
+                    return filterKey.contains("Min") ? computeFilter <= computeParam : computeFilter >= computeParam;
                 }
                 return false;
             }).collect(Collectors.toList());
@@ -222,28 +222,39 @@ public class FilterService {
         return 0;
     }
 
-    private List<Product> filterPrice(List<Product> products, Map.Entry<String, String> filter) {
-        return filter.getKey().equals("sortmin") ?
-                products.stream().filter(product -> product.getFinalPrice() >= Integer.parseInt(filter.getValue())).collect(Collectors.toList()):
-                products.stream().filter(product -> product.getFinalPrice() <= Integer.parseInt(filter.getValue())).collect(Collectors.toList());
+    private List<Product> filterPrice(List<Product> products, Map.Entry<String, String> filter, String request) {
+        int min = productService.getMinMaxPrice(request)[0];
+        int max = productService.getMinMaxPrice(request)[1];
+        int filterVal = Integer.parseInt(filter.getValue());
+
+        if (filterVal >= min && filterVal <= max)
+        {
+            return filter.getKey().equals("sortmin") ?
+                    products.stream().filter(product -> product.getFinalPrice() >= filterVal).collect(Collectors.toList()):
+                    products.stream().filter(product -> product.getFinalPrice() <= filterVal).collect(Collectors.toList());
+        }
+        return null;
     }
 
     private List<Product> filterBrands(List<Product> products, Map.Entry<String, String> filter) {
         String brands = String.join(",", filter.getValue());
         return products.stream().filter(product -> StringUtils.containsIgnoreCase(brands, product.getOriginalBrand())).collect(Collectors.toList());
     }
-}
 
-    /*private void sortProducts(List<Product> products, Map<String, String> params)
+    private void sortProducts(List<Product> products, Map<String, String> params)
     {
-        String sort = extractParamValue(params, "sortBy", "sortOrder");
-        switch (sort.toString()) {
-            *//*case "lowest"   -> products.sort(Comparator.comparingLong(Product::getFinalPrice));
+        String sort = params.get("sortOrder");
+        switch (sort) {
+            case "lowest"   -> products.sort(Comparator.comparingLong(Product::getFinalPrice));
             case "highest"  -> products.sort(Comparator.comparingLong(Product::getFinalPrice).reversed());
-            case "alphabet" -> products.sort(Comparator.comparing(Product::getBrand));*//*
+            case "alphabet" -> products.sort(Comparator.comparing(Product::getOriginalBrand));
         }
     }
+}
 
+
+
+    /*
     private Queue<String> packageProductsAndOrderedID(List<Product> products, User user) {
         Queue<String> productsAndOrder = new LinkedList<>();
         productsAndOrder.add(products);

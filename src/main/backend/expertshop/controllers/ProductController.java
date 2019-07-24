@@ -38,13 +38,13 @@ public class ProductController {
         String url = "/products/"+category+"/"+requiredProduct;
         String request = requiredProduct.replaceAll("_", " ").toLowerCase();
         String[] path = {StringUtils.capitalize(category), StringUtils.capitalize(request)};
-        //log.info(orderService.getSessionID());
 
         model.addAttribute("url",   url);
         model.addAttribute("path",  path);
         model.addAttribute("order", getOrder(user));
         model.addAttribute("page",  productService.findProducts(request, pageable, model));
         model.addAttribute("orderedProductsID", productService.getOrderedID(user));
+        model.addAttribute("price", productService.getMinMaxPrice(request));
         return "pages/products";
     }
 

@@ -42,11 +42,11 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-5">
-                                        <input type="text" onkeyup="filterProducts()" class="form-control" id="sortmin" placeholder="От ₽">
+                                        <input type="text" onkeyup="filterProducts()" class="form-control" id="sortmin" placeholder="От <#if price[0]??>${price[0]}</#if> ₽">
                                     </div>
 
                                     <div class="col-5">
-                                        <input type="text" onkeyup="filterProducts()" class="form-control" id="sortmax" placeholder="До ₽">
+                                        <input type="text" onkeyup="filterProducts()" class="form-control" id="sortmax" placeholder="До <#if price[1]??>${price[1]}</#if> ₽">
                                     </div>
                                 </div>
                             </div>
@@ -77,14 +77,14 @@
             <div class="col-9 marker3">
                 <div class="mt-2 marker2">
                     <div class="btn-group btn-group-toggle" data-toggle="buttons" id="sorting">
-                        <label class="btn btn-secondary btn-sm active">
-                            <input type="radio" name="sort_options" id="option1" value="lowest" autocomplete="off" checked> Дешевле
+                        <label class="btn btn-secondary btn-sm">
+                            <input type="radio" onchange="filterProducts()" name="sort_options" id="option1" value="lowest" autocomplete="off" checked> Дешевле
                         </label>
                         <label class="btn btn-secondary btn-sm" >
-                            <input type="radio" name="sort_options" id="option2" value="highest" autocomplete="off"> Дороже
+                            <input type="radio" onchange="filterProducts()" name="sort_options" id="option2" value="highest" autocomplete="off"> Дороже
                         </label>
                         <label class="btn btn-secondary btn-sm">
-                            <input type="radio" name="sort_options" id="option3" value="alphabet"  autocomplete="off"> По алфавиту
+                            <input type="radio" onchange="filterProducts()" name="sort_options" id="option3" value="alphabet"  autocomplete="off"> По алфавиту
                         </label>
                     </div>
                 </div>

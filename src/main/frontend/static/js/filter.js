@@ -52,11 +52,11 @@ function displayBrands() {
                 $('#brands-view').append(
                     '<div class="row">' +
                     '        <div class="col-6">' +
-                    '            <input type="checkbox" name="brand" class="form-check-input" id="'+first+'" value="'+first+'">' +
+                    '            <input type="checkbox" onclick="filterProducts()" name="brand" class="form-check-input" id="'+first+'" value="'+first+'">' +
                     '            <label class="form-check-label" for="'+first+'">'+first+'</label>' +
                     '        </div>' +
                     '        <div class="col-6">' +
-                    '            <input type="checkbox" name="brand" class="form-check-input" id="'+second+'" value="'+second+'">' +
+                    '            <input type="checkbox" onclick="filterProducts()" name="brand" class="form-check-input" id="'+second+'" value="'+second+'">' +
                     '            <label class="form-check-label" for="'+second+'">'+second+'</label>' +
                     '        </div>' +
                     '    </div>'
@@ -191,6 +191,11 @@ function filterProducts() {
         }
     });
     console.log(filters);
+
+    $('input:radio:checked').each(function()
+    {
+        filters['sortOrder'] = $(this).val();
+    });
 
     const url = resolveURL();
     filters = JSON.stringify(filters);
