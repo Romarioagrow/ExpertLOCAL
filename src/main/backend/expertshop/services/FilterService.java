@@ -30,47 +30,53 @@ public class FilterService {
         Set<String> brands = new TreeSet<>();
         Map<String, TreeSet<String>> filters = new TreeMap<>();
 
-        List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCase(productGroup);
-        products.forEach(product ->
+        try
         {
-            brands.add(StringUtils.capitalize(product.getOriginalBrand().toLowerCase()));
-
-            if (product.getSupplier().equals("1RBT"))
+            List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCase(productGroup);
+            products.forEach(product ->
             {
-                String[] filtrs = product.getOriginalAnnotation().split(";");
-                for (String fltr : filtrs)
+                brands.add(StringUtils.capitalize(product.getOriginalBrand().toLowerCase()));
+
+                if (product.getSupplier().equals("1RBT"))
                 {
-                    String key = StringUtils.substringBefore(fltr, ":").trim();
-                    String val = StringUtils.substringAfter(fltr, ":").trim();
-                    if (!key.isEmpty() && !val.startsWith("-") && !val.startsWith("нет") && !val.startsWith("0") && !key.startsWith("количество шт в"))
+                    String[] filtrs = product.getOriginalAnnotation().split(";");
+                    for (String fltr : filtrs)
                     {
-                        if (filters.get(key) != null)
+                        String key = StringUtils.substringBefore(fltr, ":").trim();
+                        String val = StringUtils.substringAfter(fltr, ":").trim();
+                        if (!key.isEmpty() && !val.startsWith("-") && !val.startsWith("нет") && !val.startsWith("0") && !key.startsWith("количество шт в"))
                         {
-                            TreeSet<String> vals = filters.get(key);
-                            vals.add(val);
-                            filters.put(key, vals);
-                        }
-                        else filters.putIfAbsent(key, new TreeSet<>(Collections.singleton(val)));
-                    }
-                }
-            }
-        });
-        products.forEach(product -> {
-            if (product.getSupplier().startsWith("2")) {
-                String[] filtrs = product.getOriginalAnnotation().split(";");
-                for (String fltr : filtrs) {
-                    for (Map.Entry<String, TreeSet<String>> entry : filters.entrySet()) {
-                        if (StringUtils.containsIgnoreCase(entry.getKey().replaceAll(" ", ""), fltr.replaceAll(" ", ""))) {
-                            System.out.println();
-                            log.info("RBT KEY " + entry.getKey());
-                            log.info("RUS PARAM " + fltr);
+                            if (filters.get(key) != null)
+                            {
+                                TreeSet<String> vals = filters.get(key);
+                                vals.add(val);
+                                filters.put(key, vals);
+                            }
+                            else filters.putIfAbsent(key, new TreeSet<>(Collections.singleton(val)));
                         }
                     }
                 }
-            }
-        });
-        System.out.println();
-        filters.forEach((s, strings) -> log.info(s + " " + strings.toString()));
+            });
+            products.forEach(product -> {
+                if (product.getSupplier().startsWith("2")) {
+                    String[] filtrs = product.getOriginalAnnotation().split(";");
+                    for (String fltr : filtrs) {
+                        for (Map.Entry<String, TreeSet<String>> entry : filters.entrySet()) {
+                            if (StringUtils.containsIgnoreCase(entry.getKey().replaceAll(" ", ""), fltr.replaceAll(" ", ""))) {
+                                System.out.println();
+                                log.info("RBT KEY " + entry.getKey());
+                                log.info("RUS PARAM " + fltr);
+                            }
+                        }
+                    }
+                }
+            });
+            System.out.println();
+            filters.forEach((s, strings) -> log.info(s + " " + strings.toString()));
+        }
+        catch (NullPointerException e) {
+            log.warning(e.getClass().getName());//e.printStackTrace();
+        }
 
         LinkedList<Object> payload = new LinkedList<>();
         payload.add(brands);
@@ -80,7 +86,7 @@ public class FilterService {
 
     public LinkedList<Object> filterProducts(Map<String, String> filters, String request, Pageable pageable, User user)
     {
-        System.out.println();
+        //System.out.println();
         //log.info("Request: " + request);
         //log.info("Received filters");
         filters.forEach((key, filter) -> log.info(key + " " + filter));
@@ -146,9 +152,9 @@ public class FilterService {
 
                         if (product.getOriginalAnnotation().contains(param) || product.getProductType().contains(param))
                         {
-                            System.out.println();
-                            log.info("FILTER: " + param);
-                            log.info("RESULT: " + product.getOriginalAnnotation());
+                            //System.out.println();
+                            //log.info("FILTER: " + param);
+                            //log.info("RESULT: " + product.getOriginalAnnotation());
                             matches.getAndIncrement();
                         }
                     }
@@ -161,7 +167,7 @@ public class FilterService {
         /// В ОТДЕЛЬНЫЙ МЕТОД
         else return products.stream().filter(product ->
         {
-            if (product.getSupplier().equals("1RBT")) ///checkSupp()
+            if (product.getSupplier().equals("1RBT") && product.getOriginalAnnotation() != null && product.getProductType() != null) ///checkSupp()
             {
                 for (String val : params)
                 {
@@ -169,9 +175,9 @@ public class FilterService {
 
                     if (product.getOriginalAnnotation().contains(param) || product.getProductType().contains(param))
                     {
-                        System.out.println();
-                        log.info("FILTER: " + param);
-                        log.info("RESULT: " + product.getOriginalAnnotation());
+                        //System.out.println();
+                        //log.info("FILTER: " + param);
+                        //log.info("RESULT: " + product.getOriginalAnnotation());
                         return true;
                     }
                 }
@@ -198,7 +204,7 @@ public class FilterService {
         {
             return products.stream().filter(product ->
             {
-                if (!product.getOriginalAnnotation().isEmpty())
+                if (product.getOriginalAnnotation() != null && !product.getOriginalAnnotation().isEmpty())
                 {
                     double computeParam  = extractComputeParam(product, filterKey);
 

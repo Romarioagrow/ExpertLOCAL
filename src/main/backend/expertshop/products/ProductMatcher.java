@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 public class ProductMatcher {
     private final BaseRepo      baseRepo;
     private final ProductRepo   productRepo;
-    private final CatalogParser catalogParser;
+    private final ProductParser catalogParser;
     static int matchCounter = 0;
 
     public void resolveAnnotation() {
@@ -51,29 +51,41 @@ public class ProductMatcher {
 
     public void findInBigBase() {
         List<Product> products = productRepo.findAllByModelNameNotNull();
-        AtomicInteger count = new AtomicInteger();
+        /*products.forEach(product -> {
+            if (product.getSupplier().startsWith("2")) {
+                product.setPics(null);
+                productRepo.save(product);
+            }
+        });*/
+        int count = (int) products.stream().filter(product -> product.getOriginalPic() != null).count();
+        log.info(count + " from " + products.size());
+        /*AtomicInteger count = new AtomicInteger();
         products.forEach(product ->
         {
-            ProductBase productBase = baseRepo.findFirstByShortModelEquals(product.getShortModel());
-            if (productBase != null)
+            if (product.getFormattedAnnotation() != null)
             {
-                System.out.println();
-                log.info("FOR PRODUCT " + product.getFullName());
-                log.info("FOUND MATCH " + productBase.getFullName());
-
-                product.setFullAnnotation(productBase.getAnnotation());
-                product.setPics(product.getPics());
-
-                if (product.getSupplier().startsWith("2"))
+                ProductBase productBase = baseRepo.findFirstByShortModelEquals(product.getShortModel());
+                if (productBase != null)
                 {
-                    String pic = StringUtils.substringBefore(productBase.getPics(), " ");
-                    product.setOriginalPic(pic);
+                    System.out.println();
+                    log.info("FOR PRODUCT " + product.getFullName());
+                    log.info("FOUND MATCH " + productBase.getFullName());
+
+                    product.setFullAnnotation(productBase.getAnnotation());
+                    product.setFormattedAnnotation(productBase.getParamsHTML());
+                    product.setPics(product.getPics());
+
+                    if (product.getSupplier().startsWith("2") && product.getOriginalPic() != null)
+                    {
+                        String pic = StringUtils.substringBefore(productBase.getPics(), " ");
+                        product.setOriginalPic(pic);
+                    }
+                    productRepo.save(product);
+                    count.getAndIncrement();
                 }
-                productRepo.save(product);
-                count.getAndIncrement();
             }
         });
-        log.info(count.toString());
+        log.info(count.toString());*/
     }
 
     public void trimBigBase() {

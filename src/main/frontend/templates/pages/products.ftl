@@ -42,11 +42,10 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-5">
-                                        <input type="text" onkeyup="filterProducts()" class="form-control" id="sortmin" placeholder="От <#if price[0]??>${price[0]}</#if> ₽">
+                                        <input type="text" onkeyup="filterProducts()" class="form-control" id="sortmin" placeholder="От <#if price??>${price[0]!''}</#if> ₽">
                                     </div>
-
                                     <div class="col-5">
-                                        <input type="text" onkeyup="filterProducts()" class="form-control" id="sortmax" placeholder="До <#if price[1]??>${price[1]}</#if> ₽">
+                                        <input type="text" onkeyup="filterProducts()" class="form-control" id="sortmax" placeholder="До <#if price??>${price[1]!''}</#if> ₽">
                                     </div>
                                 </div>
                             </div>

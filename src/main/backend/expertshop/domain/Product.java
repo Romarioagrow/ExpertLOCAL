@@ -66,6 +66,9 @@ public class Product implements Serializable {
     private String shortModel, shortName, shortSearchName;
 
     private String linkR;
+
+    @Column(length = 10000)
+    private String description;
 }
 
 

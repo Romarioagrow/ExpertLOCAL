@@ -22,7 +22,8 @@
         <div class="row">
             <div class="col-7">
                 <#if product.originalPic??>
-                    <div class="product-page-pic">
+                    <img src="${product.originalPic}" class="img-fluid" alt="Responsive image">
+                    <#--<div class="product-page-pic">
                         <div id="carousel-thumb" class="product-page-pic carousel slide carousel-fade carousel-thumbnails" data-ride="carousel" style="margin-left: -10rem;">
                             <div class="carousel-inner" role="listbox">
                                 <div class="carousel-item active">
@@ -43,7 +44,7 @@
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                 <span class="sr-only">Next</span>
                             </a>
-                            <#--<ol class="carousel-indicators">
+                            &lt;#&ndash;<ol class="carousel-indicators">
                                 <li data-target="#carousel-thumb" data-slide-to="0" class="active">
                                     <img class="d-block scale-pic" src="${product.originalPic}" style="max-height: 5rem !important;">
                                 </li>
@@ -53,9 +54,9 @@
                                 <li data-target="#carousel-thumb" data-slide-to="2">
                                     <img class="d-block scale-pic" src="${product.originalPic}" style="max-height: 5rem !important;">
                                 </li>
-                            </ol>-->
+                            </ol>&ndash;&gt;
                         </div>
-                    </div>
+                    </div>-->
                 </#if>
             </div>
             <div class="col price">
@@ -106,7 +107,7 @@
                                 <#if product.formattedAnnotation?has_content>
                                     ${product.formattedAnnotation}
                                 <#else>
-                                    ${product.originalAnnotation}
+                                    ${product.originalAnnotation!''}
                                 </#if>
                             </tr>
                             </thead>

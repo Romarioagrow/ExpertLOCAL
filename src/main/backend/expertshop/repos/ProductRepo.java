@@ -18,13 +18,18 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     Page<Product> findByOriginalTypeContainingOrOriginalNameContaining(String type, String name, Pageable pageable);
 
     Page<Product> findByProductGroupEqualsIgnoreCase(String productGroup, Pageable pageable);
-    Page<Product> findByProductGroupEqualsIgnoreCaseAndIsAvailableTrue(String productGroup, Pageable pageable);
+    Page<Product> findByProductGroupEqualsIgnoreCaseAndIsAvailableTrueAndOriginalPicIsNotNull(String productGroup, Pageable pageable);
 
     Page<Product> findByProductGroupEqualsIgnoreCaseAndSupplier(String productGroup, String supplier, Pageable pageable);
 
     //List<Product> findAllBySupplierAndProductGroupIsNotNull
     List<Product> findByProductGroupEqualsIgnoreCase(String group);
-    List<Product> findBySupplierAndProductGroupIsNotNullAndLinkRIsNotNull(String sup);
+    List<Product> findBySupplierAndProductGroupIsNotNullAndOriginalPicIsNullAndLinkRIsNotNull(String sup);
+
+    List<Product> findProductsByProductGroupEqualsIgnoreCase(String s);
+
+    Page<Product> findProductsByProductGroupEqualsIgnoreCase(String s, Pageable pageable);
+    Page<Product> findByProductGroupEqualsIgnoreCaseAndIsAvailableTrue(String s, Pageable pageable);
 
     List<Product> findByProductCategoryAndSupplierAndProductGroupIsNotNull(String cat, String supp);
     List<Product> findByProductGroup(String group);
@@ -37,7 +42,7 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     List<Product> findAllByProductGroupIsNotNull();
     List<Product> findAllByProductGroupIsNotNullAndIsDuplicateIsNull();
 
-    List<Product> findProductsByProductGroupEqualsIgnoreCase(String productGroup);
+    //List<Product> findProductsByProductGroupEqualsIgnoreCase(String productGroup);
     List<Product> findBySupplier(String supplier);
     List<Product> findBySupplierAndProductGroupIsNotNull(String supplier);
     List<Product> findProductsByProductGroupEqualsIgnoreCaseAndSupplier(String productGroup, String supplier);

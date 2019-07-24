@@ -1,7 +1,7 @@
 package expertshop.controllers;
 
 import expertshop.domain.User;
-import expertshop.products.CatalogParser;
+import expertshop.products.ProductParser;
 import expertshop.products.ProductMatcher;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
@@ -23,7 +23,7 @@ import java.io.IOException;
 @RequestMapping("/supplier")
 @PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
-    private final CatalogParser catalogParser;
+    private final ProductParser catalogParser;
     private final ProductMatcher productMatcher;
 
     @GetMapping
@@ -51,18 +51,18 @@ public class AdminController {
     {
         //productMatcher.resolveShortModel();
         return "pages/supplier";
-    }
-    @PostMapping("/match-duplicates")
+    }*/
+    @PostMapping("/xxx")
     public String matchDuplicates()
     {
         productMatcher.findInBigBase();
         return "pages/supplier";
-    }*/
+    }
 
     @PostMapping("/pics")
     public String checkProductPics()
     {
-        catalogParser.parsePicRUS();
+        catalogParser.parseRusBT();
         return "pages/supplier";
     }
 }

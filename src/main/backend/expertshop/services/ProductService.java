@@ -30,11 +30,10 @@ public class ProductService {
     private final ProductRepo productRepo;
     private final OrderRepo orderRepo;
 
-    public Page<Product> findProducts(String request, Pageable pageable, Model model)
-    {
-        Page<Product> page = productRepo.findByProductGroupEqualsIgnoreCaseAndIsAvailableTrue(request, pageable);
+    public Page<Product> findProducts(String request, Pageable pageable, Model model) {
+        Page<Product> page = productRepo.findProductsByProductGroupEqualsIgnoreCase(request, pageable);
 
-        if (page.getTotalElements() == 0){
+        if (page.getTotalElements() == 0) {
             page = findOriginalProducts(request, pageable);
         }
 
@@ -46,8 +45,7 @@ public class ProductService {
         return productRepo.findByOriginalTypeContainingOrOriginalNameContaining(request, request, pageable);
     }
 
-    public List<Product> searchProducts(String searchRequest)
-    {
+    public List<Product> searchProducts(String searchRequest) {
         log.info("Search request: " + searchRequest);
         String search = searchRequest.replaceAll(" ", "").replaceAll("-", "");
         log.info(search);

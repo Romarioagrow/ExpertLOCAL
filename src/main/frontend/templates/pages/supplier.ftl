@@ -27,12 +27,12 @@
                             <div class="form-group">
                                 <button type="submit" class="btn btn-secondary btn-sm secc">Match models!</button>
                             </div>
-                        </form>
-                        <form method="post" action="/supplier/match-duplicates">
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-secondary btn-sm secc">Match duplicates!</button>
-                            </div>
                         </form>-->
+                        <form method="post" action="/supplier/xxx">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-danger btn-sm secc" style="background-color: #c40030 !important;">xxx</button>
+                            </div>
+                        </form>
 
                     </div>
                 </div>

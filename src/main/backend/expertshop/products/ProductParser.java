@@ -31,7 +31,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Log
 @Service
 @AllArgsConstructor
-public class CatalogParser {
+public class ProductParser {
     private final ProductService productService;
     private final ProductRepo productRepo;
     private final BaseRepo baseRepo;
@@ -286,7 +286,7 @@ public class CatalogParser {
         }
     }
 
-    public void parsePicRUS()
+    public void parseRusBT()
     {
         /*productRepo.findBySupplier("2RUS-BT").forEach(product -> {
             if (product.getOriginalPic().startsWith("http://rusbt.ru/catalog")) {
@@ -299,52 +299,70 @@ public class CatalogParser {
             productRepo.save(product);
         });*/
 
-        AtomicInteger count = new AtomicInteger();
-        AtomicInteger count404 = new AtomicInteger();
-        List<Product> list = productRepo.findBySupplierAndProductGroupIsNotNullAndLinkRIsNotNull("2RUS-BT");
+        AtomicInteger count404 = new AtomicInteger(), countPic = new AtomicInteger(), countAnno = new AtomicInteger(), countInfo = new AtomicInteger();
+        List<Product> list = productRepo.findBySupplierAndProductGroupIsNotNullAndOriginalPicIsNullAndLinkRIsNotNull("2RUS-BT");
 
         list.forEach(product ->
         {
             String link = product.getLinkR();
-            try {
-                if (!link.isEmpty() && !link.startsWith("http://magazilla")) {
-
+            try
+            {
+                if (!link.isEmpty() && !link.startsWith("http://magazilla")) ///!
+                {
                     String pic;
                     Document page = Jsoup.connect(link).get();
-
-                    Elements pics = page.select("img");
-
-                    for (Element picElement : pics)
+                    if (product.getOriginalPic() == null)
                     {
-                        String picSrc = picElement.attr("src");
-
-                        if (picSrc.startsWith("/upload"))
+                        Elements pics = page.select("img");
+                        for (Element picElement : pics)
                         {
-                            System.out.println();
-                            log.info(picSrc);
-                            log.info(link);
-
-                            pic = "http://rusbt.ru".concat(picSrc);
-                            if (product.getOriginalPic() == null) product.setOriginalPic(pic);
-                            else
+                            String picSrc = picElement.attr("src");
+                            if (picSrc.startsWith("/upload"))
                             {
-                                if (product.getPics() == null) product.setPics(pic);
-                                else product.setPics(product.getPics().concat(";").concat(pic));
+                                pic = "http://rusbt.ru".concat(picSrc);
+                                if (product.getOriginalPic() == null) product.setOriginalPic(pic);
+                                else
+                                {
+                                    if (product.getPics() == null) product.setPics(pic);
+                                    else product.setPics(product.getPics().concat(";").concat(pic));
+                                }
+
+                                productRepo.save(product);
+                                log.info("ПОЛНАЯ ССЫЛКА ДЛЯ " + product.getOriginalName() + ": " + pic);
+                                countPic.getAndIncrement();
                             }
-                            productRepo.save(product);
-                            log.info("ПОЛНАЯ ССЫЛКА ДЛЯ " + product.getOriginalName() + ": " + pic);
-                            count.getAndIncrement();
+                            else log.info("Нет изображения товара на сайте!");
                         }
-                        else log.info("Нет изображения товара на сайте!");
                     }
 
-                    Elements anno = page.select("props_top");
-                    product.setFormattedAnnotation(anno.html());
+                    if (product.getFormattedAnnotation() == null || product.getFormattedAnnotation().isEmpty())
+                    {
+                        Elements props = page.getElementsByClass("one_prop");
+                        for (Element element : props) {
+                            String key = StringUtils.substringBetween(element.html(), "<span>", "</span>");
+                            String val = StringUtils.substringBetween(element.html(), "<div class=\"left_value\">", "</div>");
+                            String param = key.concat(":").concat(val).concat(";");
+
+                            if (product.getFormattedAnnotation() == null || product.getFormattedAnnotation().isEmpty()) {
+                                product.setFormattedAnnotation(param);
+                            }
+                            else product.setFormattedAnnotation(product.getFormattedAnnotation().concat(param));
+                        }
+                    }
+
+                    if (product.getDescription() == null)
+                    {
+                        Elements description = page.getElementsByClass("bx_item_description");
+                        for (Element el : description) {
+                            product.setDescription(el.html());
+                        }
+                    }
                     productRepo.save(product);
                 }
                 else log.info("ССЫЛКА ОТСУТСТВУЕТ!");
                 System.out.println();
-                log.info(count + " products from " + list.size());
+                countInfo.getAndIncrement();
+                log.info(countInfo + " products from " + list.size());
             }
             catch (HttpStatusException exp) {
                 log.info("EXP Page is empty");
@@ -362,7 +380,7 @@ public class CatalogParser {
         });
         System.out.println();
         log.info("Всего товаров: "      + list.size());
-        log.info("Успешно скачано: "    + count);
+        log.info("Успешно скачано: "    + countPic);
         log.info("404 на сайте: "       + count404);
     }
 

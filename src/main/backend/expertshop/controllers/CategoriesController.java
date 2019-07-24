@@ -1,9 +1,7 @@
 package expertshop.controllers;
 import expertshop.domain.Order;
 import expertshop.domain.User;
-import expertshop.products.ProductMatcher;
 import expertshop.repos.ProductRepo;
-import expertshop.products.CatalogParser;
 import expertshop.services.OrderService;
 import expertshop.services.ProductService;
 
@@ -14,9 +12,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 @Log
 @Controller
