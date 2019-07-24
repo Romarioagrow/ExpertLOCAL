@@ -2,7 +2,7 @@
 <@t.template>
     <div class="container" style="margin-top: 5rem">
         <div class="row mt-2">
-            <nav aria-label="breadcrumb">
+            <nav aria-label="breadcrumb" style="padding-left: 1rem;margin-top: 1rem;">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="/products/groups/${product.productGroup?lower_case}"><span style="font-size: 20px !important;">${product.productGroup}</a></li>
                     <li class="breadcrumb-item active" aria-current="page"><span style="font-size: 20px !important;">${product.groupBrand}</span></li>
@@ -10,7 +10,7 @@
                 </ol>
             </nav>
         </div>
-        <div class="row">
+        <div class="row" style="margin-bottom: 1rem;">
             <div class="col">
                 <h2>
                     <span style="color: #e52d00;">${product.singleType}</span>
@@ -20,83 +20,48 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-7">
-                <#if product.originalPic??>
-                    <img src="${product.originalPic}" class="img-fluid" alt="Responsive image">
-                    <#--<div class="product-page-pic">
-                        <div id="carousel-thumb" class="product-page-pic carousel slide carousel-fade carousel-thumbnails" data-ride="carousel" style="margin-left: -10rem;">
-                            <div class="carousel-inner" role="listbox">
-                                <div class="carousel-item active">
-                                    <img class="d-block scale-pic " src="${product.originalPic}" alt="First slide"  style="max-height: 20rem !important;">
-                                </div>
-                                <div class="carousel-item">
-                                    <img class="d-block scale-pic" src="${product.originalPic}" alt="Second slide"  style="max-height: 20rem !important;">
-                                </div>
-                                <div class="carousel-item">
-                                    <img class="d-block scale-pic" src="${product.originalPic}" alt="Third slide"   style="max-height: 20rem !important;">
-                                </div>
-                                <a class="carousel-control-prev" href="#carousel-thumb" role="button" data-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                            </div>
-                            <a class="carousel-control-next" href="#carousel-thumb" role="button" data-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                            &lt;#&ndash;<ol class="carousel-indicators">
-                                <li data-target="#carousel-thumb" data-slide-to="0" class="active">
-                                    <img class="d-block scale-pic" src="${product.originalPic}" style="max-height: 5rem !important;">
-                                </li>
-                                <li data-target="#carousel-thumb" data-slide-to="1">
-                                    <img class="d-block scale-pic" src="${product.originalPic}" style="max-height: 5rem !important;">
-                                </li>
-                                <li data-target="#carousel-thumb" data-slide-to="2">
-                                    <img class="d-block scale-pic" src="${product.originalPic}" style="max-height: 5rem !important;">
-                                </li>
-                            </ol>&ndash;&gt;
-                        </div>
-                    </div>-->
-                </#if>
+            <div class="col-7" style="max-height: 30rem;">
+                <div class="card" style="height: 100% !important; width: 100% !important; object-fit: contain !important;">
+                    <div class="card-body" style="height: 100% !important; width: 100% !important; object-fit: contain !important;">
+                        <#if product.originalPic??>
+                            <img src="${product.originalPic}" class="img-fluid scale-pic" alt="Responsive image" style="height: 100% !important; width: 100% !important; object-fit: contain !important;">
+                        </#if>
+                    </div>
+                </div>
             </div>
             <div class="col price">
                 <div class="card">
                     <div class="card-body">
-                        <h2><strong>${product.finalPrice} ₽</strong></h2>
-                        <#--<button type="button" class="btn btn-success waves-effect waves-light">Купить!</button>-->
-                        <#if orderedProductsID?? && orderedProductsID?seq_contains('${product.productID}')>
-                            <a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
-                        <#else>
-                            <div id="addToOrderDiv${product.productID?replace(".","")}">
-                                <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID}" value="${product.productID}">
-                                    В корзину
-                                </button>
+                        <div class="row">
+                            <div class="col">
+                                <h2><strong>${product.finalPrice} ₽</strong></h2>
                             </div>
-                        </#if>
+                            <div class="col">
+                                <p><i>${product.getBonus()}</i></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <#if orderedProductsID?? && orderedProductsID?seq_contains('${product.productID}')>
+                                    <a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
+                                <#else>
+                                    <div id="addToOrderDiv${product.productID?replace(".","")}">
+                                        <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID}" value="${product.productID}">
+                                            В корзину
+                                        </button>
+                                    </div>
+                                </#if>
+                            </div>
+                            <div class="col">
+                                <p>В наличии</p
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <#--<#if orderedProductsID??>
-                    <#if orderedProductsID?seq_contains('${product.productID}')>
-                        <br><a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
-                    <#else>
-                        <div id="addToOrderDiv${product.productID}">
-                            <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID}" value="${product.productID}">
-                                В корзину
-                            </button>
-                        </div>
-                    </#if>
-                <#else>
-                    <div id="addToOrderDiv${product.productID}">
-                        <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID}" value="${product.productID}">
-                            В корзину
-                        </button>
-                    </div>
-                </#if>-->
             </div>
         </div>
-
-        <div class="row">
-            <div class="col">
+        <div class="row" style="margin-top: 2.5rem">
+            <div class="col" style="margin-left: 1rem; width: 71.5rem;">
                 <div class="card" style="margin-bottom: 2rem">
                     <div class="card-body">
                         <hr>
