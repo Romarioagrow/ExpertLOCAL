@@ -49,18 +49,30 @@ function displayBrands() {
                 let first = brands[i];
                 let second = brands[i+1];
 
-                $('#brands-view').append(
-                    '<div class="row">' +
-                    '        <div class="col-6">' +
-                    '            <input type="checkbox" onclick="filterProducts()" name="brand" class="form-check-input" id="'+first+'" value="'+first+'">' +
-                    '            <label class="form-check-label" for="'+first+'">'+first+'</label>' +
-                    '        </div>' +
-                    '        <div class="col-6">' +
-                    '            <input type="checkbox" onclick="filterProducts()" name="brand" class="form-check-input" id="'+second+'" value="'+second+'">' +
-                    '            <label class="form-check-label" for="'+second+'">'+second+'</label>' +
-                    '        </div>' +
-                    '    </div>'
-                );
+                if (second !== undefined){
+                    $('#brands-view').append(
+                        '<div class="row">' +
+                        '        <div class="col" style="margin-left: -1rem;">' +
+                        '            <input type="checkbox" onclick="filterProducts()" name="brand" class="form-check-input" id="'+first+'" value="'+first+'">' +
+                        '            <label class="form-check-label" for="'+first+'">'+first+'</label>' +
+                        '        </div>' +
+                        '        <div class="col" style="margin-left: -1.5rem; width: 23rem !important;" >' +
+                        '            <input type="checkbox" onclick="filterProducts()" name="brand" class="form-check-input" id="'+second+'" value="'+second+'">' +
+                        '            <label class="form-check-label" for="'+second+'">'+second+'</label>' +
+                        '        </div>' +
+                        '    </div>'
+                    );
+                }
+                else {
+                    $('#brands-view').append(
+                        '<div class="row">' +
+                        '        <div class="col" style="margin-left: -1rem;">' +
+                        '            <input type="checkbox" onclick="filterProducts()" name="brand" class="form-check-input" id="'+first+'" value="'+first+'">' +
+                        '            <label class="form-check-label" for="'+first+'">'+first+'</label>' +
+                        '        </div>' +
+                        '    </div>'
+                    );
+                }
             }
 
             for (var key in filters)
@@ -121,7 +133,7 @@ function displayBrands() {
                         let vals = '';
                         for (let i = 0; i < filters[key].length; i++)
                         {
-                            id = replaceAll(filters[key][i], " ", "");
+                            id = replaceAll(filters[key][i], " ", "")+`f${(~~(Math.random()*1e8)).toString(16)}`;
                             vals+=
                                 '<div class="row">' +
                                 '<div class="col">' +
@@ -139,7 +151,7 @@ function displayBrands() {
                             '            <div class="card card-body filter-filed" >' +
                             '                <div class="md-form input-group">' +
                             '                    <div class="container">' +
-                                                    vals +
+                            vals +
                             '                    </div>' +
                             '                </div>' +
                             '            </div>' +
@@ -252,14 +264,16 @@ function constructProductCard(product, orderedIDs) {
 
     let productButton;
 
-    if (orderedIDs.length !== 0 && orderedIDs.includes(product.productID))
-    {
-        productButton = '<a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>';
+    if (product.isAvailable) {
+
+        if (orderedIDs.length !== 0 && orderedIDs.includes(product.productID)) {
+            productButton = '<a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>';
+        }
+        else {
+            productButton = '<button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder'+product.productID+'" value="'+product.productID+'">В корзину</button>'
+        }
     }
-    else
-    {
-        productButton = '<button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder'+product.productID+'" value="'+product.productID+'">В корзину</button>'
-    }
+    else productButton = '<p style="color: #c40030; font-size: 1.5rem; padding-top: 0.5rem;"><strong>Нет в наличии!</strong></p>';
 
     return '<div class="card product-card">'+
         '<div class="view overlay">'+

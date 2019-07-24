@@ -3,13 +3,13 @@
 
 <@t.template>
     <div class="container-fluid">
-        <div class="row" style="margin-top: 6rem; margin-left: 27.5rem">
+        <div class="row" style="margin-top: 6rem; margin-left: 27.5rem;">
             <div class="col">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/"><strong>Каталог</strong></a></li>
                         <li class="breadcrumb-item"><a href="/categories/${path[0]?lower_case}"><strong>${path[0]?replace("_"," ")}</strong></a></li>
-                        <li class="breadcrumb-item disabled" style="color: #7a7979;">${path[1]}</li>
+                        <li class="breadcrumb-item disabled">${path[1]}</li>
                     </ol>
                 </nav>
             </div>
@@ -121,7 +121,7 @@
                                         Бонус: ${product.bonus!''} ₽
                                     </p>
                                     <div>
-                                        <#if product.isAvailable??>
+                                        <#if product.isAvailable!>
                                             <#if orderedProductsID?? && orderedProductsID?seq_contains('${product.productID}')>
                                                 <a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
                                             <#else>
@@ -132,7 +132,8 @@
                                                 </div>
                                             </#if>
                                         <#else>
-                                            <button type="button" class="btn btn-warning btn-rounded" disabled>Нет в наличии!</button>
+                                            <#--<button type="button" class="btn btn-warning btn-rounded" disabled>Нет в наличии!</button>-->
+                                            <p style="color: #c40030; font-size: 1.5rem; padding-top: 0.5rem;"><strong>Нет в наличии!</strong></p>
                                         </#if>
                                     </div>
                                 </div>

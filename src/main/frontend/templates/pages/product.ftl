@@ -25,6 +25,8 @@
                     <div class="card-body" style="height: 100% !important; width: 100% !important; object-fit: contain !important;">
                         <#if product.originalPic??>
                             <img src="${product.originalPic}" class="img-fluid scale-pic" alt="Responsive image" style="height: 100% !important; width: 100% !important; object-fit: contain !important;">
+                        <#else>
+                            <h5>Изображение отсутствует :(</h5>
                         </#if>
                     </div>
                 </div>
@@ -34,26 +36,34 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <h2><strong>${product.finalPrice} ₽</strong></h2>
+                                <h2><strong style="padding-left: 0.5rem;">${product.finalPrice} ₽</strong></h2>
                             </div>
                             <div class="col">
-                                <p><i>${product.getBonus()}</i></p>
+                                <#if product.isAvailable!>
+                                    <p style="font-size: 1rem; padding-top: 0.5rem;">+<strong> ${product.getBonus()}</strong><i> баллов</i></p>
+                                </#if>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <#if orderedProductsID?? && orderedProductsID?seq_contains('${product.productID}')>
-                                    <a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
+                                <#if product.isAvailable!>
+                                    <#if orderedProductsID?? && orderedProductsID?seq_contains('${product.productID}')>
+                                        <a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
+                                    <#else>
+                                        <div id="addToOrderDiv${product.productID?replace(".","")}">
+                                            <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID}" value="${product.productID}">
+                                                В корзину
+                                            </button>
+                                        </div>
+                                    </#if>
                                 <#else>
-                                    <div id="addToOrderDiv${product.productID?replace(".","")}">
-                                        <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder${product.productID}" value="${product.productID}">
-                                            В корзину
-                                        </button>
-                                    </div>
+                                    <p style="color: #c40030; font-size: 1.5rem; padding-top: 0.5rem;"><strong>Нет в наличии!</strong></p>
                                 </#if>
                             </div>
                             <div class="col">
-                                <p>В наличии</p
+                                <#if product.isAvailable!>
+                                    <p style="color: #00c851; font-size: 1.5rem; padding-top: 0.5rem;"><strong>В наличии!</strong></p>
+                                </#if>
                             </div>
                         </div>
                     </div>
@@ -61,11 +71,11 @@
             </div>
         </div>
         <div class="row" style="margin-top: 2.5rem">
-            <div class="col" style="margin-left: 1rem; width: 71.5rem;">
+            <div class="col">
                 <div class="card" style="margin-bottom: 2rem">
                     <div class="card-body">
-                        <hr>
                         <h3>Параметры товара</h3>
+                        <hr>
                         <table class="table table table-borderless w-30">
                             <thead>
                             <tr>

@@ -57,9 +57,34 @@ public class ProductMatcher {
                 productRepo.save(product);
             }
         });*/
-        int count = (int) products.stream().filter(product -> product.getOriginalPic() != null).count();
-        log.info(count + " from " + products.size());
-        /*AtomicInteger count = new AtomicInteger();
+
+        /*int count = (int) products.stream().filter(product -> product.getOriginalPic() != null).count();
+        log.info(count + " from " + products.size());*/
+
+        /*products.forEach(product -> {
+            if (product.getFormattedAnnotation() != null && (product.getFormattedAnnotation().isEmpty() || product.getFormattedAnnotation().equals("<br>"))) {
+                product.setFormattedAnnotation(null);
+                productRepo.save(product);
+            }
+        });*/
+
+        /*productRepo.findAll().forEach(product -> {
+            String[] cutters = {" ","(",",  ",", "," - "," , ","-"};
+            for (String cut : cutters) {
+                String anno = product.getOriginalAnnotation();
+                if (anno != null) {
+                    //System.out.println();
+                    //log.info(anno);
+                    if (!anno.isEmpty() && anno.startsWith(cut)) {
+                        String newAnno = StringUtils.substringAfter(anno, cut);
+                        product.setOriginalAnnotation(newAnno);
+                        productRepo.save(product);
+                        log.info(product.getOriginalAnnotation());
+                    }
+                }
+            }
+        });*/
+        AtomicInteger count = new AtomicInteger();
         products.forEach(product ->
         {
             if (product.getFormattedAnnotation() != null)
@@ -85,7 +110,7 @@ public class ProductMatcher {
                 }
             }
         });
-        log.info(count.toString());*/
+        log.info(count.toString());
     }
 
     public void trimBigBase() {
@@ -109,6 +134,16 @@ public class ProductMatcher {
             catalogParser.parseProducts(file);
             matchProducts();
             resolveDuplicates();
+            /*productRepo.findAllByModelNameNotNull().forEach(product -> {
+                String[] cutters = {" ","(",",  ",", "," - "," , ","-"};
+                for (String cut : cutters) {
+                    String anno = product.getOriginalAnnotation();
+                    if (!anno.isEmpty() && anno.startsWith(cut)) {
+                        String newAnno = StringUtils.substringAfter(anno, cut);
+                        log.info(newAnno);
+                    }
+                }
+            });*/
         }
         catch (NullPointerException | NumberFormatException e) {
             e.printStackTrace();
@@ -134,7 +169,7 @@ public class ProductMatcher {
 
                 /*ИНСТРУМЕНТЫ ДЛЯ ДОМА*/
                 /// ПЕРЕРАСПРЕДЕЛИТЬ ГРУППЫ ДРЕЛИ БОЛЬШИЕ - ШУРУПОВЕРТЫ
-                matchProduct("06.01.01, 06.01.02, 06.01.03, 06.01.05, Шуруповерты, Дрели"				                , "Дрели-Шуруповерты"					,1.16	            , "Дрель-Шуруповерт"					, "Инструменты для дома"		    , product);
+                matchProduct("06.01.01, 06.01.02, 06.01.03, 06.01.05, Шуруповерты, Дрели"				        , "Дрели-Шуруповерты"					,1.16	            , "Дрель-Шуруповерт"					, "Инструменты для дома"		    , product);
                 matchProduct("06.02, Шлифовальные машины"										                , "Шлифовальные машины"					,1.16	            , "Шлифовальная машина"				, "Инструменты для дома"		    , product);
                 matchProduct("06.06.08, Сварочные аппараты"									                , "Сварочное оборудование"				,1.16	            , "Сварочный аппарат"					, "Инструменты для дома"		    , product);
                 matchProduct("06.01.06, Перфораторы"											                , "Перфораторы"							,1.16	            , "Перфоратор"						, "Инструменты для дома"		    , product);

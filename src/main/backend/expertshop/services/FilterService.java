@@ -86,9 +86,6 @@ public class FilterService {
 
     public LinkedList<Object> filterProducts(Map<String, String> filters, String request, Pageable pageable, User user)
     {
-        //System.out.println();
-        //log.info("Request: " + request);
-        //log.info("Received filters");
         filters.forEach((key, filter) -> log.info(key + " " + filter));
 
         List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCase(request);
@@ -120,6 +117,8 @@ public class FilterService {
 
             sortProducts(products, filters);
 
+            products.sort(Comparator.comparing(Product::getIsAvailable).reversed());
+
             int start = (int) pageable.getOffset();
             int end = (start + pageable.getPageSize()) > products.size() ? products.size() : (start + pageable.getPageSize());
 
@@ -149,12 +148,7 @@ public class FilterService {
                     for (String val : params)
                     {
                         String param = val.replaceAll("[\\[\\]]", "").trim();
-
-                        if (product.getOriginalAnnotation().contains(param) || product.getProductType().contains(param))
-                        {
-                            //System.out.println();
-                            //log.info("FILTER: " + param);
-                            //log.info("RESULT: " + product.getOriginalAnnotation());
+                        if (product.getOriginalAnnotation().contains(param) || product.getProductType().contains(param)) {
                             matches.getAndIncrement();
                         }
                     }
@@ -172,12 +166,7 @@ public class FilterService {
                 for (String val : params)
                 {
                     String param = val.replaceAll("[\\[\\]]", "").trim();
-
-                    if (product.getOriginalAnnotation().contains(param) || product.getProductType().contains(param))
-                    {
-                        //System.out.println();
-                        //log.info("FILTER: " + param);
-                        //log.info("RESULT: " + product.getOriginalAnnotation());
+                    if (product.getOriginalAnnotation().contains(param) || product.getProductType().contains(param)) {
                         return true;
                     }
                 }

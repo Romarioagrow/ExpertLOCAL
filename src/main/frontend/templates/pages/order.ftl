@@ -28,8 +28,8 @@
                                 </div>
                                 <div class="card-body">
                                     <h4 class="card-title">
-                                        <div class="mb-3">${product.productType}</div>
-                                        <a href="http://localhost:8080/info/${product.productID}">${product.productName}</a>
+                                        <div class="" style="font-size: 1.2rem;">${product.productType}</div>
+                                        <a href="http://localhost:8080/info/${product.productID}" style="font-size: 1rem;">${product.productName}</a>
                                     </h4>
                                     <h4>
                                         <strong><i id="total-price${product.orderedID?c}">${product.totalPrice} ₽</i></strong> за <span id="prAm${product.orderedID?c}">${product.orderedAmount}</span> шт.
@@ -39,9 +39,9 @@
                                         Бонус за покупку: ${productBonus}
                                     </p>
                                     <p class="card-text" id="cart-text-buttons" name="cart-text-buttons">
-                                        <button type="button" onclick="changeAmount(this)" id="${product.orderedID?c}" name="product-less" value=" ${product.productID}" class="btn btn-outline-danger waves-effect">-</button>
+                                        <button type="button" onclick="changeAmount(this)" id="${product.orderedID?c}" name="product-less" value=" ${product.productID}" class="btn btn-outline-danger btn-sm waves-effect"><span>-</span></button>
                                         <span class="badge badge-primary badge-pill" id="amount${product.orderedID?c}" name="${product.orderedID}">${product.orderedAmount}</span>
-                                        <button type="button" onclick="changeAmount(this)" id="${product.orderedID?c}" name="product-more" value=" ${product.productID}" class="btn btn-outline-success waves-effect">+</button>
+                                        <button type="button" onclick="changeAmount(this)" id="${product.orderedID?c}" name="product-more" value=" ${product.productID}" class="btn btn-outline-success btn-sm waves-effect">+</button>
                                     </p>
                                 </div>
                                 <button type="submit" onclick="removeFromOrder(this)" class="btn btn-danger btn-md" name="remove-product" id="remove-product" value="${product.orderedID?c}">Удалить</button>
@@ -107,7 +107,7 @@
                                     <ul class="list-unstyled d-flex justify-content-start mb-0">
                                         <li>Всего товаров</li>
                                         <li>
-                                            <div class="chip ml-3">
+                                            <div class="chip ml-3" style="margin-left: 3rem !important;">
                                                 <b id="order-products">${order.productsAmount}</b>
                                             </div>
                                         </li>

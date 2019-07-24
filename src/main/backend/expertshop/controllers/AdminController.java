@@ -46,12 +46,6 @@ public class AdminController {
         productMatcher.matchProducts();
         return "pages/supplier";
     }
-    /*@PostMapping("/match-models")
-    public String matchModels()
-    {
-        //productMatcher.resolveShortModel();
-        return "pages/supplier";
-    }*/
     @PostMapping("/xxx")
     public String matchDuplicates()
     {
