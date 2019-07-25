@@ -11,7 +11,7 @@
         <link rel="stylesheet" href="/../css/main.css"/>
         <link rel="stylesheet" href="/../css/service.css"/>
         <link rel="stylesheet" href="/../css/main-menu.css"/>
-        <link href="/..css/scrolling-nav.css" rel="stylesheet" type="text/css">
+        <link href="/../css/scrolling-nav.css" rel="stylesheet" type="text/css">
     </head>
     <body id="page-top">
     <#include "navbar.ftl">
@@ -23,7 +23,7 @@
     <script src="/../js/filter.js"></script>
     <script src="/../js/search.js"></script>
     <script src="/../js/order.js"></script>
-    <script src="/..js/scrolling-nav.js" type="text/javascript"></script>
+    <script src="/../js/scrolling-nav.js" type="text/javascript"></script>
     </body>
     </html>
 </#macro>

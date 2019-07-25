@@ -129,7 +129,6 @@ public class ProductService {
 
         }
 
-
         if (request.isEmpty() && isMapped != null) {
             products = productRepo.findAllByModelNameNotNull();
         }
@@ -137,8 +136,18 @@ public class ProductService {
             products = productRepo.findAll();
         }
 
-
         return products;
+    }
+
+    public boolean editProducts(Map<String, String> data) {
+        data.forEach((productID, newPrice) ->
+        {
+            log.info(productID + ": " + newPrice);
+            Product product = productRepo.findByProductID(productID);
+            product.setFinalPrice(Integer.parseInt(newPrice.replaceAll("\\W", "")));
+            productRepo.save(product);
+        });
+        return true;
     }
 }
 

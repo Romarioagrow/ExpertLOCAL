@@ -11,28 +11,70 @@ $(document).ready(function(){
 
 
 function editProduct(product) {
-    const productID = '#'+product.id;
-    const productFinalPrice = product.getAttribute("name");
-    console.log(productID);
+    const productDivID = '#'+product.id;
+    const productID = product.getAttribute("name").substr(0, product.getAttribute("name").indexOf(";"));
+    const productFinalPrice = product.getAttribute("name").substr(product.getAttribute("name").indexOf(";")+1);
+
+    console.log(productDivID);
     console.log(productFinalPrice);
+    console.log(productID);
 
-    $(productID).empty().append(
-        '<input type="text" value="'+productFinalPrice+'" style="width: 5rem; background-color: #a0ffc8" name="finalPrice">'
+    $(productDivID).empty().append(
+        '<input type="text" class="editPrice" id="'+productDivID+'" value="'+productFinalPrice+'" style="width: 5rem; background-color: #a0ffc8" name="'+productID+';'+productFinalPrice+'">'
     );
-
 }
 
 function saveProduct() {
-    $('input:text').each(function()
-    {
-        let key = this.getAttribute("name");
-        let val = $(this).val();
+    var data = {};
 
-        if (!filters.hasOwnProperty(key)) {
-            filters[key] = val;
-        }
-        else filters[key] = filters[key].concat(", ").concat(val);
+    $('input:text[class="editPrice"]').each(function()
+    {
+        const name =  this.getAttribute("name");
+        let productID = name.substr(0, name.indexOf(";")).toString();
+        let productFinalPriceDB = name.substr(name.indexOf(";")+1);
+        let newPrice = this.value;
+
+        console.log('\n');
+        console.log(productID);
+        console.log(productFinalPriceDB);
+        console.log(newPrice);
+
+        data[productID] = newPrice;
     });
+
+    console.log(data);
+    data = JSON.stringify(data);
+
+    $.ajax({
+        url: '/supplier/products/save',
+        type: 'POST',
+        dataType: 'json',
+        data: data,
+        processData: false,
+        headers: {'Content-Type': 'application/json'},
+        complete: function(response)
+        {
+            console.log(response);
+            if ((response.responseText) === 'true') {
+                alert('Saved!');
+
+                $('input:text[class="editPrice"]').each(function()
+                {
+                    const name =  this.getAttribute("name");
+                    let productDivID = this.id;
+                    let price = this.value;
+
+                    console.log(productDivID);
+
+                    $(productDivID).empty().append(
+                        '<strong style="color: #00c853">'+price+'</strong>'
+                    );
+                });
+
+            }
+        }
+    });
+
 }
 
 

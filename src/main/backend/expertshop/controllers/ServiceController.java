@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +28,13 @@ public class ServiceController {
     private final FilterService filterService;
     private final ProductService productService;
     private final OrderService orderService;
+
+    @PostMapping("/supplier/products/save")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    private boolean saveProducts(@RequestBody Map<String, String> data) {
+        return productService.editProducts(data);
+        //return "pages/supplier";
+    }
 
     /*PRODUCTS FILTERS*/
     @PostMapping("/products/{category}/{reqType}")

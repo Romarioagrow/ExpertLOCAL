@@ -111,14 +111,13 @@
                                                 <tr>
                                                     <th scope="row">${product.productID}</th>
                                                     <td>${product.supplier!'-'}</td>
-                                                    <td><strong>${product.originalName!'-'}</strong></td>
+                                                    <td><a href="/products/info/${product.productID}"><strong>${product.originalName!'-'}</strong></a></td>
                                                     <td>${product.productCategory!'-'}</td>
                                                     <td>${product.productGroup!'Нет'}</td>
                                                     <td>${product.originalBrand!'-'}</td>
                                                     <td>${product.modelName!'-'}</td>
                                                     <td style="width: 6rem;">${product.originalPrice!'-'}</td>
-                                                    <td ondblclick="editProduct(this)" id="finalPrice${product.productID?replace(".","")}" name="${product.finalPrice!'-'}"><strong>${product.finalPrice!'-'}</strong></td>
-                                                    <#--<td onclick="editProduct(this)" id="finalPrice${product.productID}" name="${product.finalPrice!'-'}"><strong id="strong${product.productID}">${product.finalPrice!'-'}</strong><input type="text" id="input${product.productID}" value="${product.finalPrice!'-'}" style="width: 5rem; display: none" name="finalPrice" ></td>-->
+                                                    <td ondblclick="editProduct(this)" id="finalPrice${product.productID?replace(".","")}" name="${product.productID};${product.finalPrice!'-'}"><strong>${product.finalPrice!'-'}</strong></td>
                                                     <td>${product.coefficient!'-'}</td>
                                                     <td>${product.bonus!'-'}</td>
                                                     <td>${product.update!'-'}</td>
