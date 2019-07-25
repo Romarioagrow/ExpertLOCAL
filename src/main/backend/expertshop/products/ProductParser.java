@@ -45,15 +45,7 @@ public class ProductParser {
             {
                 if (fileRBT(file))  parseRBT(file, bufferedReader);
                 else                parseRUSBT(file, bufferedReader);
-
-                productRepo.findAllByProductGroupIsNotNull().forEach(product -> {product.setIsAvailable(false); productRepo.save(product);});
-                for (Product product : productRepo.findAllByProductGroupIsNotNull()) {
-                    if (product.getUpdate().toString().equals(LocalDate.now().toString())) {
-                        product.setIsAvailable(true);
-                    }
-                    else product.setIsAvailable(false);
-                    productRepo.save(product);
-                }
+                setAvailable();
             }
             catch (IOException exp) {
                 exp.getStackTrace();
@@ -61,18 +53,28 @@ public class ProductParser {
         }
     }
 
+    private void setAvailable() {
+        productRepo.findAllByProductGroupIsNotNull().forEach(product -> {product.setIsAvailable(false); productRepo.save(product);});
+        for (Product product : productRepo.findAllByProductGroupIsNotNull()) {
+            if (product.getUpdate().toString().equals(LocalDate.now().toString())) {
+                product.setIsAvailable(true);
+            }
+            else product.setIsAvailable(false);
+            productRepo.save(product);
+        }
+    }
+
     private void parseRBT(MultipartFile file, BufferedReader bufferedReader) throws IOException {
         log.info("Parsing RBT file: " + file.getOriginalFilename());
 
-        int countAdd = 0, countUpdate = 0; /// В СТАТИК
+        int countAdd = 0, countUpdate = 0;  /// to static
         String[] line;
         CSVReader reader = new CSVReader(bufferedReader, ';');
 
         List<Product> products = productRepo.findBySupplier("1RBT");
         products.forEach(product -> {product.setIsAvailable(false);productRepo.save(product);});
 
-        while ((line = reader.readNext()) != null)
-        {
+        while ((line = reader.readNext()) != null) {
             if (lineIsCorrect(line))
             {
                 String productID = line[0];
@@ -82,21 +84,20 @@ public class ProductParser {
                     String productPrice             = line[7];
 
                     updateProduct(productID, productAmount, productPrice);
-
                     countUpdate++;
-                    log.info("Updating file: " + line[3]);
+                    log.info("Обновление товара: " + line[3]);
                 }
                 else
                 {
                     createProductFromRBT(line);
-                    log.info("Creating new file: " + line[3]);
+                    log.info("Создание нового товара: " + line[3]);
                     countAdd++;
                 }
             }
-            else log.info("!!! Пропуск некоректной строки " + file.getOriginalFilename());
+            else log.info("Пропуск некоректной строки " + file.getOriginalFilename());
         }
-        log.info("Products add: "       + countAdd);
-        log.info("Products updated: "   + countUpdate);
+        log.info("Товаров добавлено: "   + countAdd);
+        log.info("Товаров обновлено: "   + countUpdate);
     }
     private void parseRUSBT(MultipartFile file, BufferedReader bufferedReader) throws IOException
     {
@@ -120,20 +121,19 @@ public class ProductParser {
                     String productPrice  = line[13];
 
                     updateProduct(productID, productAmount, productPrice);
-
                     countUpdate++;
-                    log.info("Updating product: " + line[6]);
+                    log.info("Обновление товара: " + line[6]);
                 }
                 else
                 {
                     createProductFromRUSBT(line);
-                    log.info("Creating new product: " + line[6]);
+                    log.info("Создание нового товара: " + line[6]);
                     countAdd++;
                 }
             }
         }
-        log.info("Products add: " + countAdd);
-        log.info("Products updated: " + countUpdate);
+        log.info("Товаров добавлено: "   + countAdd);
+        log.info("Товаров обновлено: "   + countUpdate);
     }
 
     private void updateProduct(String productID, String productAmount, String productPrice) {
@@ -151,44 +151,36 @@ public class ProductParser {
         return !line[6].contains("Уценка") && !line[3].contains("УЦЕНКА") && !line[0].contains("Код товара") & !line[0].isEmpty() & !line[0].startsWith(";") & !line[5].isEmpty() & !line[13].contains("Цена со скидкой");
     }
 
-    ///ОБРАБАТЫВАТЬ В ОДНОМ МЕТОДЕ, ПОЛУЧАТЬ ДАННЫЕ В ПЕРЕМЕННЫЕ В РАЗНЫХ
-    private void createProductFromRBT(String[] line) {
+    private void createProductFromRBT(String[] line)
+    {
         Product product = new Product();
         product.setProductID(line[0]);
-
         product.setOriginalCategory(line[1]);
         product.setOriginalType(line[2]);
-
         product.setOriginalBrand(line[4]);
         product.setOriginalName(line[3]);
         product.setOriginalAnnotation(line[5]);
-
         product.setOriginalAmount(line[6]);
         product.setOriginalPrice(line[7].trim());
-
         product.setOriginalPic(line[10]);
-
         product.setSupplier("1RBT");
         product.setUpdate(LocalDate.now());
         productRepo.save(product);
     }
-    private void createProductFromRUSBT(String[] line) {
+    private void createProductFromRUSBT(String[] line)
+    {
         Product product = new Product();
         product.setProductID(line[5]);
-
         product.setOriginalCategory(line[0].concat("; ").concat(line[1]));
         product.setOriginalType(line[3]);
-
         product.setOriginalBrand(line[4]);
         product.setOriginalName(line[6]);
         product.setOriginalAnnotation(StringUtils.substringAfter(line[6], line[4]));
         product.setOriginalAmount(line[7]+line[8]);
         product.setOriginalPrice(line[13]);
-
         product.setLinkR(line[17]);
         product.setRType(line[3]);
         product.setRName(line[6]);
-
         product.setSupplier("2RUS-BT");
         product.setUpdate(LocalDate.now());
         product.setIsAvailable(true);
@@ -199,23 +191,6 @@ public class ProductParser {
         return productRepo.findByProductID(productID) != null;
     }
 
-    private void updateProductStatsAndDate(String productID, String amount, String price)
-    {
-        Product product = productRepo.findByProductID(productID);
-        product.setOriginalAmount(amount);
-        product.setOriginalPrice(price);
-        product.setUpdate(LocalDate.now());
-        productRepo.save(product);
-        log.info("Updating " + productID);
-    }
-
-    private void updateProductDate(String productID) {
-        Product product = productRepo.findByProductID(productID);
-        product.setUpdate(LocalDate.now());
-        productRepo.save(product);
-        log.info("Updated : " + productID);
-    }
-
     private boolean differentParams(String productID, String amount, String price) {
         Product product = productRepo.findByProductID(productID);
         return !product.getOriginalAmount().equals(amount) || !product.getOriginalPrice().equals(price);
@@ -224,23 +199,10 @@ public class ProductParser {
     private boolean fileRBT(MultipartFile file) {
         return Objects.requireNonNull(file.getOriginalFilename()).contains("СП2");
     }
-    private boolean fileRUSBT(MultipartFile file) {
-        return Objects.requireNonNull(file.getOriginalFilename()).contains("RUSBT");
-    }
 
     private boolean lineIsCorrect(String[] line) {
         return !line[3].isEmpty() && !line[0].equals("Код товара") & !line[0].equals(";") & !line[0].contains("г. Челябинск") &
                 !line[0].contains("8(351)")   & !line[0].startsWith(".")  & !line[0].startsWith(" ");
-    }
-
-    private boolean incorrectLineRBT(String[] line) {
-        return line[0].equals("Код товара")     || line[0].equals(";")      || line[0].contains("г. Челябинск")
-                || line[0].contains("8(351)")   || line[0].startsWith(".")  || line[0].startsWith(" ");
-    }
-    private boolean incorrectLineRUSBT(String[] line)
-    {
-        return line[0].equals("Код товара") || line[0].isEmpty() || line[0].startsWith(";") || line[5].isEmpty()
-                || line[13].contains("Цена со скидкой");
     }
 
     public void parseBase(MultipartFile file)
@@ -288,6 +250,7 @@ public class ProductParser {
 
     public void parseRusBT()
     {
+
         /*productRepo.findBySupplier("2RUS-BT").forEach(product -> {
             if (product.getOriginalPic().startsWith("http://rusbt.ru/catalog")) {
                 product.setLinkR(product.getOriginalPic());
@@ -328,7 +291,7 @@ public class ProductParser {
                                 }
 
                                 productRepo.save(product);
-                                log.info("ПОЛНАЯ ССЫЛКА ДЛЯ " + product.getOriginalName() + ": " + pic);
+                                log.info("Изображения для " + product.getOriginalName() + ": " + pic);
                                 countPic.getAndIncrement();
                             }
                             else log.info("Нет изображения товара на сайте!");
@@ -349,9 +312,7 @@ public class ProductParser {
                             else product.setFormattedAnnotation(product.getFormattedAnnotation().concat(param));
                         }
                     }
-
-                    /*if (product.getDescription() == null)
-                    {
+                    /*if (product.getDescription() == null){
                         Elements description = page.getElementsByClass("bx_item_description");
                         for (Element el : description) {
                             product.setDescription(el.html());
@@ -362,12 +323,11 @@ public class ProductParser {
                 else log.info("ССЫЛКА ОТСУТСТВУЕТ!");
                 System.out.println();
                 countInfo.getAndIncrement();
-                log.info(countInfo + " products from " + list.size());
+                log.info(countInfo + " из " + list.size());
             }
             catch (HttpStatusException exp) {
-                log.info("EXP Page is empty");
+                log.info("404 Page is empty");
                 count404.getAndIncrement();
-                exp.printStackTrace();
             }
             catch (ConnectException exp) {
                 log.info("Connection timed out");
@@ -375,7 +335,7 @@ public class ProductParser {
             }
             catch (IOException | NullPointerException exp) {
                 log.info("Exception");
-                exp.printStackTrace();
+                ///exp.printStackTrace();
             }
         });
         System.out.println();

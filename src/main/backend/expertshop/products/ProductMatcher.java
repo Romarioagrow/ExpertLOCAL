@@ -7,6 +7,7 @@ import expertshop.repos.ProductRepo;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,132 +27,15 @@ public class ProductMatcher {
     private final ProductParser catalogParser;
     static int matchCounter = 0;
 
-    /*public void resolveAnnotation() {
-        List<Product> products = productRepo.findAllByModelNameNotNull();
-        products.forEach(product -> {
-            String anno = product.getOriginalAnnotation();
 
-            if (product.getSupplier().startsWith("2")) {
-                if (anno.contains("ULTRA HD (2160P)")) anno = anno.replaceAll("ULTRA HD (2160P)", "Разрешение: 3840x2160 (4K UHD)");
-                else if (anno.contains("FULL HD (1080P)")) anno = anno.replaceAll("ULTRA HD (2160P)", "Разрешение: 1920x1080 (Full HD)");
-                else if (anno.contains("HD (720P)")) anno = anno.replaceAll("ULTRA HD (2160P)", "Разрешение: 1366x768 (HD Ready)");
-                anno = anno.replaceAll(", ", "; ");
-            }
-
-            if (!anno.endsWith(";")) {
-                anno = anno.concat(";");
-            }
-
-            product.setOriginalAnnotation(anno);
-            productRepo.save(product);
-
-            log.info(product.getSupplier() + " " + product.getOriginalAnnotation());
-        });
-    }*/
-
-    public void findInBigBase() {
-        List<Product> products = productRepo.findAllByModelNameNotNull();
-        /*products.forEach(product -> {
-            if (product.getSupplier().startsWith("2")) {
-                product.setPics(null);
-                productRepo.save(product);
-            }
-        });*/
-
-        /*int count = (int) products.stream().filter(product -> product.getOriginalPic() != null).count();
-        log.info(count + " from " + products.size());*/
-
-        /*products.forEach(product -> {
-            if (product.getFormattedAnnotation() != null && (product.getFormattedAnnotation().isEmpty() || product.getFormattedAnnotation().equals("<br>"))) {
-                product.setFormattedAnnotation(null);
-                productRepo.save(product);
-            }
-        });*/
-
-        /*productRepo.findAll().forEach(product -> {
-            String[] cutters = {" ","(",",  ",", "," - "," , ","-"};
-            for (String cut : cutters) {
-                String anno = product.getOriginalAnnotation();
-                if (anno != null) {
-                    //System.out.println();
-                    //log.info(anno);
-                    if (!anno.isEmpty() && anno.startsWith(cut)) {
-                        String newAnno = StringUtils.substringAfter(anno, cut);
-                        product.setOriginalAnnotation(newAnno);
-                        productRepo.save(product);
-                        log.info(product.getOriginalAnnotation());
-                    }
-                }
-            }
-        });*/
-
-        AtomicInteger count = new AtomicInteger();
-        products.forEach(product ->
-        {
-            if (product.getFormattedAnnotation() != null)
-            {
-                ProductBase productBase = baseRepo.findFirstByShortModelEquals(product.getShortModel());
-                if (productBase != null)
-                {
-                    System.out.println();
-                    log.info("FOR PRODUCT " + product.getFullName());
-                    log.info("FOUND MATCH " + productBase.getFullName());
-
-                    product.setFullAnnotation(productBase.getAnnotation());
-                    product.setFormattedAnnotation(productBase.getParamsHTML());
-                    product.setPics(product.getPics());
-
-                    if (product.getSupplier().startsWith("2") && product.getOriginalPic() != null)
-                    {
-                        String pic = StringUtils.substringBefore(productBase.getPics(), " ");
-                        product.setOriginalPic(pic);
-                    }
-                    productRepo.save(product);
-                    count.getAndIncrement();
-                }
-            }
-        });
-        log.info(count.toString());
-    }
-
-    public void trimBigBase() {
-        List<ProductBase> bases = baseRepo.findAll();
-
-        bases.forEach(productBase -> {
-            String model = StringUtils.substringAfter(productBase.getFullName(), productBase.getBrand()).trim().toUpperCase();
-            String brand = productBase.getBrand().toLowerCase();
-            String shortModel = brand.concat(model).replaceAll("\\W", "");
-            productBase.setShortModel(shortModel);
-            baseRepo.save(productBase);
-            log.info(productBase.getShortModel());
-        });
-    }
-
-    public void createShortSearchName() {
-        List<Product> products = productRepo.findAllByModelNameNotNull();
-        products.forEach(product -> {
-            if (product.getShortSearchName() == null)
-            {
-                String single = product.getSingleType().replaceAll(" ", "").toLowerCase();
-                String brand  = product.getOriginalBrand().replaceAll(" ", "").toLowerCase();
-                String model  = product.getModelName().replaceAll(" ", "").toLowerCase();
-                String searchName = single.concat(brand).concat(model).replaceAll("-", "");
-                product.setShortSearchName(searchName);
-                productRepo.save(product);
-                log.info(product.getShortSearchName());
-            }
-        });
-    }
-
-    /// СОБРАТЬ ВСЕ ИСКЛЮЧЕНИЯ ЗДЕСЬ
     public void updateProductDB(MultipartFile file)
     {
-        try
-        {
+        try {
             catalogParser.parseProducts(file);
             matchProducts();
             resolveDuplicates();
-            createShortSearchName();
+            //createShortSearchName();
+            log.info("Обновление БД завершено!");
         }
         catch (NullPointerException | NumberFormatException e) {
             e.printStackTrace();
@@ -161,7 +45,7 @@ public class ProductMatcher {
     public void matchProducts()
     {
         List<Product> products = productRepo.findAllByProductGroupIsNull();
-
+        System.out.println();log.info("Разметка товаров...");log.info("Товаров без разметки: " + products.size());
         for (Product product : products)
         {
             if (productValidToMatch(product))
@@ -199,11 +83,9 @@ public class ProductMatcher {
                 matchProduct("Термометры, Термометр"											                , "Термометры"						    ,1.15	            , "Термометр"						    , "Климатическая техника"		    , product);
                 matchProduct("04.01, Кондиционеры"											                    , "Кондиционеры"						,1.15	            , "Кондиционер"						, "Климатическая техника"		    , product);
                 matchProduct("04.05, Водонагреватели"											                , "Водонагреватели"						,1.20	            , "Водонагреватель"					, "Климатическая техника"		    , product);
-                ////+
                 matchProduct("04.04.01, Увлажнители"											                , "Увлажнители воздуха"					,1.20	            , "Увлажнитель воздуха"				, "Климатическая техника"		    , product);
                 matchProduct("04.02, Конвектор, Обогреватель, Тепловая пушка, Тепловентилятор"					, "Обогреватели"						,1.20	            , "Обогреватель"						, "Климатическая техника"		    , product);
                 matchProduct("04.03, Вентиляторы"												                , "Вентиляторы"							,1.20	            , "Вентилятор"						, "Климатическая техника"		    , product);
-                ////+
                 matchProduct("04.04.03, Мойки воздуха"										                    , "Очистители воздуха"					,1.20	            , "Очиститель воздуха"				, "Климатическая техника"		    , product);
 
                 /*КОМПЬЮТЕРЫ И ОРГТЕХНИКА*/
@@ -305,7 +187,7 @@ public class ProductMatcher {
                 matchProduct("10.17.01, Синтезаторы и цифровые фортепьяно"					                    , "Музыкальные инструменты"	            ,1.15				, "Музыкальный инструмент"			, "Теле-Видео-Аудио"			    , product);
             }
         }
-        log.info("Total matches: " + matchCounter);
+        log.info("Размечено товаров: " + matchCounter);
         matchCounter = 0;
     }
 
@@ -317,18 +199,18 @@ public class ProductMatcher {
         for (String match : matches)
         {
             String annotation, model, name, fullName, groupBrand, type, formAnno;
-
             try
             {
                 if ((supp.equals("1RBT") && StringUtils.startsWithIgnoreCase(product.getOriginalType(), match.trim())))
                 {
-                    /// matchRBT()
                     String brand = product.getOriginalBrand();
 
+                    /// Заданная разметка
                     product.setProductGroup(productGroup);
                     product.setSingleType(single);
                     product.setProductCategory(productCategory);
 
+                    /// Вычисляемые параметры
                     model        = StringUtils.substringAfter(product.getOriginalName().toUpperCase(), brand.toUpperCase()).trim();
                     fullName     = product.getSingleType().concat(" ").concat(StringUtils.capitalize(brand.toLowerCase())).concat(" ").concat(model);
                     type         = resolveProductType(product.getOriginalType());
@@ -346,15 +228,14 @@ public class ProductMatcher {
                     product.setBonus(productBonus);
                     product.setFormattedAnnotation(formAnno);
                     product.setCoefficient(coefficient);
-
                     productRepo.save(product);
+
                     resolveShortModel(product);
                     matchCounter++;
                     return;
                 }
                 else if ((supp.equals("2RUS-BT") && (StringUtils.startsWithIgnoreCase(product.getRType(), match.trim()) || StringUtils.startsWithIgnoreCase(product.getRName(), match.trim()))))
                 {
-                    ///matchR
                     product.setProductGroup(productGroup);
                     product.setSingleType(single);
                     product.setProductCategory(productCategory);
@@ -388,8 +269,8 @@ public class ProductMatcher {
                         product.setFinalPrice(finalPrice);
                         product.setBonus(productBonus);
                         product.setCoefficient(coefficient);
-
                         productRepo.save(product);
+
                         resolveShortModel(product);
                         matchCounter++;
                         return;
@@ -397,7 +278,7 @@ public class ProductMatcher {
                 }
             }
             catch (NullPointerException e) {
-                log.warning("NULL at " + product.getOriginalName() + " :: " + product.getOriginalAnnotation());
+                log.warning(e.getClass().getName()/*"NULL at " + product.getOriginalName() + " :: " + product.getOriginalAnnotation()*/);
             }
         }
     }
@@ -409,6 +290,7 @@ public class ProductMatcher {
         Matcher matcher = pattern.matcher(modelName);
 
         String shortModel;
+        String single = product.getSingleType();
         String brand = product.getOriginalBrand().toLowerCase();
 
         if (matcher.matches())
@@ -417,7 +299,12 @@ public class ProductMatcher {
         }
         else shortModel = modelName.replaceAll("\\W", "");
 
-        String shortSearch = product.getSingleType().concat(brand).concat(shortModel).replaceAll("\\W", "");
+        String shortSearch = single.concat(brand).concat(shortModel)
+                .replaceAll(" ", "") /// REGEX!
+                .replaceAll("-", "")
+                .replaceAll("_", "")
+                .replaceAll("\\(", "")
+                .replaceAll("\\)", "").toLowerCase();
         product.setShortSearchName(shortSearch);
         product.setShortModel(brand.concat(shortModel));
         productRepo.save(product);
@@ -425,6 +312,8 @@ public class ProductMatcher {
 
     public void resolveDuplicates() throws NullPointerException
     {
+        System.out.println();
+        log.info("Обработка дубликатов...");
         productRepo.findAllByModelNameNotNull().forEach(product -> {product.setIsDuplicate(null);product.setHasDuplicates(null);productRepo.save(product);});
 
         List<Product> products = productRepo.findBySupplierAndProductGroupIsNotNull("1RBT");
@@ -437,18 +326,15 @@ public class ProductMatcher {
             if (duplicates.size() > 1)
             {
                 duplicates = duplicates.stream().filter(duplicate -> duplicate.getSupplier().equals("2RUS-BT")).collect(Collectors.toList());
-
                 if (duplicates.size() >= 1)
                 {
                     duplicates.sort(Comparator.comparing(Product::getFinalPrice));
-                    System.out.println();
-                    log.info("DUPLICATES FOR RBT PRODUCT: " + product.getFullName() + "; price " + product.getFinalPrice());
-                    duplicates.forEach(duplicate -> log.info(duplicate.getOriginalName() + " " + duplicate.getFinalPrice()));
+                    /*System.out.println();
+                    log.info("Дубликаты для: " + product.getFullName() + "; цена: " + product.getFinalPrice());
+                    duplicates.forEach(duplicate -> log.info(duplicate.getOriginalName() + " " + duplicate.getFinalPrice()));*/
                     count.getAndIncrement();
 
                     Product productOriginal = duplicates.stream().findFirst().get();
-                    //log.info("!!!ПЕРВЫЙ " + productOriginal.getFullName() + " " + productOriginal.getFinalPrice());
-
                     if (product.getFinalPrice() > productOriginal.getFinalPrice())
                     {
                         productOriginal.setFormattedAnnotation(product.getFormattedAnnotation());
@@ -463,7 +349,7 @@ public class ProductMatcher {
                             duplicate.setIsDuplicate(true);
                             productRepo.save(duplicate);
                         });
-                        log.info("FIRST: " + productOriginal.getSupplier() + " " + productOriginal.getFullName()+ " " + productOriginal.getFinalPrice());
+                        ///log.info("Оригинал: " + productOriginal.getSupplier() + " " + productOriginal.getFullName()+ " " + productOriginal.getFinalPrice());
                     }
                     else
                     {
@@ -473,62 +359,66 @@ public class ProductMatcher {
                             duplicate.setIsDuplicate(true);
                             productRepo.save(duplicate);
                         });
-                        log.info("FIRST: " + product.getSupplier() + " " + product.getFullName()+ " " + product.getFinalPrice());
-
+                        ///log.info("Оригинал: " + product.getSupplier() + " " + product.getFullName()+ " " + product.getFinalPrice());
                     }
                 }
             }
         });
-        System.out.println();
-        log.info(count.toString());
-        ///ОБРЕЗАТЬ СТРОКУ ДО СЛЕША, если больше одного
-            /*if (modelName.contains("/") && StringUtils.countMatches(modelName, "/") > 1) {
-                String shortModel = StringUtils.substringBefore(modelName, "/");
-                product.setShortName(shortModel);
-                productRepo.save(product);}*/
+        log.info("Товаров с дубликатами: " + count.toString());
     }
 
-    private int roundPrice(double coefficient, int price)
-    {
+    public void createShortSearchName() {
+        List<Product> products = productRepo.findAllByModelNameNotNull();
+        products.forEach(product ->
+        {
+            if (product.getShortSearchName() == null)
+            {
+                String single = product.getSingleType().replaceAll(" ", "").toLowerCase();
+                String brand  = product.getOriginalBrand().replaceAll(" ", "").toLowerCase();
+                String model  = product.getModelName().replaceAll(" ", "").toLowerCase();
+                String searchName = single.concat(brand).concat(model).replaceAll("-", "");
+                product.setShortSearchName(searchName);
+                productRepo.save(product);
+                //log.info(product.getShortSearchName());
+            }
+        });
+    }
+
+    private int roundPrice(double coefficient, int price) {
         int finalPrice = (int) (price * coefficient);
         String val = String.valueOf(finalPrice);
 
         if (finalPrice > 0 && finalPrice <= 10) {
             return 10;
         }
-        else if (finalPrice > 10 && finalPrice < 1000)
-        {
+        else if (finalPrice > 10 && finalPrice < 1000) {
             val = val.substring(0, val.length()-1).concat("9");
             return Integer.parseInt(val);
         }
-        else if (finalPrice > 1000)
-        {
+        else if (finalPrice > 1000) {
             val = val.substring(0, val.length()-2).concat("90");
             return Integer.parseInt(val);
         }
         else return finalPrice;
     }
-    private Integer matchBonus(int price)
-    {
+    private Integer matchBonus(int price) {
         int bonus = price * 3 / 100;
         String val = String.valueOf(bonus);
 
         if (bonus > 0 && bonus <= 10) {
             return 10;
         }
-        else
-        {
+        else {
             val = val.substring(0, val.length()-1).concat("0");
             return Integer.parseInt(val);
         }
     }
 
     private boolean productValidToMatch(Product product) {
-        return product.getProductGroup() == null && !product.getOriginalBrand().isEmpty() && (product.getOriginalName().toUpperCase()).contains(product.getOriginalBrand().toUpperCase());
+        return product.getProductGroup() == null && !product.getOriginalBrand().isEmpty() && (product.getOriginalName().toUpperCase()).contains(product.getOriginalBrand().toUpperCase()); /// В ЗАПРОС К БД
     }
 
-    public String formatAnnotation(String anno)
-    {
+    public String formatAnnotation(String anno) {
         if (!anno.isEmpty() && anno.contains(";")) {
             return anno.replaceAll(";", "<br>");
         }
@@ -547,6 +437,151 @@ public class ProductMatcher {
             return StringUtils.substringAfter(originalType, " ");
         }
         return originalType;
+    }
+
+    public void findInBigBase() {
+        List<Product> products = productRepo.findAllByModelNameNotNull();
+        AtomicInteger count = new AtomicInteger();
+        products.forEach(product ->
+        {
+            if (product.getFormattedAnnotation() != null)
+            {
+                ProductBase productBase = baseRepo.findFirstByShortModelEquals(product.getShortModel());
+                if (productBase != null)
+                {
+                    System.out.println();
+                    log.info("Для: " + product.getFullName());
+                    log.info("Нашлось: " + productBase.getFullName());
+                    product.setFullAnnotation(productBase.getAnnotation());
+                    product.setFormattedAnnotation(productBase.getParamsHTML());
+                    product.setPics(product.getPics());
+
+                    if (product.getSupplier().startsWith("2") && product.getOriginalPic() != null)
+                    {
+                        String pic = StringUtils.substringBefore(productBase.getPics(), " ");
+                        product.setOriginalPic(pic);
+                    }
+                    productRepo.save(product);
+                    count.getAndIncrement();
+                }
+            }
+        });
+        log.info("Всего: " + count.toString());
+    }
+
+    public void trimBigBase() {
+        List<ProductBase> bases = baseRepo.findAll();
+        bases.forEach(productBase ->
+        {
+            String model = StringUtils.substringAfter(productBase.getFullName(), productBase.getBrand()).trim().toUpperCase();
+            String brand = productBase.getBrand().toLowerCase();
+            String shortModel = brand.concat(model).replaceAll("\\W", "");
+            productBase.setShortModel(shortModel);
+            baseRepo.save(productBase);
+            log.info(productBase.getShortModel());
+        });
+    }
+
+
+
+    public void xxx() {
+        /*List<Product> list = productRepo.findAllByModelNameNotNull();
+        list.forEach(product -> {
+            String modelName = product.getModelName();
+            Pattern pattern = Pattern.compile("^[\\w\\W\\s?]+ [А-ЯA-Z\\W?]{3,20}$");
+            Matcher matcher = pattern.matcher(modelName);
+
+            String shortModel;
+            String single = product.getSingleType();
+            String brand = product.getOriginalBrand().toLowerCase();
+
+            if (matcher.matches())
+            {
+                shortModel = StringUtils.substringBeforeLast(modelName, " ").replaceAll("\\W", "");
+            }
+            else shortModel = modelName.replaceAll("\\W", "");
+
+            String shortSearch = single.concat(brand).concat(shortModel)
+                    .replaceAll(" ", "")
+                    .replaceAll("-", "")
+                    .replaceAll("_", "")
+                    .replaceAll("\\(", "")
+                    .replaceAll("\\)", "").toLowerCase();
+            product.setShortSearchName(shortSearch);
+            product.setShortModel(brand.concat(shortModel));
+            //productRepo.save(product);
+
+            System.out.println();
+            log.info(product.getOriginalName());
+            log.info(product.getSingleType());
+            log.info(brand);
+            log.info(shortModel);
+            log.info("Search " + shortSearch);
+            product.setShortSearchName(shortSearch);
+            product.setShortModel(brand.concat(shortModel));
+            productRepo.save(product);
+        });*/
+        /*List<Product> products = productRepo.findAllByModelNameNotNull();
+        products.forEach(product -> {
+            String anno = product.getOriginalAnnotation();
+            if (!anno.endsWith(";")) {
+                anno = anno.concat(";");
+                product.setOriginalAnnotation(anno);
+                //productRepo.save(product);
+            }
+            log.info(product.getSupplier() + " " + product.getOriginalAnnotation());
+        });*/
+
+        /*List<Product> list = productRepo.findAllByModelNameNotNull();
+        list.forEach(product -> {
+            String modelName = product.getModelName();
+            Pattern pattern = Pattern.compile("^[\\w\\W\\s?]+ [А-ЯA-Z\\W?]{3,20}$"); /// WHITE LIST
+            Matcher matcher = pattern.matcher(modelName);
+
+            String shortModel;
+            String brand = product.getOriginalBrand().toLowerCase();
+
+            if (matcher.matches())
+            {
+                log.info(modelName);
+            }
+            else log.info("lol");
+        });*/
+
+        /*
+        List<Product> products = productRepo.findAllByModelNameNotNull();
+        products.forEach(product -> {
+            if (product.getSupplier().startsWith("2")) {
+                product.setPics(null);
+                productRepo.save(product);
+            }
+        });*/
+
+        /*int count = (int) products.stream().filter(product -> product.getOriginalPic() != null).count();
+        log.info(count + " from " + products.size());*/
+
+        /*products.forEach(product -> {
+            if (product.getFormattedAnnotation() != null && (product.getFormattedAnnotation().isEmpty() || product.getFormattedAnnotation().equals("<br>"))) {
+                product.setFormattedAnnotation(null);
+                productRepo.save(product);
+            }
+        });*/
+        /*productRepo.findAll().forEach(product -> {
+            String[] cutters = {" ","(",",  ",", "," - "," , ","-"};
+            for (String cut : cutters) {
+                String anno = product.getOriginalAnnotation();
+                if (anno != null) {
+                    //System.out.println();
+                    //log.info(anno);
+                    if (!anno.isEmpty() && anno.startsWith(cut)) {
+                        String newAnno = StringUtils.substringAfter(anno, cut);
+                        product.setOriginalAnnotation(newAnno);
+                        productRepo.save(product);
+                        log.info(product.getOriginalAnnotation());
+                    }
+                }
+            }
+        });*/
     }
 }
     /*public void resolveDuplicates(String request)

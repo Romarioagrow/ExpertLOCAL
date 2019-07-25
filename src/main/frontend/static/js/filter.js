@@ -13,7 +13,7 @@ function addNewCoeff(label) {
     const val = label.getAttribute("name");
     console.log(val);
     $(newCoeff).empty().append(
-        '<input type="text" id="newCoeffEdit" value="'+val+'">'
+        '<input type="text" id="newCoeffEdit" value="'+val+'" style="width: 3rem">'
     )
 }
 

@@ -17,7 +17,7 @@
                 </ul>
                 <div class="tab-content pt-0" style="margin-top: 2rem">
                     <div class="tab-pane fade <#if url?contains("db")>in show active</#if>" id="cat1" role="tabpanel">
-                        <div class="card">
+                        <div class="card" style="width: 30rem; margin-left: 40rem">
                             <div class="card-body">
                                 <h3>База товаров</h3>
                                 <form method="post" action="/supplier/updateDB" enctype="multipart/form-data">
@@ -28,17 +28,17 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-success btn-lg">Обновить базу!</button>
+                                        <button type="submit" class="btn btn-success btn-lg btn-block">Обновить базу!</button>
                                     </div>
                                 </form>
                                 <form method="post" action="/supplier/match-products">
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-secondary btn-sm secc">Обработать товары!</button>
+                                        <button type="submit" class="btn btn-secondary btn-block btn-sm secc">Обработать товары!</button>
                                     </div>
                                 </form>
                                 <form method="post" action="/supplier/xxx">
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-danger btn-sm secc" style="background-color: #c40030 !important;">xxx</button>
+                                        <button type="submit" class="btn btn-danger btn-block btn-sm secc" style="background-color: #c40030 !important;">xxx</button>
                                     </div>
                                 </form>
                                 <h3>Парсер картинок RUS</h3>

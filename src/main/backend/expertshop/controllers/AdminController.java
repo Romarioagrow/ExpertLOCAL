@@ -73,7 +73,7 @@ public class AdminController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String matchDuplicates(Model model)
     {
-        productMatcher.resolveDuplicates();//findInBigBase();
+        productMatcher.xxx();
         model.addAttribute("url", "db");
         return "pages/supplier";
     }
