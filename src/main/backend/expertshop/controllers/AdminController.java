@@ -39,20 +39,16 @@ public class AdminController {
     @GetMapping("/products")
     @PreAuthorize("hasAuthority('ADMIN')")
     private String products(@RequestParam String request, @RequestParam (value = "mapped", required = false) String mapped, @RequestParam (value = "withpic", required = false) String withpic, Model model) {
-        log.info(request);
-        log.info("mapped: " + mapped);
-        log.info("withpic: " + withpic);
-
         model.addAttribute("url", "products");
         model.addAttribute("request", request);
-        model.addAttribute("products", productService.showReqProducts(request.trim(), mapped, withpic));
+        model.addAttribute("products", productService.showReqProducts(request.trim(), mapped, withpic, model));
         return "pages/supplier";
     }
 
     @GetMapping("/orders")
-    private String orders(Model model) {
+    private String orders(Model model, @RequestParam String request) {
         model.addAttribute("url", "orders");
-        model.addAttribute("orders", orderService.showAcceptedOrders());
+        model.addAttribute("orders", orderService.showAcceptedOrders(request));
         return "pages/supplier";
     }
 
@@ -77,7 +73,7 @@ public class AdminController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String matchDuplicates(Model model)
     {
-        productMatcher.findInBigBase();
+        productMatcher.resolveDuplicates();//findInBigBase();
         model.addAttribute("url", "db");
         return "pages/supplier";
     }

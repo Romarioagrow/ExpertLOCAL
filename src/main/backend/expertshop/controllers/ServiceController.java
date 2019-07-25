@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,7 +34,13 @@ public class ServiceController {
     @PreAuthorize("hasAuthority('ADMIN')")
     private boolean saveProducts(@RequestBody Map<String, String> data) {
         return productService.editProducts(data);
-        //return "pages/supplier";
+    }
+    @PostMapping("/supplier/products/coefficient")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    private String saveNewCoefficient(@RequestBody String[] coeff) {
+        log.info(Arrays.toString(coeff));
+        productService.saveNewCoeff(coeff);
+        return "pages/supplier";
     }
 
     /*PRODUCTS FILTERS*/

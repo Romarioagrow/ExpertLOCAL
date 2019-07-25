@@ -36,8 +36,6 @@ public class Product implements Serializable {
     /*ОБЩИЕ ПОЛЯ*/
     private String supplier;
 
-    private Boolean deliveryAvailable, availableNow = false;
-
     private LocalDate update;
 
     /*ДЛЯ ВЫВОДА НА СТРАНИЦУ*/
@@ -65,12 +63,9 @@ public class Product implements Serializable {
     @Column(length = 20000)
     private String pics;
 
-    private String shortModel, shortName, shortSearchName;
+    private String shortModel, shortSearchName;
 
     private String linkR;
-
-    @Column(length = 10000)
-    private String description;
 }
 
 

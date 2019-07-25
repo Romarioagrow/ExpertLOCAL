@@ -58,7 +58,7 @@ public class OrderService {
 
             if (order == null)
             {
-                log.info("NO ORDER, NEW ONE!");
+                //log.info("NO ORDER, NEW ONE!");
                 order = new Order();
                 order.setUserID(user.getUserID());
                 order.setTotalBonus(product.getBonus());
@@ -78,9 +78,9 @@ public class OrderService {
             discount = calculateDiscount(user, order);
         }
 
-        System.out.println("\n");
-        log.info("Product with ID " + productID + " add to getOrder");
-        log.info("Product bonus: " + product.getBonus());
+        //System.out.println("\n");
+        //log.info("Product with ID " + productID + " add to getOrder");
+        //log.info("Product bonus: " + product.getBonus());
 
         return payload(order.getProductsAmount(), discount);
     }
@@ -111,8 +111,7 @@ public class OrderService {
 
         if (user != null) discount = calculateDiscount(user, order);
 
-        log.info("Order total price: " + order.getTotalPrice());
-        //return packageOrderAndProduct(order, orderedProduct);
+        //log.info("Order total price: " + order.getTotalPrice());
         return payload(order, orderedProduct, discount);
     }
 
@@ -193,7 +192,6 @@ public class OrderService {
         else if (discountPercent < 20)
         {
             order.setDiscountPrice(order.getTotalPrice() - bonusOff);
-            //user.setBonus(user.getBonus() - bonusOff);
             order.setTotalDiscount(discountPercent);
             order.setBonusOff(bonusOff);
         }
@@ -241,20 +239,22 @@ public class OrderService {
         {
             order = getSessionOrder();
 
-            order.setName   (orderContacts.getFirstName());
-            order.setSurname(orderContacts.getLastName());
-            order.setMobile (orderContacts.getUsername());
-            order.setEmail  (orderContacts.getEmail());
+            order.setName    (orderContacts.getFirstName());
+            order.setSurname (orderContacts.getLastName());
+            order.setMobile  (orderContacts.getUsername());
+            order.setEmail   (orderContacts.getEmail());
+            order.setShortTel(orderContacts.getUsername().replaceAll("\\W", ""));
             acceptOrder(order);
         }
         else
         {
             order = orderRepo.findByUserIDAndAcceptedFalse(user.getUserID());
 
-            order.setName   (user.getFirstName());
-            order.setSurname(user.getLastName());
-            order.setMobile (user.getEmail());
-            order.setEmail  (user.getUsername());
+            order.setName    (user.getFirstName());
+            order.setSurname (user.getLastName());
+            order.setMobile  (user.getEmail());
+            order.setEmail   (user.getUsername());
+            order.setShortTel(user.getUsername().replaceAll("\\W", ""));
 
             int bonusOff;
             if (order.getBonusOff() == null) bonusOff = 0;
@@ -280,13 +280,13 @@ public class OrderService {
             orderList.append(item.toString());
         }
 
-        log.info(orderList.toString());
+        //log.info(orderList.toString());
         mailService.sendOrderDetail(orderList, order);
         //mailService.sendEmailToCustomer(order, orderList);
 
         order.setAccepted(true);
         orderRepo.save(order);
-        log.fine("Order " + order.getOrderID() + " is accepted!");
+        //log.fine("Order " + order.getOrderID() + " is accepted!");
     }
 
     private LinkedList<Integer> payload(Integer productsAmount, int discount) {
@@ -352,7 +352,9 @@ public class OrderService {
         else return new HashSet<>();
     }
 
-    public List<Order> showAcceptedOrders() {
-        return orderRepo.findAllByAcceptedTrue();
+    public List<Order> showAcceptedOrders(String request) {
+        if (request.isEmpty()) return orderRepo.findAllByAcceptedTrue();
+
+        return null;
     }
 }

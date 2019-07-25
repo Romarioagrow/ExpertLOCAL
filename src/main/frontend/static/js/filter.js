@@ -9,15 +9,47 @@ $(document).ready(function(){
     $('td').on('click', filterProducts);
 });*/
 
+function addNewCoeff(label) {
+    const val = label.getAttribute("name");
+    console.log(val);
+    $(newCoeff).empty().append(
+        '<input type="text" id="newCoeffEdit" value="'+val+'">'
+    )
+}
+
+function saveNewCoeff(button) {
+    console.log(button);
+    const request  = button.getAttribute("name");
+    const newCoeff = $(newCoeffEdit).val();
+
+    data = [];
+    data.push(request, newCoeff);
+    //data[request] = newCoeff;
+
+    console.log(data);
+
+    data = JSON.stringify(data);
+
+    $.post({
+        url: '/supplier/products/coefficient',
+        type: 'POST',
+        dataType: 'json',
+        data: data,
+        processData: false,
+        headers: {'Content-Type': 'application/json'},
+        complete: function()
+        {
+            console.log('ok');
+            location.reload();
+        }
+    });
+
+}
 
 function editProduct(product) {
     const productDivID = '#'+product.id;
     const productID = product.getAttribute("name").substr(0, product.getAttribute("name").indexOf(";"));
     const productFinalPrice = product.getAttribute("name").substr(product.getAttribute("name").indexOf(";")+1);
-
-    console.log(productDivID);
-    console.log(productFinalPrice);
-    console.log(productID);
 
     $(productDivID).empty().append(
         '<input type="text" class="editPrice" id="'+productDivID+'" value="'+productFinalPrice+'" style="width: 5rem; background-color: #a0ffc8" name="'+productID+';'+productFinalPrice+'">'
@@ -34,15 +66,15 @@ function saveProduct() {
         let productFinalPriceDB = name.substr(name.indexOf(";")+1);
         let newPrice = this.value;
 
-        console.log('\n');
-        console.log(productID);
-        console.log(productFinalPriceDB);
-        console.log(newPrice);
+        //console.log('\n');
+        //console.log(productID);
+        //console.log(productFinalPriceDB);
+        //console.log(newPrice);
 
         data[productID] = newPrice;
     });
 
-    console.log(data);
+    //console.log(data);
     data = JSON.stringify(data);
 
     $.ajax({
@@ -96,7 +128,7 @@ String.prototype.capitalize = function() {
 function displayBrands() {
     const url = resolveURL();
     const request = url.substring(url.lastIndexOf("/")+1);
-    console.log(request);
+    //console.log(request);
 
     $.ajax({
         url: 'http://localhost:8080/brands/',
@@ -110,8 +142,8 @@ function displayBrands() {
             const brands  = payload.responseJSON[0];
             const filters = payload.responseJSON[1];
 
-            console.log(brands);
-            console.log(filters);
+            //console.log(brands);
+            //console.log(filters);
 
             $('#brands-view').empty();
 

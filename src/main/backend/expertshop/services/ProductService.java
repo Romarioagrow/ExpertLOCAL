@@ -44,19 +44,19 @@ public class ProductService {
 
     public List<Product> searchProducts(String searchRequest) {
         log.info("Search request: " + searchRequest);
-        String search = searchRequest.replaceAll(" ", "").replaceAll("-", "");
+        String search = searchRequest.replaceAll(" ", "").replaceAll("-", "").toLowerCase();
         log.info(search);
 
-        List<Product> searchedProducts = productRepo.findAllByProductGroupIsNotNullAndIsDuplicateIsNull().stream()
+        List<Product> searchedProducts = productRepo.findAllByProductGroupIsNotNullAndIsDuplicateIsNullAndShortSearchNameContainsIgnoreCase(search).stream()
                 .filter(product -> StringUtils.containsIgnoreCase(product.getShortSearchName(), search))
                 .collect(Collectors.toList());
 
-        if (searchedProducts.size() == 0)
+        /*if (searchedProducts.size() == 0)
         {
             searchedProducts = productRepo.findAllByProductGroupIsNotNull().stream()
                     .filter(product -> StringUtils.containsIgnoreCase(product.getOriginalName(), searchRequest))
                     .collect(Collectors.toList());
-        }
+        }*/
 
         log.info("Products found: " + searchedProducts.size());
         return searchedProducts;
@@ -105,7 +105,7 @@ public class ProductService {
         return null;
     }
 
-    public List<Product> showReqProducts(String request, String isMapped, String withPic) {
+    public List<Product> showReqProducts(String request, String isMapped, String withPic, Model model) {
         List<Product> products = new ArrayList<>();
 
         if (!request.isEmpty())
@@ -115,7 +115,10 @@ public class ProductService {
             if (products.size() != 0) return products;
 
             products = productRepo.findByProductGroupEqualsIgnoreCase(request);
-            if (products.size() != 0) return products;
+            if (products.size() != 0) {
+                model.addAttribute("coefficient", products.stream().findFirst().get().getCoefficient());
+                return products;
+            }
 
             products = productRepo.findByProductCategoryEqualsIgnoreCase(request);
             if (products.size() != 0) return products;
@@ -148,6 +151,15 @@ public class ProductService {
             productRepo.save(product);
         });
         return true;
+    }
+
+    public void saveNewCoeff(String[] coeff) {
+        List<Product> list = productRepo.findByProductGroupEqualsIgnoreCase(coeff[0]);
+        list.forEach(product -> {
+            product.setCoefficient(Double.parseDouble(coeff[1].replaceAll(",", ".")));
+            productRepo.save(product);
+            log.info(product.getCoefficient().toString());
+        });
     }
 }
 

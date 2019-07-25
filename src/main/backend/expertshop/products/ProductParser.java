@@ -350,13 +350,13 @@ public class ProductParser {
                         }
                     }
 
-                    if (product.getDescription() == null)
+                    /*if (product.getDescription() == null)
                     {
                         Elements description = page.getElementsByClass("bx_item_description");
                         for (Element el : description) {
                             product.setDescription(el.html());
                         }
-                    }
+                    }*/
                     productRepo.save(product);
                 }
                 else log.info("ССЫЛКА ОТСУТСТВУЕТ!");

@@ -26,7 +26,7 @@ public class ProductMatcher {
     private final ProductParser catalogParser;
     static int matchCounter = 0;
 
-    public void resolveAnnotation() {
+    /*public void resolveAnnotation() {
         List<Product> products = productRepo.findAllByModelNameNotNull();
         products.forEach(product -> {
             String anno = product.getOriginalAnnotation();
@@ -47,7 +47,7 @@ public class ProductMatcher {
 
             log.info(product.getSupplier() + " " + product.getOriginalAnnotation());
         });
-    }
+    }*/
 
     public void findInBigBase() {
         List<Product> products = productRepo.findAllByModelNameNotNull();
@@ -85,18 +85,7 @@ public class ProductMatcher {
             }
         });*/
 
-        List<Product> products1 = productRepo.findAllByModelNameNotNull();
-        products1.forEach(product -> {
-            String single = product.getSingleType().replaceAll(" ", "").toLowerCase();
-            String brand  = product.getOriginalBrand().replaceAll(" ", "").toLowerCase();
-            String model  = product.getModelName().replaceAll(" ", "").toLowerCase();
-            String searchName = single.concat(brand).concat(model).replaceAll("-", "");
-            product.setShortSearchName(searchName);
-            productRepo.save(product);
-            log.info(product.getShortSearchName());
-        });
-
-        /*AtomicInteger count = new AtomicInteger();
+        AtomicInteger count = new AtomicInteger();
         products.forEach(product ->
         {
             if (product.getFormattedAnnotation() != null)
@@ -122,7 +111,7 @@ public class ProductMatcher {
                 }
             }
         });
-        log.info(count.toString());*/
+        log.info(count.toString());
     }
 
     public void trimBigBase() {
@@ -138,6 +127,22 @@ public class ProductMatcher {
         });
     }
 
+    public void createShortSearchName() {
+        List<Product> products = productRepo.findAllByModelNameNotNull();
+        products.forEach(product -> {
+            if (product.getShortSearchName() == null)
+            {
+                String single = product.getSingleType().replaceAll(" ", "").toLowerCase();
+                String brand  = product.getOriginalBrand().replaceAll(" ", "").toLowerCase();
+                String model  = product.getModelName().replaceAll(" ", "").toLowerCase();
+                String searchName = single.concat(brand).concat(model).replaceAll("-", "");
+                product.setShortSearchName(searchName);
+                productRepo.save(product);
+                log.info(product.getShortSearchName());
+            }
+        });
+    }
+
     /// СОБРАТЬ ВСЕ ИСКЛЮЧЕНИЯ ЗДЕСЬ
     public void updateProductDB(MultipartFile file)
     {
@@ -146,16 +151,7 @@ public class ProductMatcher {
             catalogParser.parseProducts(file);
             matchProducts();
             resolveDuplicates();
-            /*productRepo.findAllByModelNameNotNull().forEach(product -> {
-                String[] cutters = {" ","(",",  ",", "," - "," , ","-"};
-                for (String cut : cutters) {
-                    String anno = product.getOriginalAnnotation();
-                    if (!anno.isEmpty() && anno.startsWith(cut)) {
-                        String newAnno = StringUtils.substringAfter(anno, cut);
-                        log.info(newAnno);
-                    }
-                }
-            });*/
+            createShortSearchName();
         }
         catch (NullPointerException | NumberFormatException e) {
             e.printStackTrace();
@@ -164,9 +160,7 @@ public class ProductMatcher {
 
     public void matchProducts()
     {
-        log.finest("MATCH PRODUCTS METHOD!");
         List<Product> products = productRepo.findAllByProductGroupIsNull();
-        log.info(products.size() + "");
 
         for (Product product : products)
         {
@@ -180,7 +174,6 @@ public class ProductMatcher {
                 matchProduct("Автоусилитель"													                , "Автоусилители"						,1.18	            , "Автоусилитель"					    , "Автотовары"					, product);
 
                 /*ИНСТРУМЕНТЫ ДЛЯ ДОМА*/
-                /// ПЕРЕРАСПРЕДЕЛИТЬ ГРУППЫ ДРЕЛИ БОЛЬШИЕ - ШУРУПОВЕРТЫ
                 matchProduct("06.01.01, 06.01.02, 06.01.03, 06.01.05, Шуруповерты, Дрели"				        , "Дрели-Шуруповерты"					,1.16	            , "Дрель-Шуруповерт"					, "Инструменты для дома"		    , product);
                 matchProduct("06.02, Шлифовальные машины"										                , "Шлифовальные машины"					,1.16	            , "Шлифовальная машина"				, "Инструменты для дома"		    , product);
                 matchProduct("06.06.08, Сварочные аппараты"									                , "Сварочное оборудование"				,1.16	            , "Сварочный аппарат"					, "Инструменты для дома"		    , product);
@@ -257,10 +250,12 @@ public class ProductMatcher {
                 matchProduct("03.03.02, 03.03.03, 03.03.04, Отпариватели, Ручные отпариватели"					, "Отпариватели"			            ,1.20				, "Отпариватель"						, "Техника для дома"			    , product);
 
                 /*КУХОННАЯ ТЕХНИКА*/
-                matchProduct("Тостеры"											                                , "Тостеры"	                            ,1.15				, "Тостер"						, "Кухонная техника"			    , product);
-                matchProduct("15.01.27.03"											                            , "Кулеры"	                            ,1.15				, "Кулер"						, "Кухонная техника"			    , product);
+                matchProduct("Тостеры"											                                , "Тостеры"	                            ,1.15				, "Тостер"						    , "Кухонная техника"			    , product);
+                matchProduct("15.01.27.03"											                            , "Кулеры"	                            ,1.15				, "Кулер"						        , "Кухонная техника"			    , product);
                 matchProduct("01.01.02, Холод."											                    , "Холодильники"	                    ,1.15				, "Холодильник"						, "Кухонная техника"			    , product);
-                matchProduct("01.01.03, Мороз."											                    , "Морозильники"	                    ,1.15				, "Морозильник"						, "Кухонная техника"			    , product);
+                matchProduct("01.01.03.03, Мороз."											                    , "Морозильники"	                    ,1.15				, "Морозильник"						, "Кухонная техника"			    , product);
+                matchProduct("01.01.03.04, Мороз. лари"											            , "Морозильные лари"	                ,1.15				, "Морозильный ларь"					, "Кухонная техника"			    , product);
+
                 matchProduct("01.02.01, 01.02.02, Плита эл."						                            , "Электрические плиты"		            ,1.17				, "Эликтрическая плита"				, "Кухонная техника"			    , product);
                 matchProduct("01.02.03, Плитки эл. настольные"						                            , "Электрические плитки"	            ,1.17				, "Эликтрическая плитка"				, "Кухонная техника"			    , product);
                 matchProduct("01.03.04, Плитки газ. настольные"						                        , "Газовые плитки"			            ,1.17			    , "Газовая плитка"				    , "Кухонная техника"			    , product);
@@ -430,11 +425,10 @@ public class ProductMatcher {
 
     public void resolveDuplicates() throws NullPointerException
     {
-        log.finest("RESOLVE DUPLICATES METHOD!");
+        productRepo.findAllByModelNameNotNull().forEach(product -> {product.setIsDuplicate(null);product.setHasDuplicates(null);productRepo.save(product);});
 
         List<Product> products = productRepo.findBySupplierAndProductGroupIsNotNull("1RBT");
         products.sort(Comparator.comparing(Product::getModelName));
-        products.forEach(product -> {product.setIsDuplicate(null);product.setHasDuplicates(null);productRepo.save(product);});
 
         AtomicInteger count = new AtomicInteger();
         products.forEach(product ->

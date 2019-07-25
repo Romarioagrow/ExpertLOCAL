@@ -40,13 +40,13 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     List<Product> findByProductCategoryAndSupplierAndProductGroupIsNotNull(String cat, String supp);
     List<Product> findByProductGroup(String group);
     List<Product> findByProductGroupAndSupplier(String group, String sup);
-    List<Product> findByShortNameStartingWith(String s);
     List<Product> findByShortModelEquals(String s);
     List<Product> findByShortModelEqualsAndProductGroupIsNotNull(String s);
 
     List<Product> findAllByProductGroupIsNull();
     List<Product> findAllByProductGroupIsNotNull();
     List<Product> findAllByProductGroupIsNotNullAndIsDuplicateIsNull();
+    List<Product> findAllByProductGroupIsNotNullAndIsDuplicateIsNullAndShortSearchNameContainsIgnoreCase(String search);
 
     //List<Product> findProductsByProductGroupEqualsIgnoreCase(String productGroup);
     List<Product> findBySupplier(String supplier);

@@ -54,6 +54,8 @@ public class Order implements Serializable {
     private String email;
     private String address;
 
+    private String shortTel;
+
     @Column(name = "open_date")
     private LocalDateTime orderOpenDate = LocalDateTime.now();
 

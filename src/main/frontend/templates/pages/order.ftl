@@ -242,7 +242,7 @@
                             </ul>
                             <div class="tab-content pt-0">
                                 <div class="tab-pane fade in show active" id="panel11" role="tabpanel">
-                                    <br><h5>Заберите ваш заказ с магазина по адресу: город Чебаркуль, Ленина 32</h5><#--добавить ссылку на карту-->
+                                    <br><h5>Заберите ваш заказ с магазина по адресу: город Чебаркуль, Карпенко 7</h5><#--добавить ссылку на карту-->
                                 </div>
                                 <div class="tab-pane fade" id="panel12" role="tabpanel">
                                     <p class="h4 mb-4" id="contact-info" style="margin-top: 1rem; margin-left: -1rem">Адрес для доставки</p>
@@ -251,7 +251,7 @@
                                             <div class="col">
                                                 <div class="md-form">
                                                     <input type="text" id="city" name="city" class="form-control">
-                                                    <label for="city" class="">Город</label>
+                                                    <label for="city" class="">Населенный пункт</label>
                                                 </div>
                                             </div>
                                             <div class="col">

@@ -59,7 +59,7 @@
                                             <input class="form-control" type="text" placeholder="Группа, категория, наименование, поставщик" id="request" name="request" aria-label="Search" value="${request!''}">
                                         </div>
                                         <div class="col-2">
-                                            <button href="#!" class="btn btn-primary btn-md" type="submit" style="margin-top: -0.2rem">Найти</button>
+                                            <button href="#!" class="btn btn-primary btn-block" type="submit" style="margin-top: -0.2rem">Найти</button>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -74,6 +74,17 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <#if coefficient??>
+                                        <div class="row" style="margin-top: 1rem">
+                                            <div class="col-4">
+                                                Коеффициент для группы: ${request} = <strong id="newCoeff" ondblclick="addNewCoeff(this)" name="${coefficient}">${coefficient}</strong><#--<input type="text" id="newCoeff" value="${coefficient}" style="width: 4rem">-->
+                                            </div>
+                                            <div class="col">
+
+                                                <button type="button" onclick="saveNewCoeff(this)" class="btn btn-deep-purple btn-sm" name="${request}">Сохранить</button>
+                                            </div>
+                                        </div>
+                                    </#if>
                                 </form>
                             </div>
                         </div>
@@ -138,9 +149,16 @@
                     <div class="tab-pane fade <#if url?contains("orders")>in show active</#if>" id="cat3" role="tabpanel">
                         <div class="card">
                             <div class="card-body">
-                                <h3>Принятые заказы</h3>
                                 <form method="get" action="/supplier/orders">
-                                    <button type="submit" class="btn btn-success">Показать заказы</button>
+                                    <h3>Принятые заказы</h3>
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <input class="form-control" type="text" placeholder="№Заказа, Телефон или ФИО" id="request" name="request" aria-label="Search" value="${request!''}">
+                                        </div>
+                                        <div class="col-2">
+                                            <button href="#!" class="btn btn-success btn-block" type="submit" style="margin-top: -0.2rem">Найти</button>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                         </div>
