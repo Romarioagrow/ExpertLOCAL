@@ -79,50 +79,60 @@
                         </div>
                         <div class="card" style="margin-top: 2rem">
                             <div class="card-body">
-                                <table class="table table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>ID</th>
-                                        <th>Поставщик</th>
-                                        <th>Наименование</th>
-                                        <th>Категория</th>
-                                        <th>Группа</th>
-                                        <th>Бренд</th>
-                                        <th>Модель</th>
-                                        <th>Цена ориг.</th>
-                                        <th>Цена итог.</th>
-                                        <th>Кофф.</th>
-                                        <th>Бонус</th>
-                                        <th>Обновление</th>
-                                        <th>Изобр.</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <#if products??>
-                                        <#list products as product>
-                                            <tr>
-                                                <th scope="row">${product.productID}</th>
-                                                <td>${product.supplier!'-'}</td>
-                                                <td><strong>${product.originalName!'-'}</strong></td>
-                                                <td>${product.productCategory!'-'}</td>
-                                                <td>${product.productGroup!'Нет'}</td>
-                                                <td>${product.originalBrand!'-'}</td>
-                                                <td>${product.modelName!'-'}</td>
-                                                <td style="width: 6rem;">${product.originalPrice!'-'}</td>
-                                                <td><strong><input type="text" value="${product.finalPrice!'-'}" style="width: 5rem;"></strong></td>
-                                                <td>${product.coefficient!'-'}</td>
-                                                <td>${product.bonus!'-'}</td>
-                                                <td>${product.update!'-'}</td>
-                                                <#if product.originalPic??>
-                                                    <td>Есть</td>
-                                                <#else>
-                                                    <td>Нет</td>
-                                                </#if>
-                                            </tr>
-                                        </#list>
-                                    </#if>
-                                    </tbody>
-                                </table>
+                                <#if products??>
+                                    <div class="row">
+                                        <div class="col">
+                                            <button onclick="saveProduct()" type="submit" class="btn btn-success btn-block btn-md">Сохранить</button>
+                                        </div>
+                                    </div>
+                                </#if>
+                                <form method="post" action="/supplier/products/save">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Поставщик</th>
+                                            <th>Наименование</th>
+                                            <th>Категория</th>
+                                            <th>Группа</th>
+                                            <th>Бренд</th>
+                                            <th>Модель</th>
+                                            <th>Цена</th>
+                                            <th>Цена итог.</th>
+                                            <th>Кофф.</th>
+                                            <th>Бонус</th>
+                                            <th>Обновление</th>
+                                            <th>Изобр.</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <#if products??>
+                                            <#list products as product>
+                                                <tr>
+                                                    <th scope="row">${product.productID}</th>
+                                                    <td>${product.supplier!'-'}</td>
+                                                    <td><strong>${product.originalName!'-'}</strong></td>
+                                                    <td>${product.productCategory!'-'}</td>
+                                                    <td>${product.productGroup!'Нет'}</td>
+                                                    <td>${product.originalBrand!'-'}</td>
+                                                    <td>${product.modelName!'-'}</td>
+                                                    <td style="width: 6rem;">${product.originalPrice!'-'}</td>
+                                                    <td ondblclick="editProduct(this)" id="finalPrice${product.productID?replace(".","")}" name="${product.finalPrice!'-'}"><strong>${product.finalPrice!'-'}</strong></td>
+                                                    <#--<td onclick="editProduct(this)" id="finalPrice${product.productID}" name="${product.finalPrice!'-'}"><strong id="strong${product.productID}">${product.finalPrice!'-'}</strong><input type="text" id="input${product.productID}" value="${product.finalPrice!'-'}" style="width: 5rem; display: none" name="finalPrice" ></td>-->
+                                                    <td>${product.coefficient!'-'}</td>
+                                                    <td>${product.bonus!'-'}</td>
+                                                    <td>${product.update!'-'}</td>
+                                                    <#if product.originalPic??>
+                                                        <td>Есть</td>
+                                                    <#else>
+                                                        <td>Нет</td>
+                                                    </#if>
+                                                </tr>
+                                            </#list>
+                                        </#if>
+                                        </tbody>
+                                    </table>
+                                </form>
                             </div>
                         </div>
                         <#--<tr>

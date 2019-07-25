@@ -4,9 +4,37 @@
 $(document).ready(function(){
     $('input[type="radio"]')    .on('change', filterProducts);
 });*/
+
 /*$(document).ready(function(){
-    $('input[type="text"]') .on('keyup', filterProducts);
+    $('td').on('click', filterProducts);
 });*/
+
+
+function editProduct(product) {
+    const productID = '#'+product.id;
+    const productFinalPrice = product.getAttribute("name");
+    console.log(productID);
+    console.log(productFinalPrice);
+
+    $(productID).empty().append(
+        '<input type="text" value="'+productFinalPrice+'" style="width: 5rem; background-color: #a0ffc8" name="finalPrice">'
+    );
+
+}
+
+function saveProduct() {
+    $('input:text').each(function()
+    {
+        let key = this.getAttribute("name");
+        let val = $(this).val();
+
+        if (!filters.hasOwnProperty(key)) {
+            filters[key] = val;
+        }
+        else filters[key] = filters[key].concat(", ").concat(val);
+    });
+}
+
 
 $(document).ready(function(){
     displayBrands()
@@ -21,7 +49,7 @@ function replaceAll(str, find, replace) {
 
 String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
-}
+};
 
 function displayBrands() {
     const url = resolveURL();

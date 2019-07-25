@@ -37,6 +37,7 @@ public class AdminController {
     }
 
     @GetMapping("/products")
+    @PreAuthorize("hasAuthority('ADMIN')")
     private String products(@RequestParam String request, @RequestParam (value = "mapped", required = false) String mapped, @RequestParam (value = "withpic", required = false) String withpic, Model model) {
         log.info(request);
         log.info("mapped: " + mapped);
@@ -47,8 +48,15 @@ public class AdminController {
         model.addAttribute("products", productService.showReqProducts(request.trim(), mapped, withpic));
         return "pages/supplier";
     }
+    @PostMapping("/products/save")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    private String saveProducts() {
+        return "pages/supplier";
+    }
+
 
     @PostMapping("/updateDB")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String loadCSV(@RequestParam("file") MultipartFile file, Model model, @AuthenticationPrincipal User user)
     {
         productMatcher.updateProductDB(file);
@@ -57,6 +65,7 @@ public class AdminController {
     }
 
     @PostMapping("/match-products")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String matchProducts(Model model)
     {
         productMatcher.matchProducts();
@@ -64,6 +73,7 @@ public class AdminController {
         return "pages/supplier";
     }
     @PostMapping("/xxx")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String matchDuplicates(Model model)
     {
         productMatcher.findInBigBase();
@@ -72,6 +82,7 @@ public class AdminController {
     }
 
     @PostMapping("/pics")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String checkProductPics(Model model)
     {
         catalogParser.parseRusBT();

@@ -11,7 +11,6 @@ function addToOrder(button) {
 
     var buttonID = '#addToOrderDiv' + productID;
     buttonID = replaceAll(buttonID, ".", "");
-    //console.log('Id блока кнопки ' + buttonID);
 
     $(buttonID).empty().append(
         '<a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button>'
