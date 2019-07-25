@@ -45,6 +45,8 @@ public class Product implements Serializable {
 
     private Integer finalPrice, bonus;
 
+    private Double coefficient;
+
     private Boolean isDuplicate, hasDuplicates, isAvailable;
 
     @Column(name = "formatted_annotation", length = 20000)

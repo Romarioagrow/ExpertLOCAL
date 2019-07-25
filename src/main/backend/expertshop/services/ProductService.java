@@ -15,10 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static expertshop.controllers.ControllerService.getSessionID;
@@ -106,6 +103,42 @@ public class ProductService {
             return new int[]{min, max};
         }
         return null;
+    }
+
+    public List<Product> showReqProducts(String request, String isMapped, String withPic) {
+        List<Product> products = new ArrayList<>();
+
+        if (!request.isEmpty())
+        {
+            String shortRequest = request.replaceAll(" ","").replaceAll("-", "").toLowerCase();
+            products = productRepo.findByShortSearchNameContains(shortRequest);
+            if (products.size() != 0) return products;
+
+            products = productRepo.findByProductGroupEqualsIgnoreCase(request);
+            if (products.size() != 0) return products;
+
+            products = productRepo.findByProductCategoryEqualsIgnoreCase(request);
+            if (products.size() != 0) return products;
+
+            if (isMapped != null) {
+                products = productRepo.findBySupplierContainsIgnoreCaseAndProductGroupIsNotNull(request);
+            }
+            else  products = productRepo.findBySupplierContainsIgnoreCase(request);
+            if (products.size() != 0) return products;
+
+
+        }
+
+
+        if (request.isEmpty() && isMapped != null) {
+            products = productRepo.findAllByModelNameNotNull();
+        }
+        else if (request.isEmpty()) {
+            products = productRepo.findAll();
+        }
+
+
+        return products;
     }
 }
 

@@ -22,15 +22,21 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
 
     Page<Product> findByProductGroupEqualsIgnoreCaseAndSupplier(String productGroup, String supplier, Pageable pageable);
 
+    Page<Product> findProductsByProductGroupEqualsIgnoreCase(String s, Pageable pageable);
+    Page<Product> findByProductGroupEqualsIgnoreCaseAndIsAvailableTrue(String s, Pageable pageable);
+
     //List<Product> findAllBySupplierAndProductGroupIsNotNull
     List<Product> findByProductGroupEqualsIgnoreCase(String group);
     List<Product> findBySupplierAndProductGroupIsNotNullAndOriginalPicIsNullAndLinkRIsNotNull(String sup);
 
+
+    /*ADMIN*/
+    List<Product> findByProductCategoryEqualsIgnoreCase(String category);
+    List<Product> findByShortSearchNameContains(String shortName);
+    List<Product> findBySupplierContainsIgnoreCase(String supp);
+    List<Product> findBySupplierContainsIgnoreCaseAndProductGroupIsNotNull(String supp);
+
     List<Product> findProductsByProductGroupEqualsIgnoreCase(String s);
-
-    Page<Product> findProductsByProductGroupEqualsIgnoreCase(String s, Pageable pageable);
-    Page<Product> findByProductGroupEqualsIgnoreCaseAndIsAvailableTrue(String s, Pageable pageable);
-
     List<Product> findByProductCategoryAndSupplierAndProductGroupIsNotNull(String cat, String supp);
     List<Product> findByProductGroup(String group);
     List<Product> findByProductGroupAndSupplier(String group, String sup);

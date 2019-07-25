@@ -84,7 +84,19 @@ public class ProductMatcher {
                 }
             }
         });*/
-        AtomicInteger count = new AtomicInteger();
+
+        List<Product> products1 = productRepo.findAllByModelNameNotNull();
+        products1.forEach(product -> {
+            String single = product.getSingleType().replaceAll(" ", "").toLowerCase();
+            String brand  = product.getOriginalBrand().replaceAll(" ", "").toLowerCase();
+            String model  = product.getModelName().replaceAll(" ", "").toLowerCase();
+            String searchName = single.concat(brand).concat(model).replaceAll("-", "");
+            product.setShortSearchName(searchName);
+            productRepo.save(product);
+            log.info(product.getShortSearchName());
+        });
+
+        /*AtomicInteger count = new AtomicInteger();
         products.forEach(product ->
         {
             if (product.getFormattedAnnotation() != null)
@@ -110,7 +122,7 @@ public class ProductMatcher {
                 }
             }
         });
-        log.info(count.toString());
+        log.info(count.toString());*/
     }
 
     public void trimBigBase() {
@@ -338,6 +350,7 @@ public class ProductMatcher {
                     product.setFinalPrice(finalPrice);
                     product.setBonus(productBonus);
                     product.setFormattedAnnotation(formAnno);
+                    product.setCoefficient(coefficient);
 
                     productRepo.save(product);
                     resolveShortModel(product);
@@ -379,6 +392,7 @@ public class ProductMatcher {
                         product.setProductType(product.getOriginalType()); /// resolveTypeName();
                         product.setFinalPrice(finalPrice);
                         product.setBonus(productBonus);
+                        product.setCoefficient(coefficient);
 
                         productRepo.save(product);
                         resolveShortModel(product);
@@ -388,8 +402,7 @@ public class ProductMatcher {
                 }
             }
             catch (NullPointerException e) {
-                log.warning("NULL at " + product.getOriginalName());
-                e.printStackTrace();
+                log.warning("NULL at " + product.getOriginalName() + " :: " + product.getOriginalAnnotation());
             }
         }
     }
