@@ -8,7 +8,7 @@
                 <h1>${firstName}, добро пожаловать в личный кабинет!</h1>
             </div>
             <div class="col">
-                <a type="button" class="btn btn-elegant" href="/user/logout">Выйти</a>
+                <a type="button" class="btn btn-elegant btn-sm" href="/user/logout">Выйти</a>
             </div>
         </div>
         <div class="row">
@@ -22,14 +22,14 @@
             <div class="col">
                 <ul class="nav md-pills pills-secondary">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#panel1" role="tab">Текущие заказы</a>
+                        <a class="nav-link active" data-toggle="tab" href="#panel1" role="tab"><#--Текущие заказы-->Мои заказы</a>
                     </li>
-                    <li class="nav-item">
+                    <#--<li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#panel2" role="tab">Завершенные заказы</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#panel3" role="tab">Контактная информация</a>
-                    </li>
+                    </li>-->
                 </ul>
                 <div class="tab-content pt-0">
                     <div class="tab-pane fade in show active" id="panel1" role="tabpanel">
@@ -38,9 +38,9 @@
                                 <div class="col-6">
                                     <h3 style="margin-top: 2rem">Статус текущих заказов</h3>
                                 </div>
-                                <div class="col-6">
+                                <#--<div class="col-6">
                                     <a type="button" href="/" class="btn" style="background-color: #e42c00; color: #e0e0e0; margin-top: 1rem;margin-left: 18rem;">Новый заказ</a>
-                                </div>
+                                </div>-->
                             </div>
                             <hr>
                             <div class="card-desk">
@@ -61,7 +61,7 @@
                                                         </h4>
                                                     </div>
                                                     <div class="col-4">
-                                                        <#if order.accepted>
+                                                        <#--<#if order.accepted>
                                                             <span>Статус заказа: <strong style="color: #3f51b5">Принят</strong></span>
                                                         </#if>
                                                         <#if order.confirmed>
@@ -69,7 +69,7 @@
                                                         </#if>
                                                         <#if order.completed>
                                                             <br><span>Статус заказа: <strong style="color: #007e33">Выполнен</strong></span>
-                                                        </#if>
+                                                        </#if>-->
                                                     </div>
                                                 </div>
                                                 <p class="mb-2">
@@ -168,7 +168,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <a type="button" href="/" class="btn btn-lg btn-block" style="margin-bottom: 3rem; background-color: #e42c00 !important; color: #e0e0e0">Новый заказ</a>
+                <a type="button" href="/" class="btn btn-md btn-block" style="margin-bottom: 3rem; margin-left: 10rem;  background-color: #e42c00 !important; color: #e0e0e0; width: 40rem">Новый заказ</a>
             </div>
         </div>
     </div>

@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col">
                 <div id="registration-error"></div>
-                <div class="card" style="width: 30rem">
+                <div class="card" style="width: 30rem; margin-left: 20rem; margin-top: 5rem;">
                     <div class="card-body">
                         <form action="/user/registration" method="post" name="registration" id="registrationForm" class="text-center">
                             <input type="hidden" name="sessionID" id="sessionID" value="${sessionID}">
@@ -23,9 +23,7 @@
                                     <input type="tel" value="" id="username" name="username" required
                                            placeholder="Ваш мобильный телефон"
                                            aria-describedby="registerMobile"
-                                           class="form-control ${(usernameError??)?string('is-invalid','')}"
-                                            <#--pattern="\+7(-\d{3}){2}-\d{4}"-->>
-                                    <#--<span class="form__error">Это поле должно содержать формат</span>-->
+                                           class="form-control ${(usernameError??)?string('is-invalid','')}">
                                     <#if usernameError??>
                                         <div class="invalid-feedback">
                                             <span>Номер телефона в формате +7-9xx-xxx-xxxx</span>
@@ -92,6 +90,10 @@
                                 <button type="button" class="btn btn-li"><i class="fab pr-1"></i>Mail.ru</button>
                             </div>-->
                         </form>
+                        <p>
+                            Есть аккаунт?
+                            <a href="/user/login">Войти!</a>
+                        </p>
                     </div>
                 </div>
             </div>

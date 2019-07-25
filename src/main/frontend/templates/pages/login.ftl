@@ -31,13 +31,12 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <#--<input type="text" id="username" name="username" class="form-control mb-4" placeholder="Номер телефона">
-                                <input type="password" id="password" name="password" class="form-control mb-4" placeholder="Пароль">-->
-
                                 <button class="btn btn-primary btn-block my-4" type="submit" style="background-color: #e52d00 !important;">Войти</button>
-                                <p style="font-size: 1.5rem !important;">Зашли впервые?
-                                    <p style="font-size: 1.5rem !important;"><a href="/user/registration">Зарегистрируйтесь!</a></p>
+                                <p style="font-size: 1.5rem !important;">
+                                    Зашли впервые?
+                                    <p style="font-size: 1.5rem !important;"><a href="/user/registration">
+                                        Зарегистрируйтесь!
+                                    </a>
                                 </p>
                             </div>
                         </div>
