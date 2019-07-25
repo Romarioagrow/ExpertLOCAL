@@ -3,6 +3,7 @@ package expertshop.controllers;
 import expertshop.domain.User;
 import expertshop.products.ProductParser;
 import expertshop.products.ProductMatcher;
+import expertshop.services.OrderService;
 import expertshop.services.ProductService;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
@@ -25,6 +26,7 @@ public class AdminController {
     private final ProductParser catalogParser;
     private final ProductMatcher productMatcher;
     private final ProductService productService;
+    private final OrderService orderService;
 
     @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -47,8 +49,12 @@ public class AdminController {
         return "pages/supplier";
     }
 
-
-
+    @GetMapping("/orders")
+    private String orders(Model model) {
+        model.addAttribute("url", "orders");
+        model.addAttribute("orders", orderService.showAcceptedOrders());
+        return "pages/supplier";
+    }
 
     @PostMapping("/updateDB")
     @PreAuthorize("hasAuthority('ADMIN')")

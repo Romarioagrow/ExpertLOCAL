@@ -85,12 +85,18 @@
                                                         <#list order.orderedProducts as product>
                                                             <div class="card">
                                                                 <div class="card-body">
-                                                                    <p class="card-text">
-                                                                        <span style="color: #e42c00">${product.productType}</span> <strong style="color: #0d0d0d">${product.productName}</strong>
-                                                                    </p>
-                                                                    <p class="card-text">
-                                                                        Количество:  <strong style="color: #0d0d0d">${product.orderedAmount}</strong>, Цена: <strong style="color: #0d0d0d">${product.totalPrice}</strong> ₽
-                                                                    </p>
+                                                                    <div class="row">
+                                                                        <div class="col-6">
+                                                                            <p class="card-text">
+                                                                                <span style="color: #e42c00">${product.productType}</span> <strong style="color: #0d0d0d">${product.productName}</strong>
+                                                                            </p>
+                                                                        </div>
+                                                                        <div class="col-6">
+                                                                            <p class="card-text">
+                                                                                <span>Количество:  <strong>${product.orderedAmount}</strong>, Цена: <strong>${product.totalPrice}</strong> ₽</span>
+                                                                            </p>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </#list>

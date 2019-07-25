@@ -19,7 +19,7 @@ public class OrderedProduct implements Serializable {
     @Column(name = "ordered_id")
     private Long orderedID;
 
-    public String productID, productName, productType, pic;
+    public String productID, supplier, productName, productType, pic;
 
     private Integer productPrice, totalPrice, bonus, totalBonus, orderedAmount;
 
@@ -36,6 +36,7 @@ public class OrderedProduct implements Serializable {
         this.setProductPrice    (product.getFinalPrice());
         this.setTotalPrice      (product.getFinalPrice());
         this.setBonus           (product.getBonus());
+        this.setSupplier        (product.getSupplier());
         this.setOrderedAmount   (1);
     }
 }

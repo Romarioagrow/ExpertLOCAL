@@ -134,54 +134,84 @@
                                 </form>
                             </div>
                         </div>
-                        <#--<tr>
-                            <th scope="row">1</th>
-                            <td>Product 1</td>
-                            <td>100$</td>
-                            <td><a><i class="fas fa-times"></i></a></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Product 2</td>
-                            <td>100$</td>
-                            <td><a><i class="fas fa-times"></i></a></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>Product 3</td>
-                            <td>100$</td>
-                            <td><a><i class="fas fa-times"></i></a></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">4</th>
-                            <td>Product 4</td>
-                            <td>100$</td>
-                            <td><a><i class="fas fa-times"></i></a></td>
-                        </tr>
-                        <tr class="total">
-                            <th scope="row">5</th>
-                            <td>Total</td>
-                            <td>400$</td>
-                            <td></td>
-                        </tr>-->
-
-
-                        <#--<#list products as product>
-
-                        </#list>-->
                     </div>
-                </div>
-            </div>
-            <div class="tab-pane fade <#if url?contains("orders")>in show active</#if>" id="cat3" role="tabpanel">
-                <div class="card">
-                    <div class="card-body">
+                    <div class="tab-pane fade <#if url?contains("orders")>in show active</#if>" id="cat3" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body">
+                                <h3>Принятые заказы</h3>
+                                <form method="get" action="/supplier/orders">
+                                    <button type="submit" class="btn btn-success">Показать заказы</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card-desk" style="margin-top: 2rem">
+                            <#if orders?has_content>
+                                <#list orders as order>
+                                    <div class="card" style="margin-bottom: 1rem">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col">
+                                                    <h4 class="card-title font-weight-bold">
+                                                        <#assign
+                                                        date = order.orderOpenDate.toString()
+                                                        time = date?substring(11, 16)
+                                                        date = date?substring(0, 10)
+                                                        date = date?replace("-", ".")
+                                                        >
+                                                        Заказ №${order.orderID?c} от ${date} ${time}
+                                                    </h4>
+                                                    <p>Заказчик: <strong>${order.name} ${order.surname}</strong>, Тел:  <strong>${order.email}</strong></p>
+                                                </div>
+                                            </div>
+                                            <p class="mb-2">
+                                                На сумму
+                                                <strong>${order.totalPrice} ₽</strong>
+                                                <#if order.discountApplied>
+                                                    <strong>/ ${order.discountPrice}</strong> ₽ с учетом скидки
+                                                </#if>
+                                            </p>
+                                            <div class="card-desk">
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Артикул</th>
+                                                        <th>Поставщик</th>
+                                                        <th>Тип</th>
+                                                        <th>Наименование</th>
+                                                        <th>Цена за единицу</th>
+                                                        <th>Цена всего</th>
+                                                        <th>Кол-во</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <#if order.orderedProducts?has_content>
+                                                        <#list order.orderedProducts as product>
+                                                            <tr>
+                                                                <th scope="row">${product.productID}</th>
+                                                                <td>${product.supplier}</td>
+                                                                <td>${product.productType}</td>
+                                                                <td><a href="/products/info/${product.productID}"><strong>${product.productName}</strong></a></td>
+                                                                <td>${product.productPrice}</td>
+                                                                <td>${product.totalPrice}</td>
+                                                                <td>${product.orderedAmount}</td>
+                                                            </tr>
+                                                        </#list>
+                                                    </#if>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </#list>
+                            </#if>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
-    </div>
+
 </@t.template>
 <style>
     .secc {

@@ -82,7 +82,6 @@ public class OrderService {
         log.info("Product with ID " + productID + " add to getOrder");
         log.info("Product bonus: " + product.getBonus());
 
-        //return order.getProductsAmount();
         return payload(order.getProductsAmount(), discount);
     }
 
@@ -117,7 +116,7 @@ public class OrderService {
         return payload(order, orderedProduct, discount);
     }
 
-    public LinkedList<Object>/*Order*/ removeProductFromOrder(User user, String orderedID)
+    public LinkedList<Object> removeProductFromOrder(User user, String orderedID)
     {
         OrderedProduct orderedProduct = orderedRepo.findByOrderedID(Long.parseLong(orderedID));
         Order order = resolveOrder(user);
@@ -353,4 +352,7 @@ public class OrderService {
         else return new HashSet<>();
     }
 
+    public List<Order> showAcceptedOrders() {
+        return orderRepo.findAllByAcceptedTrue();
+    }
 }
