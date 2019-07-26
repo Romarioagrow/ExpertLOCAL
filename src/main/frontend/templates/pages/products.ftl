@@ -104,10 +104,10 @@
                                 <div class="card-body">
                                     <h5 class="card-title" style="min-height: 3rem !important; max-height: 3rem !important;">
                                         <a href="/products/info/${product.productID}">
-                                            <strong>
-                                                ${product.singleType!''}
-                                                ${product.originalBrand?capitalize}
-                                                ${product.modelName!''}
+                                            <strong style="font-size: 1rem">
+                                                <span style="color: #e52d00;">${product.singleType!''}</span>
+                                                <span style="color: #222222;">${product.originalBrand?capitalize}</span>
+                                                <span style="color: #222222;">${product.modelName!''}</span>
                                             </strong>
                                         </a>
                                     </h5>

@@ -172,6 +172,15 @@
                                                     <p>Заказчик: <strong>${order.name} ${order.surname}</strong>, Тел:  <strong>${order.email}</strong></p>
                                                 </div>
                                             </div>
+                                            <div class="row" style="margin-bottom: 1rem">
+                                                <div class="col">
+                                                    <#if order.city??>
+                                                        Доставка по адресу: Город <strong>${order.city}</strong>, улица <strong>${order.street}</strong>, дом <strong>${order.house}</strong>, квартира <strong>${order.apartment!''}</strong>
+                                                    <#else>
+                                                        Самовывоз
+                                                    </#if>
+                                                </div>
+                                            </div>
                                             <p class="mb-2">
                                                 На сумму
                                                 <strong>${order.totalPrice} ₽</strong>

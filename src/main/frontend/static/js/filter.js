@@ -359,7 +359,12 @@ function filterProducts() {
 }
 
 function constructProductCard(product, orderedIDs) {
-    const productName = product.singleType.concat(" ").concat(product.originalBrand).concat(" ").concat( product.modelName);
+    let s = '<span style="color: #e52d00;">'+product.singleType+'</span>';
+    let b = '<span style="color: #222222;">'+product.originalBrand+'</span>';
+    let m = '<span style="color: #222222;">'+product.modelName+'</span>';
+
+    const productName = s.concat(' ').concat(b).concat(' ').concat(m);
+    //const productName = '<span style="color: #e52d00;">'+product.singleType+'</span>'.concat(" ").concat(product.originalBrand).concat(" ").concat( product.modelName);
 
     var buttonID = 'addToOrderDiv' + product.productID;
     buttonID = replaceAll(buttonID, ".", "");
@@ -393,7 +398,7 @@ function constructProductCard(product, orderedIDs) {
         '<div class="card-body">'+
         '<h5 class="card-title" style="min-height: 3rem !important; max-height: 3rem !important;">'+
         '<a href="/products/info/'+product.productID+'">'+
-        '<strong>'  +
+        '<strong style="font-size: 1rem">'  +
         productName +
         '</strong>' +
         '</a>'+

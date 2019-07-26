@@ -4,7 +4,7 @@
         <div class="row mt-2">
             <nav aria-label="breadcrumb" style="padding-left: 1rem;margin-top: 1rem;">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/products/groups/${product.productGroup?lower_case}"><span style="font-size: 20px !important;">${product.productGroup}</a></li>
+                    <li class="breadcrumb-item"><a href="/products/${product.productCategory?lower_case?replace(" ","_")}/${product.productGroup?lower_case}"><span style="font-size: 20px !important;">${product.productGroup}</a></li>
                     <li class="breadcrumb-item active" aria-current="page"><span style="font-size: 20px !important;">${product.groupBrand}</span></li>
                     <li class="breadcrumb-item active" aria-current="page"><span style="font-size: 20px !important;">${product.productType}</li>
                 </ol>
