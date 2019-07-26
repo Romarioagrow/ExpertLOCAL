@@ -2,12 +2,9 @@ package expertshop.services;
 import expertshop.domain.Product;
 import expertshop.domain.User;
 import expertshop.repos.ProductRepo;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
-
 import org.apache.commons.lang3.StringUtils;
-import org.jsoup.internal.StringUtil;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Log
@@ -57,22 +53,22 @@ public class FilterService {
                     }
                 }
             });
-            products.forEach(product -> {
+            /*products.forEach(product -> {
                 if (product.getSupplier().startsWith("2")) {
                     String[] filtrs = product.getOriginalAnnotation().split(";");
                     for (String fltr : filtrs) {
                         for (Map.Entry<String, TreeSet<String>> entry : filters.entrySet()) {
                             if (StringUtils.containsIgnoreCase(entry.getKey().replaceAll(" ", ""), fltr.replaceAll(" ", ""))) {
                                 System.out.println();
-                                log.info("RBT KEY " + entry.getKey());
-                                log.info("RUS PARAM " + fltr);
+                                //log.info("RBT KEY " + entry.getKey());
+                                //log.info("RUS PARAM " + fltr);
                             }
                         }
                     }
                 }
-            });
-            System.out.println();
-            filters.forEach((s, strings) -> log.info(s + " " + strings.toString()));
+            });*/
+            /*System.out.println();
+            filters.forEach((s, strings) -> log.info(s + " " + strings.toString()));*/
         }
         catch (NullPointerException e) {
             log.warning(e.getClass().getName());//e.printStackTrace();

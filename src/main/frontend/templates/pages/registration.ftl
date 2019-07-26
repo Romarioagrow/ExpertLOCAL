@@ -52,6 +52,15 @@
                             </div>
                             <div class="form-row mb-4">
                                 <div class="col">
+                                    <input type="text" id="lastName" name="lastName" required placeholder="Фамилия"
+                                           class="form-control ${(lastNameError??)?string('is-invalid','')}">
+                                    <#if lastNameError??>
+                                        <div class="invalid-feedback">
+                                            ${lastNameError}
+                                        </div>
+                                    </#if>
+                                </div>
+                                <div class="col">
                                     <input type="text" id="firstName" name="firstName" placeholder="Имя" required
                                            class="form-control ${(firstNameError??)?string('is-invalid','')}">
                                     <#if firstNameError??>
@@ -61,13 +70,7 @@
                                     </#if>
                                 </div>
                                 <div class="col">
-                                    <input type="text" id="lastName" name="lastName" required placeholder="Фамилия"
-                                           class="form-control ${(lastNameError??)?string('is-invalid','')}">
-                                    <#if lastNameError??>
-                                        <div class="invalid-feedback">
-                                            ${lastNameError}
-                                        </div>
-                                    </#if>
+                                    <input type="text" id="otchestvo" name="otchestvo" required placeholder="Отчество" class="form-control">
                                 </div>
                             </div>
                             <div class="form-row mb-4">

@@ -43,6 +43,9 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     List<Product> findByShortModelEquals(String s);
     List<Product> findByShortModelEqualsAndProductGroupIsNotNull(String s);
 
+    List<Product> findByLinkRIsNotNull();
+    List<Product> findAllByModelNameNotNullAndFullAnnotationIsNull();
+
     List<Product> findAllByProductGroupIsNull();
     List<Product> findAllByProductGroupIsNotNull();
     List<Product> findAllByProductGroupIsNotNullAndIsDuplicateIsNull();

@@ -20,12 +20,15 @@ public class ControllerService {
         return validResult.getFieldErrors().stream().collect(collector);
     }
 
-    static Set<String> getValidErrorsSet(BindingResult validResult)
+    static Object getValidErrorsSet(BindingResult validResult)
     {
         showValidErrors(validResult);
 
         Set<String> validErrors = new HashSet<>();
         validResult.getFieldErrors().forEach(fieldError -> validErrors.add(fieldError.getDefaultMessage()));
+        /*LinkedList<Object> payload = new LinkedList<>(validErrors);
+        payload.add(validErrors);
+        payload.add(null);*/
         return validErrors;
     }
 

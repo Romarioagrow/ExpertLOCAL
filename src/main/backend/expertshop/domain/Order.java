@@ -48,13 +48,17 @@ public class Order implements Serializable {
 
     private Integer discountPercent, discountPrice;
 
-    private String name;
+    private String name, otchestvo;
     private String surname;
     private String mobile;
     private String email;
-    private String address;
+    //private String address;
 
-    private String shortTel;
+    private String city, street, house, apartment;
+
+
+
+    private String shortTel, deliveryType;
 
     @Column(name = "open_date")
     private LocalDateTime orderOpenDate = LocalDateTime.now();

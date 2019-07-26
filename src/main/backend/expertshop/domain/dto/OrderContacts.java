@@ -25,7 +25,11 @@ public class OrderContacts {
     //@NotBlank(message = "username is mandatory")
     private String username;
 
+    private String otchestvo;
+
     @Email(message = "not an email!")
     //@NotBlank(message = "email is mandatory")
     private String email;
+
+    private String city, street, house, apartment;
 }

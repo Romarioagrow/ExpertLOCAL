@@ -117,7 +117,7 @@
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
                                     <img class="img-fluid scale-pic" src="/../img/tvmebel.jpg" alt="Card image cap">
-                                    <a href="/products/теле-видео-аудио/телевизоры">
+                                    <a href="/products/теле-видео-аудио/телемебель">
                                         <div class="mask rgba-white-slight"></div>
                                     </a>
                                 </div>

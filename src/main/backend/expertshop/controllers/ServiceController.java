@@ -38,7 +38,7 @@ public class ServiceController {
     @PostMapping("/supplier/products/coefficient")
     @PreAuthorize("hasAuthority('ADMIN')")
     private String saveNewCoefficient(@RequestBody String[] coeff) {
-        log.info(Arrays.toString(coeff));
+        //log.info(Arrays.toString(coeff));
         productService.saveNewCoeff(coeff);
         return "pages/supplier";
     }
@@ -58,7 +58,7 @@ public class ServiceController {
 
     @PostMapping("/brands")
     public LinkedList<Object> displayBrands(
-            @RequestBody String productGroup
+            @RequestBody(/*required = false*/) String productGroup
     ){
         productGroup = productGroup.replaceAll("_", " ");
         return filterService.resolveFilters(productGroup);
@@ -92,16 +92,14 @@ public class ServiceController {
         return orderService.removeProductFromOrder(user, productID);
     }
     @PostMapping("/order/confirm")
-    private Set<String> confirmOrder
+    private Object/*Set<String>*/ confirmOrder
             (@AuthenticationPrincipal User user, @Valid @RequestBody OrderContacts contacts, BindingResult validResult)
     {
         if (validResult.hasErrors()) {
             return ControllerService.getValidErrorsSet(validResult);
         }
-        else
-        {
-            orderService.confirmOrder(contacts, user);
-            return null;
+        else {
+            return orderService.confirmOrder(contacts, user);
         }
     }
     @PostMapping("/order/discount")

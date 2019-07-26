@@ -61,14 +61,14 @@ public class AdminController {
         return "pages/supplier";
     }
 
-    @PostMapping("/match-products")
+    /*@PostMapping("/match-products")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String matchProducts(Model model)
     {
         productMatcher.matchProducts();
         model.addAttribute("url", "db");
         return "pages/supplier";
-    }
+    }*/
     @PostMapping("/xxx")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String matchDuplicates(Model model)

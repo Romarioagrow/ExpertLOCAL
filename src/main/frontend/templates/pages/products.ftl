@@ -91,16 +91,18 @@
                     <#if page?has_content>
                         <#list page.content as product>
                             <div class="card product-card">
-                                <div class="view overlay">
+                                <div class="view overlay" style="min-height: 8rem !important; max-height: 8rem !important;">
                                     <#if product.originalPic??>
                                         <img class="img-fluid scale-pic" src="${product.originalPic}" alt="Фотографии пока нет">
                                         <a href="#">
                                             <div class="mask rgba-white-slight"></div>
                                         </a>
+                                    <#else>
+                                        <img class="img-fluid scale-pic" src="/../img/nophoto.jpg" alt="Фотографии пока нет">
                                     </#if>
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="card-title">
+                                    <h5 class="card-title" style="min-height: 3rem !important; max-height: 3rem !important;">
                                         <a href="/products/info/${product.productID}">
                                             <strong>
                                                 ${product.singleType!''}
@@ -109,11 +111,11 @@
                                             </strong>
                                         </a>
                                     </h5>
-                                    <p class="card-text">
+                                    <p class="card-text" style="margin-top: 1rem">
                                         <#if product.productType??>
-                                            <strong><i>${product.productType}</i></strong>
-                                        <#else>
-                                            <strong><i>${product.originalType}</i></strong>
+                                            <#--<#if !product.productType.contains("Ноутбуки") || !product.productType.contains("Игровые") || !product.productType.contains("Готовые ПК")>-->
+                                                <strong><i>${product.productType}</i></strong>
+                                            <#--</#if>-->
                                         </#if>
                                     </p>
                                     <h3><strong>${product.finalPrice!''} ₽</strong></h3>
@@ -132,7 +134,7 @@
                                                 </div>
                                             </#if>
                                         <#else>
-                                            <#--<button type="button" class="btn btn-warning btn-rounded" disabled>Нет в наличии!</button>-->
+                                        <#--<button type="button" class="btn btn-warning btn-rounded" disabled>Нет в наличии!</button>-->
                                             <p style="color: #c40030; font-size: 1.5rem; padding-top: 0.5rem;"><strong>Нет в наличии!</strong></p>
                                         </#if>
                                     </div>

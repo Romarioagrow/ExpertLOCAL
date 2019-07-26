@@ -22,6 +22,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ConnectException;
+import java.net.MalformedURLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -248,9 +249,7 @@ public class ProductParser {
         }
     }
 
-    public void parseRusBT()
-    {
-
+    public void parseRusBT() {
         /*productRepo.findBySupplier("2RUS-BT").forEach(product -> {
             if (product.getOriginalPic().startsWith("http://rusbt.ru/catalog")) {
                 product.setLinkR(product.getOriginalPic());
@@ -262,8 +261,20 @@ public class ProductParser {
             productRepo.save(product);
         });*/
 
+        findInBigBase();
+
+        productRepo.findByLinkRIsNotNull().forEach(product -> {
+            if (product.getLinkR().startsWith("В ячейке нет гиперссылки!") || product.getLinkR().startsWith("#ИМЯ")) {
+                product.setLinkR(null);
+                productRepo.save(product);
+            }
+        });
+
         AtomicInteger count404 = new AtomicInteger(), countPic = new AtomicInteger(), countAnno = new AtomicInteger(), countInfo = new AtomicInteger();
         List<Product> list = productRepo.findBySupplierAndProductGroupIsNotNullAndOriginalPicIsNullAndLinkRIsNotNull("2RUS-BT");
+        System.out.println();
+        log.info("Парсинг сайта картинок RUS...");
+        log.info("Всего товаров без картинок для парсинга: " + list.size());
 
         list.forEach(product ->
         {
@@ -284,14 +295,13 @@ public class ProductParser {
                             {
                                 pic = "http://rusbt.ru".concat(picSrc);
                                 if (product.getOriginalPic() == null) product.setOriginalPic(pic);
-                                else
-                                {
+                                else {
                                     if (product.getPics() == null) product.setPics(pic);
-                                    else product.setPics(product.getPics().concat(";").concat(pic));
+                                    //else product.setPics(product.getPics().concat(";").concat(pic));
                                 }
 
                                 productRepo.save(product);
-                                log.info("Изображения для " + product.getOriginalName() + ": " + pic);
+                                log.info("Изображения для: " + product.getOriginalName() + ": " + pic);
                                 countPic.getAndIncrement();
                             }
                             else log.info("Нет изображения товара на сайте!");
@@ -320,7 +330,7 @@ public class ProductParser {
                     }*/
                     productRepo.save(product);
                 }
-                else log.info("ССЫЛКА ОТСУТСТВУЕТ!");
+                else log.info("Ссылка отсутствует!");
                 System.out.println();
                 countInfo.getAndIncrement();
                 log.info(countInfo + " из " + list.size());
@@ -333,6 +343,9 @@ public class ProductParser {
                 log.info("Connection timed out");
                 exp.printStackTrace();
             }
+            catch (MalformedURLException exp) {
+                log.info(exp.getClass().getName());
+            }
             catch (IOException | NullPointerException exp) {
                 log.info("Exception");
                 ///exp.printStackTrace();
@@ -344,6 +357,36 @@ public class ProductParser {
         log.info("404 на сайте: "       + count404);
     }
 
+    public void findInBigBase() {
+        log.info("Поиск совпадений в Большой Базе...");
+        List<Product> products = productRepo.findAllByModelNameNotNullAndFullAnnotationIsNull();
+        AtomicInteger count = new AtomicInteger();
+        products.forEach(product ->
+        {
+            if (product.getFormattedAnnotation() != null)
+            {
+                ProductBase productBase = baseRepo.findFirstByShortModelEquals(product.getShortModel());
+                if (productBase != null)
+                {
+                    System.out.println();
+                    log.info("Для: " + product.getFullName());
+                    log.info("Нашлось: " + productBase.getFullName());
+                    product.setFullAnnotation(productBase.getAnnotation());
+                    product.setFormattedAnnotation(productBase.getParamsHTML());
+                    product.setPics(product.getPics());
+
+                    if (product.getSupplier().startsWith("2") && product.getOriginalPic() != null)
+                    {
+                        String pic = StringUtils.substringBefore(productBase.getPics(), " ");
+                        product.setOriginalPic(pic);
+                    }
+                    productRepo.save(product);
+                    count.getAndIncrement();
+                }
+            }
+        });
+        log.info("Всего: " + count.toString());
+    }
 
     ///!!!
     /*

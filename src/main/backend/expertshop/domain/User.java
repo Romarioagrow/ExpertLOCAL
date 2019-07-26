@@ -45,6 +45,8 @@ public class User implements UserDetails {
     @Column(name = "pic")
     private String userPic;
 
+    private String otchestvo;
+
     private LocalDateTime registrationDate;
 
     private boolean isActive;

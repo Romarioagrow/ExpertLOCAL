@@ -43,38 +43,32 @@ public class ProductService {
     }
 
     public List<Product> searchProducts(String searchRequest) {
-        log.info("Search request: " + searchRequest);
+        //log.info("Search request: " + searchRequest);
         String search = searchRequest.replaceAll(" ", "").replaceAll("-", "").toLowerCase();
-        log.info(search);
-
-        List<Product> searchedProducts = productRepo.findAllByProductGroupIsNotNullAndIsDuplicateIsNullAndShortSearchNameContainsIgnoreCase(search).stream()
-                .filter(product -> StringUtils.containsIgnoreCase(product.getShortSearchName(), search))
-                .collect(Collectors.toList());
-
+        //log.info(search);
         /*if (searchedProducts.size() == 0)
         {
             searchedProducts = productRepo.findAllByProductGroupIsNotNull().stream()
                     .filter(product -> StringUtils.containsIgnoreCase(product.getOriginalName(), searchRequest))
                     .collect(Collectors.toList());
         }*/
-
-        log.info("Products found: " + searchedProducts.size());
-        return searchedProducts;
+        //log.info("Products found: " + searchedProducts.size());
+        return productRepo.findAllByProductGroupIsNotNullAndIsDuplicateIsNullAndShortSearchNameContainsIgnoreCase(search).stream()
+                .filter(product -> StringUtils.containsIgnoreCase(product.getShortSearchName(), search))
+                .collect(Collectors.toList());
     }
 
     public Set<String> getOrderedID(User user)
     {
-        if (user != null && orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()) != null)
-        {
+        if (user != null && orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()) != null) {
             Order order = orderRepo.findByUserIDAndAcceptedFalse(user.getUserID());
             return collectID(order);
         }
-        else if (orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID()) != null)
-        {
+        else if (orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID()) != null) {
             Order order = orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID());
             return collectID(order);
         }
-        else log.info("Order empty");
+        //else log.info("Order empty");
         return new HashSet<>();
     }
 
@@ -91,9 +85,8 @@ public class ProductService {
         List<Product> prices = productRepo.findByProductGroupEqualsIgnoreCase(request);
         if (prices.size() != 0)
         {
-            log.info(request);
-            log.info(prices.size()+"");
-
+            /*log.info(request);
+            log.info(prices.size()+"");*/
             prices.sort(Comparator.comparingInt(Product::getFinalPrice));
             int min = prices.stream().findFirst().get().getFinalPrice();
 
@@ -128,8 +121,6 @@ public class ProductService {
             }
             else  products = productRepo.findBySupplierContainsIgnoreCase(request);
             if (products.size() != 0) return products;
-
-
         }
 
         if (request.isEmpty() && isMapped != null) {
@@ -145,7 +136,7 @@ public class ProductService {
     public boolean editProducts(Map<String, String> data) {
         data.forEach((productID, newPrice) ->
         {
-            log.info(productID + ": " + newPrice);
+            //log.info(productID + ": " + newPrice);
             Product product = productRepo.findByProductID(productID);
             product.setFinalPrice(Integer.parseInt(newPrice.replaceAll("\\W", "")));
             productRepo.save(product);
@@ -158,7 +149,7 @@ public class ProductService {
         list.forEach(product -> {
             product.setCoefficient(Double.parseDouble(coeff[1].replaceAll(",", ".")));
             productRepo.save(product);
-            log.info(product.getCoefficient().toString());
+            //log.info(product.getCoefficient().toString());
         });
     }
 }

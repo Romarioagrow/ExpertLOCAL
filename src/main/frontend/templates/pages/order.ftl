@@ -21,10 +21,14 @@
                         <#list orderedProducts as product>
                             <div class="card ordered-card mb-4">
                                 <div class="view overlay">
-                                    <img class="scale-pic" src="${product.pic}" alt="Card image cap">
-                                    <a href="#!">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
+                                    <#if product.pic??>
+                                        <img class="img-fluid scale-pic" src="${product.pic}" alt="Фотографии пока нет">
+                                        <a href="#">
+                                            <div class="mask rgba-white-slight"></div>
+                                        </a>
+                                    <#else>
+                                        <img class="img-fluid scale-pic" src="/../img/nophoto.jpg" alt="Фотографии пока нет">
+                                    </#if>
                                 </div>
                                 <div class="card-body">
                                     <h4 class="card-title">
@@ -198,16 +202,22 @@
                                 </div>
                             </div>
                             <div class="row mb-2" style="width: 60rem;">
-                                <div class="col-md-6">
+                                <div class="col-md">
+                                    <div class="md-form">
+                                        <input type="text" id="lastName" name="lastName" class="form-control" <#if isUser>value="${lastName}"</#if>  required>
+                                        <label for="family" class="">Ваша фамилия</label>
+                                    </div>
+                                </div>
+                                <div class="col-md">
                                     <div class="md-form">
                                         <input type="text" id="firstName" name="firstName" class="form-control" <#if isUser>value="${firstName}"</#if> required>
                                         <label for="name" class="">Ваше имя</label>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md">
                                     <div class="md-form">
-                                        <input type="text" id="lastName" name="lastName" class="form-control" <#if isUser>value="${lastName}"</#if>  required>
-                                        <label for="family" class="">Ваша фамилия</label>
+                                        <input type="text" id="otchestvo" name="otchestvo" class="form-control" <#if isUser>value="${user.otchestvo!''}"</#if> required>
+                                        <label for="otchestvo" class="">Ваше отчество</label>
                                     </div>
                                 </div>
                             </div>
@@ -220,7 +230,7 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="md-form">
-                                        <input type="email" id="email" name="email" class="form-control" <#if isUser>value="${email}"</#if>  required>
+                                        <input type="email" id="email" name="email" class="form-control" <#if isUser>value="${email}"</#if>  <#--required-->>
                                         <label for="email" class="">Ваш e-mail</label>
                                     </div>
                                 </div>
@@ -250,25 +260,25 @@
                                         <div class="row">
                                             <div class="col">
                                                 <div class="md-form">
-                                                    <input type="text" id="city" name="city" class="form-control">
+                                                    <input type="text" id="city" name="city" class="form-control" required>
                                                     <label for="city" class="">Населенный пункт</label>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="md-form">
-                                                    <input type="text" id="street" name="street" class="form-control">
+                                                    <input type="text" id="street" name="street" class="form-control" required>
                                                     <label for="street" class="">Улица</label>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="md-form">
-                                                    <input type="email" id="house" name="house" class="form-control">
+                                                    <input type="text" id="house" name="house" class="form-control" required>
                                                     <label for="house" class="">Дом</label>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="md-form">
-                                                    <input type="email" id="apartment" name="apartment" class="form-control">
+                                                    <input type="text" id="apartment" name="apartment" class="form-control">
                                                     <label for="apartment" class="">Квартира</label>
                                                 </div>
                                             </div>

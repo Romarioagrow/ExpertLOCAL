@@ -6,13 +6,13 @@
             <div class="col">
                 <ul class="nav md-pills pills-secondary">
                     <li class="nav-item">
-                        <a class="nav-link <#if url?contains("db")>active</#if>" data-toggle="tab" href="#cat1" role="tab">Обновление БД</a>
+                        <a class="nav-link <#if url?contains("db")>active</#if>" data-toggle="tab" href="#cat1" role="tab" style="width: 30rem;">Обновление БД</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <#if url?contains("products")>active</#if>" data-toggle="tab" href="#cat2" role="tab">Редактирование товаров</a>
+                        <a class="nav-link <#if url?contains("products")>active</#if>" data-toggle="tab" href="#cat2" role="tab" style="width: 45rem;">Редактирование товаров</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <#if url?contains("orders")>active</#if>" data-toggle="tab" href="#cat3" role="tab">Заказы</a>
+                        <a class="nav-link <#if url?contains("orders")>active</#if>" data-toggle="tab" href="#cat3" role="tab" style="width: 30rem;">Заказы</a>
                     </li>
                 </ul>
                 <div class="tab-content pt-0" style="margin-top: 2rem">
@@ -31,11 +31,6 @@
                                         <button type="submit" class="btn btn-success btn-lg btn-block">Обновить базу!</button>
                                     </div>
                                 </form>
-                                <form method="post" action="/supplier/match-products">
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-secondary btn-block btn-sm secc">Обработать товары!</button>
-                                    </div>
-                                </form>
                                 <form method="post" action="/supplier/xxx">
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-danger btn-block btn-sm secc" style="background-color: #c40030 !important;">xxx</button>
@@ -44,7 +39,7 @@
                                 <h3>Парсер картинок RUS</h3>
                                 <form method="POST" action="/supplier/pics">
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">Спарсить картинки!</button>
+                                        <button type="submit" class="btn btn-primary">Запустить!</button>
                                     </div>
                                 </form>
                             </div>
@@ -67,10 +62,6 @@
                                             <div class="form-check form-check-inline">
                                                 <input type="checkbox" class="form-check-input" id="mapped" name="mapped" checked>
                                                 <label class="form-check-label" for="mapped">На сайте</label>
-                                            </div>
-                                            <div class="form-check form-check-inline">
-                                                <input type="checkbox" class="form-check-input" id="withpic" name="withpic">
-                                                <label class="form-check-label" for="withpic">С картинкой</label>
                                             </div>
                                         </div>
                                     </div>

@@ -7,7 +7,6 @@ import expertshop.repos.ProductRepo;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,14 +26,13 @@ public class ProductMatcher {
     private final ProductParser catalogParser;
     static int matchCounter = 0;
 
-
     public void updateProductDB(MultipartFile file)
     {
         try {
             catalogParser.parseProducts(file);
             matchProducts();
             resolveDuplicates();
-            //createShortSearchName();
+
             log.info("Обновление БД завершено!");
         }
         catch (NullPointerException | NumberFormatException e) {
@@ -439,36 +437,6 @@ public class ProductMatcher {
         return originalType;
     }
 
-    public void findInBigBase() {
-        List<Product> products = productRepo.findAllByModelNameNotNull();
-        AtomicInteger count = new AtomicInteger();
-        products.forEach(product ->
-        {
-            if (product.getFormattedAnnotation() != null)
-            {
-                ProductBase productBase = baseRepo.findFirstByShortModelEquals(product.getShortModel());
-                if (productBase != null)
-                {
-                    System.out.println();
-                    log.info("Для: " + product.getFullName());
-                    log.info("Нашлось: " + productBase.getFullName());
-                    product.setFullAnnotation(productBase.getAnnotation());
-                    product.setFormattedAnnotation(productBase.getParamsHTML());
-                    product.setPics(product.getPics());
-
-                    if (product.getSupplier().startsWith("2") && product.getOriginalPic() != null)
-                    {
-                        String pic = StringUtils.substringBefore(productBase.getPics(), " ");
-                        product.setOriginalPic(pic);
-                    }
-                    productRepo.save(product);
-                    count.getAndIncrement();
-                }
-            }
-        });
-        log.info("Всего: " + count.toString());
-    }
-
     public void trimBigBase() {
         List<ProductBase> bases = baseRepo.findAll();
         bases.forEach(productBase ->
@@ -481,8 +449,6 @@ public class ProductMatcher {
             log.info(productBase.getShortModel());
         });
     }
-
-
 
     public void xxx() {
         /*List<Product> list = productRepo.findAllByModelNameNotNull();

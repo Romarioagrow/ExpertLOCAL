@@ -377,22 +377,28 @@ function constructProductCard(product, orderedIDs) {
     }
     else productButton = '<p style="color: #c40030; font-size: 1.5rem; padding-top: 0.5rem;"><strong>Нет в наличии!</strong></p>';
 
+    let pic;
+    if (product.originalPic !== null) {
+        pic = product.originalPic
+    }
+    else pic = '/../img/nophoto.jpg';
+
     return '<div class="card product-card">'+
-        '<div class="view overlay">'+
-        '<img class="img-fluid scale-pic" src="'+product.originalPic+'" alt="Product pic">'+
+        '<div class="view overlay" style="min-height: 8rem !important; max-height: 8rem !important;">'+
+        '<img class="img-fluid scale-pic" src="'+pic+'" alt="Фото пока нет :(">'+
         '<a href="#">'+
         '<div class="mask rgba-white-slight"></div>'+
         '</a>'+
         '</div>'+
         '<div class="card-body">'+
-        '<h5 class="card-title">'+
+        '<h5 class="card-title" style="min-height: 3rem !important; max-height: 3rem !important;">'+
         '<a href="/products/info/'+product.productID+'">'+
         '<strong>'  +
         productName +
         '</strong>' +
         '</a>'+
         '</h5>'+
-        '<p class="card-text">'+
+        '<p class="card-text" style="margin-top: 1rem">'+
         '<strong><i>'+product.productType+'</i></strong></p>'+
         '<h3><strong>'+(product.finalPrice).toLocaleString('ru')+' ₽</strong></h3>'+
         '<p>Бонус: '+product.bonus+' ₽</p>'+

@@ -123,28 +123,33 @@ function removeFromOrder(button) {
                 let product = order.orderedProducts[item];
                 var productBonus = 'Бонус за покупку: ' + product.bonus * product.orderedAmount;
 
+                let pic;
+                if (product.pic !== null) {
+                    pic = product.pic
+                }
+                else pic = '/../img/nophoto.jpg';
                 /// сервер загружает на элемент данные а ajax обновляет
                 $("#bucket-products").append
                 (
                     '<div class="card ordered-card mb-4">' +
                     '<div class="view overlay">' +
-                    '<img class="scale-pic" src="'+product.pic+'" alt="Card image cap">' +
+                    '<img class="scale-pic" src="'+pic+'" alt="Card image cap">' +
                     '<a href="#!">' +
                     '<div class="mask rgba-white-slight"></div>' +
                     '</a>' +
                     '</div>' +
                     '<div class="card-body">' +
-                    '<h4 class="card-title">' +
+                    '<h4 class="card-title" style="font-size: 1.2rem;">' +
                     '<div class="mb-3">'+product.productType+'</div>'+
-                    '<a href="http://localhost:8080/info/'+product.productID+'">'+product.productName+'</a></h4>'+
+                    '<a href="http://localhost:8080/info/'+product.productID+'" style="font-size: 1rem;">'+product.productName+'</a></h4>'+
                     '<h4><strong><i id="total-price'+product.orderedID+'">'+(product.totalPrice).toLocaleString('ru') +'</i></strong> за <span id="prAm'+product.orderedID+'">'+product.orderedAmount+'</span> шт.</h4>' +
                     '<p id="productTotalBonus'+product.orderedID+'">' +
                     productBonus +
                     '</p>'+
                     '<p class="card-text">' +
-                    '<button type="button" onclick="changeAmount(this)" id="'+product.orderedID+'" name="product-less" value="'+product.productID+'" class="btn btn-outline-danger waves-effect">-</button>' +
+                    '<button type="button" onclick="changeAmount(this)" id="'+product.orderedID+'" name="product-less" value="'+product.productID+'" class="btn btn-outline-danger btn-sm waves-effect">-</button>' +
                     '<span class="badge badge-primary badge-pill"       id="amount'+product.orderedID+'">'+(product.orderedAmount).toLocaleString('ru')+'</span>' +
-                    '<button type="button" onclick="changeAmount(this)" id="'+product.orderedID+'" name="product-more" value="'+product.productID+'" class="btn btn-outline-success waves-effect">+</button>' +
+                    '<button type="button" onclick="changeAmount(this)" id="'+product.orderedID+'" name="product-more" value="'+product.productID+'" class="btn btn-outline-success btn-sm waves-effect">+</button>' +
                     '</p>' +
                     '</div>' +
                     '<button type="submit" onclick="removeFromOrder(this)" class="btn btn-danger btn-md" name="remove-product" id="remove-product" value="'+product.orderedID+'">Удалить</button>' +
@@ -192,7 +197,6 @@ function confirmOrderList() {
         scrollTop: $("#contact-info").offset().top
     }, 1000);
 
-    ///
     $("button[name='product-less']").each(function() {
         this.disabled = true;
     });
@@ -313,12 +317,13 @@ function applyDiscount(bonus, discount, orderID) {
 function acceptOrder() {
     var firstName 	= $('#firstName').val();
     var lastName    = $('#lastName').val();
+    var otchestvo   = $('#otchestvo').val();
     var username 	= $('#username').val();
     var email 	    = $('#email').val();
 
     $(".error").remove();
     function hasValidErrors(firstName, lastName, username, email) {
-        return firstName.length === 0 || lastName.length === 0 || username.length === 0 || email.length === 0;
+        return firstName.length === 0 || lastName.length === 0 || username.length === 0 /*|| email.length === 0*/;
     }
     if (hasValidErrors(firstName, lastName, username, email)) {
         if (firstName.length < 2) {
@@ -327,9 +332,9 @@ function acceptOrder() {
         if (lastName.length < 2) {
             $('#lastName').after('<span class="error">Введите фамилию</span>');
         }
-        if (email.length < 1) {
+        /*if (email.length < 1) {
             $('#email').after('<span class="error">Введите e-mail</span>');
-        }
+        }*/
         else
         {
             var regEx = /^[A-Z0-9][A-Z0-9._%+-]{0,63}@(?:[A-Z0-9-]{1,63}.){1,125}[A-Z]{2,63}$/;
@@ -350,7 +355,17 @@ function acceptOrder() {
         lastName    : lastName,
         username    : username,
         email       : email,
+        otchestvo   : otchestvo
     };
+
+    if ($('#city').val())
+    {
+        contacts.city       = $('#city').val();
+        contacts.street     = $('#street').val();
+        contacts.house      = $('#house').val();
+        contacts.apartment  = $('#apartment').val();
+    }
+
     console.log(contacts);
     contacts = JSON.stringify(contacts);
 
@@ -368,13 +383,14 @@ function acceptOrder() {
         {
             console.log(response);
             document.getElementById("orderLoader").style.display  = "none";
-            if (response.length === 0)
+            if (response.orderID !== undefined)
             {
+                order = response;
                 $('#orderStatus').html
                 (
                     '<div class="alert alert-success" role="alert" style="width: 60rem;margin-left: -1rem;">' +
                     '        <h4 class="alert-heading">Ваш заказ принят!</h4>' +
-                    '        <p>Username, ваш заказ на сумму 25 148 ₽ принят!</p>' +
+                    '        <p><strong>'+order.name+'</strong>, ваш заказ на сумму <strong>'+order.totalPrice+'</strong> ₽ принят!</p>' +
                     '        <p class="mb-0">Ваш заказ можно будет забрать после подтверждения готовности заказа!</p>' +
                     ' </div>'
                 );
@@ -383,7 +399,7 @@ function acceptOrder() {
             }
             else
             {
-                var validErrors = response.toString();
+                var validErrors = response;
                 validErrors = validErrors.replace(",", "<br>");
 
                 document.getElementById("order-deal").style.display = "block";

@@ -64,7 +64,6 @@ public class UserController {
     {
         model.addAttribute("user", user);
         model.addAttribute("order", orderService.resolveOrder(user));
-        /////////////
         model.addAttribute("orders", orderService.showUserOrders(user.getUserID()));
         return "pages/cabinet";
     }

@@ -231,27 +231,27 @@ public class OrderService {
         return order;
     }
 
-    public void confirmOrder(OrderContacts orderContacts, User user)
+    public Object confirmOrder(OrderContacts orderContacts, User user)
     {
-        Order order;
+        log.info(orderContacts.toString());
 
+        Order order;
         if (user == null)
         {
             order = getSessionOrder();
-
             order.setName    (orderContacts.getFirstName());
             order.setSurname (orderContacts.getLastName());
+            order.setOtchestvo(orderContacts.getOtchestvo());
             order.setMobile  (orderContacts.getUsername());
             order.setEmail   (orderContacts.getEmail());
             order.setShortTel(orderContacts.getUsername().replaceAll("\\W", ""));
-            acceptOrder(order);
         }
         else
         {
             order = orderRepo.findByUserIDAndAcceptedFalse(user.getUserID());
-
             order.setName    (user.getFirstName());
             order.setSurname (user.getLastName());
+            order.setOtchestvo(user.getOtchestvo());
             order.setMobile  (user.getEmail());
             order.setEmail   (user.getUsername());
             order.setShortTel(user.getUsername().replaceAll("\\W", ""));
@@ -262,9 +262,23 @@ public class OrderService {
 
             user.setBonus(user.getBonus() - bonusOff);
             user.setBonus(user.getBonus() + order.getTotalBonus());
-            userRepo.save(user);
-            acceptOrder(order);
         }
+
+        if (orderContacts.getCity() != null) {
+            order.setCity(orderContacts.getCity());
+            order.setStreet(orderContacts.getStreet());
+            order.setHouse(orderContacts.getHouse());
+            order.setApartment(orderContacts.getApartment());
+        }
+        log.info(order.toString());
+
+        orderRepo.save(order);
+        acceptOrder(order);
+        return order;
+        /*LinkedList<Object> payload = new LinkedList<>();
+        payload.add(null);
+        payload.add(order);
+        return payload;*/
     }
     private void acceptOrder(Order order)
     {
