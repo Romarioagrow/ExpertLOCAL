@@ -289,13 +289,13 @@ public class ProductMatcher {
 
         String shortModel;
         String single = product.getSingleType();
-        String brand = product.getOriginalBrand().toLowerCase();
+        String brand  = product.getOriginalBrand().toLowerCase();
 
         if (matcher.matches())
         {
-            shortModel = StringUtils.substringBeforeLast(modelName, " ").replaceAll("\\W", "");
+            shortModel = StringUtils.substringBeforeLast(modelName, " ").replaceAll(" ", "");
         }
-        else shortModel = modelName.replaceAll("\\W", "");
+        else shortModel = modelName.replaceAll(" ", "");
 
         String shortSearch = single.concat(brand).concat(shortModel)
                 .replaceAll(" ", "") /// REGEX!
@@ -365,7 +365,12 @@ public class ProductMatcher {
         log.info("Товаров с дубликатами: " + count.toString());
     }
 
-    public void createShortSearchName() {
+    /*public void createShortSearchName() {
+        productRepo.findAllByModelNameNotNull().forEach(product -> {
+            product.setShortSearchName(null);
+            productRepo.save(product);
+        });
+
         List<Product> products = productRepo.findAllByModelNameNotNull();
         products.forEach(product ->
         {
@@ -377,12 +382,12 @@ public class ProductMatcher {
                 String searchName = single.concat(brand).concat(model).replaceAll("-", "");
                 product.setShortSearchName(searchName);
                 productRepo.save(product);
-                //log.info(product.getShortSearchName());
+                log.info(product.getShortSearchName());
             }
         });
-    }
+    }*/
 
-    private int roundPrice(double coefficient, int price) {
+    public int roundPrice(double coefficient, int price) {
         int finalPrice = (int) (price * coefficient);
         String val = String.valueOf(finalPrice);
 
@@ -399,7 +404,7 @@ public class ProductMatcher {
         }
         else return finalPrice;
     }
-    private Integer matchBonus(int price) {
+    public Integer matchBonus(int price) {
         int bonus = price * 3 / 100;
         String val = String.valueOf(bonus);
 
@@ -451,6 +456,26 @@ public class ProductMatcher {
     }
 
     public void xxx() {
+        /*productRepo.findAllByModelNameNotNull().forEach(product -> {
+            product.setShortSearchName(null);
+            productRepo.save(product);
+        });
+
+        List<Product> products = productRepo.findAllByModelNameNotNull();
+        products.forEach(product ->
+        {
+            if (product.getShortSearchName() == null)
+            {
+                String single = product.getSingleType().replaceAll(" ", "").toLowerCase();
+                String brand  = product.getOriginalBrand().replaceAll(" ", "").toLowerCase();
+                String model  = product.getModelName().replaceAll(" ", "").toLowerCase();
+                String searchName = single.concat(brand).concat(model).replaceAll("-", "");
+                product.setShortSearchName(searchName);
+                productRepo.save(product);
+                log.info(product.getShortSearchName());
+            }
+        });*/
+
         /*List<Product> list = productRepo.findAllByModelNameNotNull();
         list.forEach(product -> {
             String modelName = product.getModelName();

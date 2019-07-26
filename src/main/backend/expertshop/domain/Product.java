@@ -66,6 +66,8 @@ public class Product implements Serializable {
     private String shortModel, shortSearchName;
 
     private String linkR;
+
+    private Boolean coefficientMod, priceMod;
 }
 
 

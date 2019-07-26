@@ -38,7 +38,6 @@ public class ServiceController {
     @PostMapping("/supplier/products/coefficient")
     @PreAuthorize("hasAuthority('ADMIN')")
     private String saveNewCoefficient(@RequestBody String[] coeff) {
-        //log.info(Arrays.toString(coeff));
         productService.saveNewCoeff(coeff);
         return "pages/supplier";
     }

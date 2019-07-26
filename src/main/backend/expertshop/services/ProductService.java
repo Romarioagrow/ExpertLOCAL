@@ -3,6 +3,7 @@ import expertshop.domain.Order;
 import expertshop.domain.OrderedProduct;
 import expertshop.domain.Product;
 import expertshop.domain.User;
+import expertshop.products.ProductMatcher;
 import expertshop.repos.OrderRepo;
 import expertshop.repos.ProductRepo;
 
@@ -100,10 +101,11 @@ public class ProductService {
 
     public List<Product> showReqProducts(String request, String isMapped, String withPic, Model model) {
         List<Product> products = new ArrayList<>();
-
+        log.info(request);
         if (!request.isEmpty())
         {
-            String shortRequest = request.replaceAll(" ","").replaceAll("-", "").toLowerCase();
+            String shortRequest = StringUtils.lowerCase(request).replaceAll(" ","").replaceAll("-", "");
+            log.info("ooo "+shortRequest);
             products = productRepo.findByShortSearchNameContains(shortRequest);
             if (products.size() != 0) return products;
 
@@ -139,6 +141,7 @@ public class ProductService {
             //log.info(productID + ": " + newPrice);
             Product product = productRepo.findByProductID(productID);
             product.setFinalPrice(Integer.parseInt(newPrice.replaceAll("\\W", "")));
+            product.setPriceMod(true);
             productRepo.save(product);
         });
         return true;
@@ -146,11 +149,32 @@ public class ProductService {
 
     public void saveNewCoeff(String[] coeff) {
         List<Product> list = productRepo.findByProductGroupEqualsIgnoreCase(coeff[0]);
-        list.forEach(product -> {
+        list.forEach(product ->
+        {
             product.setCoefficient(Double.parseDouble(coeff[1].replaceAll(",", ".")));
+            product.setCoefficientMod(true);
+            int newPrice = roundPrice(Double.parseDouble(coeff[1].replaceAll(",", ".")), (int) Double.parseDouble(product.getOriginalPrice().replaceAll(",", ".")));
             productRepo.save(product);
-            //log.info(product.getCoefficient().toString());
+            log.info(product.getCoefficient().toString());
+            log.info(product.getFinalPrice().toString());
         });
+    }
+    public int roundPrice(double coefficient, int price) {
+        int finalPrice = (int) (price * coefficient);
+        String val = String.valueOf(finalPrice);
+
+        if (finalPrice > 0 && finalPrice <= 10) {
+            return 10;
+        }
+        else if (finalPrice > 10 && finalPrice < 1000) {
+            val = val.substring(0, val.length()-1).concat("9");
+            return Integer.parseInt(val);
+        }
+        else if (finalPrice > 1000) {
+            val = val.substring(0, val.length()-2).concat("90");
+            return Integer.parseInt(val);
+        }
+        else return finalPrice;
     }
 }
 

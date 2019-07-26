@@ -101,6 +101,7 @@
                                             <th>Модель</th>
                                             <th>Цена</th>
                                             <th>Цена итог.</th>
+                                            <th>Цена мод.</th>
                                             <th>Кофф.</th>
                                             <th>Бонус</th>
                                             <th>Обновление</th>
@@ -120,6 +121,7 @@
                                                     <td>${product.modelName!'-'}</td>
                                                     <td style="width: 6rem;">${product.originalPrice!'-'}</td>
                                                     <td ondblclick="editProduct(this)" id="finalPrice${product.productID?replace(".","")}" name="${product.productID};${product.finalPrice!'-'}"><strong>${product.finalPrice!'-'}</strong></td>
+                                                    <#--<td><input type="checkbox" <#if !product.priceMod?? || !product.priceMod>checked="" <#else>checked</#if>></td>-->
                                                     <td>${product.coefficient!'-'}</td>
                                                     <td>${product.bonus!'-'}</td>
                                                     <td>${product.update!'-'}</td>

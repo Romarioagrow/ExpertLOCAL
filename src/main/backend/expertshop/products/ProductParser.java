@@ -140,12 +140,56 @@ public class ProductParser {
     private void updateProduct(String productID, String productAmount, String productPrice) {
         Product product = productRepo.findByProductID(productID);
 
-        if (differentParams(productID, productAmount, productPrice)) {
+        if (differentParams(productID, productAmount, productPrice))
+        {
             product.setOriginalAmount(productAmount);
             product.setOriginalPrice(productPrice);
+            if (product.getPriceMod() == null || !product.getPriceMod())
+            {
+                try {
+                    int finalPrice      = roundPrice(product.getCoefficient(), (int) Double.parseDouble(StringUtils.deleteWhitespace(product.getOriginalPrice().replaceAll(",","."))));
+                    int productBonus    = matchBonus(finalPrice);
+                    product.setFinalPrice(finalPrice);
+                    product.setBonus(productBonus);
+                }
+                catch (NullPointerException e) {
+                    log.info(e.getClass().getName());
+                }
+            }
         }
+
         product.setUpdate(LocalDate.now());
         productRepo.save(product);
+    }
+
+    private int roundPrice(double coefficient, int price) {
+        int finalPrice = (int) (price * coefficient);
+        String val = String.valueOf(finalPrice);
+
+        if (finalPrice > 0 && finalPrice <= 10) {
+            return 10;
+        }
+        else if (finalPrice > 10 && finalPrice < 1000) {
+            val = val.substring(0, val.length()-1).concat("9");
+            return Integer.parseInt(val);
+        }
+        else if (finalPrice > 1000) {
+            val = val.substring(0, val.length()-2).concat("90");
+            return Integer.parseInt(val);
+        }
+        else return finalPrice;
+    }
+    private Integer matchBonus(int price) {
+        int bonus = price * 3 / 100;
+        String val = String.valueOf(bonus);
+
+        if (bonus > 0 && bonus <= 10) {
+            return 10;
+        }
+        else {
+            val = val.substring(0, val.length()-1).concat("0");
+            return Integer.parseInt(val);
+        }
     }
 
     private boolean correctLineR(String[] line) {
