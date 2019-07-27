@@ -118,9 +118,9 @@
                                             <#--</#if>-->
                                         </#if>
                                     </p>
-                                    <h3><strong>${product.finalPrice!''} ₽</strong></h3>
+                                    <h3><strong>${product.finalPrice!''} </strong><span style="font-size: .9rem">руб</span></h3>
                                     <p>
-                                        Бонус: ${product.bonus!''} ₽
+                                        Бонус: ${product.bonus!''}
                                     </p>
                                     <div>
                                         <#if product.isAvailable!>

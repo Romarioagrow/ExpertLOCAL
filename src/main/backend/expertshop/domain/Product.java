@@ -67,7 +67,7 @@ public class Product implements Serializable {
 
     private String linkR;
 
-    private Boolean coefficientMod, priceMod;
+    private Boolean coefficientMod, priceMod, brandPrice;
 }
 
 

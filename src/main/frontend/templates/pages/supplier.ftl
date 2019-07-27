@@ -39,7 +39,7 @@
                                 <h3>Парсер картинок RUS</h3>
                                 <form method="POST" action="/supplier/pics">
                                     <div class="form-group">
-                                        <button type="submit" class="btn btn-primary">Запустить!</button>
+                                        <button type="submit" class="btn btn-primary">Запустить парсер!</button>
                                     </div>
                                 </form>
                             </div>
@@ -89,6 +89,7 @@
                                     </div>
                                 </#if>
                                 <form method="post" action="/supplier/products/save">
+
                                     <table class="table table-hover">
                                         <thead>
                                         <tr>
@@ -121,7 +122,13 @@
                                                     <td>${product.modelName!'-'}</td>
                                                     <td style="width: 6rem;">${product.originalPrice!'-'}</td>
                                                     <td ondblclick="editProduct(this)" id="finalPrice${product.productID?replace(".","")}" name="${product.productID};${product.finalPrice!'-'}"><strong>${product.finalPrice!'-'}</strong></td>
-                                                    <#--<td><input type="checkbox" <#if !product.priceMod?? || !product.priceMod>checked="" <#else>checked</#if>></td>-->
+                                                    <#--<td><input type="checkbox" <#if !product.priceMod?? || !product.priceMod><#else>checked</#if>></td>-->
+                                                    <td>
+                                                        <div class="form-check">
+                                                            <input type="checkbox" class="form-check-input" id="materialUnchecked${product.productID?replace(".","")}" <#if !product.priceMod?? || !product.priceMod><#else>checked</#if>>
+                                                            <label class="form-check-label" for="materialUnchecked${product.productID?replace(".","")}"></label>
+                                                        </div>
+                                                    </td>
                                                     <td>${product.coefficient!'-'}</td>
                                                     <td>${product.bonus!'-'}</td>
                                                     <td>${product.update!'-'}</td>

@@ -405,8 +405,8 @@ function constructProductCard(product, orderedIDs) {
         '</h5>'+
         '<p class="card-text" style="margin-top: 1rem">'+
         '<strong><i>'+product.productType+'</i></strong></p>'+
-        '<h3><strong>'+(product.finalPrice).toLocaleString('ru')+' ₽</strong></h3>'+
-        '<p>Бонус: '+product.bonus+' ₽</p>'+
+        '<h3><strong>'+(product.finalPrice).toLocaleString('ru')+' </strong><span style="font-size: .9rem">руб</span></h3>'+
+        '<p>Бонус: '+product.bonus+' </p>'+
         '<div id='+buttonID+'>'+
         productButton +
         '</div>'+

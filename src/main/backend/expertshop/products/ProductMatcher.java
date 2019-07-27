@@ -1,8 +1,10 @@
 package expertshop.products;
 
+import expertshop.domain.BrandProduct;
 import expertshop.domain.Product;
 import expertshop.domain.ProductBase;
 import expertshop.repos.BaseRepo;
+import expertshop.repos.BrandRepo;
 import expertshop.repos.ProductRepo;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
@@ -10,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -22,6 +25,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ProductMatcher {
     private final BaseRepo      baseRepo;
+    private final BrandRepo     brandRepo;
     private final ProductRepo   productRepo;
     private final ProductParser catalogParser;
     static int matchCounter = 0;
@@ -31,13 +35,78 @@ public class ProductMatcher {
         try {
             catalogParser.parseProducts(file);
             matchProducts();
+            resolveFinalPrice();
             resolveDuplicates();
-
+            resolveAvailable();
             log.info("Обновление БД завершено!");
         }
         catch (NullPointerException | NumberFormatException e) {
             e.printStackTrace();
         }
+    }
+
+    private void resolveAvailable() {
+        System.out.println();
+        log.info("Проверка наличия товара...");
+        List<Product> list = productRepo.findAllByProductGroupIsNotNull();
+        list.forEach(product -> {
+            product.setIsAvailable(false);
+            productRepo.save(product);
+        });
+
+        list.forEach(product -> {
+            if (product.getUpdate().toString().equals(LocalDate.now().toString())) {
+                product.setIsAvailable(true);
+                productRepo.save(product);
+            }
+        });
+    }
+
+    private void resolveFinalPrice() {
+        AtomicInteger count = new AtomicInteger();
+        System.out.println();log.info("Установка итоговой цены...");
+        List<Product> list = productRepo.findAllByProductGroupNotNullAndFinalPriceIsNull();
+        list.forEach(product ->
+        {
+            String brand = product.getOriginalBrand();
+            int finalPrice, productBonus;
+
+            if (StringUtils.equalsIgnoreCase(brand, "AMCV")         ||
+                    StringUtils.equalsIgnoreCase(brand, "ARDIN")    ||
+                    StringUtils.equalsIgnoreCase(brand, "BINATONE") ||
+                    StringUtils.equalsIgnoreCase(brand, "DOFFLER")  ||
+                    StringUtils.equalsIgnoreCase(brand, "LERAN")    ||
+                    StringUtils.equalsIgnoreCase(brand, "SENTORE")
+            ){
+                BrandProduct brandProduct = brandRepo.findByProductID(product.getProductID());
+                if (brandProduct != null) {
+                    finalPrice = Integer.parseInt(brandProduct.getFinalPrice().replaceAll(" ", ""));
+                    productBonus = matchBonus(finalPrice);
+                    product.setFinalPrice(finalPrice);
+                    product.setBonus(productBonus);
+                    product.setBrandPrice(true);
+                    count.getAndIncrement();
+                    productRepo.save(product);
+                }
+                else
+                {
+                    finalPrice = roundPrice(product.getCoefficient(), (int) Double.parseDouble(product.getOriginalPrice().replaceAll(",", ".").replaceAll(" ", "")));
+                    productBonus = matchBonus(finalPrice);
+                    product.setFinalPrice(finalPrice);
+                    product.setBonus(productBonus);
+                    productRepo.save(product);
+                }
+            }
+            else
+            {
+                finalPrice = roundPrice(product.getCoefficient(), (int) Double.parseDouble(product.getOriginalPrice().replaceAll(",", ".").replaceAll(" ", "")));
+                productBonus = matchBonus(finalPrice);
+                product.setFinalPrice(finalPrice);
+                product.setBonus(productBonus);
+                productRepo.save(product);
+            }
+        });
+        log.info("Установленно цен для брендов: " + count);
     }
 
     public void matchProducts()
@@ -196,34 +265,29 @@ public class ProductMatcher {
 
         for (String match : matches)
         {
-            String annotation, model, name, fullName, groupBrand, type, formAnno;
+            String annotation, modelName, fullName, groupBrand, productType, formAnno;
             try
             {
                 if ((supp.equals("1RBT") && StringUtils.startsWithIgnoreCase(product.getOriginalType(), match.trim())))
                 {
                     String brand = product.getOriginalBrand();
 
-                    /// Заданная разметка
+                    /// Заданный параметры
                     product.setProductGroup(productGroup);
                     product.setSingleType(single);
                     product.setProductCategory(productCategory);
 
                     /// Вычисляемые параметры
-                    model        = StringUtils.substringAfter(product.getOriginalName().toUpperCase(), brand.toUpperCase()).trim();
-                    fullName     = product.getSingleType().concat(" ").concat(StringUtils.capitalize(brand.toLowerCase())).concat(" ").concat(model);
-                    type         = resolveProductType(product.getOriginalType());
+                    modelName    = StringUtils.substringAfter(product.getOriginalName().toUpperCase(), brand.toUpperCase()).trim();
+                    fullName     = product.getSingleType().concat(" ").concat(StringUtils.capitalize(brand.toLowerCase())).concat(" ").concat(modelName);
+                    productType  = resolveProductType(product.getOriginalType());
                     groupBrand   = single.concat(" ").concat(StringUtils.capitalize(brand.toLowerCase()));
                     formAnno     = formatAnnotation(product.getOriginalAnnotation());
 
-                    int finalPrice      = roundPrice(coefficient, Integer.parseInt(StringUtils.deleteWhitespace(product.getOriginalPrice())));
-                    int productBonus    = matchBonus(finalPrice);
-
-                    product.setModelName(model);
-                    product.setProductType(type);
+                    product.setModelName(modelName);
+                    product.setProductType(productType);
                     product.setGroupBrand(groupBrand);
                     product.setFullName(fullName);
-                    product.setFinalPrice(finalPrice);
-                    product.setBonus(productBonus);
                     product.setFormattedAnnotation(formAnno);
                     product.setCoefficient(coefficient);
                     productRepo.save(product);
@@ -244,28 +308,21 @@ public class ProductMatcher {
                     if (originalName.contains(", ") && originalName.contains(originalBrand))
                     {
                         annotation   = StringUtils.substringAfter(originalName,", ");
-
                         if ((StringUtils.substringAfter(originalName, originalBrand).contains(","))) {
-
-                            model   = StringUtils.substringBetween(originalName, originalBrand, ",").trim();
+                            modelName   = StringUtils.substringBetween(originalName, originalBrand, ",").trim();
                         }
-                        else model   = StringUtils.substringAfter(originalName, originalBrand).trim();
+                        else modelName   = StringUtils.substringAfter(originalName, originalBrand).trim();
 
-                        name         = StringUtils.capitalize(originalBrand.toLowerCase()).concat(" ").concat(model);//StringUtils.capitalize(originalBrand.concat(" ").concat(model).toLowerCase());
-                        fullName     = product.getSingleType().concat(" ").concat(StringUtils.capitalize(originalBrand.toLowerCase())).concat(" ").concat(model);
+                        originalName = StringUtils.capitalize(originalBrand.toLowerCase()).concat(" ").concat(modelName);//StringUtils.capitalize(originalBrand.concat(" ").concat(model).toLowerCase());
+                        fullName     = product.getSingleType().concat(" ").concat(StringUtils.capitalize(originalBrand.toLowerCase())).concat(" ").concat(modelName);
                         groupBrand   = single.concat(" ").concat(StringUtils.capitalize(originalBrand.toLowerCase()));
 
-                        int finalPrice      = roundPrice(coefficient, (int) Double.parseDouble(StringUtils.deleteWhitespace(product.getOriginalPrice()).replaceAll(",", ".")));
-                        int productBonus    = matchBonus(finalPrice);
-
-                        product.setOriginalName(name);
+                        product.setOriginalName(originalName);
                         product.setOriginalAnnotation(annotation);
-                        product.setModelName(model);
+                        product.setModelName(modelName);
                         product.setFullName(fullName);
                         product.setGroupBrand(groupBrand);
                         product.setProductType(product.getOriginalType()); /// resolveTypeName();
-                        product.setFinalPrice(finalPrice);
-                        product.setBonus(productBonus);
                         product.setCoefficient(coefficient);
                         productRepo.save(product);
 
@@ -276,7 +333,7 @@ public class ProductMatcher {
                 }
             }
             catch (NullPointerException e) {
-                log.warning(e.getClass().getName()/*"NULL at " + product.getOriginalName() + " :: " + product.getOriginalAnnotation()*/);
+                log.warning(e.getClass().getName());
             }
         }
     }
@@ -308,14 +365,12 @@ public class ProductMatcher {
         productRepo.save(product);
     }
 
-    public void resolveDuplicates() throws NullPointerException
-    {
+    public void resolveDuplicates() throws NullPointerException {
         System.out.println();
         log.info("Обработка дубликатов...");
-        productRepo.findAllByModelNameNotNull().forEach(product -> {product.setIsDuplicate(null);product.setHasDuplicates(null);productRepo.save(product);});
+        productRepo.findAllByProductGroupIsNotNull().forEach(product -> {product.setIsDuplicate(null);product.setHasDuplicates(null);productRepo.save(product);});
 
         List<Product> products = productRepo.findBySupplierAndProductGroupIsNotNull("1RBT");
-        products.sort(Comparator.comparing(Product::getModelName));
 
         AtomicInteger count = new AtomicInteger();
         products.forEach(product ->
@@ -444,9 +499,10 @@ public class ProductMatcher {
 
     public void trimBigBase() {
         List<ProductBase> bases = baseRepo.findAll();
+        log.info(bases.size() + "");
         bases.forEach(productBase ->
         {
-            String model = StringUtils.substringAfter(productBase.getFullName(), productBase.getBrand()).trim().toUpperCase();
+            String model = StringUtils.substringAfter(productBase.getFullName(), productBase.getBrand()).trim().toLowerCase();
             String brand = productBase.getBrand().toLowerCase();
             String shortModel = brand.concat(model).replaceAll("\\W", "");
             productBase.setShortModel(shortModel);
@@ -455,7 +511,82 @@ public class ProductMatcher {
         });
     }
 
+    public void setPriceFromBrandsBase() {
+        AtomicInteger countTotalBrands = new AtomicInteger();
+        AtomicInteger countMatch = new AtomicInteger();
+        List<Product> list = productRepo.findAllByProductGroupIsNotNull();
+        list.forEach(product ->
+        {
+            String brand = product.getOriginalBrand();
+            if (StringUtils.equalsIgnoreCase(brand, "AMCV")         ||
+                    StringUtils.equalsIgnoreCase(brand, "ARDIN")    ||
+                    StringUtils.equalsIgnoreCase(brand, "BINATONE") ||
+                    StringUtils.equalsIgnoreCase(brand, "DOFFLER")  ||
+                    StringUtils.equalsIgnoreCase(brand, "LERAN")    ||
+                    StringUtils.equalsIgnoreCase(brand, "SENTORE")
+            ){
+                countTotalBrands.getAndIncrement();
+                BrandProduct brandProduct = brandRepo.findByProductID(product.getProductID());
+                if (brandProduct != null)
+                {
+                    countMatch.getAndIncrement();
+                    int oldPrice = product.getFinalPrice();
+                    product.setFinalPrice(Integer.parseInt(brandProduct.getFinalPrice().replaceAll(" ", "")));
+                    if (product.getOriginalPic() == null) {
+                        product.setOriginalPic(brandProduct.getOriginalPrice());
+                    }
+                    product.setBrandPrice(true);
+                    productRepo.save(product);
+                    System.out.println();
+                    log.info("Для товара из основной базы " + product.getOriginalName());
+                    log.info("Старая цена: " + oldPrice + "; новая цена: " + product.getFinalPrice());
+                }
+                else
+                {
+                    brandProduct = brandRepo.findByShortModel(product.getShortModel());
+                    if (brandProduct != null)
+                    {
+                        countMatch.getAndIncrement();
+                        int oldPrice = product.getFinalPrice();
+                        product.setFinalPrice(Integer.parseInt(brandProduct.getFinalPrice().replaceAll(" ", "")));
+                        if (product.getOriginalPic() == null) {
+                            product.setOriginalPic(brandProduct.getOriginalPrice());
+                        }
+                        product.setBrandPrice(true);
+                        productRepo.save(product);
+                        System.out.println();
+                        log.info("Для товара из основной базы " + product.getOriginalName());
+                        log.info("Старая цена: " + oldPrice + "; новая цена: " + product.getFinalPrice());
+                    }
+                }
+            }
+        });
+        log.info("Всего товаров с брендами: " + countTotalBrands);
+        log.info("Нашлось: " + countMatch);
+    }
+
     public void xxx() {
+
+        List<Product> list = productRepo.findAllByProductGroupIsNotNull();
+        list.forEach(product -> {
+            String brand = product.getOriginalBrand();
+            if (product.getBrandPrice() == null &&
+                    (StringUtils.equalsIgnoreCase(brand, "AMCV")     ||
+                            StringUtils.equalsIgnoreCase(brand, "ARDIN")    ||
+                            StringUtils.equalsIgnoreCase(brand, "BINATONE") ||
+                            StringUtils.equalsIgnoreCase(brand, "DOFFLER")  ||
+                            StringUtils.equalsIgnoreCase(brand, "LERAN")    ||
+                            StringUtils.equalsIgnoreCase(brand, "SENTORE"))
+            ){
+                log.info(product.getProductID() + "; " + product.getOriginalName());
+            }
+        });
+
+        /*int count;
+        List<Product> products = productRepo.findAllByModelNameNotNull();
+        count = (int) products.stream().filter(product -> product.getOriginalPic() != null).count();
+        log.info(count + " из " + products.size());*/
+
         /*productRepo.findAllByModelNameNotNull().forEach(product -> {
             product.setShortSearchName(null);
             productRepo.save(product);

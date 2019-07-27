@@ -113,8 +113,6 @@ public class FilterService {
 
             sortProducts(products, filters);
 
-            products.sort(Comparator.comparing(Product::getIsAvailable).reversed());
-
             int start = (int) pageable.getOffset();
             int end = (start + pageable.getPageSize()) > products.size() ? products.size() : (start + pageable.getPageSize());
 

@@ -1,8 +1,10 @@
 package expertshop.products;
 import com.opencsv.CSVReader;
+import expertshop.domain.BrandProduct;
 import expertshop.domain.Product;
 import expertshop.domain.ProductBase;
 import expertshop.repos.BaseRepo;
+import expertshop.repos.BrandRepo;
 import expertshop.repos.ProductRepo;
 import expertshop.services.ProductService;
 
@@ -35,6 +37,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ProductParser {
     private final ProductService productService;
     private final ProductRepo productRepo;
+    private final BrandRepo brandRepo;
     private final BaseRepo baseRepo;
 
     public void
@@ -140,26 +143,46 @@ public class ProductParser {
     private void updateProduct(String productID, String productAmount, String productPrice) {
         Product product = productRepo.findByProductID(productID);
 
-        if (differentParams(productID, productAmount, productPrice))
+        if (product.getProductGroup() != null && differentParams(productID, productAmount, productPrice))
         {
-            product.setOriginalAmount(productAmount);
-            product.setOriginalPrice(productPrice);
-            if (product.getPriceMod() == null || !product.getPriceMod())
+            try
             {
-                try {
-                    int finalPrice      = roundPrice(product.getCoefficient(), (int) Double.parseDouble(StringUtils.deleteWhitespace(product.getOriginalPrice().replaceAll(",","."))));
-                    int productBonus    = matchBonus(finalPrice);
-                    product.setFinalPrice(finalPrice);
-                    product.setBonus(productBonus);
+                if (ignoreUpdate(product))
+                {
+                    product.setUpdate(LocalDate.now());
+                    product.setOriginalPrice(productPrice);
+                    product.setOriginalAmount(productAmount);
+                    return;
                 }
-                catch (NullPointerException e) {
-                    log.info(e.getClass().getName());
-                }
+
+                product.setOriginalAmount(productAmount);
+                product.setOriginalPrice(productPrice);
+
+                int finalPrice   = roundPrice(product.getCoefficient(), (int) Double.parseDouble(StringUtils.deleteWhitespace(product.getOriginalPrice().replaceAll(",","."))));
+                int productBonus = matchBonus(finalPrice);
+                product.setFinalPrice(finalPrice);
+                product.setBonus(productBonus);
+
+            }
+            catch (NullPointerException e) {
+                log.info(e.getClass().getName());
+                e.printStackTrace();
             }
         }
-
         product.setUpdate(LocalDate.now());
         productRepo.save(product);
+    }
+
+    private boolean ignoreUpdate(Product product) {
+        String brand = product.getOriginalBrand();
+        return  StringUtils.equalsIgnoreCase(brand, "AMCV")     ||
+                StringUtils.equalsIgnoreCase(brand, "ARDIN")    ||
+                StringUtils.equalsIgnoreCase(brand, "BINATONE") ||
+                StringUtils.equalsIgnoreCase(brand, "DOFFLER")  ||
+                StringUtils.equalsIgnoreCase(brand, "LERAN")    ||
+                StringUtils.equalsIgnoreCase(brand, "SENTORE")  ||
+                product.getPriceMod()       != null             ||
+                product.getCoefficientMod() != null;
     }
 
     private int roundPrice(double coefficient, int price) {
@@ -250,46 +273,82 @@ public class ProductParser {
                 !line[0].contains("8(351)")   & !line[0].startsWith(".")  & !line[0].startsWith(" ");
     }
 
-    public void parseBase(MultipartFile file)
-    {
+    public void parseBrandProducts(MultipartFile file) {
         try {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream()));
             CSVReader reader = new CSVReader(bufferedReader, ';');
 
             String[] line;
             int count = 0;
-            while ((line = reader.readNext()) != null)
-            {
+            while ((line = reader.readNext()) != null) {
+                if (!line[0].isEmpty() && !line[0].startsWith("ПРАЙС") && !line[0].contains("г. Челябинск") && !line[0].startsWith("Код товара"))
+                {
+                    BrandProduct brandProduct = new BrandProduct();
+                    brandProduct.setProductID(line[0]);
+                    brandProduct.setFullName(line[1]);
+                    brandProduct.setBrand(line[2]);
+                    brandProduct.setAnnotation(line[3]);
+                    brandProduct.setOriginalPrice(line[4]);
+                    brandProduct.setFinalPrice(line[5]);
+                    brandProduct.setPercent(line[6]);
+                    if (!line[9].startsWith("В ячейке")) {
+                        brandProduct.setPic(line[9]);
+                    }
+
+                    String shortModel = StringUtils.substringAfter(brandProduct.getFullName().toLowerCase(), brandProduct.getBrand().toLowerCase()).replaceAll(" ", "").toLowerCase();
+                    shortModel = brandProduct.getBrand().toLowerCase().concat(shortModel).replaceAll("\\W", "");
+                    brandProduct.setShortModel(shortModel);
+
+                    brandRepo.save(brandProduct);
+                    System.out.println();
+                    log.info(brandProduct.getFullName());
+                    log.info(brandProduct.getShortModel());
+                }
+            }
+        }
+        catch (IOException | ArrayIndexOutOfBoundsException exp) {
+            exp.getStackTrace();
+        }
+    }
+
+    public void parseBase(MultipartFile file) {
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream()));
+            CSVReader reader = new CSVReader(bufferedReader, ';');
+
+            String[] line;
+            int count = 0;
+            while ((line = reader.readNext()) != null) {
                 if (line[0].equals("Категория")) log.info("!!! Пропуск первой строки");
                 else
                 {
                     ProductBase product = new ProductBase();
                     product.setProductID(UUID.randomUUID().toString());
-                    String productBrand = line[13];
-                    product.setCategory(line[0]);
-                    product.setSubCategory(line[1]);
-                    if (line[2].isEmpty())  product.setProductGroup(line[1]);
-                    else product.setProductGroup(line[2]);
 
-                    product.setArticul(line[3]);
-                    product.setArticulModification(line[4]);
-                    product.setFullName(line[5]);
-                    product.setFullCategory(line[6]);
-                    product.setPrice(line[7]);
-                    product.setAnnotation(line[11]);
-                    product.setBrand(line[13]);
-                    product.setPics(line[18]);
-                    product.setParamsHTML(line[19]);
-                    log.info(product.getFullName());
+                    if (Objects.requireNonNull(file.getOriginalFilename()).contains("Компьютерная техника")) {
+                        product.setFullName(line[5]);
+                        product.setAnnotation(line[11]);
+                        product.setBrand(line[13]);
+                        product.setPics(line[19]);
+                        product.setFormattedAnnotation(line[20]);
+                    }
+                    else  {
+                        product.setFullName(line[6]);
+                        product.setAnnotation(line[11]);
+                        product.setBrand(line[14]);
+                        product.setPics(line[20]);
+                        product.setFormattedAnnotation(line[21]);
+                    }
                     baseRepo.save(product);
+                    log.info(product.getFullName());
                     count++;
-
                 }
             }
             log.info("Products add: " + count);
         }
         catch (IOException | ArrayIndexOutOfBoundsException exp) {
-            log.info("Something went wrong with Base!");
+            //log.info("Something went wrong with Base!");
+            exp.getStackTrace();
         }
     }
 
@@ -305,7 +364,7 @@ public class ProductParser {
             productRepo.save(product);
         });*/
 
-        findInBigBase();
+        //findInBigBase();
 
         productRepo.findByLinkRIsNotNull().forEach(product -> {
             if (product.getLinkR().startsWith("В ячейке нет гиперссылки!") || product.getLinkR().startsWith("#ИМЯ")) {
@@ -403,11 +462,19 @@ public class ProductParser {
 
     public void findInBigBase() {
         log.info("Поиск совпадений в Большой Базе...");
-        List<Product> products = productRepo.findAllByModelNameNotNullAndFullAnnotationIsNull();
+
+        productRepo.findAllByModelNameNotNull().forEach(product -> {
+            String n = product.getShortModel().replaceAll("-","").replaceAll("\\(","").replaceAll("\\)","").toLowerCase();
+            product.setShortModel(n);
+            productRepo.save(product);
+            log.info(product.getShortModel());
+        });
+
+        List<Product> products = productRepo.findAllByModelNameNotNullAndOriginalPicIsNotNull();
         AtomicInteger count = new AtomicInteger();
         products.forEach(product ->
         {
-            if (product.getFormattedAnnotation() != null)
+            //if (product.getFormattedAnnotation() != null)
             {
                 ProductBase productBase = baseRepo.findFirstByShortModelEquals(product.getShortModel());
                 if (productBase != null)
@@ -416,10 +483,10 @@ public class ProductParser {
                     log.info("Для: " + product.getFullName());
                     log.info("Нашлось: " + productBase.getFullName());
                     product.setFullAnnotation(productBase.getAnnotation());
-                    product.setFormattedAnnotation(productBase.getParamsHTML());
+                    product.setFormattedAnnotation(productBase.getFormattedAnnotation());
                     product.setPics(product.getPics());
 
-                    if (product.getSupplier().startsWith("2") && product.getOriginalPic() != null)
+                    if (product.getSupplier().startsWith("2") && product.getOriginalPic() == null)
                     {
                         String pic = StringUtils.substringBefore(productBase.getPics(), " ");
                         product.setOriginalPic(pic);

@@ -36,17 +36,17 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col">
-                                <h2><strong style="padding-left: 0.5rem;">${product.finalPrice} ₽</strong></h2>
+                                <h2><strong style="padding-left: 0.5rem;">${product.finalPrice} </strong><span style="font-size: .8rem">руб</span></h2>
                             </div>
                             <div class="col">
-                                <#if product.isAvailable!>
+                                <#if product.isAvailable??>
                                     <p style="font-size: 1rem; padding-top: 0.5rem;">+<strong> ${product.getBonus()}</strong><i> баллов</i></p>
                                 </#if>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
-                                <#if product.isAvailable!>
+                                <#if product.isAvailable??>
                                     <#if orderedProductsID?? && orderedProductsID?seq_contains('${product.productID}')>
                                         <a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
                                     <#else>
@@ -61,7 +61,7 @@
                                 </#if>
                             </div>
                             <div class="col">
-                                <#if product.isAvailable!>
+                                <#if product.isAvailable??>
                                     <p style="color: #00c851; font-size: 1.5rem; padding-top: 0.5rem;"><strong>В наличии!</strong></p>
                                 </#if>
                             </div>

@@ -1,7 +1,6 @@
 package expertshop.repos;
 import expertshop.domain.Product;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,6 +29,7 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     List<Product> findBySupplierAndProductGroupIsNotNullAndOriginalPicIsNullAndLinkRIsNotNull(String sup);
 
 
+
     /*ADMIN*/
     List<Product> findByProductCategoryEqualsIgnoreCase(String category);
     List<Product> findByShortSearchNameContains(String shortName);
@@ -44,12 +44,16 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     List<Product> findByShortModelEqualsAndProductGroupIsNotNull(String s);
 
     List<Product> findByLinkRIsNotNull();
-    List<Product> findAllByModelNameNotNullAndFullAnnotationIsNull();
+    List<Product> findAllByModelNameNotNullAndOriginalPicIsNotNull();
+
+    Page<Product> findProductsByProductGroupEqualsIgnoreCaseAndIsAvailableTrue(String req, Pageable pageable);
 
     List<Product> findAllByProductGroupIsNull();
     List<Product> findAllByProductGroupIsNotNull();
     List<Product> findAllByProductGroupIsNotNullAndIsDuplicateIsNull();
     List<Product> findAllByProductGroupIsNotNullAndIsDuplicateIsNullAndShortSearchNameContainsIgnoreCase(String search);
+
+    //List<Product> findAllByProductGroupIsNotNullAndIsAvailableTrueAndIsDuplicateIsNullAndShortSearchNameContainsIgnoreCase(String search);
 
     //List<Product> findProductsByProductGroupEqualsIgnoreCase(String productGroup);
     List<Product> findBySupplier(String supplier);
@@ -57,6 +61,8 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     List<Product> findProductsByProductGroupEqualsIgnoreCaseAndSupplier(String productGroup, String supplier);
     List<Product> findByModelNameIgnoreCaseOrOriginalNameIgnoreCase(String modelName, String origName);
     List<Product> findAllByModelNameNotNull();
+    List<Product> findAllByProductGroupNotNullAndFinalPriceIsNull();
+
     List<Product> findByModelNameStartsWithIgnoreCase(String modelName);
 
     /*List<Product> findByOriginalGroup(String group);*/

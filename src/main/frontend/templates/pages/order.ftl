@@ -86,9 +86,9 @@
                                     <div class="d-flex justify-content-between">
                                         <p class="display-4 align-self-end">
                                             <#if !order.discountApplied>
-                                                <strong id="order-totalPrice">${order.totalPrice}</strong> <span style="font-weight: normal !important;">₽</span>
+                                                <strong id="order-totalPrice">${order.totalPrice}</strong> <span style="font-size: .9rem">руб</span>
                                             <#else>
-                                                <strong id="order-totalPrice" style="color: #007e33">${order.discountPrice}</strong> <span>₽</span>
+                                                <strong id="order-totalPrice" style="color: #007e33">${order.discountPrice}</strong> <span style="font-size: .9rem">руб</span>
                                             </#if>
                                         </p>
                                         <p class="align-self-end pb-2" id="discountInfo">

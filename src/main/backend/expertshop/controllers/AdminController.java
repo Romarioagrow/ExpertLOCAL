@@ -57,6 +57,8 @@ public class AdminController {
     public String loadCSV(@RequestParam("file") MultipartFile file, Model model, @AuthenticationPrincipal User user)
     {
         productMatcher.updateProductDB(file);
+        //catalogParser.parseBase(file);
+        //catalogParser.parseBrandProducts(file);
         model.addAttribute("url", "db");
         return "pages/supplier";
     }

@@ -29,19 +29,19 @@ public class ProductService {
     private final OrderRepo orderRepo;
 
     public Page<Product> findProducts(String request, Pageable pageable, Model model) {
-        Page<Product> page = productRepo.findProductsByProductGroupEqualsIgnoreCase(request, pageable);
+        Page<Product> page = productRepo.findProductsByProductGroupEqualsIgnoreCaseAndIsAvailableTrue(request, pageable);
 
-        if (page.getTotalElements() == 0) {
+        /*if (page.getTotalElements() == 0) {
             page = findOriginalProducts(request, pageable);
-        }
+        }*/
 
         model.addAttribute("total", page.getTotalElements());
         return page;
     }
 
-    public Page<Product> findOriginalProducts(String request, Pageable pageable) {
+    /*public Page<Product> findOriginalProducts(String request, Pageable pageable) {
         return productRepo.findByOriginalTypeContainingOrOriginalNameContaining(request, request, pageable);
-    }
+    }*/
 
     public List<Product> searchProducts(String searchRequest) {
         //log.info("Search request: " + searchRequest);
@@ -86,26 +86,27 @@ public class ProductService {
         List<Product> prices = productRepo.findByProductGroupEqualsIgnoreCase(request);
         if (prices.size() != 0)
         {
-            /*log.info(request);
-            log.info(prices.size()+"");*/
-            prices.sort(Comparator.comparingInt(Product::getFinalPrice));
-            int min = prices.stream().findFirst().get().getFinalPrice();
+            try {
+                prices.sort(Comparator.comparingInt(Product::getFinalPrice));
+                int min = prices.stream().findFirst().get().getFinalPrice();
 
-            prices.sort(Comparator.comparingInt(Product::getFinalPrice).reversed());
-            int max = prices.stream().findFirst().get().getFinalPrice();
+                prices.sort(Comparator.comparingInt(Product::getFinalPrice).reversed());
+                int max = prices.stream().findFirst().get().getFinalPrice();
 
-            return new int[]{min, max};
+                return new int[]{min, max};
+            }
+            catch (NullPointerException e) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
 
     public List<Product> showReqProducts(String request, String isMapped, String withPic, Model model) {
         List<Product> products = new ArrayList<>();
-        log.info(request);
         if (!request.isEmpty())
         {
             String shortRequest = StringUtils.lowerCase(request).replaceAll(" ","").replaceAll("-", "");
-            log.info("ooo "+shortRequest);
             products = productRepo.findByShortSearchNameContains(shortRequest);
             if (products.size() != 0) return products;
 
