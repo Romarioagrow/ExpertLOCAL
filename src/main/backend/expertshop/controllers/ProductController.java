@@ -33,7 +33,7 @@ public class ProductController {
                               @PathVariable String category,
                               @PathVariable String requiredProduct,
                               @AuthenticationPrincipal User user,
-                              @PageableDefault(sort = {"originalPic"}, direction = Sort.Direction.ASC, size = 15) Pageable pageable)
+                              @PageableDefault(sort = {"localPic"}, direction = Sort.Direction.ASC, size = 15) Pageable pageable)
     {
         String url = "/products/"+category+"/"+requiredProduct;
         String request = requiredProduct.replaceAll("_", " ").toLowerCase();

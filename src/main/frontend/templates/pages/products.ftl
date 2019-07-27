@@ -93,10 +93,10 @@
                             <div class="card product-card">
                                 <div class="view overlay" style="min-height: 8rem !important; max-height: 8rem !important;">
                                     <#if product.originalPic??>
-                                        <img class="img-fluid scale-pic" src="${product.originalPic}" alt="Фотографии пока нет">
-                                        <a href="#">
+                                        <img class="img-fluid scale-pic" src="<#if product.localPic??>${product.localPic}<#else>/../img/nophoto.jpg<#--${product.originalPic}--></#if>" alt="Фотографии пока нет :(">
+                                        <#--<a href="#" onclick="alertPic()">
                                             <div class="mask rgba-white-slight"></div>
-                                        </a>
+                                        </a>-->
                                     <#else>
                                         <img class="img-fluid scale-pic" src="/../img/nophoto.jpg" alt="Фотографии пока нет">
                                     </#if>

@@ -369,6 +369,14 @@ public class OrderService {
     public List<Order> showAcceptedOrders(String request) {
         if (request.isEmpty()) return orderRepo.findAllByAcceptedTrue();
 
+        Order order;
+        request = request.replaceAll("\\W", "");
+        order = orderRepo.findByOrderID(Long.parseLong(request));
+        if (order != null) return Collections.singletonList(order);
+
+        List<Order> orders = orderRepo.findByShortTel(request);
+        if (!orders.isEmpty()) return orders;
+
         return null;
     }
 }

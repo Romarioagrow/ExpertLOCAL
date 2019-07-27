@@ -75,7 +75,8 @@ public class AdminController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String matchDuplicates(Model model)
     {
-        productMatcher.xxx();
+        //productMatcher.xxx();
+        catalogParser.downloadPics();
         model.addAttribute("url", "db");
         return "pages/supplier";
     }

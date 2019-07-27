@@ -67,6 +67,9 @@ public class Product implements Serializable {
 
     private String linkR;
 
+    @Column(length = 2000)
+    private String localPic;
+
     private Boolean coefficientMod, priceMod, brandPrice;
 }
 

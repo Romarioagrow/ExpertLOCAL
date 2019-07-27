@@ -75,14 +75,7 @@
                             </div>
                             <div class="form-row mb-4">
                                 <div class="col">
-                                    <input type="email" id="email" name="email" required placeholder="E-mail"
-                                           class="form-control ${(emailError??)?string('is-invalid','')}">
-                                    <span class="form__error">Это поле должно содержать E-Mail в формате example@site.com</span>
-                                    <#if emailError??>
-                                        <div class="invalid-feedback">
-                                            ${emailError}
-                                        </div>
-                                    </#if>
+                                    <input type="email" id="email" name="email" placeholder="E-mail" class="form-control">
                                 </div>
                             </div>
                             <button id="submitRegistration" class="btn btn-info my-4 btn-block" type="submit">Зарегестрироваться!</button>

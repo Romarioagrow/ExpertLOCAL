@@ -1,14 +1,3 @@
-/*$(document).ready(function(){
-    $('#filter-button')         .on('click', filterProducts);
-});
-$(document).ready(function(){
-    $('input[type="radio"]')    .on('change', filterProducts);
-});*/
-
-/*$(document).ready(function(){
-    $('td').on('click', filterProducts);
-});*/
-
 function removeModCoeff(e) {
     var request = e.name;
     $.post({
@@ -419,17 +408,18 @@ function constructProductCard(product, orderedIDs) {
     else productButton = '<p style="color: #c40030; font-size: 1.5rem; padding-top: 0.5rem;"><strong>Нет в наличии!</strong></p>';
 
     let pic;
-    if (product.originalPic !== null) {
-        pic = product.originalPic
+
+    if (product.localPic/*originalPic*/ !== null) {
+        pic = product.localPic/*originalPic*/
     }
     else pic = '/../img/nophoto.jpg';
 
     return '<div class="card product-card">'+
         '<div class="view overlay" style="min-height: 8rem !important; max-height: 8rem !important;">'+
         '<img class="img-fluid scale-pic" src="'+pic+'" alt="Фото пока нет :(">'+
-        '<a href="#">'+
+        /*'<a href="#"'+
         '<div class="mask rgba-white-slight"></div>'+
-        '</a>'+
+        '</a>'+*/
         '</div>'+
         '<div class="card-body">'+
         '<h5 class="card-title" style="min-height: 3rem !important; max-height: 3rem !important;">'+
@@ -450,3 +440,8 @@ function constructProductCard(product, orderedIDs) {
         '</div>';
 }
 
+/*
+function alertPic(pic) {
+    //pic.preventDefault();
+    confirm('<h1>lol</h1>')
+}*/

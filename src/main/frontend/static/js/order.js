@@ -390,7 +390,7 @@ function acceptOrder() {
                 (
                     '<div class="alert alert-success" role="alert" style="width: 60rem;margin-left: -1rem;">' +
                     '        <h4 class="alert-heading">Ваш заказ принят!</h4>' +
-                    '        <p><strong>'+order.name+'</strong>, ваш заказ на сумму <strong>'+order.totalPrice+'</strong> ₽ принят!</p>' +
+                    '        <p><strong>'+order.name+'</strong>, ваш заказ на сумму <strong>'+order.totalPrice+'<span style="font-size: .9rem"> руб</span></strong>  принят!</p>' +
                     '        <p class="mb-0">Ваш заказ можно будет забрать после подтверждения готовности заказа!</p>' +
                     ' </div>'
                 );

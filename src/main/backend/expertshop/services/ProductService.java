@@ -104,15 +104,18 @@ public class ProductService {
         List<Product> products = new ArrayList<>();
         if (!request.isEmpty())
         {
-            try {
+            try
+            {
                 /// По категориям
                 products = productRepo.findByProductCategoryEqualsIgnoreCase(request);
-                products.sort(Comparator.comparing(Product::getProductGroup));
-                if (!products.isEmpty()) return products;
+                if (!products.isEmpty()) {
+                    products.sort(Comparator.comparing(Product::getProductGroup));
+                    return products;
+                }
 
                 /// По группам
                 products = productRepo.findByProductGroupEqualsIgnoreCase(request);
-                if (products.size() != 0)
+                if (!products.isEmpty())
                 {
                     products.sort(Comparator.comparingDouble(Product::getDefaultCoefficient).reversed());
                     double defCoefficient = products.stream().findFirst().get().getDefaultCoefficient();
@@ -128,11 +131,18 @@ public class ProductService {
                     return products;
                 }
 
+                /// По брендам
+                products = productRepo.findByProductGroupNotNullAndOriginalBrandContainsIgnoreCase(request);
+                if (!products.isEmpty()) {
+                    products.sort(Comparator.comparing(Product::getProductGroup));
+                    return products;
+                }
 
-
+                /// По наименованию
                 String shortRequest = StringUtils.lowerCase(request).replaceAll(" ","").replaceAll("-", "");
                 products = productRepo.findByShortSearchNameContains(shortRequest);
-                if (products.size() != 0) return products;
+                if (!products.isEmpty()) return products;
+
 
                 if (isMapped != null) {
                     products = productRepo.findBySupplierContainsIgnoreCaseAndProductGroupIsNotNull(request);

@@ -33,7 +33,7 @@
                                 <div class="card-body">
                                     <h4 class="card-title">
                                         <div class="" style="font-size: 1.2rem;">${product.productType}</div>
-                                        <a href="http://localhost:8080/info/${product.productID}" style="font-size: 1rem;">${product.productName}</a>
+                                        <a href="http://localhost:8080/products/info/${product.productID}" style="font-size: 1rem;">${product.productName}</a>
                                     </h4>
                                     <h4>
                                         <strong><i id="total-price${product.orderedID?c}">${product.totalPrice} ₽</i></strong> за <span id="prAm${product.orderedID?c}">${product.orderedAmount}</span> шт.

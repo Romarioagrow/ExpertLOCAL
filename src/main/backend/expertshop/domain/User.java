@@ -39,7 +39,7 @@ public class User implements UserDetails {
     @NotBlank(message = "Введите фамилию!")
     private String lastName;
 
-    @NotBlank(message = "Введите e-mail!")
+    //@NotBlank(message = "Введите e-mail!")
     private String email;
 
     @Column(name = "pic")

@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jsoup.Connection;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -20,12 +21,11 @@ import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -364,7 +364,7 @@ public class ProductParser {
             productRepo.save(product);
         });*/
 
-        findInBigBase();
+        //findInBigBase();
 
         productRepo.findByLinkRIsNotNull().forEach(product -> {
             if (product.getLinkR().startsWith("В ячейке нет гиперссылки!") || product.getLinkR().startsWith("#ИМЯ")) {
@@ -458,6 +458,58 @@ public class ProductParser {
         log.info("Всего товаров: "      + list.size());
         log.info("Успешно скачано: "    + countPic);
         log.info("404 на сайте: "       + count404);
+    }
+
+    public void downloadPics() {
+        List<Product> list = productRepo.findAllByProductGroupNotNullAndOriginalPicNotNull();
+        list.forEach(product ->
+        {
+            try {
+                String link = product.getOriginalPic();
+                if (!link.isEmpty()) {
+                    if (product.getLocalPic() == null)
+                    {
+                        File file = new File("C:\\expertshopLOCAL\\src\\main\\frontend\\static\\img\\products\\" + link.replaceAll("\\W", "").concat(".jpg"));
+
+                        HashMap<String, String> map = new HashMap<>();
+                        Connection.Response resultImageResponse = Jsoup.connect(link).cookies(map).ignoreContentType(true).execute();
+
+                        if (!file.exists())
+                        {
+                            FileOutputStream out = (new FileOutputStream(file.getAbsoluteFile().toString()));
+                            out.write(resultImageResponse.bodyAsBytes());  /// resultImageResponse.body() image content
+                            out.close();
+                        }
+
+                        String localPath = StringUtils.substringAfterLast(file.getPath(), "\\");
+                        String localPic  = "/../img/products/".concat(localPath);
+                        product.setLocalPic(localPic);
+                        productRepo.save(product);
+                        log.info(product.getLocalPic());
+                        //product.setLocalPic(file.getAbsolutePath());
+                        //
+                        //log.info(product.getLocalPic());
+
+                        //log.info(file.getCanonicalPath());
+                        //log.info(file.get());
+                    }
+                }
+            }
+            catch (HttpStatusException exp) {
+                log.info("404 Page is empty");
+            }
+            catch (ConnectException exp) {
+                log.info("Connection timed out");
+                exp.printStackTrace();
+            }
+            catch (MalformedURLException exp) {
+                log.info(exp.getClass().getName());
+            }
+            catch (NullPointerException | IOException e){
+                e.printStackTrace();
+            }
+        });
+
     }
 
     public void findInBigBase() {

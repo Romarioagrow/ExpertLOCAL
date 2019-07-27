@@ -35,6 +35,11 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     List<Product> findByShortSearchNameContains(String shortName);
     List<Product> findBySupplierContainsIgnoreCase(String supp);
     List<Product> findBySupplierContainsIgnoreCaseAndProductGroupIsNotNull(String supp);
+    List<Product> findByProductGroupNotNullAndOriginalBrandContainsIgnoreCase(String brand);
+
+    List<Product> findByProductGroupContainsIgnoreCase(String request);
+
+    List<Product> findAllByProductGroupNotNullAndOriginalPicNotNull();
 
     List<Product> findProductsByProductGroupEqualsIgnoreCase(String s);
     List<Product> findByProductCategoryAndSupplierAndProductGroupIsNotNull(String cat, String supp);

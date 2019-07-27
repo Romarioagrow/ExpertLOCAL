@@ -450,7 +450,7 @@
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">Духовые шкафы</h4>
+                                    <h4 class="card-title">Встраиваемые духовые шкафы</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
@@ -461,7 +461,7 @@
                                     </a>
                                 </div>
                                 <div class="card-body">
-                                    <h4 class="card-title">Варочные панели</h4>
+                                    <h4 class="card-title">Встраиваемые варочные панели</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
