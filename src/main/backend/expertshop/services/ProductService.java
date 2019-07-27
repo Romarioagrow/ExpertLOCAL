@@ -1,15 +1,13 @@
 package expertshop.services;
+
 import expertshop.domain.Order;
 import expertshop.domain.OrderedProduct;
 import expertshop.domain.Product;
 import expertshop.domain.User;
-import expertshop.products.ProductMatcher;
 import expertshop.repos.OrderRepo;
 import expertshop.repos.ProductRepo;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -106,24 +104,45 @@ public class ProductService {
         List<Product> products = new ArrayList<>();
         if (!request.isEmpty())
         {
-            String shortRequest = StringUtils.lowerCase(request).replaceAll(" ","").replaceAll("-", "");
-            products = productRepo.findByShortSearchNameContains(shortRequest);
-            if (products.size() != 0) return products;
+            try {
+                /// По категориям
+                products = productRepo.findByProductCategoryEqualsIgnoreCase(request);
+                products.sort(Comparator.comparing(Product::getProductGroup));
+                if (!products.isEmpty()) return products;
 
-            products = productRepo.findByProductGroupEqualsIgnoreCase(request);
-            if (products.size() != 0) {
-                model.addAttribute("coefficient", products.stream().findFirst().get().getCoefficient());
-                return products;
+                /// По группам
+                products = productRepo.findByProductGroupEqualsIgnoreCase(request);
+                if (products.size() != 0)
+                {
+                    products.sort(Comparator.comparingDouble(Product::getDefaultCoefficient).reversed());
+                    double defCoefficient = products.stream().findFirst().get().getDefaultCoefficient();
+                    model.addAttribute("coefficient", defCoefficient);
+
+                    List<Product> modCoeff = productRepo.findByProductGroupEqualsIgnoreCase(request).stream().filter(product -> product.getModCoefficient() != null).collect(Collectors.toList());
+                    if (!modCoeff.isEmpty()) {
+                        double modCoefficient = products.stream().filter(product -> product.getModCoefficient() != null).findFirst().get().getModCoefficient();
+                        model.addAttribute("modCoefficient", modCoefficient);
+                    }
+
+                    products.sort(Comparator.comparing(Product::getOriginalBrand));
+                    return products;
+                }
+
+
+
+                String shortRequest = StringUtils.lowerCase(request).replaceAll(" ","").replaceAll("-", "");
+                products = productRepo.findByShortSearchNameContains(shortRequest);
+                if (products.size() != 0) return products;
+
+                if (isMapped != null) {
+                    products = productRepo.findBySupplierContainsIgnoreCaseAndProductGroupIsNotNull(request);
+                }
+                else  products = productRepo.findBySupplierContainsIgnoreCase(request);
+                if (products.size() != 0) return products;
             }
-
-            products = productRepo.findByProductCategoryEqualsIgnoreCase(request);
-            if (products.size() != 0) return products;
-
-            if (isMapped != null) {
-                products = productRepo.findBySupplierContainsIgnoreCaseAndProductGroupIsNotNull(request);
+            catch (NullPointerException e){
+                e.printStackTrace();
             }
-            else  products = productRepo.findBySupplierContainsIgnoreCase(request);
-            if (products.size() != 0) return products;
         }
 
         if (request.isEmpty() && isMapped != null) {
@@ -152,12 +171,21 @@ public class ProductService {
         List<Product> list = productRepo.findByProductGroupEqualsIgnoreCase(coeff[0]);
         list.forEach(product ->
         {
-            product.setCoefficient(Double.parseDouble(coeff[1].replaceAll(",", ".")));
-            product.setCoefficientMod(true);
-            int newPrice = roundPrice(Double.parseDouble(coeff[1].replaceAll(",", ".")), (int) Double.parseDouble(product.getOriginalPrice().replaceAll(",", ".")));
-            productRepo.save(product);
-            log.info(product.getCoefficient().toString());
-            log.info(product.getFinalPrice().toString());
+            String brand = product.getOriginalBrand();
+            String[] stopBrands = {"AMCV", "ARDIN", "BINATONE", "DOFFLER", "LERAN", "SENTORE"};
+            List<String> stopList = Arrays.asList(stopBrands);
+
+            if (!stopList.contains(brand.toUpperCase()))
+            {
+                product.setModCoefficient(Double.parseDouble(coeff[1].replaceAll(",", ".")));
+                product.setCoefficientMod(true);
+                int newPrice = roundPrice(Double.parseDouble(coeff[1].replaceAll(",", ".")), (int) Double.parseDouble(product.getOriginalPrice().replaceAll(",", ".").replaceAll(" ", "")));
+                product.setFinalPrice(newPrice);
+                productRepo.save(product);
+
+                log.info(product.getModCoefficient().toString());
+                log.info(product.getFinalPrice().toString());
+            }
         });
     }
     public int roundPrice(double coefficient, int price) {
@@ -176,6 +204,44 @@ public class ProductService {
             return Integer.parseInt(val);
         }
         else return finalPrice;
+    }
+
+    public boolean removePriceMod(String productID) {
+        log.info(productID);
+        Product product = productRepo.findByProductID(productID);
+        log.info(product.getOriginalName());
+        product.setPriceMod(null);
+        productRepo.save(product);
+        return true;
+    }
+
+    public boolean removeModCoeff(String productID) {
+        log.info(productID);
+        String request = StringUtils.substringBefore(productID, ";");
+        double defaultCoeff = Double.parseDouble(StringUtils.substringAfter(productID, ";").replaceAll(",", "."));
+
+        List<Product> list = productRepo.findByProductGroupEqualsIgnoreCase(request);
+        list.forEach(product ->
+        {
+            String brand = product.getOriginalBrand();
+            String[] stopBrands = {"AMCV", "ARDIN", "BINATONE", "DOFFLER", "LERAN", "SENTORE"};
+            List<String> stopList = Arrays.asList(stopBrands);
+
+            if (!stopList.contains(brand.toUpperCase()))
+            {
+                product.setModCoefficient(null);
+                product.setCoefficientMod(null);
+                product.setDefaultCoefficient(defaultCoeff);
+
+                int newPrice = roundPrice(defaultCoeff, (int) Double.parseDouble(product.getOriginalPrice().replaceAll(",", ".").replaceAll(" ", "")));
+                product.setFinalPrice(newPrice);
+                productRepo.save(product);
+
+               /* log.info(product.getModCoefficient().toString());
+                log.info(product.getFinalPrice().toString());*/
+            }
+        });
+        return true;
     }
 }
 

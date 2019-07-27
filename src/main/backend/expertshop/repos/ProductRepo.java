@@ -44,7 +44,7 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     List<Product> findByShortModelEqualsAndProductGroupIsNotNull(String s);
 
     List<Product> findByLinkRIsNotNull();
-    List<Product> findAllByModelNameNotNullAndOriginalPicIsNotNull();
+    List<Product> findAllByModelNameNotNullAndOriginalPicIsNull();
 
     Page<Product> findProductsByProductGroupEqualsIgnoreCaseAndIsAvailableTrue(String req, Pageable pageable);
 

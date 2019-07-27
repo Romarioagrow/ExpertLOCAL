@@ -158,7 +158,7 @@ public class ProductParser {
                 product.setOriginalAmount(productAmount);
                 product.setOriginalPrice(productPrice);
 
-                int finalPrice   = roundPrice(product.getCoefficient(), (int) Double.parseDouble(StringUtils.deleteWhitespace(product.getOriginalPrice().replaceAll(",","."))));
+                int finalPrice   = roundPrice(product.getDefaultCoefficient(), (int) Double.parseDouble(StringUtils.deleteWhitespace(product.getOriginalPrice().replaceAll(",","."))));
                 int productBonus = matchBonus(finalPrice);
                 product.setFinalPrice(finalPrice);
                 product.setBonus(productBonus);
@@ -364,7 +364,7 @@ public class ProductParser {
             productRepo.save(product);
         });*/
 
-        //findInBigBase();
+        findInBigBase();
 
         productRepo.findByLinkRIsNotNull().forEach(product -> {
             if (product.getLinkR().startsWith("В ячейке нет гиперссылки!") || product.getLinkR().startsWith("#ИМЯ")) {
@@ -463,14 +463,14 @@ public class ProductParser {
     public void findInBigBase() {
         log.info("Поиск совпадений в Большой Базе...");
 
-        productRepo.findAllByModelNameNotNull().forEach(product -> {
+        /*productRepo.findAllByModelNameNotNull().forEach(product -> {
             String n = product.getShortModel().replaceAll("-","").replaceAll("\\(","").replaceAll("\\)","").toLowerCase();
             product.setShortModel(n);
             productRepo.save(product);
             log.info(product.getShortModel());
-        });
+        });*/
 
-        List<Product> products = productRepo.findAllByModelNameNotNullAndOriginalPicIsNotNull();
+        List<Product> products = productRepo.findAllByModelNameNotNullAndOriginalPicIsNull();
         AtomicInteger count = new AtomicInteger();
         products.forEach(product ->
         {

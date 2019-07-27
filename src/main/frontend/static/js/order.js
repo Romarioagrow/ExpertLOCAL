@@ -13,7 +13,7 @@ function addToOrder(button) {
     buttonID = replaceAll(buttonID, ".", "");
 
     $(buttonID).empty().append(
-        '<a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button>'
+        '<a type="button" class="btn btn-danger btn-sm" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button>'
     );
 
     $.ajax({

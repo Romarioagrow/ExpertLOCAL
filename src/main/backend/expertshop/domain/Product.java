@@ -43,7 +43,7 @@ public class Product implements Serializable {
 
     private Integer finalPrice, bonus;
 
-    private Double coefficient;
+    private Double defaultCoefficient, modCoefficient;
 
     private Boolean isDuplicate, hasDuplicates, isAvailable;
 

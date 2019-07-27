@@ -51,7 +51,7 @@
                                 <form method="get" action="/supplier/products">
                                     <div class="row">
                                         <div class="col-10">
-                                            <input class="form-control" type="text" placeholder="Группа, категория, наименование, поставщик" id="request" name="request" aria-label="Search" value="${request!''}">
+                                            <input class="form-control" type="text" placeholder="Категория, Группа, Бренд, Наименование, Поставщик" id="request" name="request" aria-label="Search" value="${request!''}">
                                         </div>
                                         <div class="col-2">
                                             <button href="#!" class="btn btn-primary btn-block" type="submit" style="margin-top: -0.2rem">Найти</button>
@@ -67,14 +67,19 @@
                                     </div>
                                     <#if coefficient??>
                                         <div class="row" style="margin-top: 1rem">
-                                            <div class="col-4">
-                                                Коеффициент для группы: ${request} = <strong id="newCoeff" ondblclick="addNewCoeff(this)" name="${coefficient}">${coefficient}</strong><#--<input type="text" id="newCoeff" value="${coefficient}" style="width: 4rem">-->
-                                            </div>
                                             <div class="col">
-
+                                                Базовый коеффициент для группы: <strong><i>${request}</strong></i> = <strong id="newCoeff" ondblclick="addNewCoeff(this)" name="${coefficient}">${coefficient}</strong><#--<input type="text" id="newCoeff" value="${defaultCoefficient}" style="width: 4rem">-->
                                                 <button type="button" onclick="saveNewCoeff(this)" class="btn btn-deep-purple btn-sm" name="${request}">Сохранить</button>
                                             </div>
                                         </div>
+                                        <#if modCoefficient??>
+                                            <div class="row">
+                                                <div class="col">
+                                                    Текущий коеффициент для группы: ${modCoefficient}
+                                                    <button type="button" onclick="removeModCoeff(this)" class="btn btn-danger btn-sm" name="${request};${coefficient}">Сбросить</button>
+                                                </div>
+                                            </div>
+                                        </#if>
                                     </#if>
                                 </form>
                             </div>
@@ -89,7 +94,6 @@
                                     </div>
                                 </#if>
                                 <form method="post" action="/supplier/products/save">
-
                                     <table class="table table-hover">
                                         <thead>
                                         <tr>
@@ -122,14 +126,19 @@
                                                     <td>${product.modelName!'-'}</td>
                                                     <td style="width: 6rem;">${product.originalPrice!'-'}</td>
                                                     <td ondblclick="editProduct(this)" id="finalPrice${product.productID?replace(".","")}" name="${product.productID};${product.finalPrice!'-'}"><strong>${product.finalPrice!'-'}</strong></td>
-                                                    <#--<td><input type="checkbox" <#if !product.priceMod?? || !product.priceMod><#else>checked</#if>></td>-->
                                                     <td>
                                                         <div class="form-check">
-                                                            <input type="checkbox" class="form-check-input" id="materialUnchecked${product.productID?replace(".","")}" <#if !product.priceMod?? || !product.priceMod><#else>checked</#if>>
+                                                            <input type="checkbox" onchange="removePriceMod(this)" class="form-check-input" name="${product.productID}" id="materialUnchecked${product.productID?replace(".","")}" <#if !product.priceMod?? || !product.priceMod><#else>checked</#if>>
                                                             <label class="form-check-label" for="materialUnchecked${product.productID?replace(".","")}"></label>
                                                         </div>
                                                     </td>
-                                                    <td>${product.coefficient!'-'}</td>
+                                                    <td>
+                                                        <#if product.modCoefficient??>
+                                                            ${product.modCoefficient}
+                                                        <#else>
+                                                            ${product.defaultCoefficient}
+                                                        </#if>
+                                                    </td>
                                                     <td>${product.bonus!'-'}</td>
                                                     <td>${product.update!'-'}</td>
                                                     <#if product.originalPic??>

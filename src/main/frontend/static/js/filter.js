@@ -9,6 +9,40 @@ $(document).ready(function(){
     $('td').on('click', filterProducts);
 });*/
 
+function removeModCoeff(e) {
+    var request = e.name;
+    $.post({
+        url: '/supplier/products/removemodcoff',
+        type: 'POST',
+        dataType: 'json',
+        data: request,
+        processData: false,
+        headers: {'Content-Type': 'application/json'},
+        complete: function()
+        {
+            console.log('ok');
+            location.reload();
+        }
+    });
+}
+
+function removePriceMod(e) {
+    var productID = e.name;
+    $.post({
+        url: '/supplier/products/removemod',
+        type: 'POST',
+        dataType: 'json',
+        data: productID,
+        processData: false,
+        headers: {'Content-Type': 'application/json'},
+        complete: function()
+        {
+            console.log('ok');
+            location.reload();
+        }
+    });
+}
+
 function addNewCoeff(label) {
     const val = label.getAttribute("name");
     console.log(val);
@@ -31,7 +65,7 @@ function saveNewCoeff(button) {
     data = JSON.stringify(data);
 
     $.post({
-        url: '/supplier/products/coefficient',
+        url: '/supplier/products/defaultCoefficient',
         type: 'POST',
         dataType: 'json',
         data: data,
@@ -90,7 +124,9 @@ function saveProduct() {
             if ((response.responseText) === 'true') {
                 alert('Saved!');
 
-                $('input:text[class="editPrice"]').each(function()
+                console.log('ok');
+                location.reload();
+                /*$('input:text[class="editPrice"]').each(function()
                 {
                     const name =  this.getAttribute("name");
                     let productDivID = this.id;
@@ -101,7 +137,7 @@ function saveProduct() {
                     $(productDivID).empty().append(
                         '<strong style="color: #00c853">'+price+'</strong>'
                     );
-                });
+                });*/
 
             }
         }
@@ -374,10 +410,10 @@ function constructProductCard(product, orderedIDs) {
     if (product.isAvailable) {
 
         if (orderedIDs.length !== 0 && orderedIDs.includes(product.productID)) {
-            productButton = '<a type="button" class="btn btn-danger btn-md" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>';
+            productButton = '<a type="button" class="btn btn-danger btn-sm" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>';
         }
         else {
-            productButton = '<button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger b-add" name="addToOrder" id="addToOrder'+product.productID+'" value="'+product.productID+'">В корзину</button>'
+            productButton = '<button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger btn-sm b-add" name="addToOrder" id="addToOrder'+product.productID+'" value="'+product.productID+'">В корзину</button>'
         }
     }
     else productButton = '<p style="color: #c40030; font-size: 1.5rem; padding-top: 0.5rem;"><strong>Нет в наличии!</strong></p>';

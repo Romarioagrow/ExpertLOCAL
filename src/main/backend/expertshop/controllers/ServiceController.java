@@ -30,14 +30,28 @@ public class ServiceController {
     private final ProductService productService;
     private final OrderService orderService;
 
+    @PostMapping("/supplier/products/removemodcoff")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    private boolean removeModCoeff(@RequestBody String productID) {
+        return productService.removeModCoeff(productID);
+    }
+
+    @PostMapping("/supplier/products/removemod")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    private boolean removePriceMod(@RequestBody String productID) {
+        return productService.removePriceMod(productID);
+    }
+
     @PostMapping("/supplier/products/save")
     @PreAuthorize("hasAuthority('ADMIN')")
     private boolean saveProducts(@RequestBody Map<String, String> data) {
         return productService.editProducts(data);
     }
-    @PostMapping("/supplier/products/coefficient")
+
+    @PostMapping("/supplier/products/defaultCoefficient")
     @PreAuthorize("hasAuthority('ADMIN')")
     private String saveNewCoefficient(@RequestBody String[] coeff) {
+        log.info(Arrays.toString(coeff));
         productService.saveNewCoeff(coeff);
         return "pages/supplier";
     }
@@ -57,10 +71,13 @@ public class ServiceController {
 
     @PostMapping("/brands")
     public LinkedList<Object> displayBrands(
-            @RequestBody(/*required = false*/) String productGroup
+            @RequestBody(required = false) String productGroup
     ){
-        productGroup = productGroup.replaceAll("_", " ");
-        return filterService.resolveFilters(productGroup);
+        if (productGroup != null) {
+            productGroup = productGroup.replaceAll("_", " ");
+            return filterService.resolveFilters(productGroup);
+        }
+        return null;
     }
 
     /*PRODUCTS SEARCH*/
