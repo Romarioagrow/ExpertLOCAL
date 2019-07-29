@@ -11,7 +11,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <div class="selector" style="margin-left: -4rem">
-                <#include "menu.ftl">
+                <#--<#include "menu.ftl">-->
             </div>
             <form class="form-inline ml-auto">
                 <input class="form-control" type="text" name="main-search" id="main-search" placeholder="Введите что нибудь..." aria-label="Search" style="width: 50rem;">

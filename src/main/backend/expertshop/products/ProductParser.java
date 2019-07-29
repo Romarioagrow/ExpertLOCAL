@@ -281,10 +281,17 @@ public class ProductParser {
             String[] line;
             int count = 0;
             while ((line = reader.readNext()) != null) {
-                if (!line[0].isEmpty() && !line[0].startsWith("ПРАЙС") && !line[0].contains("г. Челябинск") && !line[0].startsWith("Код товара"))
+                if (!line[0].isEmpty()/* && !line[0].startsWith("ПРАЙС") && !line[0].contains("г. Челябинск") && !line[0].startsWith("Код товара")*/)
                 {
-                    BrandProduct brandProduct = new BrandProduct();
-                    brandProduct.setProductID(line[0]);
+                    BrandProduct brandProduct;
+                    brandProduct = brandRepo.findByProductID(line[0]);
+
+                    if (brandProduct == null) {
+                        brandProduct = new BrandProduct();
+                        brandProduct.setProductID(line[0]);
+                    }
+
+                    //BrandProduct brandProduct = new BrandProduct();
                     brandProduct.setFullName(line[1]);
                     brandProduct.setBrand(line[2]);
                     brandProduct.setAnnotation(line[3]);
@@ -353,25 +360,14 @@ public class ProductParser {
     }
 
     public void parseRusBT() {
-        /*productRepo.findBySupplier("2RUS-BT").forEach(product -> {
-            if (product.getOriginalPic().startsWith("http://rusbt.ru/catalog")) {
-                product.setLinkR(product.getOriginalPic());
-                product.setOriginalPic(null);
-            }
-            else if (!product.getOriginalPic().startsWith("http://magazilla")) {
-                product.setOriginalPic(null);
-            }
-            productRepo.save(product);
-        });*/
-
-        //findInBigBase();
-
-        productRepo.findByLinkRIsNotNull().forEach(product -> {
-            if (product.getLinkR().startsWith("В ячейке нет гиперссылки!") || product.getLinkR().startsWith("#ИМЯ")) {
+        productRepo.findBySupplier("2RUS-BT").forEach(product -> {
+            if (product.getLinkR() != null && (product.getLinkR().contains("В ячейке нет гиперссылки!") || product.getLinkR().contains("#ИМЯ?"))) {
                 product.setLinkR(null);
                 productRepo.save(product);
             }
         });
+
+        findInBigBase();
 
         AtomicInteger count404 = new AtomicInteger(), countPic = new AtomicInteger(), countAnno = new AtomicInteger(), countInfo = new AtomicInteger();
         List<Product> list = productRepo.findBySupplierAndProductGroupIsNotNullAndOriginalPicIsNullAndLinkRIsNotNull("2RUS-BT");
@@ -454,6 +450,8 @@ public class ProductParser {
                 ///exp.printStackTrace();
             }
         });
+
+        downloadPics();
         System.out.println();
         log.info("Всего товаров: "      + list.size());
         log.info("Успешно скачано: "    + countPic);
@@ -515,18 +513,11 @@ public class ProductParser {
     public void findInBigBase() {
         log.info("Поиск совпадений в Большой Базе...");
 
-        /*productRepo.findAllByModelNameNotNull().forEach(product -> {
-            String n = product.getShortModel().replaceAll("-","").replaceAll("\\(","").replaceAll("\\)","").toLowerCase();
-            product.setShortModel(n);
-            productRepo.save(product);
-            log.info(product.getShortModel());
-        });*/
-
-        List<Product> products = productRepo.findAllByModelNameNotNullAndOriginalPicIsNull();
+        List<Product> products = productRepo.findAllByModelNameNotNull();
         AtomicInteger count = new AtomicInteger();
         products.forEach(product ->
         {
-            //if (product.getFormattedAnnotation() != null)
+            if (product.getPics() == null)
             {
                 ProductBase productBase = baseRepo.findFirstByShortModelEquals(product.getShortModel());
                 if (productBase != null)
@@ -534,12 +525,12 @@ public class ProductParser {
                     System.out.println();
                     log.info("Для: " + product.getFullName());
                     log.info("Нашлось: " + productBase.getFullName());
-                    product.setFullAnnotation(productBase.getAnnotation());
-                    product.setFormattedAnnotation(productBase.getFormattedAnnotation());
-                    product.setPics(product.getPics());
 
-                    if (product.getSupplier().startsWith("2") && product.getOriginalPic() == null)
-                    {
+                    if (product.getFullAnnotation() == null) product.setFullAnnotation(productBase.getAnnotation());
+                    if (product.getPics() == null) product.setPics(product.getPics());
+                    product.setFormattedAnnotation(productBase.getFormattedAnnotation());
+
+                    if (product.getOriginalPic() == null) {
                         String pic = StringUtils.substringBefore(productBase.getPics(), " ");
                         product.setOriginalPic(pic);
                     }

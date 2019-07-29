@@ -33,7 +33,7 @@ public class ProductController {
                               @PathVariable String category,
                               @PathVariable String requiredProduct,
                               @AuthenticationPrincipal User user,
-                              @PageableDefault(sort = {"localPic"}, direction = Sort.Direction.ASC, size = 15) Pageable pageable)
+                              @PageableDefault(sort = {"originalPrice"}, direction = Sort.Direction.ASC, size = 15) Pageable pageable)
     {
         String url = "/products/"+category+"/"+requiredProduct;
         String request = requiredProduct.replaceAll("_", " ").toLowerCase();
@@ -54,6 +54,7 @@ public class ProductController {
         model.addAttribute("url", getCurrentURL(productID));
         model.addAttribute("order", getOrder(user));
         model.addAttribute("product", productRepo.findByProductID(productID));
+        model.addAttribute("anno", productService.displayAnnotation(productID, model));
         model.addAttribute("orderedProductsID", productService.getOrderedID(user));
         return "pages/product";
     }

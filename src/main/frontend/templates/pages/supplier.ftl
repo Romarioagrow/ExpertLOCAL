@@ -84,8 +84,20 @@
                                 </form>
                             </div>
                         </div>
+
                         <div class="card" style="margin-top: 2rem">
                             <div class="card-body">
+                                <#--<form method="post" action="/supplier/products/uploadpic" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <div class="custom-file">
+                                            <input type="file" name="file" id="customFile">
+                                            <label class="custom-file-label" for="customFile">Выбрать</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-success btn-lg btn-block" name="upload" value="upload">Загрузить</button>
+                                    </div>
+                                </form>-->
                                 <#if products??>
                                     <div class="row">
                                         <div class="col">
@@ -93,8 +105,8 @@
                                         </div>
                                     </div>
                                 </#if>
-                                <form method="post" action="/supplier/products/save">
-                                    <table class="table table-hover">
+                                <#--<form method="post" action="/supplier/products/save">-->
+                                    <table class="table">
                                         <thead>
                                         <tr>
                                             <th>ID</th>
@@ -144,14 +156,26 @@
                                                     <#if product.originalPic??>
                                                         <td>Есть</td>
                                                     <#else>
-                                                        <td>Нет</td>
+                                                        <td>
+                                                            <form method="post" action="/supplier/products/uploadpic" enctype="multipart/form-data">
+                                                                <div class="form-group">
+                                                                    <div class="custom-file">
+                                                                        <input type="file" name="file" id="file">
+                                                                        <label class="custom-file-label" for="file">Выбрать</label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <button type="submit" class="btn btn-success btn-lg btn-block" name="upload" value="upload${product.productID}">Загрузить</button>
+                                                                </div>
+                                                            </form>
+                                                        </td>
                                                     </#if>
                                                 </tr>
                                             </#list>
                                         </#if>
                                         </tbody>
                                     </table>
-                                </form>
+                                <#--</form>-->
                             </div>
                         </div>
                     </div>

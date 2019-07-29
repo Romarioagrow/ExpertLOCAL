@@ -40,7 +40,7 @@ public class FilterService {
                     {
                         String key = StringUtils.substringBefore(fltr, ":").trim();
                         String val = StringUtils.substringAfter(fltr, ":").trim();
-                        if (!key.isEmpty() && !val.startsWith("-") && !val.startsWith("нет") && !val.startsWith("0") && !key.startsWith("количество шт в"))
+                        if (!key.isEmpty() && !val.startsWith("-") && !val.startsWith("нет") && !val.startsWith("0") && !key.startsWith("количество шт в") && !key.contains("количество шт в кор"))
                         {
                             if (filters.get(key) != null)
                             {
@@ -232,11 +232,19 @@ public class FilterService {
 
     private void sortProducts(List<Product> products, Map<String, String> params)
     {
-        String sort = params.get("sortOrder");
-        switch (sort) {
-            case "lowest"   -> products.sort(Comparator.comparingLong(Product::getFinalPrice));
-            case "highest"  -> products.sort(Comparator.comparingLong(Product::getFinalPrice).reversed());
-            case "alphabet" -> products.sort(Comparator.comparing(Product::getOriginalBrand));
+        try {
+
+
+            String sort = params.get("sortOrder");
+            switch (sort) {
+                case "lowest"   -> products.sort(Comparator.comparingLong(Product::getFinalPrice));
+                case "highest"  -> products.sort(Comparator.comparingLong(Product::getFinalPrice).reversed());
+                case "alphabet" -> products.sort(Comparator.comparing(Product::getOriginalBrand));
+                default         -> products.sort(Comparator.comparing(Product::getLocalPic));
+            }
+        }
+        catch (NullPointerException e){
+            e.getClass().getName();
         }
     }
 }

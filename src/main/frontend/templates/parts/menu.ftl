@@ -5,28 +5,42 @@
     <div class="dropdown-menu">
         <ul class="category-menu">
             <li><a href="/categories/electronics">Электроника</a>
-                <div class="product-type-menu marker2" style="width: 45vw">
+                <div class="product-type-menu marker2" style="width: 35rem !important;">
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="/products/tv"><strong>Телевизоры</strong></a></li>
-                            <li><a href="/products/tv">4K</a></li>
+                            <li class="list-head"><a href="/products/теле-видео-аудио/телевизоры"><strong>Телевизоры</strong></a></li>
+                            <#--<li><a href="/products/tv">4K</a></li>
                             <li><a href="/products/tv">FullHD</a></li>
                             <li><a href="/tv">SmartTV</a></li>
                             <li><a href="/tv">Гибкий экран</a></li>
-                            <li><a href="/tv">DVBT2</a></li>
+                            <li><a href="/tv">DVBT2</a></li>-->
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="/subcats/multimedia"><strong>Мультимедийные системы</strong></a></li>
-                            <li><a href="/products/music_centers">Музыкальные центры</a></li>
+                            <li class="list-head"><a href="/products/теле-видео-аудио/ресиверы_для_тв"><strong>Ресиверы для ТВ</strong></a></li>
+                            <#--<li><a href="/products/music_centers">Музыкальные центры</a></li>
                             <li><a href="/products/home_cinema">Домашние кинотеатры</a></li>
-                            <li><a href="/products/projectors">Проекторы</a></li>
+                            <li><a href="/products/projectors">Проекторы</a></li>-->
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
-                            <li class="list-head"><a href="/subcats/sputnik"><strong>Спутниковая техника</strong></a></li>
+                            <li class="list-head"><a href="/products/теле-видео-аудио/кабели_тв"><strong>ТВ кабели и переходники</strong></a></li>
+                            <li><a href="/products/sputnik_receivers">Ресиверы</a></li>
+                            <li><a href="/products/antennas">Антенны</a></li>
+                        </ul>
+                    </div>
+                    <div class="product-type-list marker2">
+                        <ul class="products-list">
+                            <li class="list-head"><a href="/products/теле-видео-аудио/кабели_тв"><strong>ТВ кабели и переходники</strong></a></li>
+                            <li><a href="/products/sputnik_receivers">Ресиверы</a></li>
+                            <li><a href="/products/antennas">Антенны</a></li>
+                        </ul>
+                    </div>
+                    <div class="product-type-list marker2">
+                        <ul class="products-list">
+                            <li class="list-head"><a href="/products/теле-видео-аудио/кабели_тв"><strong>ТВ кабели и переходники</strong></a></li>
                             <li><a href="/products/sputnik_receivers">Ресиверы</a></li>
                             <li><a href="/products/antennas">Антенны</a></li>
                         </ul>

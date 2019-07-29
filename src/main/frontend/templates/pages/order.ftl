@@ -36,7 +36,7 @@
                                         <a href="http://localhost:8080/products/info/${product.productID}" style="font-size: 1rem;">${product.productName}</a>
                                     </h4>
                                     <h4>
-                                        <strong><i id="total-price${product.orderedID?c}">${product.totalPrice} ₽</i></strong> за <span id="prAm${product.orderedID?c}">${product.orderedAmount}</span> шт.
+                                        <strong><i id="total-price${product.orderedID?c}">${product.totalPrice} <span style="font-size: .9rem">руб</span></i></strong> за <span id="prAm${product.orderedID?c}">${product.orderedAmount}</span> шт.
                                     </h4>
                                     <p id="productTotalBonus${product.orderedID?c}">
                                         <#assign productBonus = product.bonus * product.orderedAmount>

@@ -1,3 +1,39 @@
+/*$('#zoomimg').mouseenter(function() {
+    $(this).css("cursor","pointer");
+    $(this).animate({width: "50%", height: "50%"}, 'slow');
+});
+
+$('#zoomimg').mouseleave(function() {
+    $(this).animate({width: "28%"}, 'slow');
+});
+
+$('#zoomimg').hover(function() {
+    $(this).css("cursor", "pointer");
+    $(this).animate({
+        width: "50%",
+        height: "50%"
+    }, 'slow');
+
+}, function() {
+    $(this).animate({
+        width: "28%"
+    }, 'slow');
+
+});*/
+
+function uploadPic(element) {
+    var productID = element.name;
+
+}
+
+
+function im() {
+    $('#image').addClass('transition');
+}
+function iii() {
+    $('#image').removeClass('transition');
+}
+
 function removeModCoeff(e) {
     var request = e.name;
     $.post({
@@ -209,6 +245,7 @@ function displayBrands() {
                     let filter = replaceAll(key," ","").replace("(","").replace(")","");
                     var onlyDigits = /^\d+[,]?\d*$/g.exec(filters[key][0]);
 
+                    /*ФИЛЬТРЫ С МНОЖЕСТВОМ*/
                     if (filters[key].includes("есть") || filters[key].includes("да"))
                     {
                         document.getElementById("featButton").style.display = "block";
@@ -221,6 +258,7 @@ function displayBrands() {
                             '</div>'
                         );
                     }
+                    /*ФИЛЬТРЫ С ЧИСЛАМИ*/
                     else if (onlyDigits)
                     {
                         console.log(filters[key]);
@@ -255,17 +293,19 @@ function displayBrands() {
                             '        </div>'
                         );
                     }
+                    /*ФИЛЬТРЫ С СОДЕРАЖНИЕМ*/
                     else
                     {
                         let vals = '';
                         for (let i = 0; i < filters[key].length; i++)
                         {
                             id = replaceAll(filters[key][i], " ", "")+`f${(~~(Math.random()*1e8)).toString(16)}`;
+                            filter = filter.replace("/","");
                             vals+=
-                                '<div class="row">' +
-                                '<div class="col">' +
+                                '<div class="row" style="max-height: 55rem !important;">' +
+                                '<div class="col" style="max-height: 55rem !important;">' +
                                 '<input type="checkbox" onclick="filterProducts()" class="form-check-input" name="Cont-'+filter+'" id="'+id+'" value="'+key+': '+filters[key][i]+';">' +
-                                '<label class="custom-control-label" for="'+id+'">'+filters[key][i].capitalize().replace(",",", ")+'</label>' +
+                                '<label class="custom-control-label" for="'+id+'" style="height: auto !important; ">'+filters[key][i].capitalize().replace(",",", ")+'</label>' +
                                 '</div>' +
                                 '</div>'
                         }
@@ -409,8 +449,8 @@ function constructProductCard(product, orderedIDs) {
 
     let pic;
 
-    if (product.localPic/*originalPic*/ !== null) {
-        pic = product.localPic/*originalPic*/
+    if (product.originalPic/*originalPic*/ !== null) {
+        pic = product.originalPic/*originalPic*/
     }
     else pic = '/../img/nophoto.jpg';
 
@@ -422,7 +462,7 @@ function constructProductCard(product, orderedIDs) {
         '</a>'+*/
         '</div>'+
         '<div class="card-body">'+
-        '<h5 class="card-title" style="min-height: 3rem !important; max-height: 3rem !important;">'+
+        '<h5 class="card-title" style="height: auto !important;">'+
         '<a href="/products/info/'+product.productID+'">'+
         '<strong style="font-size: 1rem">'  +
         productName +

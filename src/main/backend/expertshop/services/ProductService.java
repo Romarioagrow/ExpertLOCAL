@@ -15,6 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static expertshop.controllers.ControllerService.getSessionID;
@@ -55,6 +57,10 @@ public class ProductService {
         return productRepo.findAllByProductGroupIsNotNullAndIsDuplicateIsNullAndShortSearchNameContainsIgnoreCase(search).stream()
                 .filter(product -> StringUtils.containsIgnoreCase(product.getShortSearchName(), search))
                 .collect(Collectors.toList());
+
+        /*if products null {
+        split Requests[] by " "
+        findBySearchShortNameContainsOrSearchShortNameContains }*/
     }
 
     public Set<String> getOrderedID(User user)
@@ -82,7 +88,7 @@ public class ProductService {
 
     public int[] getMinMaxPrice(String request) {
         List<Product> prices = productRepo.findByProductGroupEqualsIgnoreCase(request);
-        if (prices.size() != 0)
+        if (!prices.isEmpty())
         {
             try {
                 prices.sort(Comparator.comparingInt(Product::getFinalPrice));
@@ -252,6 +258,64 @@ public class ProductService {
             }
         });
         return true;
+    }
+
+    public Map<String, String> displayAnnotation(String productID, Model model) {
+        Map<String, String> stringMap = new LinkedHashMap<>();
+        Product product = productRepo.findByProductID(productID);
+        String formAnno = product.getFormattedAnnotation();
+
+        if (formAnno != null && !formAnno.isEmpty())
+        {
+            String[] annotation;
+
+            if (formAnno.contains("</tr>")) {
+                annotation = formAnno.replaceAll("\n","").split("</tr>");
+                for (String s : annotation)
+                {
+                    String annoKey = StringUtils.substringBeforeLast(s, "<td>").replaceAll("[<table></table><tr><td></td>]","");
+                    String annoValue = StringUtils.substringAfterLast(s, "<td>").replaceAll("[<td></td>]","");;
+                    stringMap.put(annoKey, annoValue);
+                }
+                return stringMap;
+            }
+
+            if (formAnno.contains("<br>"))
+            {
+                annotation = formAnno.split("<br>");
+                for (String splitParam : annotation)
+                {
+                    String annoKey = StringUtils.substringBefore(splitParam, ":").trim();
+                    String annoValue = StringUtils.substringAfter(splitParam, ":").trim();
+
+                    if (annoKey.startsWith("количество шт в")) {
+                        continue;
+                    }
+
+                    if (annoValue.startsWith("-") || annoValue.equals("0")) {
+                        continue;
+                    }
+                    stringMap.put(annoKey, annoValue);
+                }
+                return stringMap;
+            }
+        }
+        else
+        {
+            formAnno = product.getOriginalAnnotation();
+            if (formAnno!= null && !formAnno.isEmpty())
+            {
+                //log.info(formAnno);
+                //log.info(formAnno.contains(", ") +"");
+                if (formAnno.contains(", "))
+                {
+                    String[] annotation = formAnno.split(", ");
+                    model.addAttribute("listAnno", annotation);
+                    return null;
+                }
+            }
+        }
+        return null;
     }
 }
 

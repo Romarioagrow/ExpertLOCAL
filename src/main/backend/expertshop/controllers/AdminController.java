@@ -28,6 +28,26 @@ public class AdminController {
     private final ProductService productService;
     private final OrderService orderService;
 
+
+    @PostMapping("/products/uploadpic")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String uploadPic(@RequestParam("file") MultipartFile file, @RequestParam (value = "upload", required = false) String productID, Model model)
+    {
+        log.info(file.getOriginalFilename());log.info(file.isEmpty() + "");
+        productMatcher.uploadProductPic(file, productID);
+        model.addAttribute("url", "products");
+        return "pages/supplier";
+    }
+
+    @PostMapping("/updateDB")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String loadCSV(@RequestParam("file") MultipartFile file, Model model, @AuthenticationPrincipal User user)
+    {
+        productMatcher.updateProductDB(file);
+        model.addAttribute("url", "db");
+        return "pages/supplier";
+    }
+
     @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
     public String supplier(Model model)
@@ -52,31 +72,11 @@ public class AdminController {
         return "pages/supplier";
     }
 
-    @PostMapping("/updateDB")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public String loadCSV(@RequestParam("file") MultipartFile file, Model model, @AuthenticationPrincipal User user)
-    {
-        productMatcher.updateProductDB(file);
-        //catalogParser.parseBase(file);
-        //catalogParser.parseBrandProducts(file);
-        model.addAttribute("url", "db");
-        return "pages/supplier";
-    }
-
-    /*@PostMapping("/match-products")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public String matchProducts(Model model)
-    {
-        productMatcher.matchProducts();
-        model.addAttribute("url", "db");
-        return "pages/supplier";
-    }*/
     @PostMapping("/xxx")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String matchDuplicates(Model model)
     {
-        //productMatcher.xxx();
-        catalogParser.downloadPics();
+        productMatcher.xxx();
         model.addAttribute("url", "db");
         return "pages/supplier";
     }

@@ -42,10 +42,10 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-5">
-                                        <input type="text" onkeyup="filterProducts()" class="form-control" id="sortmin" placeholder="От <#if price??>${price[0]!''}</#if> ₽">
+                                        <input type="text" onkeyup="filterProducts()" class="form-control" id="sortmin" placeholder="От <#if price??>${price[0]!''}</#if> руб">
                                     </div>
                                     <div class="col-5">
-                                        <input type="text" onkeyup="filterProducts()" class="form-control" id="sortmax" placeholder="До <#if price??>${price[1]!''}</#if> ₽">
+                                        <input type="text" onkeyup="filterProducts()" class="form-control" id="sortmax" placeholder="До <#if price??>${price[1]!''}</#if> руб">
                                     </div>
                                 </div>
                             </div>
@@ -93,7 +93,7 @@
                             <div class="card product-card">
                                 <div class="view overlay" style="min-height: 8rem !important; max-height: 8rem !important;">
                                     <#if product.originalPic??>
-                                        <img class="img-fluid scale-pic" src="<#if product.localPic??>${product.localPic}<#else>/../img/nophoto.jpg<#--${product.originalPic}--></#if>" alt="Фотографии пока нет :(">
+                                        <img class="img-fluid scale-pic" src="<#if product.originalPic??>${product.originalPic}<#else>/../img/nophoto.jpg<#--${product.originalPic}--></#if>" alt="Фотографии пока нет :(">
                                         <#--<a href="#" onclick="alertPic()">
                                             <div class="mask rgba-white-slight"></div>
                                         </a>-->
@@ -102,7 +102,7 @@
                                     </#if>
                                 </div>
                                 <div class="card-body">
-                                    <h5 class="card-title" style="min-height: 3rem !important; max-height: 3rem !important;">
+                                    <h5 class="card-title" style="height: auto !important;/*min-height: 3rem !important; max-height: 3rem !important;*/">
                                         <a href="/products/info/${product.productID}">
                                             <strong style="font-size: 1rem">
                                                 <span style="color: #e52d00;">${product.singleType!''}</span>

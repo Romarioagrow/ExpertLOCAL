@@ -23,11 +23,14 @@
             <div class="col-7" style="max-height: 30rem;">
                 <div class="card" style="height: 100% !important; width: 100% !important; object-fit: contain !important;">
                     <div class="card-body" style="height: 100% !important; width: 100% !important; object-fit: contain !important;">
+                        <#--<div class="bgc-img">-->
                         <#if product.originalPic??>
-                            <img src="${product.originalPic}" class="img-fluid scale-pic" alt="Responsive image" style="height: 100% !important; width: 100% !important; object-fit: contain !important;">
+                            <a><img src="${product.originalPic}" id="image" onclick="im()" ondblclick="iii()" class="img-fluid scale-pic " alt="Responsive image" style="height: 100% !important; width: 100% !important; object-fit: contain !important;"></a>
+
                         <#else>
-                            <h5>Изображение отсутствует :(</h5>
+                            <img src="/../img/nophoto.jpg" class="img-fluid scale-pic" alt="Responsive image" style="height: 100% !important; width: 100% !important; object-fit: contain !important;">
                         </#if>
+                        <#--</div>-->
                     </div>
                 </div>
             </div>
@@ -48,7 +51,7 @@
                             <div class="col">
                                 <#if product.isAvailable??>
                                     <#if orderedProductsID?? && orderedProductsID?seq_contains('${product.productID}')>
-                                        <a type="button" class="btn btn-danger btn-sm" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
+                                        <a type="button" class="btn btn-danger btn-sm" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</a>
                                     <#else>
                                         <div id="addToOrderDiv${product.productID?replace(".","")}">
                                             <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger btn-sm b-add" name="addToOrder" id="addToOrder${product.productID}" value="${product.productID}">
@@ -70,29 +73,45 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top: 2.5rem">
+        <div class="row" style="margin-top: 2.5rem; width: auto !important;" >
             <div class="col">
                 <div class="card" style="margin-bottom: 2rem">
                     <div class="card-body">
-                        <h3>Параметры товара</h3>
-                        <hr>
-                        <table class="table table table-borderless w-30">
-                            <thead>
-                            <tr>
-                                <#if product.formattedAnnotation?has_content>
-                                    ${product.formattedAnnotation}
-                                <#else>
-                                    ${product.originalAnnotation!''}
-                                </#if>
-                            </tr>
-                            </thead>
-                            <tbody>
+                        <h3 style="margin-bottom: 1rem">Характеристики товара</h3>
+                        <#if anno??>
+                            <div class="container">
+                                <#list anno as key, val>
+                                    <#if key?has_content>
+                                        <div class="row">
+                                            <div class="col">
+                                                <h5><span>${key}</span></h5>
+                                                <hr>
+                                            </div>
+                                            <div class="col">
+                                                <span><strong>${val?cap_first}</strong></span>
+                                            </div>
+                                        </div>
+                                    </#if>
+                                </#list>
+                            </div>
+                        <#elseif listAnno??>
+                            <ul class="list-group list-group-flush">
+                                <#list listAnno as param>
+                                    <li class="list-group-item"><strong>${param?lower_case?cap_first}</strong></li>
+                                </#list>
+                            </ul>
+                        <#else>
+                            <table class="table table table-borderless w-30">
+                                <thead>
+                                <tr>
+                                    <strong>${product.originalAnnotation?replace(";","")!''}</strong>
+                                </tr>
+                                </thead>
+                                <tbody>
+                            </table>
+                        </#if>
                     </div>
                 </div>
-                <#--${product.fullInfo}
-                &lt;#&ndash;<#include "../parts/product-info.ftl">&ndash;&gt;
-                </tbody>-->
-                </table>
             </div>
         </div>
     </div>
