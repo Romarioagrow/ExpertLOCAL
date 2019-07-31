@@ -54,17 +54,17 @@ public class ProductMatcher {
     }
 
     private void resolveAvailable() {
-        System.out.println();
+        System.out.println();log.info("Проверка наличия товара...");
+
         AtomicInteger count = new AtomicInteger();
-        log.info("Проверка наличия товара...");
         List<Product> list = productRepo.findAllByProductGroupIsNotNull();
         list.forEach(product -> {
-            product.setIsAvailable(false);
+            product.setIsAvailable(null);
             productRepo.save(product);
         });
 
         list.forEach(product -> {
-            if (product.getUpdate().toString().equals(LocalDate.now().toString())) {
+            if (product.getUpdate() != null && product.getUpdate().toString().equals(LocalDate.now().toString())) {
                 product.setIsAvailable(true);
                 productRepo.save(product);
                 count.getAndIncrement();
@@ -408,69 +408,6 @@ public class ProductMatcher {
                         return;
                     }
                 }
-                /*if ((supp.equals("1RBT") && StringUtils.startsWithIgnoreCase(product.getOriginalType(), match.trim())))
-                {
-                    String brand = product.getOriginalBrand();
-
-                    /// Заданный параметры
-                    product.setProductGroup(productGroup);
-                    product.setSingleType(single);
-                    product.setProductCategory(productCategory);
-
-                    /// Вычисляемые параметры
-                    modelName    = StringUtils.substringAfter(product.getOriginalName().toUpperCase(), brand.toUpperCase()).trim();
-                    fullName     = product.getSingleType().concat(" ").concat(StringUtils.capitalize(brand.toLowerCase())).concat(" ").concat(modelName);
-                    productType  = resolveProductType(product.getOriginalType());
-                    groupBrand   = single.concat(" ").concat(StringUtils.capitalize(brand.toLowerCase()));
-                    formAnno     = formatAnnotation(product.getOriginalAnnotation());
-
-                    product.setModelName(modelName);
-                    product.setProductType(productType);
-                    product.setGroupBrand(groupBrand);
-                    product.setFullName(fullName);
-                    product.setFormattedAnnotation(formAnno);
-                    product.setDefaultCoefficient(coefficient);
-                    productRepo.save(product);
-
-                    resolveShortModel(product);
-                    matchCounter++;
-                    return;
-                }
-                else if ((supp.equals("2RUS-BT") && (StringUtils.startsWithIgnoreCase(product.getOriginalType(), match.trim()) || StringUtils.startsWithIgnoreCase(product.getRName(), match.trim()))*//*(StringUtils.startsWithIgnoreCase(product.getRType(), match.trim()) || StringUtils.startsWithIgnoreCase(product.getRName(), match.trim())*//*))
-                {
-                    product.setProductGroup(productGroup);
-                    product.setSingleType(single);
-                    product.setProductCategory(productCategory);
-
-                    String originalBrand = product.getOriginalBrand().toUpperCase();
-                    String originalName  = product.getRName().toUpperCase();
-
-                    if (originalName.contains(", ") && originalName.contains(originalBrand))
-                    {
-                        annotation   = StringUtils.substringAfter(originalName,", ");
-                        if ((StringUtils.substringAfter(originalName, originalBrand).contains(","))) {
-                            modelName   = StringUtils.substringBetween(originalName, originalBrand, ",").trim();
-                        }
-                        else modelName   = StringUtils.substringAfter(originalName, originalBrand).trim();
-
-                        originalName = StringUtils.capitalize(originalBrand.toLowerCase()).concat(" ").concat(modelName);//StringUtils.capitalize(originalBrand.concat(" ").concat(model).toLowerCase());
-                        fullName     = product.getSingleType().concat(" ").concat(StringUtils.capitalize(originalBrand.toLowerCase())).concat(" ").concat(modelName);
-                        groupBrand   = single.concat(" ").concat(StringUtils.capitalize(originalBrand.toLowerCase()));
-
-                        product.setOriginalName(originalName);
-                        product.setOriginalAnnotation(annotation);
-                        product.setModelName(modelName);
-                        product.setFullName(fullName);
-                        product.setGroupBrand(groupBrand);
-                        product.setProductType(product.getOriginalType()); /// resolveTypeName();
-                        product.setDefaultCoefficient(coefficient);
-                        productRepo.save(product);
-
-                        resolveShortModel(product);
-                        matchCounter++;
-                        return;
-                    }
-                }*/
             }
             catch (NullPointerException e) {
                 log.warning(e.getClass().getName());

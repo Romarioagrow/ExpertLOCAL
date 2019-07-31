@@ -28,7 +28,7 @@ public class FilterService {
 
         try
         {
-            List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCase(productGroup);
+            List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCaseAndIsAvailableTrue(productGroup);
             products.forEach(product ->
             {
                 brands.add(StringUtils.capitalize(product.getOriginalBrand().toLowerCase()));
@@ -53,25 +53,9 @@ public class FilterService {
                     }
                 }
             });
-            /*products.forEach(product -> {
-                if (product.getSupplier().startsWith("2")) {
-                    String[] filtrs = product.getOriginalAnnotation().split(";");
-                    for (String fltr : filtrs) {
-                        for (Map.Entry<String, TreeSet<String>> entry : filters.entrySet()) {
-                            if (StringUtils.containsIgnoreCase(entry.getKey().replaceAll(" ", ""), fltr.replaceAll(" ", ""))) {
-                                System.out.println();
-                                //log.info("RBT KEY " + entry.getKey());
-                                //log.info("RUS PARAM " + fltr);
-                            }
-                        }
-                    }
-                }
-            });*/
-            /*System.out.println();
-            filters.forEach((s, strings) -> log.info(s + " " + strings.toString()));*/
         }
         catch (NullPointerException e) {
-            log.warning(e.getClass().getName());//e.printStackTrace();
+            log.warning(e.getClass().getName());
         }
 
         LinkedList<Object> payload = new LinkedList<>();
@@ -84,7 +68,7 @@ public class FilterService {
     {
         filters.forEach((key, filter) -> log.info(key + " " + filter));
 
-        List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCase(request);
+        List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCaseAndIsAvailableTrue(request);
         log.info("Product list before filter: " + products.size());
 
         for (Map.Entry<String, String> filter : filters.entrySet())

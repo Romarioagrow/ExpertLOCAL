@@ -52,6 +52,7 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     List<Product> findAllByModelNameNotNullAndOriginalPicIsNull();
 
     Page<Product> findProductsByProductGroupEqualsIgnoreCaseAndIsAvailableTrue(String req, Pageable pageable);
+    List<Product> findProductsByProductGroupEqualsIgnoreCaseAndIsAvailableTrue(String req);
 
     List<Product> findAllByProductGroupIsNull();
     List<Product> findAllByProductGroupIsNotNull();

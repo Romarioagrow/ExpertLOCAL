@@ -47,9 +47,14 @@ public class ProductParser {
         {
             try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream())))
             {
+                /*productRepo.findAllByProductGroupIsNotNull().forEach(product -> {
+                    product.setIsAvailable(null);
+                    productRepo.save(product);
+                });*/
+
                 if (fileRBT(file))  parseRBT(file, bufferedReader);
                 else                parseRUSBT(file, bufferedReader);
-                setAvailable();
+                //setAvailable();
             }
             catch (IOException exp) {
                 exp.getStackTrace();
@@ -75,8 +80,8 @@ public class ProductParser {
         String[] line;
         CSVReader reader = new CSVReader(bufferedReader, ';');
 
-        List<Product> products = productRepo.findBySupplier("1RBT");
-        products.forEach(product -> {product.setIsAvailable(false);productRepo.save(product);});
+        /*List<Product> products = productRepo.findBySupplier("1RBT");
+        products.forEach(product -> {product.setIsAvailable(false);productRepo.save(product);});*/
 
         while ((line = reader.readNext()) != null) {
             if (lineIsCorrect(line))
@@ -111,8 +116,8 @@ public class ProductParser {
         String[] line;
         CSVReader reader = new CSVReader(bufferedReader, ';');
 
-        List<Product> products = productRepo.findBySupplier("2RUS-BT");
-        products.forEach(product -> {product.setIsAvailable(false);productRepo.save(product);});
+        /*List<Product> products = productRepo.findBySupplier("2RUS-BT");
+        products.forEach(product -> {product.setIsAvailable(false);productRepo.save(product);});*/
 
         while ((line = reader.readNext()) != null)
         {
@@ -143,20 +148,23 @@ public class ProductParser {
     private void updateProduct(String productID, String productAmount, String productPrice) {
         Product product = productRepo.findByProductID(productID);
 
-        if (product.getProductGroup() != null && differentParams(productID, productAmount, productPrice))
+        if (product.getProductGroup() != null/* && differentParams(productID, productAmount, productPrice)*/)
         {
             try
             {
                 if (ignoreUpdate(product))
                 {
                     product.setUpdate(LocalDate.now());
+                    product.setIsAvailable(true);
                     product.setOriginalPrice(productPrice);
                     product.setOriginalAmount(productAmount);
+                    productRepo.save(product);
                     return;
                 }
 
                 product.setOriginalAmount(productAmount);
                 product.setOriginalPrice(productPrice);
+                product.setIsAvailable(true);
 
                 int finalPrice   = roundPrice(product.getDefaultCoefficient(), (int) Double.parseDouble(StringUtils.deleteWhitespace(product.getOriginalPrice().replaceAll(",","."))));
                 int productBonus = matchBonus(finalPrice);
@@ -233,6 +241,7 @@ public class ProductParser {
         product.setOriginalPic(line[10]);
         product.setSupplier("1RBT");
         product.setUpdate(LocalDate.now());
+        product.setIsAvailable(true);
         productRepo.save(product);
     }
     private void createProductFromRUSBT(String[] line)
