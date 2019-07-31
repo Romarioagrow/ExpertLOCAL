@@ -21,7 +21,11 @@ public interface OrderRepo extends JpaRepository<Order, Integer> {
 
     List<Order> findAllByAcceptedTrue();
 
-    List<Order> findByShortTel(String tel);
+    List<Order> findByShortTelAndAcceptedTrue(String tel);
+
+    List<Order> findAllByCompletedTrue();
+
+    List<Order> findAllByUserIDAndCompletedTrue(Long userID);
 
     //Optional<Order> findAllByUserIDAndAcceptedFalse(Long userID);
 }

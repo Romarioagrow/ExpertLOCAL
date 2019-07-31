@@ -1,5 +1,6 @@
 package expertshop.controllers;
 import expertshop.domain.User;
+import expertshop.repos.OrderRepo;
 import expertshop.services.OrderService;
 import expertshop.services.UserService;
 
@@ -22,6 +23,7 @@ import java.util.Map;
 public class UserController {
     private final UserService userService;
     private final OrderService orderService;
+    private final OrderRepo orderRepo;
 
     @GetMapping("/registration")
     public String registrationPage(Model model) 
@@ -65,6 +67,7 @@ public class UserController {
         model.addAttribute("user", user);
         model.addAttribute("order", orderService.resolveOrder(user));
         model.addAttribute("orders", orderService.showUserOrders(user.getUserID()));
+        model.addAttribute("completedOrders", orderRepo.findAllByUserIDAndCompletedTrue(user.getUserID()));
         return "pages/cabinet";
     }
 }

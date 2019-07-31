@@ -3,6 +3,7 @@ package expertshop.controllers;
 import expertshop.domain.User;
 import expertshop.products.ProductParser;
 import expertshop.products.ProductMatcher;
+import expertshop.repos.OrderRepo;
 import expertshop.services.OrderService;
 import expertshop.services.ProductService;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,7 @@ public class AdminController {
     private final ProductMatcher productMatcher;
     private final ProductService productService;
     private final OrderService orderService;
+    private final OrderRepo orderRepo;
 
 
     @PostMapping("/products/uploadpic")
@@ -58,7 +60,7 @@ public class AdminController {
 
     @GetMapping("/products")
     @PreAuthorize("hasAuthority('ADMIN')")
-    private String products(@RequestParam String request, @RequestParam (value = "mapped", required = false) String mapped, @RequestParam (value = "withpic", required = false) String withpic, Model model) {
+    private String products(@RequestParam String request, @RequestParam(value = "mapped", required = false) String mapped, @RequestParam (value = "withpic", required = false) String withpic, Model model) {
         model.addAttribute("url", "products");
         model.addAttribute("request", request);
         model.addAttribute("products", productService.showReqProducts(request.trim(), mapped, withpic, model));
@@ -70,6 +72,26 @@ public class AdminController {
         model.addAttribute("url", "orders");
         model.addAttribute("orders", orderService.showAcceptedOrders(request));
         return "pages/supplier";
+    }
+
+    @GetMapping("/completeOrders")
+    private String completeOrders(Model model) {
+        model.addAttribute("url", "completeOrders");
+        model.addAttribute("completeOrders", orderRepo.findAllByCompletedTrue());
+        return "pages/supplier";
+    }
+
+    @PostMapping("/orders/complete")
+    private String completeOrder(Model model, @RequestParam(value = "orderID", required = false) String orderID) {
+        model.addAttribute("url", "orders");
+        orderService.completeOrder(orderID);
+        return "redirect:/supplier/orders?request=";
+    }
+    @PostMapping("/orders/removeorder")
+    private String removeOrder(Model model, @RequestParam(value = "orderID", required = false) String orderID) {
+        model.addAttribute("url", "orders");
+        orderService.removeOrder(orderID);
+        return "redirect:/supplier/orders?request=";
     }
 
     @PostMapping("/xxx")

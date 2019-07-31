@@ -374,9 +374,21 @@ public class OrderService {
         order = orderRepo.findByOrderID(Long.parseLong(request));
         if (order != null) return Collections.singletonList(order);
 
-        List<Order> orders = orderRepo.findByShortTel(request);
+        List<Order> orders = orderRepo.findByShortTelAndAcceptedTrue(request);
         if (!orders.isEmpty()) return orders;
 
         return null;
+    }
+
+    public void removeOrder(String orderID) {
+        Order order = orderRepo.findByOrderID(Long.parseLong(orderID.replaceAll("\\W", "")));
+        orderRepo.delete(order);
+    }
+
+    public void completeOrder(String orderID) {
+        Order order = orderRepo.findByOrderID(Long.parseLong(orderID.replaceAll("\\W", "")));
+        order.setAccepted(null);
+        order.setCompleted(true);
+        orderRepo.save(order);
     }
 }
