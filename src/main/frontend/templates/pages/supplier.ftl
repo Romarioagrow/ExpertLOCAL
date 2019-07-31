@@ -213,7 +213,7 @@
                                                         >
                                                         Заказ №${order.orderID?c} от ${date} ${time}
                                                     </h4>
-                                                    <p>Заказчик: <strong>${order.name} ${order.surname}</strong>, Тел:  <strong>${order.email}</strong></p>
+                                                    <p>Заказчик: <strong>${order.name} ${order.otchestvo!''} ${order.surname}</strong>, Тел:  <strong>+${order.shortTel}</strong></p>
                                                 </div>
                                                 <div class="col">
                                                     <form method="post" action="/supplier/orders/removeorder">
