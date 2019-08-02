@@ -39,6 +39,8 @@ public class ProductMatcher {
     public void updateProductDB(MultipartFile file)
     {
         try {
+
+            ///ПРОВЕРИТЬ АДРЕСА КАРТИНОК И БАЗ
             catalogParser.parseProducts(file);
             matchProducts();
             resolveFinalPrice();
@@ -643,15 +645,15 @@ public class ProductMatcher {
 
     public void uploadProductPic(MultipartFile file, String productID) {
         log.info(productID);
-        log.info(file.getOriginalFilename());
-        log.info("empty "+file.isEmpty() + "");
+        //log.info(file.getOriginalFilename());
+        //log.info("empty "+file.isEmpty() + "");
 
         Product product = productRepo.findByProductID(productID);
 
         if (!file.isEmpty()) {
             try {
                 log.info("file is ok " + file.getOriginalFilename());
-                File file1 = new File("C:\\expertshopLOCAL\\src\\main\\frontend\\static\\img\\products\\" + file.getOriginalFilename());
+                File file1 = new File("D:\\OneDrive\\IT\\Projects\\expertshopLOCAL\\src\\main\\frontend\\static\\img\\products\\" + file.getOriginalFilename());
 
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(file1.getAbsoluteFile().toString()));
                 stream.write(file.getBytes());
@@ -660,9 +662,10 @@ public class ProductMatcher {
                 String localPath = StringUtils.substringAfterLast(file1.getPath(), "\\");
                 String localPic  = "/../img/products/".concat(localPath);
 
-                log.info(product.getOriginalName());
+                log.info("check " + localPic);
                 product.setOriginalPic(localPic);
                 productRepo.save(product);
+
                 log.info(product.getOriginalPic());
             } catch (Exception e) {
                 e.printStackTrace();

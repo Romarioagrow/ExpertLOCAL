@@ -463,7 +463,7 @@ function constructProductCard(product, orderedIDs) {
         '</div>'+
         '<div class="card-body">'+
         '<h5 class="card-title" style="height: auto !important;">'+
-        '<a href="/products/info/'+product.productID+'">'+
+        '<a href="/products/info/'+product.productID.replace("\\","_")+'">'+
         '<strong style="font-size: 1rem">'  +
         productName +
         '</strong>' +

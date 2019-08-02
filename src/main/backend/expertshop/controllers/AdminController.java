@@ -8,6 +8,14 @@ import expertshop.services.OrderService;
 import expertshop.services.ProductService;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
+
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -15,8 +23,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Map;
+import java.util.Iterator;
+
 
 @Log
 @Controller
@@ -35,7 +47,7 @@ public class AdminController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String uploadPic(@RequestParam("file") MultipartFile file, @RequestParam (value = "upload", required = false) String productID, Model model)
     {
-        log.info(file.getOriginalFilename());log.info(file.isEmpty() + "");
+        //log.info(file.getOriginalFilename());log.info(file.isEmpty() + "");
         productMatcher.uploadProductPic(file, productID);
         model.addAttribute("url", "products");
         return "pages/supplier";

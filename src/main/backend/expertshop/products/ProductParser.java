@@ -1,4 +1,5 @@
 package expertshop.products;
+
 import com.opencsv.CSVReader;
 import expertshop.domain.BrandProduct;
 import expertshop.domain.Product;
@@ -7,11 +8,14 @@ import expertshop.repos.BaseRepo;
 import expertshop.repos.BrandRepo;
 import expertshop.repos.ProductRepo;
 import expertshop.services.ProductService;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
-
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.jsoup.Connection;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
@@ -25,10 +29,7 @@ import java.io.*;
 import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Log
@@ -45,111 +46,96 @@ public class ProductParser {
     {
         if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty())
         {
-            try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream())))
+            log.info("Парсинг " + file.getOriginalFilename());
+            try
             {
-                /*productRepo.findAllByProductGroupIsNotNull().forEach(product -> {
-                    product.setIsAvailable(null);
-                    productRepo.save(product);
-                });*/
+                File excelFile = new File("C:\\Users\\R\\Desktop\\Prices\\"+file.getOriginalFilename());
+                FileInputStream inputStream = new FileInputStream(excelFile);
 
-                if (fileRBT(file))  parseRBT(file, bufferedReader);
-                else                parseRUSBT(file, bufferedReader);
-                //setAvailable();
+                if (fileRBT(file)) parseRBT(inputStream);
+                else               parseRUSBT(inputStream);
             }
-            catch (IOException exp) {
-                exp.getStackTrace();
+            catch (IOException ex) {
+                ex.printStackTrace();
             }
         }
     }
 
-    private void setAvailable() {
-        productRepo.findAllByProductGroupIsNotNull().forEach(product -> {product.setIsAvailable(false); productRepo.save(product);});
-        for (Product product : productRepo.findAllByProductGroupIsNotNull()) {
-            if (product.getUpdate().toString().equals(LocalDate.now().toString())) {
-                product.setIsAvailable(true);
-            }
-            else product.setIsAvailable(false);
-            productRepo.save(product);
-        }
-    }
-
-    private void parseRBT(MultipartFile file, BufferedReader bufferedReader) throws IOException {
-        log.info("Parsing RBT file: " + file.getOriginalFilename());
-
-        int countAdd = 0, countUpdate = 0;  /// to static
-        String[] line;
-        CSVReader reader = new CSVReader(bufferedReader, ';');
-
-        /*List<Product> products = productRepo.findBySupplier("1RBT");
-        products.forEach(product -> {product.setIsAvailable(false);productRepo.save(product);});*/
-
-        while ((line = reader.readNext()) != null) {
-            if (lineIsCorrect(line))
-            {
-                String productID = line[0];
-                if (productAlreadyExists(productID))
-                {
-                    String productAmount            = line[6];
-                    String productPrice             = line[7];
-
-                    updateProduct(productID, productAmount, productPrice);
-                    countUpdate++;
-                    log.info("Обновление товара: " + line[3]);
-                }
-                else
-                {
-                    createProductFromRBT(line);
-                    log.info("Создание нового товара: " + line[3]);
-                    countAdd++;
-                }
-            }
-            else log.info("Пропуск некоректной строки " + file.getOriginalFilename());
-        }
-        log.info("Товаров добавлено: "   + countAdd);
-        log.info("Товаров обновлено: "   + countUpdate);
-    }
-    private void parseRUSBT(MultipartFile file, BufferedReader bufferedReader) throws IOException
-    {
-        log.info("Parsing RUS-BT file: " + file.getOriginalFilename());
-
+    private void parseRBT(FileInputStream inputStream) throws IOException {
         int countAdd = 0, countUpdate = 0;
-        String[] line;
-        CSVReader reader = new CSVReader(bufferedReader, ';');
 
-        /*List<Product> products = productRepo.findBySupplier("2RUS-BT");
-        products.forEach(product -> {product.setIsAvailable(false);productRepo.save(product);});*/
+        HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
+        HSSFSheet sheet = workbook.getSheetAt(0);
 
-        while ((line = reader.readNext()) != null)
+        for (Row row : sheet)
         {
-            if (correctLineR(line))
+            if (lineIsCorrect(row))
             {
-                String productID = line[5];
-                if (productAlreadyExists(productID))
+                String productID = row.getCell(0).toString();
+                if (productExists(productID))
                 {
-                    String productAmount = line[7] + line[8];
-                    String productPrice  = line[13];
-
-                    updateProduct(productID, productAmount, productPrice);
+                    updateProduct(row, productID);
                     countUpdate++;
-                    log.info("Обновление товара: " + line[6]);
                 }
                 else
                 {
-                    createProductFromRUSBT(line);
-                    log.info("Создание нового товара: " + line[6]);
+                    createProductRBT(row);
                     countAdd++;
                 }
             }
         }
+        workbook.close();
+        inputStream.close();
         log.info("Товаров добавлено: "   + countAdd);
         log.info("Товаров обновлено: "   + countUpdate);
     }
 
-    private void updateProduct(String productID, String productAmount, String productPrice) {
+    private void parseRUSBT(FileInputStream inputStream) throws IOException
+    {
+        int countAdd = 0, countUpdate = 0;
+
+        XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+        XSSFSheet sheet = workbook.getSheetAt(0);
+
+        for (Row row : sheet)
+        {
+            if (lineIsCorrectR(row))
+            {
+                String productID = row.getCell(5).toString().replaceAll("\\\\", "_");
+                if (productExists(productID))
+                {
+                    updateProduct(row, productID);
+                    countUpdate++;
+                }
+                else
+                {
+                    createProductRUSBT(row);
+                    countAdd++;
+                }
+            }
+        }
+        workbook.close();
+        inputStream.close();
+        log.info("Товаров добавлено: "   + countAdd);
+        log.info("Товаров обновлено: "   + countUpdate);
+    }
+
+    private void updateProduct(Row row, String productID) {
         Product product = productRepo.findByProductID(productID);
 
-        if (product.getProductGroup() != null/* && differentParams(productID, productAmount, productPrice)*/)
+        if (product.getProductGroup() != null)
         {
+            String productAmount, productPrice;
+            if (product.getSupplier().equals("1RBT"))
+            {
+                productAmount   = row.getCell(6).toString();
+                productPrice    = row.getCell(7).toString();
+            }
+            else
+            {
+                productAmount   = row.getCell(7).toString().concat(row.getCell(8).toString());
+                productPrice    = row.getCell(13).toString();
+            }
             try
             {
                 if (ignoreUpdate(product))
@@ -170,7 +156,6 @@ public class ProductParser {
                 int productBonus = matchBonus(finalPrice);
                 product.setFinalPrice(finalPrice);
                 product.setBonus(productBonus);
-
             }
             catch (NullPointerException e) {
                 log.info(e.getClass().getName());
@@ -179,6 +164,51 @@ public class ProductParser {
         }
         product.setUpdate(LocalDate.now());
         productRepo.save(product);
+    }
+
+    private void createProductRBT(Row row)
+    {
+        try {
+            Product product = new Product();
+            product.setProductID(row.getCell(0).toString());
+            product.setOriginalCategory(row.getCell(1).toString());
+            product.setOriginalType(row.getCell(2).toString());
+            product.setOriginalBrand(row.getCell(4).toString());
+            product.setOriginalName(row.getCell(3).getStringCellValue());
+            product.setOriginalAnnotation(row.getCell(5).toString());
+            product.setOriginalAmount(row.getCell(6).toString());
+            product.setOriginalPrice(row.getCell(7).toString().trim());
+            product.setOriginalPic(StringUtils.substringBetween(row.getCell(3).toString(), "\"", "\""));
+            product.setSupplier("1RBT");
+            product.setUpdate(LocalDate.now());
+            product.setIsAvailable(true);
+            productRepo.save(product);
+        }
+        catch (Exception e) {
+            log.warning(e.getClass().getName());
+        }
+    }
+    private void createProductRUSBT(Row row)
+    {
+        try {
+            Product product = new Product();
+            product.setProductID(row.getCell(5).toString().replaceAll("\\\\", "_"));
+            product.setOriginalCategory(row.getCell(0).toString().concat("; ").concat(row.getCell(1).toString()));
+            product.setOriginalType(row.getCell(3).toString());
+            product.setOriginalBrand(row.getCell(4).toString());
+            product.setOriginalName(row.getCell(6).toString());
+            product.setOriginalAmount(row.getCell(7).toString() + row.getCell(8).toString());
+            product.setOriginalPrice(row.getCell(13).toString());
+            product.setLinkR(row.getCell(15).getHyperlink().getAddress());
+            product.setRType(row.getCell(3).toString());
+            product.setRName(row.getCell(6).toString());
+            product.setSupplier("2RUS-BT");
+            product.setUpdate(LocalDate.now());
+            product.setIsAvailable(true);
+            productRepo.save(product);
+        }
+        catch (NullPointerException ignored) {
+        }
     }
 
     private boolean ignoreUpdate(Product product) {
@@ -223,48 +253,11 @@ public class ProductParser {
         }
     }
 
-    private boolean correctLineR(String[] line) {
-        return !line[6].contains("Уценка") && !line[3].contains("УЦЕНКА") && !line[0].contains("Код товара") & !line[0].isEmpty() & !line[0].startsWith(";") & !line[5].isEmpty() & !line[13].contains("Цена со скидкой");
+    private boolean lineIsCorrectR(Row row) throws NullPointerException {
+        return row.getCell(0) != null && !row.getCell(0).getStringCellValue().isEmpty() && !row.getCell(0).getStringCellValue().isEmpty() && !row.getCell(0).getStringCellValue().contains("Уценка") && !row.getCell(0).getStringCellValue().contains("УЦЕНКА") && !row.getCell(0).getStringCellValue().contains("Группа 1");
     }
 
-    private void createProductFromRBT(String[] line)
-    {
-        Product product = new Product();
-        product.setProductID(line[0]);
-        product.setOriginalCategory(line[1]);
-        product.setOriginalType(line[2]);
-        product.setOriginalBrand(line[4]);
-        product.setOriginalName(line[3]);
-        product.setOriginalAnnotation(line[5]);
-        product.setOriginalAmount(line[6]);
-        product.setOriginalPrice(line[7].trim());
-        product.setOriginalPic(line[10]);
-        product.setSupplier("1RBT");
-        product.setUpdate(LocalDate.now());
-        product.setIsAvailable(true);
-        productRepo.save(product);
-    }
-    private void createProductFromRUSBT(String[] line)
-    {
-        Product product = new Product();
-        product.setProductID(line[5]);
-        product.setOriginalCategory(line[0].concat("; ").concat(line[1]));
-        product.setOriginalType(line[3]);
-        product.setOriginalBrand(line[4]);
-        product.setOriginalName(line[6]);
-        product.setOriginalAnnotation(StringUtils.substringAfter(line[6], line[4]));
-        product.setOriginalAmount(line[7]+line[8]);
-        product.setOriginalPrice(line[13]);
-        product.setLinkR(line[17]);
-        product.setRType(line[3]);
-        product.setRName(line[6]);
-        product.setSupplier("2RUS-BT");
-        product.setUpdate(LocalDate.now());
-        product.setIsAvailable(true);
-        productRepo.save(product);
-    }
-
-    private boolean productAlreadyExists(String productID) {
+    private boolean productExists(String productID) {
         return productRepo.findByProductID(productID) != null;
     }
 
@@ -277,9 +270,9 @@ public class ProductParser {
         return Objects.requireNonNull(file.getOriginalFilename()).contains("СП2");
     }
 
-    private boolean lineIsCorrect(String[] line) {
-        return !line[3].isEmpty() && !line[0].equals("Код товара") & !line[0].equals(";") & !line[0].contains("г. Челябинск") &
-                !line[0].contains("8(351)")   & !line[0].startsWith(".")  & !line[0].startsWith(" ");
+
+    private boolean lineIsCorrect(Row line) {
+        return !line.getCell(0).toString().isEmpty() && !line.getCell(0).toString().contains("8(351) 239 39 10(11)") && !line.getCell(0).toString().startsWith(".") && !line.getCell(0).toString().startsWith("г. Челябинск") && !line.getCell(0).toString().startsWith("Код товара");
     }
 
     public void parseBrandProducts(MultipartFile file) {
@@ -324,6 +317,17 @@ public class ProductParser {
         }
         catch (IOException | ArrayIndexOutOfBoundsException exp) {
             exp.getStackTrace();
+        }
+    }
+
+    private void setAvailable() {
+        productRepo.findAllByProductGroupIsNotNull().forEach(product -> {product.setIsAvailable(false); productRepo.save(product);});
+        for (Product product : productRepo.findAllByProductGroupIsNotNull()) {
+            if (product.getUpdate().toString().equals(LocalDate.now().toString())) {
+                product.setIsAvailable(true);
+            }
+            else product.setIsAvailable(false);
+            productRepo.save(product);
         }
     }
 
@@ -460,7 +464,7 @@ public class ProductParser {
             }
         });
 
-        downloadPics();
+        //downloadPics();
         System.out.println();
         log.info("Всего товаров: "      + list.size());
         log.info("Успешно скачано: "    + countPic);
@@ -522,11 +526,11 @@ public class ProductParser {
     public void findInBigBase() {
         log.info("Поиск совпадений в Большой Базе...");
 
-        List<Product> products = productRepo.findAllByModelNameNotNull();
+        List<Product> products = productRepo.findAllByModelNameNotNullAndOriginalPicIsNull();
         AtomicInteger count = new AtomicInteger();
         products.forEach(product ->
         {
-            if (product.getPics() == null)
+            //if (product.getPics() == null)
             {
                 ProductBase productBase = baseRepo.findFirstByShortModelEquals(product.getShortModel());
                 if (productBase != null)
@@ -550,6 +554,8 @@ public class ProductParser {
         });
         log.info("Всего: " + count.toString());
     }
+
+
 
     ///!!!
     /*

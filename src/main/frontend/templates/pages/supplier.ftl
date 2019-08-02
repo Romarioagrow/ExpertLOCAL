@@ -167,7 +167,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="form-group">
-                                                                <button type="submit" class="btn btn-success btn-lg btn-block" name="upload" value="upload${product.productID}">Загрузить</button>
+                                                                <button type="submit" class="btn btn-success btn-lg btn-block" name="upload" value="${product.productID}">Загрузить</button>
                                                             </div>
                                                         </form>
                                                     </td>

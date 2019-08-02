@@ -68,7 +68,7 @@ public class FilterService {
     {
         filters.forEach((key, filter) -> log.info(key + " " + filter));
 
-        List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCaseAndIsAvailableTrue(request);
+        List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCaseAndIsDuplicateIsNullAndIsAvailableTrue(request);
         log.info("Product list before filter: " + products.size());
 
         for (Map.Entry<String, String> filter : filters.entrySet())

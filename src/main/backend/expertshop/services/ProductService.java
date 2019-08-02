@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static expertshop.controllers.ControllerService.getSessionID;
@@ -29,38 +27,16 @@ public class ProductService {
     private final OrderRepo orderRepo;
 
     public Page<Product> findProducts(String request, Pageable pageable, Model model) {
-        Page<Product> page = productRepo.findProductsByProductGroupEqualsIgnoreCaseAndIsAvailableTrue(request, pageable);
-
-        /*if (page.getTotalElements() == 0) {
-            page = findOriginalProducts(request, pageable);
-        }*/
-
+        Page<Product> page = productRepo.findProductsByProductGroupEqualsIgnoreCaseAndIsDuplicateIsNullAndIsAvailableTrue(request, pageable);
         model.addAttribute("total", page.getTotalElements());
         return page;
     }
 
-    /*public Page<Product> findOriginalProducts(String request, Pageable pageable) {
-        return productRepo.findByOriginalTypeContainingOrOriginalNameContaining(request, request, pageable);
-    }*/
-
     public List<Product> searchProducts(String searchRequest) {
-        //log.info("Search request: " + searchRequest);
         String search = searchRequest.replaceAll(" ", "").replaceAll("-", "").toLowerCase();
-        //log.info(search);
-        /*if (searchedProducts.size() == 0)
-        {
-            searchedProducts = productRepo.findAllByProductGroupIsNotNull().stream()
-                    .filter(product -> StringUtils.containsIgnoreCase(product.getOriginalName(), searchRequest))
-                    .collect(Collectors.toList());
-        }*/
-        //log.info("Products found: " + searchedProducts.size());
         return productRepo.findAllByProductGroupIsNotNullAndIsDuplicateIsNullAndShortSearchNameContainsIgnoreCase(search).stream()
                 .filter(product -> StringUtils.containsIgnoreCase(product.getShortSearchName(), search))
                 .collect(Collectors.toList());
-
-        /*if products null {
-        split Requests[] by " "
-        findBySearchShortNameContainsOrSearchShortNameContains }*/
     }
 
     public Set<String> getOrderedID(User user)
@@ -73,7 +49,6 @@ public class ProductService {
             Order order = orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID());
             return collectID(order);
         }
-        //else log.info("Order empty");
         return new HashSet<>();
     }
 
@@ -174,7 +149,6 @@ public class ProductService {
     public boolean editProducts(Map<String, String> data) {
         data.forEach((productID, newPrice) ->
         {
-            //log.info(productID + ": " + newPrice);
             Product product = productRepo.findByProductID(productID);
             product.setFinalPrice(Integer.parseInt(newPrice.replaceAll("\\W", "")));
             product.setPriceMod(true);
@@ -198,9 +172,6 @@ public class ProductService {
                 int newPrice = roundPrice(Double.parseDouble(coeff[1].replaceAll(",", ".")), (int) Double.parseDouble(product.getOriginalPrice().replaceAll(",", ".").replaceAll(" ", "")));
                 product.setFinalPrice(newPrice);
                 productRepo.save(product);
-
-                log.info(product.getModCoefficient().toString());
-                log.info(product.getFinalPrice().toString());
             }
         });
     }
@@ -252,9 +223,6 @@ public class ProductService {
                 int newPrice = roundPrice(defaultCoeff, (int) Double.parseDouble(product.getOriginalPrice().replaceAll(",", ".").replaceAll(" ", "")));
                 product.setFinalPrice(newPrice);
                 productRepo.save(product);
-
-               /* log.info(product.getModCoefficient().toString());
-                log.info(product.getFinalPrice().toString());*/
             }
         });
         return true;
@@ -305,8 +273,6 @@ public class ProductService {
             formAnno = product.getOriginalAnnotation();
             if (formAnno!= null && !formAnno.isEmpty())
             {
-                //log.info(formAnno);
-                //log.info(formAnno.contains(", ") +"");
                 if (formAnno.contains(", "))
                 {
                     String[] annotation = formAnno.split(", ");

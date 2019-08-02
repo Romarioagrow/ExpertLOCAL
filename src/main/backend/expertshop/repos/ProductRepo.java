@@ -51,6 +51,8 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     List<Product> findByLinkRIsNotNull();
     List<Product> findAllByModelNameNotNullAndOriginalPicIsNull();
 
+    List<Product> findProductsByProductGroupEqualsIgnoreCaseAndIsDuplicateIsNullAndIsAvailableTrue(String req);
+    Page<Product> findProductsByProductGroupEqualsIgnoreCaseAndIsDuplicateIsNullAndIsAvailableTrue(String req, Pageable pageable);
     Page<Product> findProductsByProductGroupEqualsIgnoreCaseAndIsAvailableTrue(String req, Pageable pageable);
     List<Product> findProductsByProductGroupEqualsIgnoreCaseAndIsAvailableTrue(String req);
 
@@ -66,7 +68,10 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     List<Product> findBySupplierAndProductGroupIsNotNull(String supplier);
     List<Product> findProductsByProductGroupEqualsIgnoreCaseAndSupplier(String productGroup, String supplier);
     List<Product> findByModelNameIgnoreCaseOrOriginalNameIgnoreCase(String modelName, String origName);
+
     List<Product> findAllByModelNameNotNull();
+    //List<Product> findAllByModelNameNotNullAndOriginalPicIsNull();
+
     List<Product> findAllByProductGroupNotNullAndFinalPriceIsNull();
 
     List<Product> findByModelNameStartsWithIgnoreCase(String modelName);
