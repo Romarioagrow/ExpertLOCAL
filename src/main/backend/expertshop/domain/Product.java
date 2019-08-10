@@ -33,6 +33,8 @@ public class Product implements Serializable {
     @Column(name = "original_pic", length = 10000)
     private String originalPic;
 
+    private String originalGroup;
+
     /*ОБЩИЕ ПОЛЯ*/
     private String supplier;
 

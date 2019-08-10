@@ -1,25 +1,4 @@
-/*$('#zoomimg').mouseenter(function() {
-    $(this).css("cursor","pointer");
-    $(this).animate({width: "50%", height: "50%"}, 'slow');
-});
 
-$('#zoomimg').mouseleave(function() {
-    $(this).animate({width: "28%"}, 'slow');
-});
-
-$('#zoomimg').hover(function() {
-    $(this).css("cursor", "pointer");
-    $(this).animate({
-        width: "50%",
-        height: "50%"
-    }, 'slow');
-
-}, function() {
-    $(this).animate({
-        width: "28%"
-    }, 'slow');
-
-});*/
 
 function displaySomeGroups(element) {
     var productCategory = element.getAttribute("name");
@@ -49,7 +28,7 @@ function displaySomeGroups(element) {
                     '<div class="card catalog-card">\n' +
                     '<div class="view overlay catalog-pic">\n' +
                     '<img class="img-fluid scale-pic" src="/../img/nophoto.jpg" alt="Card image cap">\n' +
-                    '<a href="/products/гаджеты/'+link+'">\n' +
+                    '<a href="/products/'+productCategory+'/'+link+'">\n' +
                     '<div class="mask rgba-white-slight"></div>\n' +
                     '</a>\n' +
                     '</div>\n' +
@@ -211,7 +190,6 @@ function saveProduct() {
 
 }
 
-
 $(document).ready(function(){
     displayBrands()
 });
@@ -233,7 +211,7 @@ function displayBrands() {
     //console.log(request);
 
     $.ajax({
-        url: 'http://localhost:8080/brands/',
+        url: 'http://localhost:8080/brands',
         type: 'POST',
         dataType: 'json',
         data: request,
@@ -243,9 +221,6 @@ function displayBrands() {
         {
             const brands  = payload.responseJSON[0];
             const filters = payload.responseJSON[1];
-
-            //console.log(brands);
-            //console.log(filters);
 
             $('#brands-view').empty();
 

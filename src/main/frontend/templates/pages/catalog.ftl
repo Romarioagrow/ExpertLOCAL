@@ -50,7 +50,10 @@
                             </li>
 
                             <#--/////////////-->
-                            <li class="nav-item" onclick="displaySomeGroups(this)" name="техника_для_подсобного_хозяйства">
+                            <li class="nav-item" onclick="displaySomeGroups(this)" onchange="displaySomeGroups(this)" name="инструмент">
+                                <a class="nav-link <#if url?contains("строительные_инструменты")>active</#if>" data-toggle="tab" href="#panel18" role="tab">Строительные инструменты</a>
+                            </li>
+                            <li class="nav-item" onclick="displaySomeGroups(this)" onselect="displaySomeGroups(this)" name="техника_для_подсобного_хозяйства">
                                 <a class="nav-link <#if url?contains("техника_для_подсобного_хозяйства")>active</#if>" data-toggle="tab" href="#panel12" role="tab">Подсобное хозяйство</a>
                             </li>
                             <li class="nav-item" onclick="displaySomeGroups(this)" name="садово-огородный_инвентарь">
@@ -1765,6 +1768,11 @@
                     </div>
 
                     <#---->
+                    <div class="tab-pane fade <#if url?contains("строительные_инструменты")>in show active</#if>" id="panel18" role="tabpanel">
+                        <div class="card-deck" id="deckинструмент">
+                        </div>
+                    </div>
+
                     <div class="tab-pane fade <#if url?contains("техника_для_подсобного_хозяйства")>in show active</#if>" id="panel12" role="tabpanel">
                         <div class="card-deck" id="deckтехника_для_подсобного_хозяйства">
                         </div>

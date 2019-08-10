@@ -3,19 +3,25 @@
     <div class="container" style="margin-top: 5rem">
         <div class="row mt-2">
             <nav aria-label="breadcrumb" style="padding-left: 1rem;margin-top: 1rem;">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="/products/${product.productCategory?lower_case?replace(" ","_")}/${product.productGroup?lower_case}"><span style="font-size: 20px !important;">${product.productGroup}</a></li>
-                    <li class="breadcrumb-item active" aria-current="page"><span style="font-size: 20px !important;">${product.groupBrand}</span></li>
-                    <li class="breadcrumb-item active" aria-current="page"><span style="font-size: 20px !important;">${product.productType}</li>
-                </ol>
+                <#if product.productCategory??>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/products/${product.productCategory?lower_case?replace(" ","_")}/${product.productGroup?lower_case}"><span style="font-size: 20px !important;">${product.productGroup}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"><span style="font-size: 20px !important;">${product.groupBrand}</span></li>
+                        <li class="breadcrumb-item active" aria-current="page"><span style="font-size: 20px !important;">${product.productType}</li>
+                    </ol>
+                </#if>
             </nav>
         </div>
         <div class="row" style="margin-bottom: 1rem;">
             <div class="col">
                 <h2>
-                    <span style="color: #e52d00;">${product.singleType}</span>
-                    ${product.originalBrand?capitalize}
-                    ${product.modelName}
+                    <#if product.singleType??>
+                        <span style="color: #e52d00;">${product.singleType}</span>
+                        ${product.originalBrand?capitalize}
+                        ${product.modelName}
+                    <#else>
+                        ${product.originalName?capitalize}
+                    </#if>
                 </h2>
             </div>
         </div>
@@ -23,14 +29,12 @@
             <div class="col-7" style="max-height: 30rem;">
                 <div class="card" style="height: 100% !important; width: 100% !important; object-fit: contain !important;">
                     <div class="card-body" style="height: 100% !important; width: 100% !important; object-fit: contain !important;">
-                        <#--<div class="bgc-img">-->
                         <#if product.originalPic??>
                             <a><img src="${product.originalPic}" id="image" onclick="im()" ondblclick="iii()" class="img-fluid scale-pic " alt="Responsive image" style="height: 100% !important; width: 100% !important; object-fit: contain !important;"></a>
 
                         <#else>
                             <img src="/../img/nophoto.jpg" class="img-fluid scale-pic" alt="Responsive image" style="height: 100% !important; width: 100% !important; object-fit: contain !important;">
                         </#if>
-                        <#--</div>-->
                     </div>
                 </div>
             </div>
@@ -104,7 +108,9 @@
                             <table class="table table table-borderless w-30">
                                 <thead>
                                 <tr>
-                                    <strong>${product.originalAnnotation?replace(";","")!''}</strong>
+                                    <#if product.originalAnnotation??>
+                                        <strong>${product.originalAnnotation?replace(";","")!''}</strong>
+                                    </#if>
                                 </tr>
                                 </thead>
                                 <tbody>

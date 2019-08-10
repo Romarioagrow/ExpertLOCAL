@@ -672,12 +672,18 @@ public class ProductMatcher {
 
     public void xxx() {
 
-        productRepo.findAllByProductGroupIsNotNull().forEach(product -> {
-            String anno = product.getOriginalAnnotation();
-            if (anno != null && !anno.endsWith(";")) product.setOriginalAnnotation(product.getOriginalAnnotation().concat(";"));
+        ///ДЛЯ RUSBT
+        productRepo.findBySupplier("2RUS-BT").forEach(product -> {
+            String group = StringUtils.substringAfter(product.getOriginalCategory(), ";");
+            product.setOriginalGroup(group);
             productRepo.save(product);
         });
 
+        /*productRepo.findAllByProductGroupIsNotNull().forEach(product -> {
+            String anno = product.getOriginalAnnotation();
+            if (anno != null && !anno.endsWith(";")) product.setOriginalAnnotation(product.getOriginalAnnotation().concat(";"));
+            productRepo.save(product);
+        });*/
 
         /*List<Product> list = productRepo.findAllByProductGroupIsNotNull();
         list.forEach(product -> {

@@ -28,8 +28,44 @@ public class ProductService {
 
     public Page<Product> findProducts(String request, Pageable pageable, Model model) {
         Page<Product> page = productRepo.findProductsByProductGroupEqualsIgnoreCaseAndIsDuplicateIsNullAndIsAvailableTrue(request, pageable);
-        model.addAttribute("total", page.getTotalElements());
-        return page;
+        if (page.getTotalElements() != 0) {
+            model.addAttribute("total", page.getTotalElements());
+            return page;
+        }
+        else
+        { ///displayUnmappedProducts();
+            request = StringUtils.capitalize(request.replaceAll("_", " "));
+            page = productRepo.findByOriginalTypeAndIsAvailableIsTrue(request, pageable);
+
+            String[] accessories = {
+                    "Клей, герметик, жидкие гвозди","Приспособления для кладки плитки","Изолента, скотч, ленты","Сверла, фрезы","Электроды","Шнуры и веревки хозяйственные","Тросы, цепи",
+                    "Аксессуары для сварки","Батареи для шуруповертов","Средства защиты","Щетки для шлифмашин","Диски пильные","Запчасти и приспособления","Приспособления для доильных аппаратов","Ср-ва защиты от грызунов",
+                    "Ср-ва защиты от насекомых","Пленка","Крышки металлические","Крышки винтовые","Крышки полиэтиленовые","Запчасти и приспособления к машинкам","Подводка для газа","Баллончики газовые туристические",
+                    "Уголь и средства для розжига"
+            };
+
+            page.forEach(product ->
+            {
+                //if (product.getFinalPrice() == null)
+                {
+                    double coeff;
+                    int finalPrice = (int) Double.parseDouble(product.getOriginalPrice().replaceAll(",",".").replaceAll(" ",""));
+                    if (Arrays.asList(accessories).contains(product.getOriginalType()))
+                        coeff = 1.5;
+                    else coeff = 1.2;
+                    finalPrice = roundPrice(coeff, finalPrice);
+
+                    product.setFinalPrice(finalPrice);
+                    product.setBonus(matchBonus(finalPrice));
+                    product.setDefaultCoefficient(coeff);
+                    productRepo.save(product);
+                }
+            });
+            //String[] path = {StringUtils.capitalize(request), StringUtils.capitalize(request)};
+            model.addAttribute("total", page.getTotalElements());
+            //model.addAttribute("path",  path);
+            return page;
+        }
     }
 
     public List<Product> searchProducts(String searchRequest) {
@@ -289,10 +325,23 @@ public class ProductService {
         productCategory = StringUtils.capitalize(productCategory.replaceAll("_", " "));
         log.info(productCategory);
 
-        productRepo.findByOriginalCategoryContains(productCategory).forEach(product -> {
+        productRepo.findByProductGroupIsNullAndSupplierEqualsAndOriginalCategoryContains("2RUS-BT" ,productCategory).forEach(product -> {
             productGroups.add(product.getOriginalType());
         });
         return productGroups;
+    }
+
+    public Integer matchBonus(int price) {
+        int bonus = price * 3 / 100;
+        String val = String.valueOf(bonus);
+
+        if (bonus > 0 && bonus <= 10) {
+            return 10;
+        }
+        else {
+            val = val.substring(0, val.length()-1).concat("0");
+            return Integer.parseInt(val);
+        }
     }
 }
 

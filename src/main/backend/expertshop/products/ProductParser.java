@@ -194,6 +194,7 @@ public class ProductParser {
             Product product = new Product();
             product.setProductID(row.getCell(5).toString().replaceAll("\\\\", "_"));
             product.setOriginalCategory(row.getCell(0).toString().concat("; ").concat(row.getCell(1).toString()));
+            product.setOriginalGroup(row.getCell(1).toString());
             product.setOriginalType(row.getCell(3).toString());
             product.setOriginalBrand(row.getCell(4).toString());
             product.setOriginalName(row.getCell(6).toString());

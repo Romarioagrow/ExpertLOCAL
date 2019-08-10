@@ -13,7 +13,9 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     Product findByProductID(String ID);
 
     List<Product> findByOriginalCategoryStartsWith(String category);
-    List<Product> findByOriginalCategoryContains(String category);
+    List<Product> findByProductGroupIsNullAndSupplierEqualsAndOriginalCategoryContains(String supplier, String category);
+
+    Page<Product> findByOriginalTypeAndIsAvailableIsTrue(String req, Pageable pageable);
 
     /*Page<Product> findByOriginalTypeContainingOrOriginalGroupContainingOrOriginalNameContaining(String type, String group, String name, Pageable pageable);*/
 

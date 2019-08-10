@@ -94,9 +94,9 @@
                                 <div class="view overlay" style="min-height: 8rem !important; max-height: 8rem !important;">
                                     <#if product.originalPic??>
                                         <img class="img-fluid scale-pic" src="<#if product.originalPic??>${product.originalPic}<#else>/../img/nophoto.jpg<#--${product.originalPic}--></#if>" alt="Фотографии пока нет :(">
-                                        <#--<a href="#" onclick="alertPic()">
-                                            <div class="mask rgba-white-slight"></div>
-                                        </a>-->
+                                    <#--<a href="#" onclick="alertPic()">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>-->
                                     <#else>
                                         <img class="img-fluid scale-pic" src="/../img/nophoto.jpg" alt="Фотографии пока нет">
                                     </#if>
@@ -104,18 +104,22 @@
                                 <div class="card-body">
                                     <h5 class="card-title" style="height: auto !important;/*min-height: 3rem !important; max-height: 3rem !important;*/">
                                         <a href="/products/info/${product.productID?replace("\\","_")}">
-                                            <strong style="font-size: 1rem">
-                                                <span style="color: #e52d00;">${product.singleType!''}</span>
-                                                <span style="color: #222222;">${product.originalBrand?capitalize}</span>
-                                                <span style="color: #222222;">${product.modelName!''}</span>
-                                            </strong>
+                                            <#if product.productGroup??>
+                                                <strong style="font-size: 1rem">
+                                                    <span style="color: #e52d00;">${product.singleType!''}</span>
+                                                    <span style="color: #222222;">${product.originalBrand?capitalize}</span>
+                                                    <span style="color: #222222;">${product.modelName!''}</span>
+                                                </strong>
+                                            <#else>
+                                                <span style="color: #222222;">${product.originalName!''}</span>
+                                            </#if>
                                         </a>
                                     </h5>
                                     <p class="card-text" style="margin-top: 1rem">
                                         <#if product.productType??>
-                                            <#--<#if !product.productType.contains("Ноутбуки") || !product.productType.contains("Игровые") || !product.productType.contains("Готовые ПК")>-->
-                                                <strong><i>${product.productType}</i></strong>
-                                            <#--</#if>-->
+                                            <strong><i>${product.productType}</i></strong>
+                                            <#else>
+                                                <strong><i>${product.originalGroup}</i></strong>
                                         </#if>
                                     </p>
                                     <h3><strong>${product.finalPrice!''} </strong><span style="font-size: .9rem">руб</span></h3>
