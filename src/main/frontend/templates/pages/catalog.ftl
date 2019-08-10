@@ -48,9 +48,26 @@
                             <li class="nav-item">
                                 <a class="nav-link <#if url?contains("гаджеты")>active</#if>" data-toggle="tab" href="#panel11" role="tab">Гаджеты</a>
                             </li>
-                            <#--<li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#panel12" role="tab">Гаджеты</a>
-                            </li>-->
+
+                            <#--/////////////-->
+                            <li class="nav-item" onclick="displaySomeGroups(this)" name="техника_для_подсобного_хозяйства">
+                                <a class="nav-link <#if url?contains("техника_для_подсобного_хозяйства")>active</#if>" data-toggle="tab" href="#panel12" role="tab">Подсобное хозяйство</a>
+                            </li>
+                            <li class="nav-item" onclick="displaySomeGroups(this)" name="садово-огородный_инвентарь">
+                                <a class="nav-link <#if url?contains("садово_огородный_инвентарь")>active</#if>" data-toggle="tab" href="#panel13" role="tab">Садово-огородный инвентарь</a>
+                            </li>
+                            <li class="nav-item" onclick="displaySomeGroups(this)" name="консервирование">
+                                <a class="nav-link <#if url?contains("консервирование")>active</#if>" data-toggle="tab" href="#panel14" role="tab">Консервирование</a>
+                            </li>
+                            <li class="nav-item" onclick="displaySomeGroups(this)" name="отопительное_оборудование">
+                                <a class="nav-link <#if url?contains("отопительное_оборудование")>active</#if>" data-toggle="tab" href="#panel15" role="tab">Отопительное оборудование</a>
+                            </li>
+                            <li class="nav-item" onclick="displaySomeGroups(this)" name="спорт_и_отдых">
+                                <a class="nav-link <#if url?contains("спорт_и_отдых")>active</#if>" data-toggle="tab" href="#panel16" role="tab">Спорт и отдых</a>
+                            </li>
+                            <li class="nav-item" onclick="displaySomeGroups(this)" name="товары_для_отдыха_на_природе">
+                                <a class="nav-link <#if url?contains("товары_для_отдыха_на_природе")>active</#if>" data-toggle="tab" href="#panel17" role="tab">Товары для отдыха на природе</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -1700,17 +1717,6 @@
                                     <h4 class="card-title">Bluetooth колонки</h4>
                                 </div>
                             </div>
-                            <#--<div class="card catalog-card">
-                                <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/goloskolonka.jpg" alt="Card image cap">
-                                    <a href="/products/гаджеты/колонки_с_голосовым_помощником">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">Голосовые помощники</h4>
-                                </div>
-                            </div>-->
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
                                     <img class="img-fluid scale-pic" src="/../img/smartwatch.jpg" alt="Card image cap">
@@ -1757,6 +1763,38 @@
                             </div>
                         </div>
                     </div>
+
+                    <#---->
+                    <div class="tab-pane fade <#if url?contains("техника_для_подсобного_хозяйства")>in show active</#if>" id="panel12" role="tabpanel">
+                        <div class="card-deck" id="deckтехника_для_подсобного_хозяйства">
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade <#if url?contains("садово_огородный_инвентарь")>in show active</#if>" id="panel13" role="tabpanel">
+                        <div class="card-deck" id="deckсадово-огородный_инвентарь">
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade <#if url?contains("консервирование")>in show active</#if>" id="panel14" role="tabpanel">
+                        <div class="card-deck" id="deckконсервирование">
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade <#if url?contains("отопительное_оборудование")>in show active</#if>" id="panel15" role="tabpanel">
+                        <div class="card-deck" id="deckотопительное_оборудование">
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade <#if url?contains("спорт_и_отдых")>in show active</#if>" id="panel16" role="tabpanel">
+                        <div class="card-deck" id="deckспорт_и_отдых">
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade <#if url?contains("товары_для_отдыха_на_природе")>in show active</#if>" id="panel17" role="tabpanel">
+                        <div class="card-deck" id="deckтовары_для_отдыха_на_природе">
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

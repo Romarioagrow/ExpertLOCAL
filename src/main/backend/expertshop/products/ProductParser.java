@@ -49,7 +49,7 @@ public class ProductParser {
             log.info("Парсинг " + file.getOriginalFilename());
             try
             {
-                File excelFile = new File("C:\\Users\\R\\Desktop\\Prices\\"+file.getOriginalFilename());
+                File excelFile = new File("D:\\IT\\Dev\\Expert Store Dev\\Prices\\"+file.getOriginalFilename());
                 FileInputStream inputStream = new FileInputStream(excelFile);
 
                 if (fileRBT(file)) parseRBT(inputStream);

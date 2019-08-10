@@ -435,7 +435,7 @@ public class ProductMatcher {
 
         shortModel = shortModel.replaceAll("-", "").replaceAll("_", "").replaceAll("_", "").replaceAll("\\(", "").replaceAll("\\)", "").replaceAll("/", "").toLowerCase();
 
-        String shortSearch = single.concat(brand).concat(shortModel);
+        String shortSearch = single.concat(brand).concat(shortModel).replaceAll(" ", "").toLowerCase();
         product.setShortSearchName(shortSearch);
         product.setShortModel(brand.concat(shortModel));
         productRepo.save(product);
@@ -639,14 +639,10 @@ public class ProductMatcher {
                 e.printStackTrace();
             }
         });
-        /*log.info("Всего товаров с брендами: " + countTotalBrands);
-        log.info("Нашлось: " + countMatch);*/
     }
 
     public void uploadProductPic(MultipartFile file, String productID) {
         log.info(productID);
-        //log.info(file.getOriginalFilename());
-        //log.info("empty "+file.isEmpty() + "");
 
         Product product = productRepo.findByProductID(productID);
 

@@ -30,6 +30,12 @@ public class ServiceController {
     private final ProductService productService;
     private final OrderService orderService;
 
+    @PostMapping("/catalog")
+    private Set<String> displayCatalogGroups(@RequestBody String productGroup) {
+        //log.info(productGroup);
+        return productService.displayCatalogGroups(productGroup);
+    }
+
     @PostMapping("/supplier/products/removemodcoff")
     @PreAuthorize("hasAuthority('ADMIN')")
     private boolean removeModCoeff(@RequestBody String productID) {

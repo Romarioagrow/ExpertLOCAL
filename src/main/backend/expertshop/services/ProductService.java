@@ -283,6 +283,17 @@ public class ProductService {
         }
         return null;
     }
+
+    public Set<String> displayCatalogGroups(String productCategory) {
+        Set<String> productGroups = new HashSet<>();
+        productCategory = StringUtils.capitalize(productCategory.replaceAll("_", " "));
+        log.info(productCategory);
+
+        productRepo.findByOriginalCategoryContains(productCategory).forEach(product -> {
+            productGroups.add(product.getOriginalType());
+        });
+        return productGroups;
+    }
 }
 
 

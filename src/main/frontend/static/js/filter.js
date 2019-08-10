@@ -21,9 +21,50 @@ $('#zoomimg').hover(function() {
 
 });*/
 
+function displaySomeGroups(element) {
+    var productCategory = element.getAttribute("name");
+    console.log(productCategory);
+
+    $.ajax({
+        url: '/catalog',
+        type: 'POST',
+        dataType: 'json',
+        data: productCategory,
+        processData: false,
+        headers: {'Content-Type': 'application/json'},
+        complete: function(productGroups)
+        {
+            const groups = productGroups.responseJSON;
+            console.log(groups);
+
+            let divID = '#deck'+productCategory;
+            console.log(divID);
+
+            $(divID).empty();
+            for (var group in groups)
+            {
+                let link = replaceAll(groups[group].toLowerCase(), " ", "_");
+
+                $(divID).append(
+                    '<div class="card catalog-card">\n' +
+                    '<div class="view overlay catalog-pic">\n' +
+                    '<img class="img-fluid scale-pic" src="/../img/nophoto.jpg" alt="Card image cap">\n' +
+                    '<a href="/products/гаджеты/'+link+'">\n' +
+                    '<div class="mask rgba-white-slight"></div>\n' +
+                    '</a>\n' +
+                    '</div>\n' +
+                    '<div class="card-body">\n' +
+                    '<h4 class="card-title">'+groups[group]+'</h4>\n' +
+                    '</div>\n' +
+                    '</div>'
+                )
+            }
+        }
+    });
+}
+
 function uploadPic(element) {
     var productID = element.name;
-
 }
 
 

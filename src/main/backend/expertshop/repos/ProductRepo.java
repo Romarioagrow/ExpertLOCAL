@@ -12,6 +12,9 @@ import java.util.List;
 public interface ProductRepo extends JpaRepository<Product, Long> {
     Product findByProductID(String ID);
 
+    List<Product> findByOriginalCategoryStartsWith(String category);
+    List<Product> findByOriginalCategoryContains(String category);
+
     /*Page<Product> findByOriginalTypeContainingOrOriginalGroupContainingOrOriginalNameContaining(String type, String group, String name, Pageable pageable);*/
 
     Page<Product> findByOriginalTypeContainingOrOriginalNameContaining(String type, String name, Pageable pageable);
