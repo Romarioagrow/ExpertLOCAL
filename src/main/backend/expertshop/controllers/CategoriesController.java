@@ -46,15 +46,18 @@ public class CategoriesController {
         model.addAttribute("order", getOrder(user));
         return "pages/catalog";
     }
+
     @GetMapping("/categories")
     public String categories() {
         return "pages/catalog";
     }
+
     @GetMapping("/categories/{category}")
     public String showByCategories(Model model, @PathVariable String category, @AuthenticationPrincipal User user)
     {
         model.addAttribute("url", category);
         model.addAttribute("order", getOrder(user));
+        model.addAttribute("groups", productService.displayCatalogGroups(category));
         log.info(category);
         return "pages/catalog";
     }

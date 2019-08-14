@@ -1770,36 +1770,141 @@
                     <#---->
                     <div class="tab-pane fade <#if url?contains("строительные_инструменты")>in show active</#if>" id="panel18" role="tabpanel">
                         <div class="card-deck" id="deckинструмент">
+                            <#if groups??>
+                                <#list groups as group>
+                                    <div class="card catalog-card">
+                                        <div class="view overlay catalog-pic">
+                                            <img class="img-fluid scale-pic" src="/../img/${group}.jpg" alt="Card image cap">
+                                            <a href="/products/инструмент/${group}">
+                                                <div class="mask rgba-white-slight"></div>
+                                            </a>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">${group}</h4>
+                                        </div>
+                                    </div>
+                                </#list>
+                            </#if>
                         </div>
                     </div>
 
                     <div class="tab-pane fade <#if url?contains("техника_для_подсобного_хозяйства")>in show active</#if>" id="panel12" role="tabpanel">
                         <div class="card-deck" id="deckтехника_для_подсобного_хозяйства">
+                            <#if groups??>
+                                <#list groups as group>
+                                    <div class="card catalog-card">
+                                        <div class="view overlay catalog-pic">
+                                            <img class="img-fluid scale-pic" src="/../img/${group}.jpg" alt="Card image cap">
+                                            <a href="/products/техника_для_подсобного_хозяйства/${group}">
+                                                <div class="mask rgba-white-slight"></div>
+                                            </a>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">${group}</h4>
+                                        </div>
+                                    </div>
+                                </#list>
+                            </#if>
                         </div>
                     </div>
 
                     <div class="tab-pane fade <#if url?contains("садово_огородный_инвентарь")>in show active</#if>" id="panel13" role="tabpanel">
                         <div class="card-deck" id="deckсадово-огородный_инвентарь">
+                            <#if groups??>
+                                <#list groups as group>
+                                    <div class="card catalog-card">
+                                        <div class="view overlay catalog-pic">
+                                            <img class="img-fluid scale-pic" src="/../img/${group}.jpg" alt="Card image cap">
+                                            <a href="/products/садово-огородный_инвентарь/${group}">
+                                                <div class="mask rgba-white-slight"></div>
+                                            </a>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">${group}</h4>
+                                        </div>
+                                    </div>
+                                </#list>
+                            </#if>
                         </div>
                     </div>
 
                     <div class="tab-pane fade <#if url?contains("консервирование")>in show active</#if>" id="panel14" role="tabpanel">
                         <div class="card-deck" id="deckконсервирование">
+                            <#if groups??>
+                                <#list groups as group>
+                                    <div class="card catalog-card">
+                                        <div class="view overlay catalog-pic">
+                                            <img class="img-fluid scale-pic" src="/../img/${group}.jpg" alt="Card image cap">
+                                            <a href="/products/консервирование/${group}">
+                                                <div class="mask rgba-white-slight"></div>
+                                            </a>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">${group}</h4>
+                                        </div>
+                                    </div>
+                                </#list>
+                            </#if>
                         </div>
                     </div>
 
-                    <div class="tab-pane fade <#if url?contains("отопительное_оборудование")>in show active</#if>" id="panel15" role="tabpanel">
+                    <div class="tab-pane fade <#if url?lower_case?contains("отопительное_оборудование")>in show active</#if>" id="panel15" role="tabpanel">
                         <div class="card-deck" id="deckотопительное_оборудование">
+                            <#if groups??>
+                                <#list groups as group>
+                                    <div class="card catalog-card">
+                                        <div class="view overlay catalog-pic">
+                                            <img class="img-fluid scale-pic" src="/../img/${group}.jpg" alt="Card image cap">
+                                            <a href="/products/гаджеты/${group}">
+                                                <div class="mask rgba-white-slight"></div>
+                                            </a>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">${group}</h4>
+                                        </div>
+                                    </div>
+                                </#list>
+                            </#if>
                         </div>
                     </div>
 
                     <div class="tab-pane fade <#if url?contains("спорт_и_отдых")>in show active</#if>" id="panel16" role="tabpanel">
                         <div class="card-deck" id="deckспорт_и_отдых">
+                            <#if groups??>
+                                <#list groups as group>
+                                    <div class="card catalog-card">
+                                        <div class="view overlay catalog-pic">
+                                            <img class="img-fluid scale-pic" src="/../img/${group}.jpg" alt="Card image cap">
+                                            <a href="/products/спорт_и_отдых/${group}">
+                                                <div class="mask rgba-white-slight"></div>
+                                            </a>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">${group}</h4>
+                                        </div>
+                                    </div>
+                                </#list>
+                            </#if>
                         </div>
                     </div>
 
                     <div class="tab-pane fade <#if url?contains("товары_для_отдыха_на_природе")>in show active</#if>" id="panel17" role="tabpanel">
                         <div class="card-deck" id="deckтовары_для_отдыха_на_природе">
+                            <#if groups??>
+                                <#list groups as group>
+                                    <div class="card catalog-card">
+                                        <div class="view overlay catalog-pic">
+                                            <img class="img-fluid scale-pic" src="/../img/${group}.jpg" alt="Card image cap">
+                                            <a href="/products/товары_для_отдыха_на_природе/${group}">
+                                                <div class="mask rgba-white-slight"></div>
+                                            </a>
+                                        </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">${group}</h4>
+                                        </div>
+                                    </div>
+                                </#list>
+                            </#if>
                         </div>
                     </div>
 

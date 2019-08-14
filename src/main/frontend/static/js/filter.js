@@ -440,12 +440,13 @@ function filterProducts() {
 }
 
 function constructProductCard(product, orderedIDs) {
-    let s = '<span style="color: #e52d00;">'+product.singleType+'</span>';
-    let b = '<span style="color: #222222;">'+product.originalBrand+'</span>';
-    let m = '<span style="color: #222222;">'+product.modelName+'</span>';
-
-    const productName = s.concat(' ').concat(b).concat(' ').concat(m);
-    //const productName = '<span style="color: #e52d00;">'+product.singleType+'</span>'.concat(" ").concat(product.originalBrand).concat(" ").concat( product.modelName);
+    let singleType = '<span style="color: #e52d00;">'+product.singleType+'</span>';
+    let brand = '<span style="color: #222222;">'+product.originalBrand+'</span>';
+    let model = '<span style="color: #222222;">'+product.modelName+'</span>';
+    let productName = singleType.concat(' ').concat(brand).concat(' ').concat(model);
+    if (product.singleType === null) {
+        productName = '<span style="color: #222222;">'+product.originalName+'</span>';
+    }
 
     var buttonID = 'addToOrderDiv' + product.productID;
     buttonID = replaceAll(buttonID, ".", "");
@@ -453,7 +454,6 @@ function constructProductCard(product, orderedIDs) {
     let productButton;
 
     if (product.isAvailable) {
-
         if (orderedIDs.length !== 0 && orderedIDs.includes(product.productID)) {
             productButton = '<a type="button" class="btn btn-danger btn-sm" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>';
         }
@@ -470,12 +470,11 @@ function constructProductCard(product, orderedIDs) {
     }
     else pic = '/../img/nophoto.jpg';
 
+    let productType = product.productType != null ? product.productType : product.originalGroup;
+
     return '<div class="card product-card">'+
         '<div class="view overlay" style="min-height: 8rem !important; max-height: 8rem !important;">'+
         '<img class="img-fluid scale-pic" src="'+pic+'" alt="Фото пока нет :(">'+
-        /*'<a href="#"'+
-        '<div class="mask rgba-white-slight"></div>'+
-        '</a>'+*/
         '</div>'+
         '<div class="card-body">'+
         '<h5 class="card-title" style="height: auto !important;">'+
@@ -486,7 +485,7 @@ function constructProductCard(product, orderedIDs) {
         '</a>'+
         '</h5>'+
         '<p class="card-text" style="margin-top: 1rem">'+
-        '<strong><i>'+product.productType+'</i></strong></p>'+
+        '<strong><i>'+productType+'</i></strong></p>'+
         '<h3><strong>'+(product.finalPrice).toLocaleString('ru')+' </strong><span style="font-size: .9rem">руб</span></h3>'+
         '<p>Бонус: '+product.bonus+' </p>'+
         '<div id='+buttonID+'>'+
@@ -496,8 +495,3 @@ function constructProductCard(product, orderedIDs) {
         '</div>';
 }
 
-/*
-function alertPic(pic) {
-    //pic.preventDefault();
-    confirm('<h1>lol</h1>')
-}*/

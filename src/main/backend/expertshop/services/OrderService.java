@@ -58,7 +58,7 @@ public class OrderService {
         }
         else
         {
-            order = orderRepo.findByUserIDAndAcceptedFalse(user.getUserID());
+            order = orderRepo.findFirstByUserIDAndAcceptedFalse(user.getUserID());
 
             if (order == null)
             {
@@ -115,7 +115,9 @@ public class OrderService {
         orderedProduct.setTotalPrice(orderedProduct.getProductPrice() * orderedProduct.getOrderedAmount());
         orderedRepo.save(orderedProduct);
 
-        Order order = resolveOrder(user);
+
+        Order order = user != null ? resolveOrder(user) : getSessionOrder();
+
         order.setTotalPrice (order.extractTotalOrderPrice());
         order.setTotalAmount(order.extractTotalProductsAmount());
         order.setTotalBonus (order.extractTotalBonus());
@@ -225,8 +227,7 @@ public class OrderService {
 
     public LinkedList<Object> dropDiscount(String orderID, User user) {
         Order order = orderRepo.findByOrderID(Long.valueOf(orderID));
-
-        if (order.getDiscountApplied()) {
+        if (user != null && order.getDiscountApplied()) {
             log.info(user.toString());
             return payload(dropDiscountParams(order), user);
         }
@@ -260,7 +261,7 @@ public class OrderService {
         }
         else
         {
-            order = orderRepo.findByUserIDAndAcceptedFalse(user.getUserID());
+            order = orderRepo.findFirstByUserIDAndAcceptedFalse(user.getUserID());
             order.setName    (user.getFirstName());
             order.setSurname (user.getLastName());
             order.setOtchestvo(user.getOtchestvo());
@@ -403,10 +404,9 @@ public class OrderService {
 
         /// Начислить пользователю баллы
         User user = userRepo.findByUserID(order.getUserID());
-        user.setBonus(user.getBonus() + order.getTotalBonus());
-        userRepo.saveAndFlush(user);
-
-        /*Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);*/
+        if (user != null) {
+            user.setBonus(user.getBonus() + order.getTotalBonus());
+            userRepo.saveAndFlush(user);
+        }
     }
 }

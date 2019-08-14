@@ -71,6 +71,10 @@ public class FilterService {
         List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCaseAndIsDuplicateIsNullAndIsAvailableTrue(request);
         log.info("Product list before filter: " + products.size());
 
+        if (products.size() == 0) {
+            products = productRepo.findByOriginalTypeAndIsAvailableIsTrue(request);
+        }
+
         for (Map.Entry<String, String> filter : filters.entrySet())
         {
             try

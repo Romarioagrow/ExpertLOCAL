@@ -34,7 +34,6 @@ public class ServiceController {
 
     @PostMapping("/catalog")
     private Set<String> displayCatalogGroups(@RequestBody String productGroup) {
-        //log.info(productGroup);
         return productService.displayCatalogGroups(productGroup);
     }
 
@@ -106,9 +105,13 @@ public class ServiceController {
     @PutMapping("/order")
     private LinkedList<Object> changeAmount(
             @AuthenticationPrincipal User user, @RequestBody Map<String, String> data
-    ){
-        User reloadUser = userRepo.findByUserID(user.getUserID());
-        return orderService.changeAmount(reloadUser, data);
+    ) throws NullPointerException {
+        if (user != null)
+        {
+            User reloadUser = userRepo.findByUserID(user.getUserID());
+            return orderService.changeAmount(reloadUser, data);
+        }
+        return orderService.changeAmount(null, data);
     }
     @DeleteMapping("/order")
     private LinkedList<Object> removeProductFromOrder(
@@ -137,8 +140,11 @@ public class ServiceController {
         return orderService.applyDiscount(discountData, reloadUser);
     }
     @PutMapping("/order/discount")
-    private LinkedList<Object> dropDiscount(@AuthenticationPrincipal User user, @RequestBody String orderID) {
-        User reloadUser = userRepo.findByUserID(user.getUserID());
-        return orderService.dropDiscount(orderID, reloadUser);
+    private LinkedList<Object> dropDiscount(@AuthenticationPrincipal User user, @RequestBody String orderID) throws NullPointerException {
+        if (user != null) {
+            User reloadUser = userRepo.findByUserID(user.getUserID());
+            return orderService.dropDiscount(orderID, reloadUser);
+        }
+        return orderService.dropDiscount(orderID, null);
     }
 }

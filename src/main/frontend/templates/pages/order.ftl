@@ -34,10 +34,9 @@
                                     <h4 class="card-title">
                                         <#if product.productType??>
                                             <div class="" style="font-size: 1.2rem;">${product.productType}</div>
+                                        </#if>
+                                        <#if product.productName??>
                                             <a href="http://localhost:8080/products/info/${product.productID}" style="font-size: 1rem;">${product.productName}</a>
-                                        <#else>
-                                            <#--&lt;#&ndash;<div class="" style="font-size: 1.2rem;">${product.ori}</div>&ndash;&gt;
-                                            <a href="http://localhost:8080/products/info/${product.productID}" style="font-size: 1rem;">${product.}</a>-->
                                         </#if>
                                     </h4>
                                     <h4>
@@ -188,7 +187,7 @@
                                     <h4 class="card-title font-weight-bold">
                                         Доступно бонусов: <strong>${bonus}</strong>, Ваша скидка: <strong id="total-discount" name="ftl">${discount}%</strong>
                                     </h4>
-                                    <a type="button" onclick="applyDiscount(${bonus?c}, ${discount?c}, ${order.orderID?c})" class="btn btn-sm btn-unique" style="margin-bottom: 3rem">Применить скидку!</a
+                                    <a type="button" onclick="applyDiscount(${bonus?c}, ${discount?c}, ${order.orderID?c})" class="btn btn-sm btn-unique" style="margin-bottom: 3rem">Применить скидку!</a>
                                     <hr>
                                 </div>
                             <#else>

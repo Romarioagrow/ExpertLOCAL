@@ -129,6 +129,9 @@ function removeFromOrder(button) {
                     pic = product.pic
                 }
                 else pic = '/../img/nophoto.jpg';
+
+                let productType = product.productType != null ? product.productType : '';
+
                 /// сервер загружает на элемент данные а ajax обновляет
                 $("#bucket-products").append
                 (
@@ -141,8 +144,8 @@ function removeFromOrder(button) {
                     '</div>' +
                     '<div class="card-body">' +
                     '<h4 class="card-title" style="font-size: 1.2rem;">' +
-                    '<div class="mb-3">'+product.productType+'</div>'+
-                    '<a href="http://localhost:8080/info/'+product.productID+'" style="font-size: 1rem;">'+product.productName+'</a></h4>'+
+                    '<div class="mb-3">'+productType+'</div>'+
+                    '<a href="http://localhost:8080/products/info/'+product.productID+'" style="font-size: 1rem;">'+product.productName+'</a></h4>'+
                     '<h4><strong><i id="total-price'+product.orderedID+'">'+(product.totalPrice).toLocaleString('ru') +'</i></strong> за <span id="prAm'+product.orderedID+'">'+product.orderedAmount+'</span> шт.</h4>' +
                     '<p id="productTotalBonus'+product.orderedID+'">' +
                     productBonus +

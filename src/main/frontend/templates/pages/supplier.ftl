@@ -256,7 +256,9 @@
                                                             <tr>
                                                                 <th scope="row">${product.productID}</th>
                                                                 <td>${product.supplier}</td>
-                                                                <td>${product.productType}</td>
+                                                                <#if product.productType??>
+                                                                    <td>${product.productType}</td>
+                                                                </#if>
                                                                 <td><a href="/products/info/${product.productID}"><strong>${product.productName}</strong></a></td>
                                                                 <td>${product.productPrice}</td>
                                                                 <td>${product.totalPrice}</td>

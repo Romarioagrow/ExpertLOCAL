@@ -64,9 +64,9 @@
                                                         <#if order.accepted>
                                                             <span>Статус заказа: <strong style="color: #3f51b5">Принят</strong></span>
                                                         </#if>
-                                                       <#-- <#if order.confirmed>
-                                                            <br><span>Статус заказа: <strong style="color: #e42c00">В ожидании клиента</strong></span>
-                                                        </#if>-->
+                                                        <#-- <#if order.confirmed>
+                                                             <br><span>Статус заказа: <strong style="color: #e42c00">В ожидании клиента</strong></span>
+                                                         </#if>-->
                                                     </div>
                                                 </div>
                                                 <p class="mb-2">
@@ -85,7 +85,11 @@
                                                                     <div class="row">
                                                                         <div class="col-6">
                                                                             <p class="card-text">
-                                                                                <span style="color: #e42c00">${product.productType}</span> <strong style="color: #0d0d0d">${product.productName}</strong>
+                                                                                <#if product.productType??>
+                                                                                    <span style="color: #e42c00">${product.productType}</span> <strong style="color: #0d0d0d">${product.productName}</strong>
+                                                                                <#else>
+                                                                                    <strong style="color: #0d0d0d">${product.productName}</strong>
+                                                                                </#if>
                                                                             </p>
                                                                         </div>
                                                                         <div class="col-6">
@@ -102,7 +106,7 @@
                                             </div>
                                         </div>
                                     </#list>
-                                    <#else>
+                                <#else>
                                     Нет активных заказов
                                 </#if>
                             </div>
@@ -147,9 +151,11 @@
                                                             <div class="card-body">
                                                                 <div class="row">
                                                                     <div class="col-6">
-                                                                        <p class="card-text">
+                                                                        <#if product.productType??>
                                                                             <span style="color: #e42c00">${product.productType}</span> <strong style="color: #0d0d0d">${product.productName}</strong>
-                                                                        </p>
+                                                                        <#else>
+                                                                            <strong style="color: #0d0d0d">${product.productName}</strong>
+                                                                        </#if>
                                                                     </div>
                                                                     <div class="col-6">
                                                                         <p class="card-text">
@@ -171,7 +177,7 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="panel3" role="tabpanel">
-                        <div class="card" style="width: 60 rem; height: 40rem">
+                        <div class="card" style="width: 60rem; height: 40rem">
                             <div class="card-body pb-3">
                                 <p>
                                     Контактные данные

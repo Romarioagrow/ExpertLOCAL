@@ -77,8 +77,8 @@ public class ProductService {
 
     public Set<String> getOrderedID(User user)
     {
-        if (user != null && orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()) != null) {
-            Order order = orderRepo.findByUserIDAndAcceptedFalse(user.getUserID());
+        if (user != null && orderRepo.findFirstByUserIDAndAcceptedFalse(user.getUserID()) != null) {
+            Order order = orderRepo.findFirstByUserIDAndAcceptedFalse(user.getUserID());
             return collectID(order);
         }
         else if (orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID()) != null) {
@@ -322,6 +322,7 @@ public class ProductService {
 
     public Set<String> displayCatalogGroups(String productCategory) {
         Set<String> productGroups = new HashSet<>();
+
         productCategory = StringUtils.capitalize(productCategory.replaceAll("_", " "));
         log.info(productCategory);
 

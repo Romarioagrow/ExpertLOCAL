@@ -5,9 +5,16 @@
             <nav aria-label="breadcrumb" style="padding-left: 1rem;margin-top: 1rem;">
                 <#if product.productCategory??>
                     <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/categories/${product.productCategory?lower_case?replace(" ","_")}"><span style="font-size: 20px !important;">${product.productCategory}</a></li>
                         <li class="breadcrumb-item"><a href="/products/${product.productCategory?lower_case?replace(" ","_")}/${product.productGroup?lower_case}"><span style="font-size: 20px !important;">${product.productGroup}</a></li>
                         <li class="breadcrumb-item active" aria-current="page"><span style="font-size: 20px !important;">${product.groupBrand}</span></li>
                         <li class="breadcrumb-item active" aria-current="page"><span style="font-size: 20px !important;">${product.productType}</li>
+                    </ol>
+                <#else>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/categories/${product.originalCategory?keep_before(";")?lower_case?replace(" ","_")}"><span style="font-size: 20px !important;">${product.originalCategory?keep_before(";")}</a></li>
+                        <li class="breadcrumb-item"><a href="/products/${product.originalCategory?keep_before(";")?lower_case?replace(" ","_")}/${product.originalType?lower_case?replace(" ","_")}"><span style="font-size: 20px !important;">${product.originalType}</a></li>
+                        <#--<li class="breadcrumb-item active" aria-current="page"><span style="font-size: 20px !important;">${product.originalType}</li>-->
                     </ol>
                 </#if>
             </nav>
