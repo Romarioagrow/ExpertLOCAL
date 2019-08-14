@@ -2,6 +2,7 @@ package expertshop.controllers;
 import expertshop.domain.Order;
 import expertshop.domain.User;
 import expertshop.repos.ProductRepo;
+import expertshop.repos.UserRepo;
 import expertshop.services.OrderService;
 import expertshop.services.ProductService;
 
@@ -20,15 +21,22 @@ public class CategoriesController {
     private final ProductService    productService;
     private final OrderService      orderService;
     private final ProductRepo       productRepo;
+    private final UserRepo userRepo;
 
     /*ORDER*/
     @GetMapping("/order")
     public String getOrder(Model model, @AuthenticationPrincipal User user)
     {
-        model.addAttribute("order", getOrder(user));
-        model.addAttribute("user", user);
+        if (user != null) {
+            User reloadUser = userRepo.findByUserID(user.getUserID());
+            model.addAttribute("bonus", reloadUser.getBonus());
+            model.addAttribute("discount", orderService.calculateDiscount(reloadUser, getOrder(reloadUser)));
+            model.addAttribute("order", getOrder(reloadUser));
+            model.addAttribute("user", reloadUser);
+            model.addAttribute("orderedProducts", orderService.showOrderedProducts(reloadUser));
+        }
         model.addAttribute("orderedProducts", orderService.showOrderedProducts(user));
-        model.addAttribute("discount", orderService.calculateDiscount(user, getOrder(user)));
+        model.addAttribute("order", getOrder(user));
         return "pages/order";
     }
 

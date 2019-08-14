@@ -134,8 +134,8 @@
                                     <div class="rounded-bottom mdb-color lighten-3 text-center pt-3">
                                         <ul class="list-unstyled list-inline font-small">
                                             <p class="card-text">
-                                                <#assign bonusAvailable = user.bonus - order.bonusOff>
-                                                Доступно бонусов: <strong id="userBonusUpper">${bonusAvailable}</strong>
+                                                <#assign bonusAvailable = bonus - order.bonusOff>
+                                                Доступно бонусов: <strong id="userBonusUpper">${bonus}</strong>
                                             </p>
                                         </ul>
                                     </div>
@@ -183,13 +183,13 @@
                 <div class="card chart-card" style="width: 60rem; margin-left: 10rem">
                     <div class="card-body pb-3">
                         <#--ЗАГОЛОВОК СКИДКИ ДЛЯ ПОЛЬЗОВАТЕЛЯ-->
-                        <#if isUser && user.bonus !=0 && order??>
+                        <#if isUser && bonus != 0 && order??>
                             <#if !order.discountApplied>
                                 <div id="applyDiscount">
                                     <h4 class="card-title font-weight-bold">
-                                        Доступно бонусов: <strong>${user.bonus}</strong>, Ваша скидка: <strong id="total-discount">${discount}%</strong>
+                                        Доступно бонусов: <strong>${bonus}</strong>, Ваша скидка: <strong id="total-discount" name="ftl">${discount}%</strong>
                                     </h4>
-                                    <a type="button" onclick="applyDiscount(${user.bonus?c}, ${discount?c}, ${order.orderID?c})" class="btn btn-sm btn-unique" style="margin-bottom: 3rem">Применить скидку!</a
+                                    <a type="button" onclick="applyDiscount(${bonus?c}, ${discount?c}, ${order.orderID?c})" class="btn btn-sm btn-unique" style="margin-bottom: 3rem">Применить скидку!</a
                                     <hr>
                                 </div>
                             <#else>

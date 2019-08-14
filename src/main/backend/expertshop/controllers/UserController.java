@@ -1,13 +1,17 @@
 package expertshop.controllers;
 import expertshop.domain.User;
 import expertshop.repos.OrderRepo;
+import expertshop.repos.UserRepo;
 import expertshop.services.OrderService;
 import expertshop.services.UserService;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,6 +28,7 @@ public class UserController {
     private final UserService userService;
     private final OrderService orderService;
     private final OrderRepo orderRepo;
+    private final UserRepo userRepo;
 
     @GetMapping("/registration")
     public String registrationPage(Model model) 
@@ -62,10 +67,23 @@ public class UserController {
     }
 
     @GetMapping("/cabinet")
-    public String userCabinet(Model model, @AuthenticationPrincipal User user) 
+    public String userCabinet(Model model, @AuthenticationPrincipal User user)
     {
-        model.addAttribute("user", user);
-        model.addAttribute("order", orderService.resolveOrder(user));
+        //AuthenticationPrincipal principal
+
+        /*Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);*/
+
+        //User u = (User) authentication.getPrincipal();
+
+        User reloadUser = userRepo.findByUserID(user.getUserID());
+
+        log.info(reloadUser.getBonus().toString());
+        log.info(user.getBonus().toString());
+
+        model.addAttribute("bonus", reloadUser.getBonus().toString());
+        //model.addAttribute("user", reloadUser);
+        //model.addAttribute("order", orderService.resolveOrder(user));
         model.addAttribute("orders", orderService.showUserOrders(user.getUserID()));
         model.addAttribute("completedOrders", orderRepo.findAllByUserIDAndCompletedTrue(user.getUserID()));
         return "pages/cabinet";

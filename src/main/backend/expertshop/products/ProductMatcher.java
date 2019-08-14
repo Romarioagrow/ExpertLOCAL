@@ -48,6 +48,14 @@ public class ProductMatcher {
             resolveAvailable();
             setPriceFromBrandsBase();
 
+            /// Костыль для исправления нулевых бонусов
+            productRepo.findAll().forEach(product -> {
+                if (product.getBonus() != null && product.getBonus() == 0) {
+                    product.setBonus(10);
+                    productRepo.save(product);
+                }
+            });
+
             log.info("Обновление БД завершено!");
         }
         catch (NullPointerException | NumberFormatException e) {
@@ -535,8 +543,8 @@ public class ProductMatcher {
         }
         else return finalPrice;
     }
-    public Integer matchBonus(int price) {
-        int bonus = price * 3 / 100;
+    public Integer matchBonus(int finalPrice) {
+        int bonus = finalPrice * 3 / 100;
         String val = String.valueOf(bonus);
 
         if (bonus > 0 && bonus <= 10) {

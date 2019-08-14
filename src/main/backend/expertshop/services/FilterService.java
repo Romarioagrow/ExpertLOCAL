@@ -197,7 +197,7 @@ public class FilterService {
 
         if (annotation.contains(keyName))
         {
-            String compVal = StringUtils.substringBetween(annotation, keyName, ";");//.replaceAll(",", ".").replaceAll("\\W","");
+            String compVal = StringUtils.substringBetween(annotation, keyName, ";").replaceAll(",", ".");
             compVal = compVal.replaceAll("[^\\d.]", "");
             log.info(compVal);
 

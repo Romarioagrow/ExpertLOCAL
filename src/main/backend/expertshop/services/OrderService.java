@@ -12,6 +12,9 @@ import expertshop.repos.UserRepo;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 
@@ -214,14 +217,14 @@ public class OrderService {
     public LinkedList<Object> dropDiscount(String orderID, User user) {
         Order order = orderRepo.findByOrderID(Long.valueOf(orderID));
 
-        if (order.getDiscountApplied())
-        {
-            //order = dropDiscountParams(order);
+        if (order.getDiscountApplied()) {
+            log.info(user.toString());
             return payload(dropDiscountParams(order), user);
         }
         return null;
     }
     Order dropDiscountParams(Order order) {
+        log.info(order.toString());
         order.setDiscountApplied  (false);
         order.setDiscountPrice    (0);
         order.setTotalDiscount    (0);
@@ -261,7 +264,8 @@ public class OrderService {
             else bonusOff = order.getBonusOff();
 
             user.setBonus(user.getBonus() - bonusOff);
-            user.setBonus(user.getBonus() + order.getTotalBonus());
+            userRepo.save(user);
+            //user.setBonus(user.getBonus() + order.getTotalBonus());
         }
 
         if (orderContacts.getCity() != null) {
@@ -275,10 +279,6 @@ public class OrderService {
         orderRepo.save(order);
         acceptOrder(order);
         return order;
-        /*LinkedList<Object> payload = new LinkedList<>();
-        payload.add(null);
-        payload.add(order);
-        return payload;*/
     }
     private void acceptOrder(Order order)
     {
@@ -318,6 +318,7 @@ public class OrderService {
     }
     private LinkedList<Object> payload(Order order, Object discount) {
         LinkedList<Object> payload = new LinkedList<>();
+        //log.info(order.toString());log.info(discount.toString());
         payload.add(order);
         payload.add(discount);
         return payload;
@@ -390,5 +391,13 @@ public class OrderService {
         order.setAccepted(null);
         order.setCompleted(true);
         orderRepo.save(order);
+
+        /// Начислить пользователю баллы
+        User user = userRepo.findByUserID(order.getUserID());
+        user.setBonus(user.getBonus() + order.getTotalBonus());
+        userRepo.saveAndFlush(user);
+
+        /*Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(authentication);*/
     }
 }

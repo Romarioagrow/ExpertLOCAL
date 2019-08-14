@@ -2,6 +2,7 @@ package expertshop.controllers;
 import expertshop.domain.Product;
 import expertshop.domain.User;
 import expertshop.domain.dto.OrderContacts;
+import expertshop.repos.UserRepo;
 import expertshop.services.FilterService;
 import expertshop.services.OrderService;
 import expertshop.services.ProductService;
@@ -29,6 +30,7 @@ public class ServiceController {
     private final FilterService filterService;
     private final ProductService productService;
     private final OrderService orderService;
+    private final UserRepo userRepo;
 
     @PostMapping("/catalog")
     private Set<String> displayCatalogGroups(@RequestBody String productGroup) {
@@ -114,22 +116,28 @@ public class ServiceController {
         return orderService.removeProductFromOrder(user, productID);
     }
     @PostMapping("/order/confirm")
-    private Object/*Set<String>*/ confirmOrder
-            (@AuthenticationPrincipal User user, @Valid @RequestBody OrderContacts contacts, BindingResult validResult)
+    private Object confirmOrder (@AuthenticationPrincipal User user, @Valid @RequestBody OrderContacts contacts, BindingResult validResult)
     {
         if (validResult.hasErrors()) {
             return ControllerService.getValidErrorsSet(validResult);
         }
-        else {
+        else
+        {
+            if (user != null) {
+                User reloadUser = userRepo.findByUserID(user.getUserID());
+                return orderService.confirmOrder(contacts, reloadUser);
+            }
             return orderService.confirmOrder(contacts, user);
         }
     }
     @PostMapping("/order/discount")
     private LinkedList<Object> applyDiscount(@RequestBody Map<String, String> discountData, @AuthenticationPrincipal User user) {
-        return orderService.applyDiscount(discountData, user);
+        User reloadUser = userRepo.findByUserID(user.getUserID());
+        return orderService.applyDiscount(discountData, reloadUser);
     }
     @PutMapping("/order/discount")
     private LinkedList<Object> dropDiscount(@AuthenticationPrincipal User user, @RequestBody String orderID) {
-        return orderService.dropDiscount(orderID, user);
+        User reloadUser = userRepo.findByUserID(user.getUserID());
+        return orderService.dropDiscount(orderID, reloadUser);
     }
 }

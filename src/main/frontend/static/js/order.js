@@ -42,7 +42,7 @@ function changeAmount(product) {
         action    : product.name
     };
 
-    console.log(data);
+    //console.log(data);
 
     let amountID        = '#amount'             + data.orderedID;
     let totalPriceID    = '#total-price'        + data.orderedID;
@@ -66,8 +66,8 @@ function changeAmount(product) {
             const orderedProduct    = payload.responseJSON[1];
             const discount          = payload.responseJSON[2];
 
-            console.log(orderedProduct);
-            console.log(order);
+            //console.log(orderedProduct);
+            //console.log(order);
 
             var productBonus = 'Бонус за покупку: ' + (orderedProduct.bonus * orderedProduct.orderedAmount).toLocaleString('ru');
 
@@ -182,7 +182,6 @@ function removeFromOrder(button) {
                 document.getElementById("order-button").style.display   = "none";
                 document.getElementById("order-details").style.display  = "none";
                 document.getElementById("goToBuy").style.display        = "block";
-
             }
         }
     });
@@ -240,12 +239,16 @@ function editOrder(orderID) {
                 const order = payload.responseJSON[0];
                 const user  = payload.responseJSON[1];
 
+                console.log('bonus '+user.bonus);
                 let discountPercent = 100 * user.bonus / order.totalPrice;
+                console.log(discountPercent);
                 if (discountPercent > 20) discountPercent = 20;
+                if (discountPercent > 0 && discountPercent < 1) discountPercent = 1;
                 discountPercent = parseInt(discountPercent, 10);
+                console.log('FFFF ' + discountPercent);
 
                 $('#applyDiscount').empty().append(
-                    '<h4 class="card-title font-weight-bold">Доступно бонусов: <strong>'+user.bonus+'</strong>, Ваша скидка: <strong id="total-discount">'+discountPercent+'%</strong></h4>'+
+                    '<h4 class="card-title font-weight-bold">Доступно бонусов: <strong>'+user.bonus+'</strong>, Ваша скидка: <strong id="total-discount" name="js">'+discountPercent+'%</strong></h4>'+
                     '<a type="button" onclick="applyDiscount('+user.bonus+','+discountPercent+','+order.orderID+')" class="btn btn-sm btn-unique" style="margin-bottom: 3rem">Применить скидку!</a><hr>'
                 );
 

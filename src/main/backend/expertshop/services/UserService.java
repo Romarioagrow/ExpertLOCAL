@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -50,6 +51,11 @@ public class UserService implements UserDetailsService {
         user.setRegistrationDate(LocalDateTime.now());
         user.setRoles(Collections.singleton(Role.USER));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        /// Обрезка случайных пробелов в ФИО
+        user.setFirstName(user.getFirstName().trim());
+        user.setLastName(user.getLastName().trim());
+        user.setOtchestvo(user.getOtchestvo().trim());
         userRepo.save(user);
 
         Order userOrder =  orderRepo.findBySessionUUIDAndAcceptedFalse(sessionID);
@@ -64,8 +70,17 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepo.findByUsername(username);
-        /*if userRepo.findByEmail(username) != null
-        * return userRepo.findByUsername(username); */
+        User user = userRepo.findByUsername(username);
+
+        /// Присовение закзаза сессии пользователю при логине
+        if (!user.getRoles().toString().contains("ADMIN"))
+        {
+            String sessionID = RequestContextHolder.currentRequestAttributes().getSessionId();
+            Order order = orderRepo.findBySessionUUIDAndAcceptedFalse(sessionID);
+            if (order == null) return user;
+            order.setUserID(user.getUserID());
+            orderRepo.save(order);
+        }
+        return user;
     }
 }

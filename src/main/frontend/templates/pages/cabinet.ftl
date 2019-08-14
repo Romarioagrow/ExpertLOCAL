@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col">
                 <h3 style="margin-top: 1rem">
-                    <span>Доступно бонусов: <strong>${user.bonus}</strong></span>
+                    <span>Доступно бонусов: <strong>${bonus}</strong></span>
                 </h3>
             </div>
         </div>
