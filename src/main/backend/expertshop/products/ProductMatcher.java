@@ -18,6 +18,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -135,6 +136,33 @@ public class ProductMatcher {
                 int bonus = matchBonus(finalPrice);
                 product.setFinalPrice(finalPrice);
                 product.setBonus(bonus);
+                productRepo.save(product);
+            }
+        });
+
+        String[] accessories = {
+                "Клей, герметик, жидкие гвозди","Приспособления для кладки плитки","Изолента, скотч, ленты","Сверла, фрезы","Электроды","Шнуры и веревки хозяйственные","Тросы, цепи",
+                "Аксессуары для сварки","Батареи для шуруповертов","Средства защиты","Щетки для шлифмашин","Диски пильные","Запчасти и приспособления","Приспособления для доильных аппаратов","Ср-ва защиты от грызунов",
+                "Ср-ва защиты от насекомых","Пленка","Крышки металлические","Крышки винтовые","Крышки полиэтиленовые","Запчасти и приспособления к машинкам","Подводка для газа","Баллончики газовые туристические",
+                "Уголь и средства для розжига"
+        };
+
+        productRepo.findByFinalPriceIsNull().forEach(product ->
+        {
+            //if (product.getFinalPrice() == null)
+            {
+                double coeff;
+                int finalPrice = (int) Double.parseDouble(product.getOriginalPrice().replaceAll(",",".").replaceAll(" ",""));
+                if (Arrays.asList(accessories).contains(product.getOriginalType()))
+                    coeff = 1.5;
+                else coeff = 1.2;
+                finalPrice = roundPrice(coeff, finalPrice);
+
+                product.setFinalPrice(finalPrice);
+                product.setBonus(matchBonus(finalPrice));
+
+                if (product.getBonus() == 0) product.setBonus(10);
+                product.setDefaultCoefficient(coeff);
                 productRepo.save(product);
             }
         });

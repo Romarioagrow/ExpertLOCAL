@@ -24,6 +24,7 @@ public class FilterService {
     public LinkedList<Object> resolveFilters(String productGroup)
     {
         Set<String> brands = new TreeSet<>();
+        Set<String> filtersRUS = new TreeSet<>();
         Map<String, TreeSet<String>> filters = new TreeMap<>();
 
         try
@@ -31,9 +32,11 @@ public class FilterService {
             List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCaseAndIsAvailableTrue(productGroup);
             products.forEach(product ->
             {
+                /// Вывести все бренды
                 brands.add(StringUtils.capitalize(product.getOriginalBrand().toLowerCase()));
 
-                   if (product.getSupplier().startsWith("1RBT"))
+                /// Вывести все неповторяющиеся RBT фильтры из аннотации
+                if (product.getSupplier().startsWith("1RBT"))
                 {
                     String[] filtrs = product.getOriginalAnnotation().split(";");
                     for (String fltr : filtrs)
@@ -53,14 +56,62 @@ public class FilterService {
                     }
                 }
             });
+
+            /// Filters RUS
+            if (brands.size() == 0)
+            {
+                products = productRepo.findByOriginalTypeIgnoreCaseAndIsAvailableIsTrue(productGroup);
+                products.forEach(product -> {
+                    if (!product.getOriginalBrand().isEmpty()) {
+                        brands.add(StringUtils.capitalize(product.getOriginalBrand().toLowerCase()));
+                    }
+                });
+                products.forEach(product ->{
+                    String annotation = StringUtils.substringAfter(product.getOriginalName(), ",");
+                    String[] items = annotation.split(", ");
+
+                    for (String item : items) {
+                        //log.info(item);
+                        if (StringUtils.countMatches(StringUtils.capitalize(item.trim().toLowerCase()), " ") == 1)
+                        {
+                            String key = StringUtils.substringAfter(item.trim(), " ");
+
+                            //String[] stops = {"арт."};
+                            if (!item.contains("арт.")) {
+                                if (filters.get(key) != null)
+                                {
+                                    TreeSet<String> vals = filters.get(key);
+                                    vals.add(item.trim());
+                                    filters.put(key, vals);
+                                }
+                                else filters.putIfAbsent(key, new TreeSet<>(Collections.singleton(item.trim())));
+                            }
+                        }
+                        else
+                        {
+                            if (filters.get("Особенности") != null && !item.isEmpty())
+                            {
+                                TreeSet<String> vals = filters.get("Особенности");
+                                vals.add(item.trim());
+                                filters.put("Особенности", vals);
+                            }
+                            else filters.putIfAbsent("Особенности", new TreeSet<>(Collections.singleton(item.trim())));
+                        }
+                    }
+                    //filtersRUS.stream().distinct().collect(Collectors.toSet());
+                });
+                log.info(filters.toString());
+            }
         }
         catch (NullPointerException e) {
             log.warning(e.getClass().getName());
+            e.printStackTrace();
         }
 
         LinkedList<Object> payload = new LinkedList<>();
         payload.add(brands);
-        payload.add(filters);
+        if (filters.size() != 0) payload.add(filters);
+        if (filtersRUS.size() != 0) payload.add(filtersRUS);
         return payload;
     }
 
@@ -72,7 +123,7 @@ public class FilterService {
         log.info("Product list before filter: " + products.size());
 
         if (products.size() == 0) {
-            products = productRepo.findByOriginalTypeAndIsAvailableIsTrue(request);
+            products = productRepo.findByOriginalTypeIgnoreCaseAndIsAvailableIsTrue(request);
         }
 
         for (Map.Entry<String, String> filter : filters.entrySet())

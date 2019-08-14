@@ -36,43 +36,35 @@ public class ProductService {
         { ///displayUnmappedProducts();
             request = StringUtils.capitalize(request.replaceAll("_", " "));
             page = productRepo.findByOriginalTypeAndIsAvailableIsTrue(request, pageable);
-
-            String[] accessories = {
-                    "Клей, герметик, жидкие гвозди","Приспособления для кладки плитки","Изолента, скотч, ленты","Сверла, фрезы","Электроды","Шнуры и веревки хозяйственные","Тросы, цепи",
-                    "Аксессуары для сварки","Батареи для шуруповертов","Средства защиты","Щетки для шлифмашин","Диски пильные","Запчасти и приспособления","Приспособления для доильных аппаратов","Ср-ва защиты от грызунов",
-                    "Ср-ва защиты от насекомых","Пленка","Крышки металлические","Крышки винтовые","Крышки полиэтиленовые","Запчасти и приспособления к машинкам","Подводка для газа","Баллончики газовые туристические",
-                    "Уголь и средства для розжига"
-            };
-
-            page.forEach(product ->
-            {
-                //if (product.getFinalPrice() == null)
-                {
-                    double coeff;
-                    int finalPrice = (int) Double.parseDouble(product.getOriginalPrice().replaceAll(",",".").replaceAll(" ",""));
-                    if (Arrays.asList(accessories).contains(product.getOriginalType()))
-                        coeff = 1.5;
-                    else coeff = 1.2;
-                    finalPrice = roundPrice(coeff, finalPrice);
-
-                    product.setFinalPrice(finalPrice);
-                    product.setBonus(matchBonus(finalPrice));
-                    product.setDefaultCoefficient(coeff);
-                    productRepo.save(product);
-                }
-            });
-            //String[] path = {StringUtils.capitalize(request), StringUtils.capitalize(request)};
             model.addAttribute("total", page.getTotalElements());
-            //model.addAttribute("path",  path);
             return page;
         }
     }
 
     public List<Product> searchProducts(String searchRequest) {
+        List<Product> products;
+        log.info(searchRequest);
+
+        /// Поиск по shortSearchName
         String search = searchRequest.replaceAll(" ", "").replaceAll("-", "").toLowerCase();
-        return productRepo.findAllByProductGroupIsNotNullAndIsDuplicateIsNullAndShortSearchNameContainsIgnoreCase(search).stream()
+        products = productRepo.findAllByProductGroupIsNotNullAndIsDuplicateIsNullAndShortSearchNameContainsIgnoreCase(search).stream()
                 .filter(product -> StringUtils.containsIgnoreCase(product.getShortSearchName(), search))
                 .collect(Collectors.toList());
+        if (products.size() != 0) return products;
+
+        /// Поиск по вхождению в оригинальное название
+        products = productRepo.findByOriginalNameContainsIgnoreCaseAndIsAvailableTrue(searchRequest);
+        if (products.size() != 0) return products;
+
+        /// поиск по раздельным словам массив
+
+        /// Поиск по группам
+        products = productRepo.findByOriginalTypeContainsIgnoreCaseAndIsAvailableTrueAndFinalPriceIsNotNull(searchRequest);
+        if (products.size() != 0) return products;
+
+
+        log.info(products.size() + "");
+        return products;
     }
 
     public Set<String> getOrderedID(User user)

@@ -219,6 +219,7 @@ function displayBrands() {
         headers: {'Content-Type': 'application/json'},
         complete: function(payload)
         {
+            console.log(payload);
             const brands  = payload.responseJSON[0];
             const filters = payload.responseJSON[1];
 
@@ -258,7 +259,7 @@ function displayBrands() {
             {
                 if (filters.hasOwnProperty(key))
                 {
-                    let filter = replaceAll(key," ","").replace("(","").replace(")","");
+                    let filter = replaceAll(key," ","").replace("(","").replace(")","").replace('.','').replace('-','');
                     var onlyDigits = /^\d+[,]?\d*$/g.exec(filters[key][0]);
 
                     /*ФИЛЬТРЫ С МНОЖЕСТВОМ*/

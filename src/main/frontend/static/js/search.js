@@ -33,16 +33,16 @@ function searchProducts(e) {
             let found = response.responseJSON.length;
             console.log('Found products: ' + found);
 
-            if (found !== undefined)
-            {
-                response.responseJSON.forEach(product => $("#display-result").append
-                (
-                    '<p><a href="http://localhost:8080/products/info/'+product.productID+'">'        +
-                    ''+product.singleType + ' ' + product.originalName +'<strong>'+'         '+product.finalPrice+'₽</strong></a></p>'
-                ));
+            if (found !== undefined) {
+                response.responseJSON.forEach(product => {
+                    let singleType = product.singleType ? product.singleType : '';
+                    $("#display-result").append(
+                        '<p><a href="http://localhost:8080/products/info/'+product.productID+'">'        +
+                        ''+singleType+' '+product.originalName +'<strong>'+'         '+product.finalPrice+'₽</strong></a></p>'
+                    )
+                });
             }
-            else
-            {
+            else {
                 $("#display-result").append(
                     '<p>Ничего не нашлось!</p>'
                 );
