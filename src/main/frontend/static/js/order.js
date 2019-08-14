@@ -62,6 +62,7 @@ function changeAmount(product) {
         {
             payload = JSON.parse(JSON.stringify(payload));
 
+            console.log(payload);
             const order             = payload.responseJSON[0];
             const orderedProduct    = payload.responseJSON[1];
             const discount          = payload.responseJSON[2];

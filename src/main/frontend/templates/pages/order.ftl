@@ -134,7 +134,6 @@
                                     <div class="rounded-bottom mdb-color lighten-3 text-center pt-3">
                                         <ul class="list-unstyled list-inline font-small">
                                             <p class="card-text">
-                                                <#assign bonusAvailable = bonus - order.bonusOff>
                                                 Доступно бонусов: <strong id="userBonusUpper">${bonus}</strong>
                                             </p>
                                         </ul>

@@ -36,6 +36,7 @@ public class OrderService {
         OrderedProduct orderedProduct = new OrderedProduct();
         Product product = productRepo.findByProductID(productID);
         int discount = 0;
+        log.info("add product bonus "+product.getBonus().toString());
 
         if (user == null)
         {
@@ -61,7 +62,6 @@ public class OrderService {
 
             if (order == null)
             {
-                //log.info("NO ORDER, NEW ONE!");
                 order = new Order();
                 order.setUserID(user.getUserID());
                 order.setTotalBonus(product.getBonus());
@@ -74,8 +74,17 @@ public class OrderService {
             orderedProduct.constructOrderedProduct(product); ///
 
             order.addProductToOrder(orderedProduct);
-            order.setTotalBonus(order.getTotalBonus() + product.getBonus());
+
+            log.info("order getTotalBonus "+order.getTotalBonus().toString());
+            log.info("product getBonus "+product.getBonus().toString());
+
+            if (order.getProductsAmount() >= 1) {
+                order.setTotalBonus(order.getTotalBonus() + product.getBonus());
+            }
+
             setOrderStats(order, orderedProduct.getTotalPrice());
+
+            log.info("TotalBonus "+order.getTotalBonus().toString());
 
             orderRepo.save(order);
             discount = calculateDiscount(user, order);
@@ -226,10 +235,10 @@ public class OrderService {
     Order dropDiscountParams(Order order) {
         log.info(order.toString());
         order.setDiscountApplied  (false);
-        order.setDiscountPrice    (0);
-        order.setTotalDiscount    (0);
-        order.setDiscountPercent  (0);
-        order.setBonusOff         (0);
+        order.setDiscountPrice    (null);
+        order.setTotalDiscount    (null);
+        order.setDiscountPercent  (null);
+        order.setBonusOff         (null);
         orderRepo.save(order);
         return order;
     }
@@ -333,7 +342,7 @@ public class OrderService {
     }
 
     public boolean checkUserOrder(User user) {
-        return orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()) != null;
+        return orderRepo.findFirstByUserIDAndAcceptedFalse(user.getUserID()) != null;
     }
 
     private boolean checkSessionOrder() {
@@ -348,7 +357,7 @@ public class OrderService {
 
     ///
     public Order getUserOrder(Long userID) {
-        return orderRepo.findByUserIDAndAcceptedFalse(userID);
+        return orderRepo.findFirstByUserIDAndAcceptedFalse(userID);
     }
 
     ///
@@ -359,7 +368,7 @@ public class OrderService {
     public Set<OrderedProduct> showOrderedProducts(User user)
     {
         if (user != null && checkUserOrder(user)) {
-            return orderRepo.findByUserIDAndAcceptedFalse(user.getUserID()).getOrderedProducts();
+            return orderRepo.findFirstByUserIDAndAcceptedFalse(user.getUserID()).getOrderedProducts();
         }
         else if (checkSessionOrder()) {
             return orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID()).getOrderedProducts();

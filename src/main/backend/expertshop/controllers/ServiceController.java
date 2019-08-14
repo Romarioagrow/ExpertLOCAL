@@ -107,7 +107,8 @@ public class ServiceController {
     private LinkedList<Object> changeAmount(
             @AuthenticationPrincipal User user, @RequestBody Map<String, String> data
     ){
-        return orderService.changeAmount(user, data);
+        User reloadUser = userRepo.findByUserID(user.getUserID());
+        return orderService.changeAmount(reloadUser, data);
     }
     @DeleteMapping("/order")
     private LinkedList<Object> removeProductFromOrder(
