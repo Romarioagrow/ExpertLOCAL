@@ -384,7 +384,7 @@ public class ProductParser {
         findInBigBase();
 
         AtomicInteger count404 = new AtomicInteger(), countPic = new AtomicInteger(), countAnno = new AtomicInteger(), countInfo = new AtomicInteger();
-        List<Product> list = productRepo.findBySupplierAndProductGroupIsNotNullAndOriginalPicIsNullAndLinkRIsNotNull("2RUS-BT");
+        List<Product> list = productRepo.findBySupplierAndOriginalPicIsNullAndLinkRIsNotNull("2RUS-BT");
         System.out.println();
         log.info("Парсинг сайта картинок RUS...");
         log.info("Всего товаров без картинок для парсинга: " + list.size());

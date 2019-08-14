@@ -33,7 +33,7 @@ public class FilterService {
             {
                 brands.add(StringUtils.capitalize(product.getOriginalBrand().toLowerCase()));
 
-                if (product.getSupplier().startsWith("1RBT"))
+                   if (product.getSupplier().startsWith("1RBT"))
                 {
                     String[] filtrs = product.getOriginalAnnotation().split(";");
                     for (String fltr : filtrs)
@@ -112,7 +112,7 @@ public class FilterService {
     }
 
     private List<Product> filterContainsParams(List<Product> products, Map.Entry<String, String> filter) {
-        String[] params = filter.getValue().split(resolveSplitter(filter.getKey()));
+        String[] params = filter.getValue().replaceAll(";","").split(resolveSplitter(filter.getKey()));
         log.info(Arrays.toString(params));
 
         //paramRus
@@ -165,7 +165,7 @@ public class FilterService {
 
         double checkMin      = Double.parseDouble(StringUtils.substringBetween(filter.getKey(), ";","/"));
         double checkMax      = Double.parseDouble(StringUtils.substringAfter(filter.getKey(), "/"));
-        double computeFilter = Double.parseDouble(filter.getValue());
+        double computeFilter = Double.parseDouble(filter.getValue().replaceAll(",","."));
 
         if (computeFilter >= checkMin && computeFilter <= checkMax)
         {
@@ -187,9 +187,20 @@ public class FilterService {
         String annotation = product.getOriginalAnnotation();
         String keyName    = StringUtils.substringAfterLast(filterKey, "-");
 
+        /// Проверка закрытия аннотации ;
+        if (!annotation.endsWith(";")) {
+            annotation = annotation.concat(";");
+        }
+
+        log.info(annotation);
+        log.info(keyName);
+
         if (annotation.contains(keyName))
         {
-            String compVal = StringUtils.substringBetween(annotation, keyName.concat(": "), ";").replaceAll(",", ".");
+            String compVal = StringUtils.substringBetween(annotation, keyName, ";");//.replaceAll(",", ".").replaceAll("\\W","");
+            compVal = compVal.replaceAll("[^\\d.]", "");
+            log.info(compVal);
+
             return !compVal.contains("-") ? Double.parseDouble(compVal) : 0;
         }
         return 0;

@@ -4,6 +4,7 @@ import expertshop.domain.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 @Repository
 public interface ProductRepo extends JpaRepository<Product, Long> {
     Product findByProductID(String ID);
+    List<Product> findBySupplierAndOriginalPicIsNullAndLinkRIsNotNull(String supp);
 
     List<Product> findByOriginalCategoryStartsWith(String category);
     List<Product> findByProductGroupIsNullAndSupplierEqualsAndOriginalCategoryContains(String supplier, String category);
