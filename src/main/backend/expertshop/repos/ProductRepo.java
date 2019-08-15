@@ -13,6 +13,8 @@ import java.util.List;
 public interface ProductRepo extends JpaRepository<Product, Long> {
     List<Product> findByFinalPriceIsNull();
 
+    List<Product> findByOriginalNameContainsIgnoreCase(String name);
+
     Product findFirstByOriginalTypeAndOriginalPicIsNotNull(String type);
     List<Product> findByOriginalTypeAndOriginalPicIsNotNull(String type);
 

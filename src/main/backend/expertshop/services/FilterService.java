@@ -167,7 +167,7 @@ public class FilterService {
 
     private List<Product> filterContainsParams(List<Product> products, Map.Entry<String, String> filter) {
         String[] params = filter.getValue().replaceAll(";","").split(", "/*resolveSplitter(filter.getKey())*/);
-        log.info(Arrays.toString(params));
+        //log.info(Arrays.toString(params));
         if (filter.getKey().contains("MultiParams"))
         {
             return products.stream().filter(product ->
@@ -204,15 +204,10 @@ public class FilterService {
             }
             else
             {
-                //AtomicInteger matches = new AtomicInteger(0);
                 for (String item : params)
                 {
-                    //log.info(item);
                     String param = StringUtils.substringAfter(item, ": ");
-                    log.info(params.length + "");
-                    log.info("param "+param);
                     if (StringUtils.containsIgnoreCase(product.getOriginalName(), param)) {
-                        //matches.getAndIncrement();
                         return true;
                     }
                 }

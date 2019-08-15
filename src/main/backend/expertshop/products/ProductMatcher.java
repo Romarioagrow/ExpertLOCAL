@@ -687,7 +687,7 @@ public class ProductMatcher {
         if (!file.isEmpty()) {
             try {
                 log.info("file is ok " + file.getOriginalFilename());
-                File file1 = new File("D:\\OneDrive\\IT\\Projects\\expertshopLOCAL\\src\\main\\frontend\\static\\img\\products\\" + file.getOriginalFilename());
+                File file1 = new File("D:\\IT\\Projects\\expertshopLOCAL\\src\\main\\frontend\\static\\img\\products\\" + file.getOriginalFilename());
 
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(file1.getAbsoluteFile().toString()));
                 stream.write(file.getBytes());

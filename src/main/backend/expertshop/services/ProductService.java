@@ -154,6 +154,10 @@ public class ProductService {
                 String shortRequest = StringUtils.lowerCase(request).replaceAll(" ","").replaceAll("-", "");
                 products = productRepo.findByShortSearchNameContains(shortRequest);
                 if (!products.isEmpty()) return products;
+                else {
+                    products = productRepo.findByOriginalNameContainsIgnoreCase(request);
+                    if (products.size() != 0) return products;
+                }
 
 
                 if (isMapped != null) {
