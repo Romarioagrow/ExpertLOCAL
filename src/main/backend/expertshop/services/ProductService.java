@@ -90,7 +90,9 @@ public class ProductService {
     }
 
     public int[] getMinMaxPrice(String request) {
-        List<Product> prices = productRepo.findByProductGroupEqualsIgnoreCase(request);
+        List<Product>           prices = productRepo.findByProductGroupEqualsIgnoreCase(request);
+        if (prices.size() == 0) prices = productRepo.findByOriginalTypeIgnoreCaseAndIsAvailableIsTrue(request);
+
         if (!prices.isEmpty())
         {
             try {

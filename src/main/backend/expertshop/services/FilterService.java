@@ -76,6 +76,8 @@ public class FilterService {
                         {
                             String key = StringUtils.substringAfter(item.trim(), " ");
 
+                            /*///!!!ЕСЛИ ИТЕМ НЕ СОДЕРЖИТ ЦИФР REGEX*/
+
                             //String[] stops = {"арт."};
                             if (!item.contains("арт.")) {
                                 if (filters.get(key) != null)
@@ -124,6 +126,7 @@ public class FilterService {
 
         if (products.size() == 0) {
             products = productRepo.findByOriginalTypeIgnoreCaseAndIsAvailableIsTrue(request);
+            log.info("Product list before filter: " + products.size());
         }
 
         for (Map.Entry<String, String> filter : filters.entrySet())
@@ -205,7 +208,11 @@ public class FilterService {
                 }
                 return false;
             }
-            else return false;
+            for (String item : params) {
+                String param = StringUtils.substringAfter(item, ": ");
+                if (StringUtils.containsIgnoreCase(product.getOriginalName(), param)) return true;
+            }
+            return false;
         }).collect(Collectors.toList());
     }
     private String resolveSplitter(String key) {
@@ -246,10 +253,8 @@ public class FilterService {
         if (!annotation.endsWith(";")) {
             annotation = annotation.concat(";");
         }
-
-        log.info(annotation);
-        log.info(keyName);
-
+        /*log.info(annotation);
+        log.info(keyName);*/
         if (annotation.contains(keyName))
         {
             String compVal = StringUtils.substringBetween(annotation, keyName, ";").replaceAll(",", ".");
@@ -262,15 +267,21 @@ public class FilterService {
     }
 
     private List<Product> filterPrice(List<Product> products, Map.Entry<String, String> filter, String request) {
+        log.info("req " +request);
         int min = productService.getMinMaxPrice(request)[0];
         int max = productService.getMinMaxPrice(request)[1];
         int filterVal = Integer.parseInt(filter.getValue());
 
+
         if (filterVal >= min && filterVal <= max)
         {
-            return filter.getKey().equals("sortmin") ?
-                    products.stream().filter(product -> product.getFinalPrice() >= filterVal).collect(Collectors.toList()):
-                    products.stream().filter(product -> product.getFinalPrice() <= filterVal).collect(Collectors.toList());
+            try {
+                return filter.getKey().equals("sortmin") ?
+                        products.stream().filter(product -> product.getFinalPrice() >= filterVal).collect(Collectors.toList()):
+                        products.stream().filter(product -> product.getFinalPrice() <= filterVal).collect(Collectors.toList());
+            }
+            catch (NullPointerException ignored) {
+            }
         }
         return null;
     }

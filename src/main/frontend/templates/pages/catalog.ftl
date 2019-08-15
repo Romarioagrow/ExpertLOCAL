@@ -391,17 +391,6 @@
                             </div>
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/multicooker.jpg" alt="Card image cap">
-                                    <a href="/products/кухонная_техника/мультиварки">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">Мультиварки</h4>
-                                </div>
-                            </div>
-                            <div class="card catalog-card">
-                                <div class="view overlay catalog-pic">
                                     <img class="img-fluid scale-pic" src="/../img/blender.jpg" alt="Card image cap">
                                     <a href="/products/кухонная_техника/блендеры">
                                         <div class="mask rgba-white-slight"></div>
@@ -444,6 +433,175 @@
                                     <h4 class="card-title">Хлебопечи</h4>
                                 </div>
                             </div>
+                            <div class="card catalog-card">
+                                <div class="view overlay catalog-pic">
+                                    <img class="img-fluid scale-pic" src="/../img/multicooker.jpg" alt="Card image cap">
+                                    <a href="/products/кухонная_техника/мультиварки">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">Мультиварки</h4>
+                                </div>
+                            </div>
+                            <div class="card catalog-card">
+                                <div class="view overlay catalog-pic">
+                                    <img class="img-fluid scale-pic" src="/../img/parovarki.jpg" alt="Card image cap">
+                                    <a href="/products/кухонная_техника/пароварки">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">Пароварки</h4>
+                                </div>
+                            </div>
+                            <div class="card catalog-card">
+                                <div class="view overlay catalog-pic">
+                                    <img class="img-fluid scale-pic" src="/../img/aerogrili.jpg" alt="Card image cap">
+                                    <a href="/products/кухонная_техника/аэрогрили">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">Аэрогрили</h4>
+                                </div>
+                            </div>
+
+
+                            <div class="card catalog-card">
+                                <div class="view overlay catalog-pic">
+                                    <img class="img-fluid scale-pic" src="/../img/electropechi.jpg" alt="Card image cap">
+                                    <a href="/products/кухонная_техника/электропечи">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">Электропечи</h4>
+                                </div>
+                            </div>
+                            <div class="card catalog-card">
+                                <div class="view overlay catalog-pic">
+                                    <img class="img-fluid scale-pic" src="/../img/oreshnichi.jpg" alt="Card image cap">
+                                    <a href="/products/кухонная_техника/орешницы">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">Орешницы</h4>
+                                </div>
+                            </div>
+                            <div class="card catalog-card">
+                                <div class="view overlay catalog-pic">
+                                    <img class="img-fluid scale-pic" src="/../img/multipekari.jpg" alt="Card image cap">
+                                    <a href="/products/кухонная_техника/мультипекари">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">Мультипекари</h4>
+                                </div>
+                            </div>
+                            <div class="card catalog-card">
+                                <div class="view overlay catalog-pic">
+                                    <img class="img-fluid scale-pic" src="/../img/vafelnici.jpg" alt="Card image cap">
+                                    <a href="/products/кухонная_техника/вафельницы">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">Вафельницы</h4>
+                                </div>
+                            </div>
+                            <div class="card catalog-card">
+                                <div class="view overlay catalog-pic">
+                                    <img class="img-fluid scale-pic" src="/../img/shashichnici.jpg" alt="Card image cap">
+                                    <a href="/products/кухонная_техника/шашлычницы">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">Шашлычницы</h4>
+                                </div>
+                            </div>
+                            <div class="card catalog-card">
+                                <div class="view overlay catalog-pic">
+                                    <img class="img-fluid scale-pic" src="/../img/electrogrili.jpg" alt="Card image cap">
+                                    <a href="/products/кухонная_техника/электрогрили">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">Электрогрили</h4>
+                                </div>
+                            </div>
+                            <div class="card catalog-card">
+                                <div class="view overlay catalog-pic">
+                                    <img class="img-fluid scale-pic" src="/../img/yogurtnici.jpg" alt="Card image cap">
+                                    <a href="/products/кухонная_техника/йогуртницы">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">Йогуртницы</h4>
+                                </div>
+                            </div>
+                            <div class="card catalog-card">
+                                <div class="view overlay catalog-pic">
+                                    <img class="img-fluid scale-pic" src="/../img/friturnichi.jpg" alt="Card image cap">
+                                    <a href="/products/кухонная_техника/Фритюрницы">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">Фритюрницы</h4>
+                                </div>
+                            </div>
+                            <div class="card catalog-card">
+                                <div class="view overlay catalog-pic">
+                                    <img class="img-fluid scale-pic" src="/../img/Блинницы.jpg" alt="Card image cap">
+                                    <a href="/products/кухонная_техника/Блинницы">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">Блинницы</h4>
+                                </div>
+                            </div>
+                            <div class="card catalog-card">
+                                <div class="view overlay catalog-pic">
+                                    <img class="img-fluid scale-pic" src="/../img/Соковыжималки.jpg" alt="Card image cap">
+                                    <a href="/products/кухонная_техника/Соковыжималки">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">Соковыжималки</h4>
+                                </div>
+                            </div>
+                            <div class="card catalog-card">
+                                <div class="view overlay catalog-pic">
+                                    <img class="img-fluid scale-pic" src="/../img/плитки_газовые.jpg" alt="Card image cap">
+                                    <a href="/products/кухонная_техника/газовые_плитки">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">Газовые плитки</h4>
+                                </div>
+                            </div>
+                            <div class="card catalog-card">
+                                <div class="view overlay catalog-pic">
+                                    <img class="img-fluid scale-pic" src="/../img/плитки_электрические.jpg" alt="Card image cap">
+                                    <a href="/products/кухонная_техника/электрические_плитки">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">Электрические плитки</h4>
+                                </div>
+                            </div>
+
+
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
                                     <img class="img-fluid scale-pic" src="/../img/kastruli.jpg" alt="Card image cap">
@@ -637,6 +795,17 @@
                                 </div>
                                 <div class="card-body">
                                     <h4 class="card-title">Швейные машины</h4>
+                                </div>
+                            </div>
+                            <div class="card catalog-card">
+                                <div class="view overlay catalog-pic">
+                                    <img class="img-fluid scale-pic" src="/../img/Оверлоки.jpg" alt="Card image cap">
+                                    <a href="/products/техника_для_дома/Оверлоки">
+                                        <div class="mask rgba-white-slight"></div>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <h4 class="card-title">Оверлоки</h4>
                                 </div>
                             </div>
                             <div class="card catalog-card">
@@ -1787,7 +1956,9 @@
                             </#if>
                         </div>
                     </div>
+                    <#---->
 
+                    <#---->
                     <div class="tab-pane fade <#if url?contains("техника_для_подсобного_хозяйства")>in show active</#if>" id="panel12" role="tabpanel">
                         <div class="card-deck" id="deckтехника_для_подсобного_хозяйства">
                             <#if groups??>
