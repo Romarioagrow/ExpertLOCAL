@@ -269,15 +269,16 @@ function displayBrands() {
             {
                 if (filters.hasOwnProperty(key))
                 {
-                    let filter = replaceAll(key," ","").replace("(","").replace(")","").replace('.','').replace('-','');
+                    let filter = replaceAll(key," ","").replace("(","").replace(")","").replace('.','').replace('-','').replace('/','');
                     var onlyDigits = /^\d+[,]?\d*$/g.exec(filters[key][0]);
 
                     /*ФИЛЬТРЫ С МНОЖЕСТВОМ*/
                     if (filters[key].includes("есть") || filters[key].includes("да"))
                     {
                         document.getElementById("featButton").style.display = "block";
-
                         let val = filters[key];
+                        console.log(val);
+
                         $('#feat-element').append(
                             '<div class="custom-control custom-checkbox">' +
                             '<input type="checkbox" onclick="filterProducts()" class="form-check-input" name="Cont-MultiParams-'+key+'" id="'+filter+'" value="'+key+': '+val+'">' +
@@ -285,6 +286,7 @@ function displayBrands() {
                             '</div>'
                         );
                     }
+
                     /*ФИЛЬТРЫ С ЧИСЛАМИ*/
                     else if (onlyDigits)
                     {
@@ -320,6 +322,7 @@ function displayBrands() {
                             '        </div>'
                         );
                     }
+
                     /*ФИЛЬТРЫ С СОДЕРАЖНИЕМ*/
                     else
                     {

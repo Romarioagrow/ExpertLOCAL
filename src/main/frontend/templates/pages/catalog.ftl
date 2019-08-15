@@ -51,13 +51,13 @@
 
                             <#--/////////////-->
                             <li class="nav-item" onclick="displaySomeGroups(this)" onchange="displaySomeGroups(this)" name="инструмент">
-                                <a class="nav-link <#if url?contains("строительные_инструменты")>active</#if>" data-toggle="tab" href="#panel18" role="tab">Строительные инструменты</a>
+                                <a class="nav-link <#if url?contains("инструмент")>active</#if>" data-toggle="tab" href="#panel18" role="tab">Строительные инструменты</a>
                             </li>
                             <li class="nav-item" onclick="displaySomeGroups(this)" onselect="displaySomeGroups(this)" name="техника_для_подсобного_хозяйства">
-                                <a class="nav-link <#if url?contains("техника_для_подсобного_хозяйства")>active</#if>" data-toggle="tab" href="#panel12" role="tab">Подсобное хозяйство</a>
+                                <a class="nav-link <#if url?contains("подсобное_хозяйство") || url?contains("техника_для_подсобного_хозяйства")>active</#if>" data-toggle="tab" href="#panel12" role="tab">Подсобное хозяйство</a>
                             </li>
                             <li class="nav-item" onclick="displaySomeGroups(this)" name="садово-огородный_инвентарь">
-                                <a class="nav-link <#if url?contains("садово_огородный_инвентарь")>active</#if>" data-toggle="tab" href="#panel13" role="tab">Садово-огородный инвентарь</a>
+                                <a class="nav-link <#if url?contains("садово-огородный_инвентарь")>active</#if>" data-toggle="tab" href="#panel13" role="tab">Садово-огородный инвентарь</a>
                             </li>
                             <li class="nav-item" onclick="displaySomeGroups(this)" name="консервирование">
                                 <a class="nav-link <#if url?contains("консервирование")>active</#if>" data-toggle="tab" href="#panel14" role="tab">Консервирование</a>
@@ -1937,7 +1937,7 @@
                     </div>
 
                     <#---->
-                    <div class="tab-pane fade <#if url?contains("строительные_инструменты")>in show active</#if>" id="panel18" role="tabpanel">
+                    <div class="tab-pane fade <#if url?contains("инструмент")>in show active</#if>" id="panel18" role="tabpanel">
                         <div class="card-deck" id="deckинструмент">
                             <#if groups??>
                                 <#list groups as group>
@@ -1969,7 +1969,7 @@
                     </div>
                     <#---->
                     <#---->
-                    <div class="tab-pane fade <#if url?contains("техника_для_подсобного_хозяйства")>in show active</#if>" id="panel12" role="tabpanel">
+                    <div class="tab-pane fade <#if url?contains("подсобное_хозяйство") || url?contains("техника_для_подсобного_хозяйства")>in show active</#if>" id="panel12" role="tabpanel">
                         <div class="card-deck" id="deckтехника_для_подсобного_хозяйства">
                             <#if groups??>
                                 <#list groups as group>
@@ -2000,7 +2000,7 @@
                         </div>
                     </div>
 
-                    <div class="tab-pane fade <#if url?contains("садово_огородный_инвентарь")>in show active</#if>" id="panel13" role="tabpanel">
+                    <div class="tab-pane fade <#if url?contains("садово-огородный_инвентарь")>in show active</#if>" id="panel13" role="tabpanel">
                         <div class="card-deck" id="deckсадово-огородный_инвентарь">
                             <#if groups??>
                                 <#list groups as group>

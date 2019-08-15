@@ -24,7 +24,7 @@ public class FilterService {
     public LinkedList<Object> resolveFilters(String productGroup)
     {
         Set<String> brands = new TreeSet<>();
-        Set<String> filtersRUS = new TreeSet<>();
+        //Set<String> filtersRUS = new TreeSet<>();
         Map<String, TreeSet<String>> filters = new TreeMap<>();
 
         try
@@ -71,22 +71,23 @@ public class FilterService {
                     String[] items = annotation.split(", ");
 
                     for (String item : items) {
-                        //log.info(item);
                         if (StringUtils.countMatches(StringUtils.capitalize(item.trim().toLowerCase()), " ") == 1)
                         {
                             String key = StringUtils.substringAfter(item.trim(), " ");
+                            String val = StringUtils.substringBeforeLast(item.trim(), " ").replaceAll(" ", "");
+                            String filter = val.concat(" ").concat(key);
 
-                            /*///!!!ЕСЛИ ИТЕМ НЕ СОДЕРЖИТ ЦИФР REGEX*/
+                            /*!!!ПРОВЕРКА REGEX НА ТОЛЬКО ЦИФРЫ, ЕСЛИ FALSE ТО В ОСОБЕННОСТИ!!!*/
+                            /*!!!ПРОВЕРКА REGEX НА ВЕЛИЧИНЫ БЕЗ ПРОБЕЛОВ(ММ, см), ЕСЛИ true ТО разделить пробелом!!!*/
 
-                            //String[] stops = {"арт."};
                             if (!item.contains("арт.")) {
                                 if (filters.get(key) != null)
                                 {
                                     TreeSet<String> vals = filters.get(key);
-                                    vals.add(item.trim());
+                                    vals.add(filter);
                                     filters.put(key, vals);
                                 }
-                                else filters.putIfAbsent(key, new TreeSet<>(Collections.singleton(item.trim())));
+                                else filters.putIfAbsent(key, new TreeSet<>(Collections.singleton(filter)));
                             }
                         }
                         else
@@ -100,9 +101,7 @@ public class FilterService {
                             else filters.putIfAbsent("Особенности", new TreeSet<>(Collections.singleton(item.trim())));
                         }
                     }
-                    //filtersRUS.stream().distinct().collect(Collectors.toSet());
                 });
-                log.info(filters.toString());
             }
         }
         catch (NullPointerException e) {
@@ -113,7 +112,6 @@ public class FilterService {
         LinkedList<Object> payload = new LinkedList<>();
         payload.add(brands);
         if (filters.size() != 0) payload.add(filters);
-        if (filtersRUS.size() != 0) payload.add(filtersRUS);
         return payload;
     }
 
@@ -122,7 +120,6 @@ public class FilterService {
         filters.forEach((key, filter) -> log.info(key + " " + filter));
 
         List<Product> products = productRepo.findProductsByProductGroupEqualsIgnoreCaseAndIsDuplicateIsNullAndIsAvailableTrue(request);
-        log.info("Product list before filter: " + products.size());
 
         if (products.size() == 0) {
             products = productRepo.findByOriginalTypeIgnoreCaseAndIsAvailableIsTrue(request);
@@ -152,7 +149,6 @@ public class FilterService {
         if (products != null)
         {
             log.info("Product after filter " + products.size());
-
             sortProducts(products, filters);
 
             int start = (int) pageable.getOffset();
@@ -170,10 +166,8 @@ public class FilterService {
     }
 
     private List<Product> filterContainsParams(List<Product> products, Map.Entry<String, String> filter) {
-        String[] params = filter.getValue().replaceAll(";","").split(resolveSplitter(filter.getKey()));
+        String[] params = filter.getValue().replaceAll(";","").split(", "/*resolveSplitter(filter.getKey())*/);
         log.info(Arrays.toString(params));
-
-        //paramRus
         if (filter.getKey().contains("MultiParams"))
         {
             return products.stream().filter(product ->
@@ -194,7 +188,7 @@ public class FilterService {
 
             }).collect(Collectors.toList());
         }
-        /// В ОТДЕЛЬНЫЙ МЕТОД
+        /// В ОТДЕЛЬНЫЙ МЕТОД В CASE
         else return products.stream().filter(product ->
         {
             if (product.getSupplier().equals("1RBT") && product.getOriginalAnnotation() != null && product.getProductType() != null) ///checkSupp()
@@ -208,18 +202,23 @@ public class FilterService {
                 }
                 return false;
             }
-            for (String item : params) {
-                String param = StringUtils.substringAfter(item, ": ");
-                if (StringUtils.containsIgnoreCase(product.getOriginalName(), param)) return true;
+            else
+            {
+                //AtomicInteger matches = new AtomicInteger(0);
+                for (String item : params)
+                {
+                    //log.info(item);
+                    String param = StringUtils.substringAfter(item, ": ");
+                    log.info(params.length + "");
+                    log.info("param "+param);
+                    if (StringUtils.containsIgnoreCase(product.getOriginalName(), param)) {
+                        //matches.getAndIncrement();
+                        return true;
+                    }
+                }
+                return false;
             }
-            return false;
         }).collect(Collectors.toList());
-    }
-    private String resolveSplitter(String key) {
-        return switch (key) {
-            case "Cont-tvCablesLength", "Cont-TeapotMaterial" -> ";,";
-            default -> ",";
-        };
     }
 
     private List<Product> filterComputeParams(List<Product> products, Map.Entry<String, String> filter) {

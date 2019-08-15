@@ -317,27 +317,13 @@ public class ProductService {
 
     public Set<String> displayCatalogGroups(String productCategory) {
         Set<String> productGroups = new HashSet<>();
-
         productCategory = StringUtils.capitalize(productCategory.replaceAll("_", " "));
-        log.info(productCategory);
+        //log.info(productCategory);
 
         Set<String> finalProductGroups = productGroups;
         productRepo.findByProductGroupIsNullAndSupplierEqualsAndOriginalCategoryContains("2RUS-BT" ,productCategory).forEach(product -> {
             finalProductGroups.add(product.getOriginalType());
         });
-
-        /*for (String item : productGroups)
-        {
-            Product product = productRepo.findFirstByOriginalTypeAndOriginalPicIsNotNull(item);
-            String link = product != null ? product.getOriginalPic() : null;
-
-            //String itemLink = null;
-            if (link != null) {
-                item = item.concat(";").concat(link);
-            }
-            //log.info(item);
-        }*/
-
 
         productGroups = finalProductGroups.stream().map(item -> {
             Product product = productRepo.findFirstByOriginalTypeAndOriginalPicIsNotNull(item);
@@ -347,19 +333,6 @@ public class ProductService {
             }
             return item;
         }).collect(Collectors.toSet());
-        /*//{
-            Product product = productRepo.findFirstByOriginalTypeAndOriginalPicIsNotNull(item);
-            String link = product != null ? product.getOriginalPic() : null;
-
-            //String itemLink = null;
-            if (link != null) {
-                item = item.concat(";").concat(link);
-            }
-            //log.info(item);
-        //}*/
-
-        productGroups.forEach(log::info);
-
         return productGroups;
     }
 
