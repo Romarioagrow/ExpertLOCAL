@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 import static expertshop.controllers.ControllerService.getSessionID;
@@ -320,9 +321,45 @@ public class ProductService {
         productCategory = StringUtils.capitalize(productCategory.replaceAll("_", " "));
         log.info(productCategory);
 
+        Set<String> finalProductGroups = productGroups;
         productRepo.findByProductGroupIsNullAndSupplierEqualsAndOriginalCategoryContains("2RUS-BT" ,productCategory).forEach(product -> {
-            productGroups.add(product.getOriginalType());
+            finalProductGroups.add(product.getOriginalType());
         });
+
+        /*for (String item : productGroups)
+        {
+            Product product = productRepo.findFirstByOriginalTypeAndOriginalPicIsNotNull(item);
+            String link = product != null ? product.getOriginalPic() : null;
+
+            //String itemLink = null;
+            if (link != null) {
+                item = item.concat(";").concat(link);
+            }
+            //log.info(item);
+        }*/
+
+
+        productGroups = finalProductGroups.stream().map(item -> {
+            Product product = productRepo.findFirstByOriginalTypeAndOriginalPicIsNotNull(item);
+            String link = product != null ? product.getOriginalPic() : null;
+            if (link != null) {
+                return item = item.concat(";").concat(link);
+            }
+            return item;
+        }).collect(Collectors.toSet());
+        /*//{
+            Product product = productRepo.findFirstByOriginalTypeAndOriginalPicIsNotNull(item);
+            String link = product != null ? product.getOriginalPic() : null;
+
+            //String itemLink = null;
+            if (link != null) {
+                item = item.concat(";").concat(link);
+            }
+            //log.info(item);
+        //}*/
+
+        productGroups.forEach(log::info);
+
         return productGroups;
     }
 

@@ -22,18 +22,28 @@ function displaySomeGroups(element) {
             $(divID).empty();
             for (var group in groups)
             {
-                let link = replaceAll(groups[group].toLowerCase(), " ", "_");
+                let name, pic, link;
+                if (groups[group].includes(';')) {
+                    pic = groups[group].substr(groups[group].indexOf(';')+1);
+                    name = groups[group].substr(0, groups[group].indexOf(';'));
+                    link = replaceAll(name.toLowerCase(), " ", "_");
+                }
+                else {
+                    name = groups[group];
+                    pic = '/../img/nophoto.jpg';
+                    link = replaceAll(groups[group].toLowerCase(), " ", "_");
+                }
 
                 $(divID).append(
                     '<div class="card catalog-card">\n' +
                     '<div class="view overlay catalog-pic">\n' +
-                    '<img class="img-fluid scale-pic" src="/../img/nophoto.jpg" alt="Card image cap">\n' +
+                    '<img class="img-fluid scale-pic" src="'+pic+'" alt="Card image cap">\n' +
                     '<a href="/products/'+productCategory+'/'+link+'">\n' +
                     '<div class="mask rgba-white-slight"></div>\n' +
                     '</a>\n' +
                     '</div>\n' +
                     '<div class="card-body">\n' +
-                    '<h4 class="card-title">'+groups[group]+'</h4>\n' +
+                    '<h4 class="card-title">'+name+'</h4>\n' +
                     '</div>\n' +
                     '</div>'
                 )

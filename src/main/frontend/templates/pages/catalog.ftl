@@ -1943,13 +1943,24 @@
                                 <#list groups as group>
                                     <div class="card catalog-card">
                                         <div class="view overlay catalog-pic">
-                                            <img class="img-fluid scale-pic" src="/../img/${group}.jpg" alt="Card image cap">
-                                            <a href="/products/инструмент/${group}">
-                                                <div class="mask rgba-white-slight"></div>
-                                            </a>
+                                            <#if group?contains(";")>
+                                                <img class="img-fluid scale-pic" src="${group?substring(group?last_index_of(";")+1)}" alt="Card image cap">
+                                                <a href="/products/инструмент/${group?substring(0, group?last_index_of(";"))}">
+                                                    <div class="mask rgba-white-slight"></div>
+                                                </a>
+                                            <#else>
+                                                <img class="img-fluid scale-pic" src="/../img/nophoto.jpg" alt="Card image cap">
+                                                <a href="/products/инструмент/${group}">
+                                                    <div class="mask rgba-white-slight"></div>
+                                                </a>
+                                            </#if>
                                         </div>
                                         <div class="card-body">
-                                            <h4 class="card-title">${group}</h4>
+                                            <#if group?contains(";")>
+                                                <h4 class="card-title">${group?substring(0, group?last_index_of(";"))}</h4>
+                                            <#else>
+                                                <h4 class="card-title">${group}</h4>
+                                            </#if>
                                         </div>
                                     </div>
                                 </#list>
@@ -1957,7 +1968,6 @@
                         </div>
                     </div>
                     <#---->
-
                     <#---->
                     <div class="tab-pane fade <#if url?contains("техника_для_подсобного_хозяйства")>in show active</#if>" id="panel12" role="tabpanel">
                         <div class="card-deck" id="deckтехника_для_подсобного_хозяйства">
@@ -1965,13 +1975,24 @@
                                 <#list groups as group>
                                     <div class="card catalog-card">
                                         <div class="view overlay catalog-pic">
-                                            <img class="img-fluid scale-pic" src="/../img/${group}.jpg" alt="Card image cap">
-                                            <a href="/products/техника_для_подсобного_хозяйства/${group}">
-                                                <div class="mask rgba-white-slight"></div>
-                                            </a>
+                                            <#if group?contains(";")>
+                                                <img class="img-fluid scale-pic" src="${group?substring(group?last_index_of(";")+1)}" alt="Card image cap">
+                                                <a href="/products/инструмент/${group?substring(0, group?last_index_of(";"))}">
+                                                    <div class="mask rgba-white-slight"></div>
+                                                </a>
+                                            <#else>
+                                                <img class="img-fluid scale-pic" src="/../img/nophoto.jpg" alt="Card image cap">
+                                                <a href="/products/инструмент/${group}">
+                                                    <div class="mask rgba-white-slight"></div>
+                                                </a>
+                                            </#if>
                                         </div>
                                         <div class="card-body">
-                                            <h4 class="card-title">${group}</h4>
+                                            <#if group?contains(";")>
+                                                <h4 class="card-title">${group?substring(0, group?last_index_of(";"))}</h4>
+                                            <#else>
+                                                <h4 class="card-title">${group}</h4>
+                                            </#if>
                                         </div>
                                     </div>
                                 </#list>
@@ -1985,13 +2006,24 @@
                                 <#list groups as group>
                                     <div class="card catalog-card">
                                         <div class="view overlay catalog-pic">
-                                            <img class="img-fluid scale-pic" src="/../img/${group}.jpg" alt="Card image cap">
-                                            <a href="/products/садово-огородный_инвентарь/${group}">
-                                                <div class="mask rgba-white-slight"></div>
-                                            </a>
+                                            <#if group?contains(";")>
+                                                <img class="img-fluid scale-pic" src="${group?substring(group?last_index_of(";")+1)}" alt="Card image cap">
+                                                <a href="/products/инструмент/${group?substring(0, group?last_index_of(";"))}">
+                                                    <div class="mask rgba-white-slight"></div>
+                                                </a>
+                                            <#else>
+                                                <img class="img-fluid scale-pic" src="/../img/nophoto.jpg" alt="Card image cap">
+                                                <a href="/products/инструмент/${group}">
+                                                    <div class="mask rgba-white-slight"></div>
+                                                </a>
+                                            </#if>
                                         </div>
                                         <div class="card-body">
-                                            <h4 class="card-title">${group}</h4>
+                                            <#if group?contains(";")>
+                                                <h4 class="card-title">${group?substring(0, group?last_index_of(";"))}</h4>
+                                            <#else>
+                                                <h4 class="card-title">${group}</h4>
+                                            </#if>
                                         </div>
                                     </div>
                                 </#list>
@@ -2005,13 +2037,24 @@
                                 <#list groups as group>
                                     <div class="card catalog-card">
                                         <div class="view overlay catalog-pic">
-                                            <img class="img-fluid scale-pic" src="/../img/${group}.jpg" alt="Card image cap">
-                                            <a href="/products/консервирование/${group}">
-                                                <div class="mask rgba-white-slight"></div>
-                                            </a>
+                                            <#if group?contains(";")>
+                                                <img class="img-fluid scale-pic" src="${group?substring(group?last_index_of(";")+1)}" alt="Card image cap">
+                                                <a href="/products/инструмент/${group?substring(0, group?last_index_of(";"))}">
+                                                    <div class="mask rgba-white-slight"></div>
+                                                </a>
+                                            <#else>
+                                                <img class="img-fluid scale-pic" src="/../img/nophoto.jpg" alt="Card image cap">
+                                                <a href="/products/инструмент/${group}">
+                                                    <div class="mask rgba-white-slight"></div>
+                                                </a>
+                                            </#if>
                                         </div>
                                         <div class="card-body">
-                                            <h4 class="card-title">${group}</h4>
+                                            <#if group?contains(";")>
+                                                <h4 class="card-title">${group?substring(0, group?last_index_of(";"))}</h4>
+                                            <#else>
+                                                <h4 class="card-title">${group}</h4>
+                                            </#if>
                                         </div>
                                     </div>
                                 </#list>
@@ -2025,13 +2068,24 @@
                                 <#list groups as group>
                                     <div class="card catalog-card">
                                         <div class="view overlay catalog-pic">
-                                            <img class="img-fluid scale-pic" src="/../img/${group}.jpg" alt="Card image cap">
-                                            <a href="/products/гаджеты/${group}">
-                                                <div class="mask rgba-white-slight"></div>
-                                            </a>
+                                            <#if group?contains(";")>
+                                                <img class="img-fluid scale-pic" src="${group?substring(group?last_index_of(";")+1)}" alt="Card image cap">
+                                                <a href="/products/инструмент/${group?substring(0, group?last_index_of(";"))}">
+                                                    <div class="mask rgba-white-slight"></div>
+                                                </a>
+                                            <#else>
+                                                <img class="img-fluid scale-pic" src="/../img/nophoto.jpg" alt="Card image cap">
+                                                <a href="/products/инструмент/${group}">
+                                                    <div class="mask rgba-white-slight"></div>
+                                                </a>
+                                            </#if>
                                         </div>
                                         <div class="card-body">
-                                            <h4 class="card-title">${group}</h4>
+                                            <#if group?contains(";")>
+                                                <h4 class="card-title">${group?substring(0, group?last_index_of(";"))}</h4>
+                                            <#else>
+                                                <h4 class="card-title">${group}</h4>
+                                            </#if>
                                         </div>
                                     </div>
                                 </#list>
@@ -2045,13 +2099,24 @@
                                 <#list groups as group>
                                     <div class="card catalog-card">
                                         <div class="view overlay catalog-pic">
-                                            <img class="img-fluid scale-pic" src="/../img/${group}.jpg" alt="Card image cap">
-                                            <a href="/products/спорт_и_отдых/${group}">
-                                                <div class="mask rgba-white-slight"></div>
-                                            </a>
+                                            <#if group?contains(";")>
+                                                <img class="img-fluid scale-pic" src="${group?substring(group?last_index_of(";")+1)}" alt="Card image cap">
+                                                <a href="/products/инструмент/${group?substring(0, group?last_index_of(";"))}">
+                                                    <div class="mask rgba-white-slight"></div>
+                                                </a>
+                                            <#else>
+                                                <img class="img-fluid scale-pic" src="/../img/nophoto.jpg" alt="Card image cap">
+                                                <a href="/products/инструмент/${group}">
+                                                    <div class="mask rgba-white-slight"></div>
+                                                </a>
+                                            </#if>
                                         </div>
                                         <div class="card-body">
-                                            <h4 class="card-title">${group}</h4>
+                                            <#if group?contains(";")>
+                                                <h4 class="card-title">${group?substring(0, group?last_index_of(";"))}</h4>
+                                            <#else>
+                                                <h4 class="card-title">${group}</h4>
+                                            </#if>
                                         </div>
                                     </div>
                                 </#list>
@@ -2065,13 +2130,24 @@
                                 <#list groups as group>
                                     <div class="card catalog-card">
                                         <div class="view overlay catalog-pic">
-                                            <img class="img-fluid scale-pic" src="/../img/${group}.jpg" alt="Card image cap">
-                                            <a href="/products/товары_для_отдыха_на_природе/${group}">
-                                                <div class="mask rgba-white-slight"></div>
-                                            </a>
+                                            <#if group?contains(";")>
+                                                <img class="img-fluid scale-pic" src="${group?substring(group?last_index_of(";")+1)}" alt="Card image cap">
+                                                <a href="/products/инструмент/${group?substring(0, group?last_index_of(";"))}">
+                                                    <div class="mask rgba-white-slight"></div>
+                                                </a>
+                                            <#else>
+                                                <img class="img-fluid scale-pic" src="/../img/nophoto.jpg" alt="Card image cap">
+                                                <a href="/products/инструмент/${group}">
+                                                    <div class="mask rgba-white-slight"></div>
+                                                </a>
+                                            </#if>
                                         </div>
                                         <div class="card-body">
-                                            <h4 class="card-title">${group}</h4>
+                                            <#if group?contains(";")>
+                                                <h4 class="card-title">${group?substring(0, group?last_index_of(";"))}</h4>
+                                            <#else>
+                                                <h4 class="card-title">${group}</h4>
+                                            </#if>
                                         </div>
                                     </div>
                                 </#list>
