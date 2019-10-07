@@ -41,8 +41,7 @@ public class ProductParser {
     private final BrandRepo brandRepo;
     private final BaseRepo baseRepo;
 
-    public void
-    parseProducts(MultipartFile file)
+    public void parseProducts(MultipartFile file)
     {
         if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty())
         {

@@ -40,7 +40,6 @@ public class ProductMatcher {
     public void updateProductDB(MultipartFile file)
     {
         try {
-
             ///ПРОВЕРИТЬ АДРЕСА КАРТИНОК И БАЗ
             catalogParser.parseProducts(file);
             matchProducts();

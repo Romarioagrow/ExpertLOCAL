@@ -1,6 +1,4 @@
 package expertshop.controllers;
-
-import expertshop.domain.User;
 import expertshop.products.ProductParser;
 import expertshop.products.ProductMatcher;
 import expertshop.repos.OrderRepo;
@@ -8,27 +6,11 @@ import expertshop.services.OrderService;
 import expertshop.services.ProductService;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
-
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Iterator;
-
 
 @Log
 @Controller
@@ -36,31 +18,41 @@ import java.util.Iterator;
 @RequestMapping("/supplier")
 @PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
-    private final ProductParser catalogParser;
+    private final ProductParser productParser;
     private final ProductMatcher productMatcher;
     private final ProductService productService;
     private final OrderService orderService;
     private final OrderRepo orderRepo;
 
-
-    @PostMapping("/products/uploadpic")
-    @PreAuthorize("hasAuthority('ADMIN')")
-    public String uploadPic(@RequestParam("file") MultipartFile file, @RequestParam (value = "upload", required = false) String productID, Model model)
-    {
-        //log.info(file.getOriginalFilename());log.info(file.isEmpty() + "");
-        productMatcher.uploadProductPic(file, productID);
-        model.addAttribute("url", "products");
-        return "pages/supplier";
-    }
-
     @PostMapping("/updateDB")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String loadCSV(@RequestParam("file") MultipartFile file, Model model, @AuthenticationPrincipal User user)
+    public String loadCSV(@RequestParam("file") MultipartFile file, Model model)
     {
         productMatcher.updateProductDB(file);
         model.addAttribute("url", "db");
         return "pages/supplier";
     }
+
+    @PostMapping("/updateBrandsProducts")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String updateBrandProducts(@RequestParam("brandsFile") MultipartFile file, Model model)
+    {
+        log.info(file.getOriginalFilename());
+        productParser.parseBrandProducts(file);
+        model.addAttribute("url", "db");
+        return "pages/supplier";
+    }
+
+    @PostMapping("/products/uploadpic")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    public String uploadPic(@RequestParam("file") MultipartFile file, @RequestParam (value = "upload", required = false) String productID, Model model)
+    {
+        productMatcher.uploadProductPic(file, productID);
+        model.addAttribute("url", "products");
+        return "pages/supplier";
+    }
+
+
 
     @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -119,7 +111,7 @@ public class AdminController {
     @PreAuthorize("hasAuthority('ADMIN')")
     public String checkProductPics(Model model)
     {
-        catalogParser.parseRusBT();
+        productParser.parseRusBT();
         model.addAttribute("url", "db");
         return "pages/supplier";
     }

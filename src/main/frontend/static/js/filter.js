@@ -1,5 +1,3 @@
-
-
 function displaySomeGroups(element) {
     var productCategory = element.getAttribute("name");
     console.log(productCategory);
