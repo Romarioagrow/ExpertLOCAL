@@ -280,36 +280,32 @@ public class ProductParser {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream()));
             CSVReader reader = new CSVReader(bufferedReader, ';');
 
-            String[] line;
-            int count = 0;
-            while ((line = reader.readNext()) != null) {
-                if (!line[0].isEmpty()/* && !line[0].startsWith("ПРАЙС") && !line[0].contains("г. Челябинск") && !line[0].startsWith("Код товара")*/)
+            for (String[] line: reader) {
+                log.info(Arrays.toString(line));
+
+                if (!line[0].isEmpty())
                 {
-                    BrandProduct brandProduct;
-                    brandProduct = brandRepo.findByProductID(line[0]);
+                    log.info(line[0]);
+
+                    BrandProduct brandProduct = brandRepo.findByProductID(line[0]);
 
                     if (brandProduct == null) {
                         brandProduct = new BrandProduct();
                         brandProduct.setProductID(line[0]);
                     }
 
-                    //BrandProduct brandProduct = new BrandProduct();
                     brandProduct.setFullName(line[1]);
                     brandProduct.setBrand(line[2]);
                     brandProduct.setAnnotation(line[3]);
                     brandProduct.setOriginalPrice(line[4]);
                     brandProduct.setFinalPrice(line[5]);
                     brandProduct.setPercent(line[6]);
-                    if (!line[9].startsWith("В ячейке")) {
-                        brandProduct.setPic(line[9]);
-                    }
 
                     String shortModel = StringUtils.substringAfter(brandProduct.getFullName().toLowerCase(), brandProduct.getBrand().toLowerCase()).replaceAll(" ", "").toLowerCase();
                     shortModel = brandProduct.getBrand().toLowerCase().concat(shortModel).replaceAll("\\W", "");
                     brandProduct.setShortModel(shortModel);
 
                     brandRepo.save(brandProduct);
-                    System.out.println();
                     log.info(brandProduct.getFullName());
                     log.info(brandProduct.getShortModel());
                 }
