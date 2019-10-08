@@ -19,6 +19,7 @@ HELP.md
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
+.mvn/wrapper
 
 ### NetBeans ###
 /nbproject/private/
