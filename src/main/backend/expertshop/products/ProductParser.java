@@ -48,7 +48,7 @@ public class ProductParser {
             log.info("Парсинг " + file.getOriginalFilename());
             try
             {
-                File excelFile = new File("D:\\IT\\Dev\\Expert Store Dev\\Prices\\"+file.getOriginalFilename());
+                File excelFile = new File("D:\\IT\\Dev\\ExpertStoreDev\\Prices\\"+file.getOriginalFilename());
                 FileInputStream inputStream = new FileInputStream(excelFile);
 
                 if (fileRBT(file)) parseRBT(inputStream);
@@ -62,22 +62,16 @@ public class ProductParser {
 
     private void parseRBT(FileInputStream inputStream) throws IOException {
         int countAdd = 0, countUpdate = 0;
-
         HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
         HSSFSheet sheet = workbook.getSheetAt(0);
-
-        for (Row row : sheet)
-        {
-            if (lineIsCorrect(row))
-            {
+        for (Row row : sheet) {
+            if (lineIsCorrect(row)) {
                 String productID = row.getCell(0).toString();
-                if (productExists(productID))
-                {
+                if (productExists(productID)) {
                     updateProduct(row, productID);
                     countUpdate++;
                 }
-                else
-                {
+                else {
                     createProductRBT(row);
                     countAdd++;
                 }
@@ -92,22 +86,16 @@ public class ProductParser {
     private void parseRUSBT(FileInputStream inputStream) throws IOException
     {
         int countAdd = 0, countUpdate = 0;
-
         XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
         XSSFSheet sheet = workbook.getSheetAt(0);
-
-        for (Row row : sheet)
-        {
-            if (lineIsCorrectR(row))
-            {
+        for (Row row : sheet) {
+            if (lineIsCorrectR(row)) {
                 String productID = row.getCell(5).toString().replaceAll("\\\\", "_");
-                if (productExists(productID))
-                {
+                if (productExists(productID)) {
                     updateProduct(row, productID);
                     countUpdate++;
                 }
-                else
-                {
+                else {
                     createProductRUSBT(row);
                     countAdd++;
                 }
@@ -280,11 +268,9 @@ public class ProductParser {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream()));
             CSVReader reader = new CSVReader(bufferedReader, ';');
 
-            for (String[] line: reader) {
-                log.info(Arrays.toString(line));
-
-                if (!line[0].isEmpty())
-                {
+            for (String[] line: reader)
+            {
+                if (!line[0].isEmpty()) {
                     log.info(line[0]);
 
                     BrandProduct brandProduct = brandRepo.findByProductID(line[0]);

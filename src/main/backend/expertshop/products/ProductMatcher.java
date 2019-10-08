@@ -44,9 +44,9 @@ public class ProductMatcher {
             catalogParser.parseProducts(file);
             matchProducts();
             resolveFinalPrice();
-            resolveDuplicates();
+            resolveDuplicates(); /// в matchProducts()
             resolveAvailable();
-            setPriceFromBrandsBase();
+            setPriceFromBrandsBase(); /// в matchProducts()
 
             /// Костыль для исправления нулевых бонусов
             productRepo.findAll().forEach(product -> {
