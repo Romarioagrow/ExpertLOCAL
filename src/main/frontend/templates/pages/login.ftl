@@ -40,12 +40,6 @@
                                 </p>
                             </div>
                         </div>
-                        <#--<div style="margin-left: 45rem;">
-                            <h3>Через социальные сети</h3>
-                            <button type="button" class="btn btn-gplus"><i class="fab pr-1"></i> Google </button>
-                            <button type="button" class="btn btn-so"><i class="fab pr-1"></i>Yandex</button>
-                            <button type="button" class="btn btn-li"><i class="fab pr-1"></i>Mail.ru</button>
-                        </div>-->
                     </form>
                 </div>
             </div>

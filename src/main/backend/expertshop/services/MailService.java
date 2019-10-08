@@ -1,5 +1,4 @@
 package expertshop.services;
-
 import expertshop.domain.Order;
 import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class MailService {
         mail.setSubject("Заказ №" + order.getOrderID());
         mail.setText(orderList.toString());
 
-        mailSender.send(mail);
+        //!mailSender.send(mail);
         log.info("Order №" + order.getOrderID() + " from " + order.getEmail() + " is accepted and send.");
     }
 

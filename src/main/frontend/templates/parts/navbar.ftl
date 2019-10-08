@@ -10,9 +10,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
-            <div class="selector" style="margin-left: -4rem">
-                <#--<#include "menu.ftl">-->
-            </div>
+            <div class="selector" style="margin-left: -4rem"></div>
             <form class="form-inline ml-auto">
                 <input class="form-control" type="text" name="main-search" id="main-search" placeholder="Введите что нибудь..." aria-label="Search" style="width: 50rem;">
                 <button href="#!" class="btn btn-outline-white btn-md my-0 ml-sm-2" type="submit" id="search-button">Найти</button>
@@ -34,7 +32,6 @@
                     <#if !isUser>
                         <a class="nav-link js-scroll-trigger" href="/user/login">Войти</a>
                     <#else>
-                       <#--<i class="fas fa-user-tie"></i>-->
                         <a class="nav-link js-scroll-trigger" href="/user/cabinet">Личный кабинет</a>
                     </#if>
                 </li>

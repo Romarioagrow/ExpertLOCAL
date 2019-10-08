@@ -1,5 +1,4 @@
 package expertshop.services;
-
 import expertshop.domain.Order;
 import expertshop.domain.OrderedProduct;
 import expertshop.domain.Product;
@@ -13,11 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
-
 import static expertshop.controllers.ControllerService.getSessionID;
 
 @Log
@@ -33,8 +29,8 @@ public class ProductService {
             model.addAttribute("total", page.getTotalElements());
             return page;
         }
-        else
-        { ///displayUnmappedProducts();
+        else /// displayUnmappedProducts();
+        {
             request = StringUtils.capitalize(request.replaceAll("_", " "));
             page = productRepo.findByOriginalTypeAndIsAvailableIsTrue(request, pageable);
             model.addAttribute("total", page.getTotalElements());
@@ -44,27 +40,24 @@ public class ProductService {
 
     public List<Product> searchProducts(String searchRequest) {
         List<Product> products;
-        log.info(searchRequest);
 
-        /// Поиск по shortSearchName
+        /*Поиск по shortSearchName*/
         String search = searchRequest.replaceAll(" ", "").replaceAll("-", "").toLowerCase();
         products = productRepo.findAllByProductGroupIsNotNullAndIsDuplicateIsNullAndShortSearchNameContainsIgnoreCase(search).stream()
                 .filter(product -> StringUtils.containsIgnoreCase(product.getShortSearchName(), search))
                 .collect(Collectors.toList());
         if (products.size() != 0) return products;
 
-        /// Поиск по вхождению в оригинальное название
+        /*Поиск по вхождению в оригинальное название*/
         products = productRepo.findByOriginalNameContainsIgnoreCaseAndIsAvailableTrue(searchRequest);
         if (products.size() != 0) return products;
 
-        /// поиск по раздельным словам массив
+        /*поиск по раздельным словам массив*/
+        /// ()
 
-        /// Поиск по группам
+        /*Поиск по группам*/
         products = productRepo.findByOriginalTypeContainsIgnoreCaseAndIsAvailableTrueAndFinalPriceIsNotNull(searchRequest);
         if (products.size() != 0) return products;
-
-
-        log.info(products.size() + "");
         return products;
     }
 
@@ -83,10 +76,7 @@ public class ProductService {
 
     Set<String> collectID(Order order) {
         Set<String> orderedProductsID = new HashSet<>();
-
-        for (OrderedProduct product : order.getOrderedProducts())
-            orderedProductsID.add(product.getProductID());
-
+        for (OrderedProduct product : order.getOrderedProducts()) orderedProductsID.add(product.getProductID());
         return orderedProductsID;
     }
 
@@ -118,14 +108,14 @@ public class ProductService {
         {
             try
             {
-                /// По категориям
+                /*По категориям*/
                 products = productRepo.findByProductCategoryEqualsIgnoreCase(request);
                 if (!products.isEmpty()) {
                     products.sort(Comparator.comparing(Product::getProductGroup));
                     return products;
                 }
 
-                /// По группам
+                /*По группам*/
                 products = productRepo.findByProductGroupEqualsIgnoreCase(request);
                 if (!products.isEmpty())
                 {
@@ -143,14 +133,14 @@ public class ProductService {
                     return products;
                 }
 
-                /// По брендам
+                /*По брендам*/
                 products = productRepo.findByProductGroupNotNullAndOriginalBrandContainsIgnoreCase(request);
                 if (!products.isEmpty()) {
                     products.sort(Comparator.comparing(Product::getProductGroup));
                     return products;
                 }
 
-                /// По наименованию
+                /*По наименованию*/
                 String shortRequest = StringUtils.lowerCase(request).replaceAll(" ","").replaceAll("-", "");
                 products = productRepo.findByShortSearchNameContains(shortRequest);
                 if (!products.isEmpty()) return products;
@@ -158,7 +148,6 @@ public class ProductService {
                     products = productRepo.findByOriginalNameContainsIgnoreCase(request);
                     if (products.size() != 0) return products;
                 }
-
 
                 if (isMapped != null) {
                     products = productRepo.findBySupplierContainsIgnoreCaseAndProductGroupIsNotNull(request);
@@ -170,14 +159,12 @@ public class ProductService {
                 e.printStackTrace();
             }
         }
-
         if (request.isEmpty() && isMapped != null) {
             products = productRepo.findAllByModelNameNotNull();
         }
         else if (request.isEmpty()) {
             products = productRepo.findAll();
         }
-
         return products;
     }
 
@@ -229,9 +216,7 @@ public class ProductService {
     }
 
     public boolean removePriceMod(String productID) {
-        log.info(productID);
         Product product = productRepo.findByProductID(productID);
-        log.info(product.getOriginalName());
         product.setPriceMod(null);
         productRepo.save(product);
         return true;
@@ -294,7 +279,6 @@ public class ProductService {
                     if (annoKey.startsWith("количество шт в")) {
                         continue;
                     }
-
                     if (annoValue.startsWith("-") || annoValue.equals("0")) {
                         continue;
                     }
@@ -308,8 +292,7 @@ public class ProductService {
             formAnno = product.getOriginalAnnotation();
             if (formAnno!= null && !formAnno.isEmpty())
             {
-                if (formAnno.contains(", "))
-                {
+                if (formAnno.contains(", ")) {
                     String[] annotation = formAnno.split(", ");
                     model.addAttribute("listAnno", annotation);
                     return null;
@@ -322,7 +305,6 @@ public class ProductService {
     public Set<String> displayCatalogGroups(String productCategory) {
         Set<String> productGroups = new HashSet<>();
         productCategory = StringUtils.capitalize(productCategory.replaceAll("_", " "));
-        //log.info(productCategory);
 
         Set<String> finalProductGroups = productGroups;
         productRepo.findByProductGroupIsNullAndSupplierEqualsAndOriginalCategoryContains("2RUS-BT" ,productCategory).forEach(product -> {

@@ -1,11 +1,9 @@
 package expertshop.domain;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import expertshop.domain.categories.Role;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -39,7 +37,6 @@ public class User implements UserDetails {
     @NotBlank(message = "Введите фамилию!")
     private String lastName;
 
-    //@NotBlank(message = "Введите e-mail!")
     private String email;
 
     @Column(name = "pic")
@@ -85,7 +82,6 @@ public class User implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return true;
     }
-
     public boolean isAdmin() {
         return roles.contains(Role.ADMIN);
     }

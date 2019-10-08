@@ -4,7 +4,6 @@ import expertshop.domain.User;
 import expertshop.repos.ProductRepo;
 import expertshop.services.OrderService;
 import expertshop.services.ProductService;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -15,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 
@@ -33,8 +31,8 @@ public class ProductController {
                               @PathVariable String category,
                               @PathVariable String requiredProduct,
                               @AuthenticationPrincipal User user,
-                              @PageableDefault(sort = {"originalPic"}, direction = Sort.Direction.ASC, size = 15) Pageable pageable)
-    {
+                              @PageableDefault(sort = {"originalPic"}, direction = Sort.Direction.ASC, size = 15) Pageable pageable
+    ){
         String url = "/products/"+category+"/"+requiredProduct;
         String request = requiredProduct.replaceAll("_", " ").toLowerCase();
         String[] path = {StringUtils.capitalize(category), StringUtils.capitalize(request)};

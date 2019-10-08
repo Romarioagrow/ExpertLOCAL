@@ -27,9 +27,6 @@
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#panel2" role="tab">Завершенные заказы</a>
                     </li>
-                    <#--<li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#panel3" role="tab">Контактная информация</a>
-                    </li>-->
                 </ul>
                 <div class="tab-content pt-0">
                     <div class="tab-pane fade in show active" id="panel1" role="tabpanel">
@@ -38,9 +35,6 @@
                                 <div class="col-6">
                                     <h3 style="margin-top: 2rem">Статус текущих заказов</h3>
                                 </div>
-                                <#--<div class="col-6">
-                                    <a type="button" href="/" class="btn" style="background-color: #e42c00; color: #e0e0e0; margin-top: 1rem;margin-left: 18rem;">Новый заказ</a>
-                                </div>-->
                             </div>
                             <hr>
                             <div class="card-desk">
@@ -64,9 +58,6 @@
                                                         <#if order.accepted>
                                                             <span>Статус заказа: <strong style="color: #3f51b5">Принят</strong></span>
                                                         </#if>
-                                                        <#-- <#if order.confirmed>
-                                                             <br><span>Статус заказа: <strong style="color: #e42c00">В ожидании клиента</strong></span>
-                                                         </#if>-->
                                                     </div>
                                                 </div>
                                                 <p class="mb-2">
@@ -186,42 +177,6 @@
                         </div>
                     </div>
                 </div>
-
-
-
-                <#--<ul class="nav nav-tabs nav-justified md-tabs indigo" style="background-color: #e52d00 !important;" id="myTabJust" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
-                           aria-selected="true">Мои заказы</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
-                           aria-selected="false">Мой профиль</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="contact-tab-just" data-toggle="tab" href="#contact-just" role="tab" aria-controls="contact-just"
-                           aria-selected="false">Акции и бонусы</a>
-                    </li>
-                </ul>
-                <div class="tab-content card pt-5" id="myTabContentJust">
-                    <div class="tab-pane fade show active" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
-                        <#if orders?has_content>
-                            <#list orders as order>
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    Номер заказа: ${order.orderID?c} | Итого ₽: ${order.totalPrice} | Всего наименований:${order.productsAmount} | Всего едениц: ${order.totalAmount}
-                                </li>
-                            </#list>
-                        <#else>
-                            <h3>Заказов пока нет</h3>
-                        </#if>
-                    </div>
-                    <div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
-                        Настройки профиля
-                    </div>
-                    <div class="tab-pane fade" id="contact-just" role="tabpanel" aria-labelledby="contact-tab-just">
-                        Мои акции и бонусы
-                    </div>
-                </div>-->
             </div>
         </div>
         <div class="row">

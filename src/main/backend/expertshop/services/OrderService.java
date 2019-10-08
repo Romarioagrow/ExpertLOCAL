@@ -7,17 +7,11 @@ import expertshop.domain.dto.OrderContacts;
 import expertshop.repos.OrderRepo;
 import expertshop.repos.OrderedRepo;
 import expertshop.repos.ProductRepo;
-
 import expertshop.repos.UserRepo;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
-
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
-
 import java.util.*;
 
 @Log
@@ -25,18 +19,17 @@ import java.util.*;
 @AllArgsConstructor
 public class OrderService {
     private final MailService   mailService;
-    private final OrderRepo     orderRepo;
     private final ProductRepo   productRepo;
     private final OrderedRepo   orderedRepo;
+    private final OrderRepo     orderRepo;
     private final UserRepo      userRepo;
 
-    public LinkedList<Integer> addProductToOrder(String productID, User user)
-    {
+    public LinkedList<Integer> addProductToOrder(String productID, User user) {
         Order order;
         OrderedProduct orderedProduct = new OrderedProduct();
         Product product = productRepo.findByProductID(productID);
         int discount = 0;
-        log.info("add product bonus "+product.getBonus().toString());
+        log.info("add product bonus " + product.getBonus().toString());
 
         if (user == null)
         {
@@ -48,8 +41,8 @@ public class OrderService {
                 order.setSessionUUID(getSessionID());
                 order.setTotalBonus(product.getBonus());
             }
-            ///
-            orderedProduct.constructOrderedProduct(product);///
+
+            orderedProduct.constructOrderedProduct(product);
             order.addProductToOrder(orderedProduct);
             order.setTotalBonus(order.extractTotalBonus());
 
@@ -71,7 +64,7 @@ public class OrderService {
                 order = dropDiscountParams(order);
             }
 
-            orderedProduct.constructOrderedProduct(product); ///
+            orderedProduct.constructOrderedProduct(product);
 
             order.addProductToOrder(orderedProduct);
 
@@ -89,16 +82,10 @@ public class OrderService {
             orderRepo.save(order);
             discount = calculateDiscount(user, order);
         }
-
-        //System.out.println("\n");
-        //log.info("Product with ID " + productID + " add to getOrder");
-        //log.info("Product bonus: " + product.getBonus());
-
         return payload(order.getProductsAmount(), discount);
     }
 
-    public LinkedList<Object> changeAmount(User user, Map<String, String> data)
-    {
+    public LinkedList<Object> changeAmount(User user, Map<String, String> data) {
         OrderedProduct orderedProduct = orderedRepo.findByOrderedID(Long.valueOf(data.get("orderedID")));
         int discount = 0;
 
@@ -115,22 +102,17 @@ public class OrderService {
         orderedProduct.setTotalPrice(orderedProduct.getProductPrice() * orderedProduct.getOrderedAmount());
         orderedRepo.save(orderedProduct);
 
-
         Order order = user != null ? resolveOrder(user) : getSessionOrder();
-
         order.setTotalPrice (order.extractTotalOrderPrice());
         order.setTotalAmount(order.extractTotalProductsAmount());
         order.setTotalBonus (order.extractTotalBonus());
         orderRepo.save(order);
 
         if (user != null) discount = calculateDiscount(user, order);
-
-        //log.info("Order total price: " + order.getTotalPrice());
         return payload(order, orderedProduct, discount);
     }
 
-    public LinkedList<Object> removeProductFromOrder(User user, String orderedID)
-    {
+    public LinkedList<Object> removeProductFromOrder(User user, String orderedID) {
         OrderedProduct orderedProduct = orderedRepo.findByOrderedID(Long.parseLong(orderedID));
         Order order = resolveOrder(user);
         int discount = 0;
@@ -145,11 +127,9 @@ public class OrderService {
 
         if (user != null) discount = calculateDiscount(user, order);
         return payload(order, discount);
-        //return order;
     }
 
-    private void setOrderStats(Order order, Integer productTotalPrice)
-    {
+    private void setOrderStats(Order order, Integer productTotalPrice) {
         if (order.getTotalPrice() == null)
         {
             order.setTotalPrice     (productTotalPrice);
@@ -215,7 +195,6 @@ public class OrderService {
             order.setDiscountPrice(order.getTotalPrice() - bonusOffPart);
             order.setTotalDiscount(bonusOffPart);
             order.setBonusOff(bonusOffPart);
-            //user.setBonus(user.getBonus() - bonusOffPart);
         }
         order.setDiscountPercent(discountPercent);
         order.setDiscountApplied(true);
@@ -275,7 +254,6 @@ public class OrderService {
 
             user.setBonus(user.getBonus() - bonusOff);
             userRepo.save(user);
-            //user.setBonus(user.getBonus() + order.getTotalBonus());
         }
 
         if (orderContacts.getCity() != null) {
@@ -304,13 +282,9 @@ public class OrderService {
             orderList.append(item.toString());
         }
 
-        //log.info(orderList.toString());
         mailService.sendOrderDetail(orderList, order);
-        //mailService.sendEmailToCustomer(order, orderList);
-
         order.setAccepted(true);
         orderRepo.save(order);
-        //log.fine("Order " + order.getOrderID() + " is accepted!");
     }
 
     private LinkedList<Integer> payload(Integer productsAmount, int discount) {
@@ -328,7 +302,6 @@ public class OrderService {
     }
     private LinkedList<Object> payload(Order order, Object discount) {
         LinkedList<Object> payload = new LinkedList<>();
-        //log.info(order.toString());log.info(discount.toString());
         payload.add(order);
         payload.add(discount);
         return payload;
@@ -351,17 +324,15 @@ public class OrderService {
     }
 
     public Order getSessionOrder()
-    { ///
+    {
         Order sessionOrder = orderRepo.findBySessionUUIDAndAcceptedFalse(getSessionID());
         return (sessionOrder != null && sessionOrder.isAccepted()) ? null : sessionOrder;
     }
 
-    ///
     public Order getUserOrder(Long userID) {
         return orderRepo.findFirstByUserIDAndAcceptedFalse(userID);
     }
 
-    ///
     public Order resolveOrder(User user) {
         return user != null ? getUserOrder(user.getUserID()) : getSessionOrder();
     }
@@ -402,7 +373,7 @@ public class OrderService {
         order.setCompleted(true);
         orderRepo.save(order);
 
-        /// Начислить пользователю баллы
+        /*Начислить пользователю баллы*/
         User user = userRepo.findByUserID(order.getUserID());
         if (user != null) {
             user.setBonus(user.getBonus() + order.getTotalBonus());

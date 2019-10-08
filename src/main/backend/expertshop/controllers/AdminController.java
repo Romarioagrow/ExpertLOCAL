@@ -26,8 +26,7 @@ public class AdminController {
 
     @PostMapping("/updateDB")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String loadCSV(@RequestParam("file") MultipartFile file, Model model)
-    {
+    public String loadCSV(@RequestParam("file") MultipartFile file, Model model) {
         productMatcher.updateProductDB(file);
         model.addAttribute("url", "db");
         return "pages/supplier";
@@ -35,9 +34,7 @@ public class AdminController {
 
     @PostMapping("/updateBrandsProducts")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String updateBrandProducts(@RequestParam("brandsFile") MultipartFile file, Model model)
-    {
-        log.info(file.getOriginalFilename());
+    public String updateBrandProducts(@RequestParam("brandsFile") MultipartFile file, Model model) {
         productParser.parseBrandProducts(file);
         model.addAttribute("url", "db");
         return "pages/supplier";
@@ -45,26 +42,27 @@ public class AdminController {
 
     @PostMapping("/products/uploadpic")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String uploadPic(@RequestParam("file") MultipartFile file, @RequestParam (value = "upload", required = false) String productID, Model model)
-    {
+    public String uploadPic(Model model,
+                            @RequestParam("file") MultipartFile file,
+                            @RequestParam (value = "upload", required = false) String productID) {
         productMatcher.uploadProductPic(file, productID);
         model.addAttribute("url", "products");
         return "pages/supplier";
     }
 
-
-
     @GetMapping
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String supplier(Model model)
-    {
+    public String supplier(Model model) {
         model.addAttribute("url", "db");
         return "pages/supplier";
     }
 
     @GetMapping("/products")
     @PreAuthorize("hasAuthority('ADMIN')")
-    private String products(@RequestParam String request, @RequestParam(value = "mapped", required = false) String mapped, @RequestParam (value = "withpic", required = false) String withpic, Model model) {
+    private String products(Model model,
+                            @RequestParam String request,
+                            @RequestParam(value = "mapped", required = false) String mapped,
+                            @RequestParam(value = "withpic", required = false) String withpic) {
         model.addAttribute("url", "products");
         model.addAttribute("request", request);
         model.addAttribute("products", productService.showReqProducts(request.trim(), mapped, withpic, model));
@@ -100,8 +98,7 @@ public class AdminController {
 
     @PostMapping("/xxx")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String matchDuplicates(Model model)
-    {
+    public String matchDuplicates(Model model) {
         productMatcher.xxx();
         model.addAttribute("url", "db");
         return "pages/supplier";
@@ -109,8 +106,7 @@ public class AdminController {
 
     @PostMapping("/pics")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public String checkProductPics(Model model)
-    {
+    public String checkProductPics(Model model) {
         productParser.parseRusBT();
         model.addAttribute("url", "db");
         return "pages/supplier";

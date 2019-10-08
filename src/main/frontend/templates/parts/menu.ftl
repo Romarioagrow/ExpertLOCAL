@@ -9,19 +9,11 @@
                     <div class="product-type-list marker2">
                         <ul class="products-list">
                             <li class="list-head"><a href="/products/теле-видео-аудио/телевизоры"><strong>Телевизоры</strong></a></li>
-                            <#--<li><a href="/products/tv">4K</a></li>
-                            <li><a href="/products/tv">FullHD</a></li>
-                            <li><a href="/tv">SmartTV</a></li>
-                            <li><a href="/tv">Гибкий экран</a></li>
-                            <li><a href="/tv">DVBT2</a></li>-->
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
                         <ul class="products-list">
                             <li class="list-head"><a href="/products/теле-видео-аудио/ресиверы_для_тв"><strong>Ресиверы для ТВ</strong></a></li>
-                            <#--<li><a href="/products/music_centers">Музыкальные центры</a></li>
-                            <li><a href="/products/home_cinema">Домашние кинотеатры</a></li>
-                            <li><a href="/products/projectors">Проекторы</a></li>-->
                         </ul>
                     </div>
                     <div class="product-type-list marker2">
@@ -98,7 +90,7 @@
                             <li><a href="/#">Посуда </a></li>
                             <li><a href="/#">Кухонная утварь</a></li>
                             <li><a href="/#">Кухонные аксессуары</a></li>
-                        </ul
+                        </ul>
                     </div>
                 </div>
             </li>

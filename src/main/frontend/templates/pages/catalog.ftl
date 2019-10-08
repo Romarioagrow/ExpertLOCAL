@@ -87,17 +87,6 @@
                                 </div>
                                 <div class="card-body">
                                     <h4 class="card-title">Телевизоры</h4>
-                                    <#--<p class="card-text">
-                                        <a href="/products/теле-видео-аудио/телевизоры">
-                                            <span class="badge badge-dark">Full HD</span>
-                                        </a>
-                                        <a href="/products/теле-видео-аудио/телевизоры">
-                                            <span class="badge badge-dark">4K</span>
-                                        </a>
-                                        <a href="/products/теле-видео-аудио/телевизоры">
-                                            <span class="badge badge-dark">Smart TV</span>
-                                        </a>
-                                    </p>-->
                                 </div>
                             </div>
                             <div class="card catalog-card">
@@ -226,17 +215,6 @@
                                     <h4 class="card-title">Аккумуляторы</h4>
                                 </div>
                             </div>
-                            <#--<div class="card catalog-card">
-                                <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/nophoto.jpg" alt="Card image cap">
-                                    <a href="/products/кухонная_техника/зарядники_батареек">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">Зарядники батареек</h4>
-                                </div>
-                            </div>-->
                         </div>
                     </div>
                     <#---->
@@ -600,8 +578,6 @@
                                     <h4 class="card-title">Электрические плитки</h4>
                                 </div>
                             </div>
-
-
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
                                     <img class="img-fluid scale-pic" src="/../img/kastruli.jpg" alt="Card image cap">
@@ -671,17 +647,6 @@
                                     <h4 class="card-title">Аксессуары для мясорубок</h4>
                                 </div>
                             </div>
-                            <#--<div class="card catalog-card">
-                                <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/nophoto.jpg" alt="Card image cap">
-                                    <a href="/products/кухонная_техника/аксессуары_для_соковыжималок">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">Аксессуары для соковыжималок</h4>
-                                </div>
-                            </div>-->
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
                                     <img class="img-fluid scale-pic" src="/../img/svcakks.jpg" alt="Card image cap">
@@ -960,30 +925,6 @@
                                 </div>
                             </div>
                         </div>
-                        <#--<div class="card-deck">
-                            <div class="card catalog-card">
-                                <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/nophoto.jpg" alt="Card image cap">
-                                    <a href="/products/встраеваемая_техника/аксессуары_для_вытяжки">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">Аксессуары для вытяжки</h4>
-                                </div>
-                            </div>
-                            <div class="card catalog-card">
-                                <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/nophoto.jpg" alt="Card image cap">
-                                    <a href="/products/встраеваемая_техника/фильтры_для_вытяжки">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">фильтры для вытяжки</h4>
-                                </div>
-                            </div>
-                        </div>-->
                     </div>
                     <#---->
                     <div class="tab-pane fade <#if url?contains("климатическая_техника")>in show active</#if>" id="panel5" role="tabpanel">
@@ -1213,19 +1154,7 @@
                                     <h4 class="card-title">Электрические зубные щетки</h4>
                                 </div>
                             </div>
-                            <#--<div class="card catalog-card">
-                                <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/conder.jpg" alt="Card image cap">
-                                    <a href="/products/приборы_персонального_ухода/медицинские_приборы">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">Медицинские приборы</h4>
-                                </div>
-                            </div>-->
                         </div>
-
                     </div>
                     <#---->
                     <div class="tab-pane fade <#if url?contains("цифровые_устройства")>in show active</#if>" id="panel7" role="tabpanel">
@@ -1375,17 +1304,6 @@
                         </div>
                         <h2>Акксессуары для цифровой техники</h2>
                         <div class="card-deck">
-                            <#--<div class="card catalog-card">
-                                <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/nophoto.jpg" alt="Card image cap">
-                                    <a href="/products/цифровые_устройства/зарядные_устройства">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">Зарядные устройства</h4>
-                                </div>
-                            </div>-->
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
                                     <img class="img-fluid scale-pic" src="/../img/sumkidlyatehniki.jpg" alt="Card image cap">
@@ -1592,17 +1510,6 @@
                                     <h4 class="card-title">Картриджи лазерные</h4>
                                 </div>
                             </div>
-                            <#--<div class="card catalog-card">
-                                <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/nophoto.jpg" alt="Card image cap">
-                                    <a href="/products/компьютеры_и_орг_техника/бумага_для_принтеров">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">Бумага для принтеров</h4>
-                                </div>
-                            </div>-->
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
                                     <img class="img-fluid scale-pic" src="/../img/photopaper.jpg" alt="Card image cap">
@@ -1743,18 +1650,6 @@
                                     <h4 class="card-title">Паяльники</h4>
                                 </div>
                             </div>
-
-                            <#--<div class="card catalog-card">
-                                <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/derevoobrabat.jpg" alt="Card image cap">
-                                    <a href="/products/инструменты_для_дома/деревообрабатывающие_станки">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">Деревообрабатывающие станки</h4>
-                                </div>
-                            </div>-->
                         </div>
                         <h2>Аксессуары для инструментов</h2>
                         <div class="card-deck">
@@ -1796,17 +1691,6 @@
                                     <h4 class="card-title">Автомагнитолы</h4>
                                 </div>
                             </div>
-                            <#--<div class="card catalog-card">
-                                <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/navigator.png" alt="Card image cap">
-                                    <a href="/products/автотовары/навигаторы">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">Навигаторы</h4>
-                                </div>
-                            </div>-->
                             <div class="card catalog-card">
                                 <div class="view overlay catalog-pic">
                                     <img class="img-fluid scale-pic" src="/../img/vidioreg.jpg" alt="Card image cap">
@@ -1840,39 +1724,6 @@
                                     <h4 class="card-title">Автоакустика</h4>
                                 </div>
                             </div>
-                            <#--<div class="card catalog-card">
-                                <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/sub.jpg" alt="Card image cap">
-                                    <a href="/products/автотовары/сабвуферы_для_авто">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">Сабвуферы для авто</h4>
-                                </div>
-                            </div>
-                            <div class="card catalog-card">
-                                <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/avtousil.jpg" alt="Card image cap">
-                                    <a href="/products/автотовары/усилители">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">Усилители</h4>
-                                </div>
-                            </div>
-                            <div class="card catalog-card">
-                                <div class="view overlay catalog-pic">
-                                    <img class="img-fluid scale-pic" src="/../img/avtozukpodkl.jpg" alt="Card image cap">
-                                    <a href="/products/автотовары/комплекты_подключения_автозвука">
-                                        <div class="mask rgba-white-slight"></div>
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">Подключение автозвука</h4>
-                                </div>
-                            </div>-->
                         </div>
                     </div>
                     <#---->
@@ -1935,7 +1786,6 @@
                             </div>
                         </div>
                     </div>
-
                     <#---->
                     <div class="tab-pane fade <#if url?contains("инструмент")>in show active</#if>" id="panel18" role="tabpanel">
                         <div class="card-deck" id="deckинструмент">
@@ -1968,7 +1818,6 @@
                         </div>
                     </div>
                     <#---->
-                    <#---->
                     <div class="tab-pane fade <#if url?contains("подсобное_хозяйство") || url?contains("техника_для_подсобного_хозяйства")>in show active</#if>" id="panel12" role="tabpanel">
                         <div class="card-deck" id="deckтехника_для_подсобного_хозяйства">
                             <#if groups??>
@@ -1999,7 +1848,6 @@
                             </#if>
                         </div>
                     </div>
-
                     <div class="tab-pane fade <#if url?contains("садово-огородный_инвентарь")>in show active</#if>" id="panel13" role="tabpanel">
                         <div class="card-deck" id="deckсадово-огородный_инвентарь">
                             <#if groups??>
@@ -2030,7 +1878,6 @@
                             </#if>
                         </div>
                     </div>
-
                     <div class="tab-pane fade <#if url?contains("консервирование")>in show active</#if>" id="panel14" role="tabpanel">
                         <div class="card-deck" id="deckконсервирование">
                             <#if groups??>
@@ -2061,7 +1908,6 @@
                             </#if>
                         </div>
                     </div>
-
                     <div class="tab-pane fade <#if url?lower_case?contains("отопительное_оборудование")>in show active</#if>" id="panel15" role="tabpanel">
                         <div class="card-deck" id="deckотопительное_оборудование">
                             <#if groups??>
@@ -2092,7 +1938,6 @@
                             </#if>
                         </div>
                     </div>
-
                     <div class="tab-pane fade <#if url?contains("спорт_и_отдых")>in show active</#if>" id="panel16" role="tabpanel">
                         <div class="card-deck" id="deckспорт_и_отдых">
                             <#if groups??>
@@ -2123,7 +1968,6 @@
                             </#if>
                         </div>
                     </div>
-
                     <div class="tab-pane fade <#if url?contains("товары_для_отдыха_на_природе")>in show active</#if>" id="panel17" role="tabpanel">
                         <div class="card-deck" id="deckтовары_для_отдыха_на_природе">
                             <#if groups??>
@@ -2158,149 +2002,6 @@
                 </div>
             </div>
         </div>
-        <#--
-
-        <div class="row">
-            <div class="col mb-3 popular">
-                <h1>Самая популярная техника</h1>
-                <div id="multi-item-example" class="carousel slide carousel-multi-item" data-ride="carousel">
-                    <div class="controls-top">
-                        <a class="btn-floating" href="#multi-item-example" data-slide="prev"><i class="fas fa-chevron-left"></i></a>
-                        <a class="btn-floating" href="#multi-item-example" data-slide="next"><i class="fas fa-chevron-right"></i></a>
-                    </div>
-                    <ol class="carousel-indicators">
-                        <li data-target="#multi-item-example" data-slide-to="0" class="active"></li>
-                        <li data-target="#multi-item-example" data-slide-to="1"></li>
-                        <li data-target="#multi-item-example" data-slide-to="2"></li>
-                    </ol>
-                    <div class="carousel-inner" role="listbox">
-                        <div class="carousel-item active">
-                            <div class="col-md-4">
-                                <div class="card mb-2">
-                                    <img class="card-img-top"
-                                         src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                                         alt="Card image cap">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Бренд Модель</h4>
-                                        <p class="card-text">Параметры и особенности товара</p>
-                                        <strong>5 680₽</strong>
-                                        <a class="btn btn-blue-grey">Заказать</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card mb-2">
-                                    <img class="card-img-top"
-                                         src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                                         alt="Card image cap">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Бренд Модель</h4>
-                                        <p class="card-text">Параметры и особенности товара</p>
-                                        <strong>5 680₽</strong>
-                                        <a class="btn btn-blue-grey">Заказать</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card mb-2">
-                                    <img class="card-img-top"
-                                         src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                                         alt="Card image cap">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Бренд Модель</h4>
-                                        <p class="card-text">Параметры и особенности товара</p>
-                                        <strong>5 680₽</strong>
-                                        <a class="btn btn-blue-grey">Заказать</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="col-md-4">
-                                <div class="card mb-2">
-                                    <img class="card-img-top"
-                                         src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                                         alt="Card image cap">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Бренд Модель</h4>
-                                        <p class="card-text">Параметры и особенности товара</p>
-                                        <strong>5 680₽</strong>
-                                        <a class="btn btn-blue-grey">Заказать</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card mb-2">
-                                    <img class="card-img-top"
-                                         src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                                         alt="Card image cap">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Бренд Модель</h4>
-                                        <p class="card-text">Параметры и особенности товара</p>
-                                        <strong>5 680₽</strong>
-                                        <a class="btn btn-blue-grey">Заказать</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card mb-2">
-                                    <img class="card-img-top"
-                                         src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                                         alt="Card image cap">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Бренд Модель</h4>
-                                        <p class="card-text">Параметры и особенности товара</p>
-                                        <strong>5 680₽</strong>
-                                        <a class="btn btn-blue-grey">Заказать</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="col-md-4">
-                                <div class="card mb-2">
-                                    <img class="card-img-top"
-                                         src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                                         alt="Card image cap">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Бренд Модель</h4>
-                                        <p class="card-text">Параметры и особенности товара</p>
-                                        <strong>5 680₽</strong>
-                                        <a class="btn btn-blue-grey">Заказать</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card mb-2">
-                                    <img class="card-img-top"
-                                         src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                                         alt="Card image cap">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Бренд Модель</h4>
-                                        <p class="card-text">Параметры и особенности товара</p>
-                                        <strong>5 680₽</strong>
-                                        <a class="btn btn-blue-grey">Заказать</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="card mb-2">
-                                    <img class="card-img-top"
-                                         src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(34).jpg"
-                                         alt="Card image cap">
-                                    <div class="card-body">
-                                        <h4 class="card-title">Бренд Модель</h4>
-                                        <p class="card-text">Параметры и особенности товара</p>
-                                        <strong>5 680₽</strong>
-                                        <a class="btn btn-blue-grey">Заказать</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>-->
     </div>
 </@t.template>
 <style>

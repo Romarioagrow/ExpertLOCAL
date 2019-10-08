@@ -42,8 +42,6 @@ function changeAmount(product) {
         action    : product.name
     };
 
-    //console.log(data);
-
     let amountID        = '#amount'             + data.orderedID;
     let totalPriceID    = '#total-price'        + data.orderedID;
     let productBonusID  = '#productTotalBonus'  + data.orderedID;
@@ -66,9 +64,6 @@ function changeAmount(product) {
             const order             = payload.responseJSON[0];
             const orderedProduct    = payload.responseJSON[1];
             const discount          = payload.responseJSON[2];
-
-            //console.log(orderedProduct);
-            //console.log(order);
 
             var productBonus = 'Бонус за покупку: ' + (orderedProduct.bonus * orderedProduct.orderedAmount).toLocaleString('ru');
 
@@ -131,8 +126,6 @@ function removeFromOrder(button) {
                 else pic = '/../img/nophoto.jpg';
 
                 let productType = product.productType != null ? product.productType : '';
-
-                /// сервер загружает на элемент данные а ajax обновляет
                 $("#bucket-products").append
                 (
                     '<div class="card ordered-card mb-4">' +
@@ -163,7 +156,7 @@ function removeFromOrder(button) {
 
             $('#total-discount').empty().append(
                 discount + '%'
-            )
+            );
             $('#bonusAmount').empty().append(
                 (order.totalBonus).toLocaleString('ru')
             );
@@ -179,7 +172,6 @@ function removeFromOrder(button) {
             $("#productsAmount-Div").empty().append(
                 '<a class="nav-link js-scroll-trigger" id="productAmount-Order" href="/order">Товаров:  <span class="badge badge-primary">'+order.productsAmount+'</span></a>'
             );
-
 
             if (order.productsAmount === 0)
             {
@@ -237,7 +229,6 @@ function editOrder(orderID) {
         complete: function(payload)
         {
             console.info(payload);
-            /*ЦЕНА*/
             if (payload !== null)
             {
                 const order = payload.responseJSON[0];
@@ -268,8 +259,6 @@ function editOrder(orderID) {
             }
         }
     });
-
-
 }
 $(document).ready(function() {
     $("#confirm-order").click(
@@ -339,9 +328,6 @@ function acceptOrder() {
         if (lastName.length < 2) {
             $('#lastName').after('<span class="error">Введите фамилию</span>');
         }
-        /*if (email.length < 1) {
-            $('#email').after('<span class="error">Введите e-mail</span>');
-        }*/
         else
         {
             var regEx = /^[A-Z0-9][A-Z0-9._%+-]{0,63}@(?:[A-Z0-9-]{1,63}.){1,125}[A-Z]{2,63}$/;
@@ -380,7 +366,7 @@ function acceptOrder() {
     document.getElementById("order-deal").style.display  = "none";
     document.getElementById("edit-order").style.display  = "none";
     document.getElementById("orderLoader").style.display = "block";
-    /*ОБНОВЛЯТЬ ИНФОРМАЦИЮ О БОНУСАХ*/
+
     $.ajax({
         url:  "http://localhost:8080/order/confirm",
         type: "POST",

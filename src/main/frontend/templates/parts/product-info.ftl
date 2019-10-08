@@ -30,12 +30,3 @@
         <td><strong>${product.productParams.stoveDimensions}</strong></td>
     </tr>
 </#if>
-
-<#--
-<#if product.smthParam?contains("smthVal")>
-    <tr>
-        <th scope="row">smthParam</th>
-        <td><strong>smthVal</strong></td>
-    </tr>
-</#if>
--->

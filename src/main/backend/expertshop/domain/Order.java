@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -44,20 +43,14 @@ public class Order implements Serializable {
     private Integer productsAmount  = 0;
     private Integer totalAmount     = 0;
     private Integer totalDiscount   = 0;
-    private Integer totalBonus, bonusOff      = 0; /// bonusOff @Column(name = "discount")
-
+    private Integer totalBonus, bonusOff = 0; /// bonusOff @Column(name = "discount")
     private Integer discountPercent, discountPrice;
 
     private String name, otchestvo;
     private String surname;
     private String mobile;
     private String email;
-    //private String address;
-
     private String city, street, house, apartment;
-
-
-
     private String shortTel, deliveryType;
 
     @Column(name = "open_date")

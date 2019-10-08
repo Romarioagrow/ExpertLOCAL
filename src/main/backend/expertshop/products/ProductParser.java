@@ -1,5 +1,4 @@
 package expertshop.products;
-
 import com.opencsv.CSVReader;
 import expertshop.domain.BrandProduct;
 import expertshop.domain.Product;
@@ -24,7 +23,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.*;
 import java.net.ConnectException;
 import java.net.MalformedURLException;
@@ -36,13 +34,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Service
 @AllArgsConstructor
 public class ProductParser {
-    private final ProductService productService;
     private final ProductRepo productRepo;
     private final BrandRepo brandRepo;
     private final BaseRepo baseRepo;
 
-    public void parseProducts(MultipartFile file)
-    {
+    public void parseProducts(MultipartFile file) {
         if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty())
         {
             log.info("Парсинг " + file.getOriginalFilename());
@@ -83,8 +79,7 @@ public class ProductParser {
         log.info("Товаров обновлено: "   + countUpdate);
     }
 
-    private void parseRUSBT(FileInputStream inputStream) throws IOException
-    {
+    private void parseRUSBT(FileInputStream inputStream) throws IOException {
         int countAdd = 0, countUpdate = 0;
         XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
         XSSFSheet sheet = workbook.getSheetAt(0);
@@ -109,7 +104,6 @@ public class ProductParser {
 
     private void updateProduct(Row row, String productID) {
         Product product = productRepo.findByProductID(productID);
-
         if (product.getProductGroup() != null)
         {
             String productAmount, productPrice;
@@ -153,9 +147,9 @@ public class ProductParser {
         productRepo.save(product);
     }
 
-    private void createProductRBT(Row row)
-    {
-        try {
+    private void createProductRBT(Row row) {
+        try
+        {
             Product product = new Product();
             product.setProductID(row.getCell(0).toString());
             product.setOriginalCategory(row.getCell(1).toString());
@@ -175,9 +169,9 @@ public class ProductParser {
             log.warning(e.getClass().getName());
         }
     }
-    private void createProductRUSBT(Row row)
-    {
-        try {
+    private void createProductRUSBT(Row row) {
+        try
+        {
             Product product = new Product();
             product.setProductID(row.getCell(5).toString().replaceAll("\\\\", "_"));
             product.setOriginalCategory(row.getCell(0).toString().concat("; ").concat(row.getCell(1).toString()));
@@ -264,6 +258,7 @@ public class ProductParser {
     }
 
     public void parseBrandProducts(MultipartFile file) {
+        log.info(file.getOriginalFilename());
         try {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream()));
             CSVReader reader = new CSVReader(bufferedReader, ';');
@@ -314,7 +309,8 @@ public class ProductParser {
     }
 
     public void parseBase(MultipartFile file) {
-        try {
+        try
+        {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(file.getInputStream()));
             CSVReader reader = new CSVReader(bufferedReader, ';');
 
@@ -349,7 +345,6 @@ public class ProductParser {
             log.info("Products add: " + count);
         }
         catch (IOException | ArrayIndexOutOfBoundsException exp) {
-            //log.info("Something went wrong with Base!");
             exp.getStackTrace();
         }
     }
@@ -389,10 +384,7 @@ public class ProductParser {
                             {
                                 pic = "http://rusbt.ru".concat(picSrc);
                                 if (product.getOriginalPic() == null) product.setOriginalPic(pic);
-                                else {
-                                    if (product.getPics() == null) product.setPics(pic);
-                                    //else product.setPics(product.getPics().concat(";").concat(pic));
-                                }
+                                else if (product.getPics() == null) product.setPics(pic);
 
                                 productRepo.save(product);
                                 log.info("Изображения для: " + product.getOriginalName() + ": " + pic);
@@ -401,7 +393,6 @@ public class ProductParser {
                             else log.info("Нет изображения товара на сайте!");
                         }
                     }
-
                     if (product.getFormattedAnnotation() == null || product.getFormattedAnnotation().isEmpty())
                     {
                         Elements props = page.getElementsByClass("one_prop");
@@ -416,12 +407,6 @@ public class ProductParser {
                             else product.setFormattedAnnotation(product.getFormattedAnnotation().concat(param));
                         }
                     }
-                    /*if (product.getDescription() == null){
-                        Elements description = page.getElementsByClass("bx_item_description");
-                        for (Element el : description) {
-                            product.setDescription(el.html());
-                        }
-                    }*/
                     productRepo.save(product);
                 }
                 else log.info("Ссылка отсутствует!");
@@ -441,8 +426,7 @@ public class ProductParser {
                 log.info(exp.getClass().getName());
             }
             catch (IOException | NullPointerException exp) {
-                log.info("Exception");
-                ///exp.printStackTrace();
+                exp.printStackTrace();
             }
         });
 
@@ -479,12 +463,6 @@ public class ProductParser {
                         product.setLocalPic(localPic);
                         productRepo.save(product);
                         log.info(product.getLocalPic());
-                        //product.setLocalPic(file.getAbsolutePath());
-                        //
-                        //log.info(product.getLocalPic());
-
-                        //log.info(file.getCanonicalPath());
-                        //log.info(file.get());
                     }
                 }
             }
@@ -512,208 +490,25 @@ public class ProductParser {
         AtomicInteger count = new AtomicInteger();
         products.forEach(product ->
         {
-            //if (product.getPics() == null)
+            ProductBase productBase = baseRepo.findFirstByShortModelEquals(product.getShortModel());
+            if (productBase != null)
             {
-                ProductBase productBase = baseRepo.findFirstByShortModelEquals(product.getShortModel());
-                if (productBase != null)
-                {
-                    System.out.println();
-                    log.info("Для: " + product.getFullName());
-                    log.info("Нашлось: " + productBase.getFullName());
+                System.out.println();
+                log.info("Для: " + product.getFullName());
+                log.info("Нашлось: " + productBase.getFullName());
 
-                    if (product.getFullAnnotation() == null) product.setFullAnnotation(productBase.getAnnotation());
-                    if (product.getPics() == null) product.setPics(product.getPics());
-                    product.setFormattedAnnotation(productBase.getFormattedAnnotation());
+                if (product.getFullAnnotation() == null) product.setFullAnnotation(productBase.getAnnotation());
+                if (product.getPics() == null) product.setPics(product.getPics());
+                product.setFormattedAnnotation(productBase.getFormattedAnnotation());
 
-                    if (product.getOriginalPic() == null) {
-                        String pic = StringUtils.substringBefore(productBase.getPics(), " ");
-                        product.setOriginalPic(pic);
-                    }
-                    productRepo.save(product);
-                    count.getAndIncrement();
+                if (product.getOriginalPic() == null) {
+                    String pic = StringUtils.substringBefore(productBase.getPics(), " ");
+                    product.setOriginalPic(pic);
                 }
+                productRepo.save(product);
+                count.getAndIncrement();
             }
         });
         log.info("Всего: " + count.toString());
     }
-
-
-
-    ///!!!
-    /*
-    private String findPicAndParse(String requestName) throws IOException
-    {
-        log.info(requestName);
-        if (!requestName.isEmpty())
-        {
-            Document page = Jsoup.connect(requestName).get();
-            Elements elements = page.select("img");
-            //Elements elements = page.getElementsByAttribute("img");
-            //Elements elements = page.getElementsByClass("mimg");
-            //Elements elements = page.getAllElements();
-            for (Element element : elements) {
-                log.info(element.toString());
-            }
-            //Element pic = page.select("class=\"serp-item__thumb justifier__thumb\"").first();
-            //log.info(pics.toString());
-        }
-        return pic.toString();
-    }*/
-
-    /*public void countPics()
-    {
-        List<Product> products = productRepo.findAll();
-        int totalPics = 0, picsFromSite = 0;
-
-        for (Product product : products)
-        {
-            if (!product.getPic().equals("no pic"))
-            {
-                totalPics++;
-                if (product.getPic().contains("top-tehnica.ru"))
-                {
-                    picsFromSite++;
-                }
-            }
-        }
-        log.info("Total pics: " + totalPics);
-        log.info("Pics from site: " + picsFromSite);
-    }*/
-
-    /*public void checkProductPics()
-    {
-        String request = "телевизоры";
-        //Set<Product> products = productRepo.findProductsByProductGroupContainingIgnoreCaseOrTypeContainingIgnoreCaseOrFullNameContainingIgnoreCase(request, request, request);
-        List<Product> products = productRepo.findAll();
-        int count = 0;
-
-        for (Product product : products)
-        {
-            if (checkForParse(product))
-            {
-                String model = product.getModelName();//.replaceAll(" ", "-");
-                String parseSearchRequest = "https://top-tehnica.ru/search?q=".concat(model.substring(0, model.length() - 3)); ///СТРОГАЯ ЛОГИКА ПОИСКА
-                log.info("request " + parseSearchRequest);
-
-                try {
-                    Document page = Jsoup.connect(parseSearchRequest).get();
-                    Elements links = page.select("a");
-
-                    for (Element linkAttr : links)
-                    {
-                        String link = linkAttr.attr("href");
-                        //log.info(link);
-
-                        if (link.contains("https://top-tehnica.ru//catalog"))
-                        {
-                            System.out.println("\n");
-                            log.info("Ссылка на товар " + link);
-                            count++;
-
-                            Document productPage = Jsoup.connect(link).get();
-                            Elements pics = productPage.select("img"); ///УТОЧНИТЬ
-
-                            for (Element pic : pics)
-                            {
-                                String picSrc = pic.attr("src");
-
-                                if (picSrc.contains("image.webp") && product.getPic().equals("no pic"))
-                                {
-                                    product.setPic("https://top-tehnica.ru/".concat(picSrc));
-                                    productRepo.save(product);
-                                    log.info("Основная картинка для " + model + ":" + picSrc);
-                                }
-                                else if (picSrc.contains("/img/product"))
-                                {
-                                    String fullLink = "https://top-tehnica.ru/".concat(picSrc);
-
-                                    String anotherPic = (product.getPics() == null) ? "" : product.getPics(); ///IF
-                                    anotherPic = anotherPic.concat(" ").concat(fullLink);
-
-                                    product.setPics(anotherPic);
-                                    productRepo.save(product);
-                                    log.info("Ссылка на картинку для " + model + ":" + picSrc);
-                                }
-                            }
-
-                            if (product.getShortHtmlInfo() == null)
-                            {
-                                Elements params = productPage.getElementsByClass("n-product-spec-list");
-                                for (Element param : params)
-                                {
-                                    String li = param.html();
-                                    product.setShortHtmlInfo(li);
-                                    productRepo.save(product);
-                                    log.info("Short Info for " + product.getModelName());
-                                }
-                            }
-
-                            if (product.getFullInfo() == null)
-                            {
-                                Document productParamsPage = Jsoup.connect(link.concat("/harakteristiki")).get();
-                                Elements tab = productParamsPage.getElementsByClass("product-options-table");
-                                for (Element element : tab)
-                                {
-                                    String table = element.html();
-                                    product.setFullInfo(table);
-                                    productRepo.save(product);
-                                    log.info("Full Info for " + product.getModelName());
-                                }
-                            }
-                        }
-                    }
-                }
-                catch (IOException e) {///
-                    e.getStackTrace();
-                }
-            }
-            else log.info("Not required for product " + product.getModelName());
-        }
-        log.info("END OF SEQUENCE! " + count + " Products parsed!");
-    }*/
-
-    /*private boolean checkForParse(Product product) {
-        return product.getPic().equals("no pic") || product.getShortHtmlInfo() == null || product.getFullInfo() == null;
-    }*/
-
-    /*private void resolvePics()
-    {
-        List<Product> products = productRepo.findAll();
-        List<ProductBase> productsBase = baseRepo.findAll();
-
-        for (Product product : products)
-        {
-            if (product.getPic() == null)
-            {
-                ProductBase productBase = baseRepo.findFirstByModelNameContaining(product.getModelName());
-
-                if (productBase != null)
-                {
-                    product.setPic(productBase.getPics());
-                    productRepo.save(product);
-                    log.info(product.getModelName() + " URL: " + product.getPic());
-                }
-            }
-        }
-
-        *//*for (ProductBase productBase : productsBase)
-        {
-            Product product = productRepo.findFirstByModelNameContaining(productBase.getModelName());
-
-            if (product != null && product.getPic() == null)
-            {
-                product.setPic(productBase.getPics());
-                productRepo.save(product);
-                log.info(product.getModelName() + " URL: " + product.getPic());
-            }
-        }*//*
-
-        int count = 0;
-        for (Product product : products)
-        {
-            if (product.getPic() != null) count++;
-        }
-
-        log.info("PICS SET: " + count + " from " + products.size());
-    }*/
 }

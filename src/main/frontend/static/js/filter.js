@@ -50,18 +50,6 @@ function displaySomeGroups(element) {
     });
 }
 
-function uploadPic(element) {
-    var productID = element.name;
-}
-
-
-function im() {
-    $('#image').addClass('transition');
-}
-function iii() {
-    $('#image').removeClass('transition');
-}
-
 function removeModCoeff(e) {
     var request = e.name;
     $.post({
@@ -111,10 +99,6 @@ function saveNewCoeff(button) {
 
     data = [];
     data.push(request, newCoeff);
-    //data[request] = newCoeff;
-
-    console.log(data);
-
     data = JSON.stringify(data);
 
     $.post({
@@ -153,15 +137,9 @@ function saveProduct() {
         let productFinalPriceDB = name.substr(name.indexOf(";")+1);
         let newPrice = this.value;
 
-        //console.log('\n');
-        //console.log(productID);
-        //console.log(productFinalPriceDB);
-        //console.log(newPrice);
-
         data[productID] = newPrice;
     });
 
-    //console.log(data);
     data = JSON.stringify(data);
 
     $.ajax({
@@ -176,22 +154,8 @@ function saveProduct() {
             console.log(response);
             if ((response.responseText) === 'true') {
                 alert('Saved!');
-
                 console.log('ok');
                 location.reload();
-                /*$('input:text[class="editPrice"]').each(function()
-                {
-                    const name =  this.getAttribute("name");
-                    let productDivID = this.id;
-                    let price = this.value;
-
-                    console.log(productDivID);
-
-                    $(productDivID).empty().append(
-                        '<strong style="color: #00c853">'+price+'</strong>'
-                    );
-                });*/
-
             }
         }
     });
@@ -216,7 +180,6 @@ String.prototype.capitalize = function() {
 function displayBrands() {
     const url = resolveURL();
     const request = url.substring(url.lastIndexOf("/")+1);
-    //console.log(request);
 
     $.ajax({
         url: 'http://localhost:8080/brands',
@@ -280,7 +243,7 @@ function displayBrands() {
                         $('#feat-element').append(
                             '<div class="custom-control custom-checkbox">' +
                             '<input type="checkbox" onclick="filterProducts()" class="form-check-input" name="Cont-MultiParams-'+key+'" id="'+filter+'" value="'+key+': '+val+'">' +
-                            '<label class="custom-control-label" for="'+filter+'">'+key+'</label>' +
+                            '<label class="custom-control-label" for="'+filter+'"><strong>'+key+'</strong></label>' +
                             '</div>'
                         );
                     }
@@ -333,7 +296,7 @@ function displayBrands() {
                                 '<div class="row" style="max-height: 55rem !important;">' +
                                 '<div class="col" style="max-height: 55rem !important;">' +
                                 '<input type="checkbox" onclick="filterProducts()" class="form-check-input" name="Cont-'+filter+'" id="'+id+'" value="'+key+': '+filters[key][i]+';">' +
-                                '<label class="custom-control-label" for="'+id+'" style="height: auto !important; ">'+filters[key][i].capitalize().replace(",",", ")+'</label>' +
+                                '<label class="custom-control-label" for="'+id+'" style="height: auto !important; "><strong>'+filters[key][i].capitalize().replace(",",", ")+'</strong></label>' +
                                 '</div>' +
                                 '</div>'
                         }
@@ -408,7 +371,7 @@ function filterProducts() {
     filters = JSON.stringify(filters);
 
     $.ajax({
-        url: url, ///+'?page=2'
+        url: url, /// +'?page=n'
         type: 'POST',
         dataType: 'json',
         data: filters,
@@ -435,7 +398,7 @@ function filterProducts() {
                 '<a class="page-link" href="#/*'+prevPage+'*/">Назад</a></li>'+
                 '<li class="page-item"><a class="page-link" href="#/*'+nextPage+'*/">Вперед</a></li></ul>'
             );
-            $('#pageable1').empty().append(/*новый пагинатор*/);///html.load
+            $('#pageable1').empty().append(/*новый пагинатор*/); /// html.load
 
             $('#products-found').empty().append(
                 '<small>Всего товаров: '+total+'</small>'
@@ -445,7 +408,7 @@ function filterProducts() {
             {
                 let product = products[item];
                 var productCard = constructProductCard(product, orderedIDs);
-                $("#products").append(productCard); ///load html block
+                $("#products").append(productCard); /// load html block
             }
         }
     });
@@ -464,14 +427,13 @@ function constructProductCard(product, orderedIDs) {
     buttonID = replaceAll(buttonID, ".", "");
 
     let productButton;
-
-    if (product.isAvailable) {
+    if (product.isAvailable)
+    {
         if (orderedIDs.length !== 0 && orderedIDs.includes(product.productID)) {
             productButton = '<a type="button" class="btn btn-danger btn-sm" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>';
         }
-        else {
-            productButton = '<button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger btn-sm b-add" name="addToOrder" id="addToOrder'+product.productID+'" value="'+product.productID+'">В корзину</button>'
-        }
+        else productButton = '<button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger btn-sm b-add" name="addToOrder" id="addToOrder'+product.productID+'" value="'+product.productID+'">В корзину</button>'
+
     }
     else productButton = '<p style="color: #c40030; font-size: 1.5rem; padding-top: 0.5rem;"><strong>Нет в наличии!</strong></p>';
 
@@ -507,3 +469,10 @@ function constructProductCard(product, orderedIDs) {
         '</div>';
 }
 
+
+function im() {
+    $('#image').addClass('transition');
+}
+function iii() {
+    $('#image').removeClass('transition');
+}

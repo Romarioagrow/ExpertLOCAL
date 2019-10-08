@@ -2,17 +2,6 @@
 <#include "../parts/security.ftl">
 <@t.template>
     <div class="container-fluid" style="margin-top: 5rem">
-        <#--<div class="row" style="margin-left: 10rem;">
-            <#if order??>
-                <#if !isUser>
-                    <h3 style="margin-top: 2rem; margin-bottom: 2rem">Ваш заказ</h3>
-                <#else>
-                    <h3 style="margin-top: 2rem; margin-bottom: 2rem">Ваш заказ, ${user.firstName}</h3>
-                </#if>
-            <#else>
-                <h3 style="margin-top: 2rem">Товаров пока нет</h3>
-            </#if>
-        </div>-->
         <div class="row" style="height: 3rem;"></div>
         <div class="row">
             <div class="col-8">
@@ -302,32 +291,3 @@
     </div>
     <script src="/../lib/mobilemask.js"></script>
 </@t.template>
-
-
-<#--
-<#if orderedProducts?has_content>
-    <div id="order-layout">
-        <button type="button" class="btn btn-light" name="cards-layout-inp">Cards</button>
-        <button type="button" class="btn btn-light" name="rows-layout-inp">Rows</button>
-    </div>
-</#if>
-
-<ul class="list-group" id="bucket-products-rows" name="rows-layout" style="display: none">
-    <#if orderedProducts??>
-        <#list orderedProducts as product>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-                <img class="ordered-product-img-line" src="${product.pic}" height="50" width="80"  alt="Card image cap">
-                <strong>${product.type}</strong> ${product.brand} ${product.model}
-                <button type="button" class="btn btn-outline-danger waves-effect" onclick="changeAmount(this)" id="${product.orderedID?c}" name="product-less" value="${product.productID}">-</button>
-                <div id="amount${product.orderedID?c}" name="${product.orderedID}"><span class="badge badge-primary badge-pill">${product.amount}</span></div>
-                <button type="button" class="btn btn-outline-success waves-effect" onclick="changeAmount(this)" id="${product.orderedID?c}" name="product-more" value="${product.productID}">+</button>
-                <strong><i id="total-price${product.orderedID}">${product.totalPrice} ₽</i></strong>
-                <button type="submit" onclick="removeFromOrder(this)" class="btn btn-danger btn-md" name="remove-product" id="remove-product" value="${product.orderedID?c}">Удалить</button>
-            </li>
-        </#list>
-    <#else>
-        <h3 style="margin-top: 4vh">Пока ничего нет...</h3>
-        <a type="button" href="/" class="btn blue-gradient btn-lg btn-block">Вернуться за покупками</a>
-    </#if>
-</ul>
--->

@@ -5,10 +5,8 @@ import expertshop.repos.ProductRepo;
 import expertshop.repos.UserRepo;
 import expertshop.services.OrderService;
 import expertshop.services.ProductService;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
-
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +21,6 @@ public class CategoriesController {
     private final ProductRepo       productRepo;
     private final UserRepo userRepo;
 
-    /*ORDER*/
     @GetMapping("/order")
     public String getOrder(Model model, @AuthenticationPrincipal User user)
     {
@@ -61,19 +58,6 @@ public class CategoriesController {
         log.info(category);
         return "pages/catalog";
     }
-
-    /*@GetMapping("/subcats/{req_subcategory}")
-    public String showSubCategories( Model model, @PathVariable String req_subcategory, @AuthenticationPrincipal User user)
-    {
-        //log.info("Category: " + req_subcategory);
-        model.addAttribute("url", req_subcategory);
-        model.addAttribute("order", getOrder(user));
-        return "pages/products";
-    }
-    @GetMapping("/subcats")
-    public String subCategories() {
-        return "redirect:/hello";
-    }*/
 
     private Order getOrder(User user) {
         return user != null ? orderService.getUserOrder(user.getUserID()) : orderService.getSessionOrder();

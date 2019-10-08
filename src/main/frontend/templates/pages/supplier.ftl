@@ -43,7 +43,6 @@
                                 </form>
                             </div>
                         </div>
-
                         <div class="card mt-3" style="width: 30rem; margin-left: 40rem">
                             <div class="card-body">
                                 <h5>Обновить Leran и тд</h5>
@@ -60,7 +59,6 @@
                                 </form>
                             </div>
                         </div>
-
                     </div>
                     <div class="tab-pane fade <#if url?contains("products")>in show active</#if>" id="cat2" role="tabpanel">
                         <div class="card">
@@ -103,17 +101,6 @@
                         </div>
                         <div class="card" style="margin-top: 2rem">
                             <div class="card-body">
-                                <#--<form method="post" action="/supplier/products/uploadpic" enctype="multipart/form-data">
-                                    <div class="form-group">
-                                        <div class="custom-file">
-                                            <input type="file" name="file" id="customFile">
-                                            <label class="custom-file-label" for="customFile">Выбрать</label>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-success btn-lg btn-block" name="upload" value="upload">Загрузить</button>
-                                    </div>
-                                </form>-->
                                 <#if products??>
                                     <div class="row">
                                         <div class="col">
@@ -121,7 +108,6 @@
                                         </div>
                                     </div>
                                 </#if>
-                                <#--<form method="post" action="/supplier/products/save">-->
                                 <table class="table">
                                     <thead>
                                     <tr>
@@ -191,7 +177,6 @@
                                     </#if>
                                     </tbody>
                                 </table>
-                                <#--</form>-->
                             </div>
                         </div>
                     </div>
@@ -330,11 +315,6 @@
                                                     </h4>
                                                     <p>Заказчик: <strong>${order.name} ${order.surname}</strong>, Тел:  <strong>${order.email}</strong></p>
                                                 </div>
-                                                <#--<div class="col">
-                                                    <form method="post" action="/supplier/orders/removeorder">
-                                                        <button type="submit" class="btn btn-danger btn-sm" name="orderID" value="${order.orderID}">Удалить</button>
-                                                    </form>
-                                                </div>-->
                                             </div>
                                             <div class="row" style="margin-bottom: 1rem">
                                                 <div class="col">
@@ -392,10 +372,5 @@
             </div>
         </div>
     </div>
-
 </@t.template>
-<style>
-    .secc {
-        width: 15rem !important;
-    }
-</style>
+

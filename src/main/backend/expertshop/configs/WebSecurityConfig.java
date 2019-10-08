@@ -1,6 +1,5 @@
 package expertshop.configs;
 import expertshop.services.UserService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-//@EnableOAuth2Sso
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
@@ -51,26 +49,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .csrf().disable();
     }
-    
-    /*@Bean
-    public PrincipalExtractor principalExtractor(UserRepo userRepo) {
-        return map -> {
-            String userID = map.get("sub").toString();
-
-            User user = userRepo.findById(userID).orElseGet(() -> {
-                User newUser = new User();
-
-                newUser.setUserID(userID);
-                newUser.setFullName(map.get("fullName").toString());
-                newUser.setEmail(map.get("email").toString());
-                newUser.setUserPic(map.get("picture").toString());
-
-                return newUser;
-            });
-
-            user.setRegistrationDate(LocalDateTime.now());
-
-            return userRepo.save(user);
-        };
-    }*/
 }

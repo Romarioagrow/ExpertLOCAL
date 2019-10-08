@@ -56,9 +56,6 @@
     text-decoration: none;
     border: 1px solid #e5e5e5;
 }
-/*.category-menu a:hover {
-    background-color: #e5e5e5;
-}*/
 .category-menu a:hover {
     background-color: #e5e5e5;
     color: #e52d00;

@@ -6,20 +6,16 @@ import expertshop.repos.UserRepo;
 import expertshop.services.FilterService;
 import expertshop.services.OrderService;
 import expertshop.services.ProductService;
-
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 import java.util.*;
 
@@ -63,7 +59,6 @@ public class ServiceController {
         return "pages/supplier";
     }
 
-    /*PRODUCTS FILTERS*/
     @PostMapping("/products/{category}/{reqType}")
     public LinkedList<Object> filterProducts(
             @RequestBody Map<String, String> params,
@@ -77,9 +72,7 @@ public class ServiceController {
     }
 
     @PostMapping("/brands")
-    public LinkedList<Object> displayBrands(
-            @RequestBody(required = false) String productGroup
-    ){
+    public LinkedList<Object> displayBrands(@RequestBody(required = false) String productGroup) {
         if (productGroup != null) {
             productGroup = productGroup.replaceAll("_", " ");
             return filterService.resolveFilters(productGroup);
@@ -87,41 +80,30 @@ public class ServiceController {
         return null;
     }
 
-    /*PRODUCTS SEARCH*/
     @PostMapping("/search")
-    public List<Product> searchProducts(
-            @RequestBody String searchRequest
-    ){
+    public List<Product> searchProducts(@RequestBody String searchRequest) {
         return productService.searchProducts(searchRequest);
     }
 
-    /*ORDER*/
     @PostMapping("/order")
     private LinkedList<Integer> addProductToOrder(
-            @AuthenticationPrincipal User user, @RequestBody String productID
-    ){
+            @AuthenticationPrincipal User user, @RequestBody String productID){
         return orderService.addProductToOrder(productID, user);
     }
     @PutMapping("/order")
-    private LinkedList<Object> changeAmount(
-            @AuthenticationPrincipal User user, @RequestBody Map<String, String> data
-    ) throws NullPointerException {
-        if (user != null)
-        {
+    private LinkedList<Object> changeAmount(@AuthenticationPrincipal User user, @RequestBody Map<String, String> data) throws NullPointerException {
+        if (user != null) {
             User reloadUser = userRepo.findByUserID(user.getUserID());
             return orderService.changeAmount(reloadUser, data);
         }
         return orderService.changeAmount(null, data);
     }
     @DeleteMapping("/order")
-    private LinkedList<Object> removeProductFromOrder(
-            @AuthenticationPrincipal User user, @RequestBody String productID
-    ){
+    private LinkedList<Object> removeProductFromOrder(@AuthenticationPrincipal User user, @RequestBody String productID){
         return orderService.removeProductFromOrder(user, productID);
     }
     @PostMapping("/order/confirm")
-    private Object confirmOrder (@AuthenticationPrincipal User user, @Valid @RequestBody OrderContacts contacts, BindingResult validResult)
-    {
+    private Object confirmOrder (@AuthenticationPrincipal User user, @Valid @RequestBody OrderContacts contacts, BindingResult validResult) {
         if (validResult.hasErrors()) {
             return ControllerService.getValidErrorsSet(validResult);
         }

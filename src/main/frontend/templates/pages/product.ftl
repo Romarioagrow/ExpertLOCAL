@@ -14,7 +14,6 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/categories/${product.originalCategory?keep_before(";")?lower_case?replace(" ","_")}"><span style="font-size: 20px !important;">${product.originalCategory?keep_before(";")}</a></li>
                         <li class="breadcrumb-item"><a href="/products/${product.originalCategory?keep_before(";")?lower_case?replace(" ","_")}/${product.originalType?lower_case?replace(" ","_")}"><span style="font-size: 20px !important;">${product.originalType}</a></li>
-                        <#--<li class="breadcrumb-item active" aria-current="page"><span style="font-size: 20px !important;">${product.originalType}</li>-->
                     </ol>
                 </#if>
             </nav>
@@ -137,7 +136,6 @@
         min-height: 5rem !important;
         max-height: 5rem !important;
     }
-
     .scale-pic {
         height: 100% !important;
         width: 100% !important;

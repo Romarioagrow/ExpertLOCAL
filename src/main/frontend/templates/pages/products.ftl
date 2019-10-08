@@ -66,8 +66,7 @@
                         </button>
                         <div class="collapse" id="feat1">
                             <div class="card card-body filter-filed">
-                                <div class="form-group" id="feat-element">
-                                </div>
+                                <div class="form-group" id="feat-element"></div>
                             </div>
                         </div>
                     </form>
@@ -129,7 +128,7 @@
                                     <div>
                                         <#if product.isAvailable!>
                                             <#if orderedProductsID?? && orderedProductsID?seq_contains('${product.productID}')>
-                                                <a type="button" class="btn btn-danger btn-sm" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</button></a>
+                                                <a type="button" class="btn btn-danger btn-sm" style="background-color: #e52d00 !important;" href="http://localhost:8080/order">Оформить заказ</a>
                                             <#else>
                                                 <div id="addToOrderDiv${product.productID?replace(".","")}">
                                                     <button type="submit" onclick="addToOrder(this)" class="btn btn-rounded btn-outline-danger btn-sm b-add" name="addToOrder" id="addToOrder${product.productID}" value="${product.productID}">
@@ -138,7 +137,6 @@
                                                 </div>
                                             </#if>
                                         <#else>
-                                        <#--<button type="button" class="btn btn-warning btn-rounded" disabled>Нет в наличии!</button>-->
                                             <p style="color: #c40030; font-size: 1.5rem; padding-top: 0.5rem;"><strong>Нет в наличии!</strong></p>
                                         </#if>
                                     </div>

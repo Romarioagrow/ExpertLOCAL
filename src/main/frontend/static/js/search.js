@@ -2,18 +2,16 @@ $(document).ready(function(){
     $('#search-button').on('click', searchProducts);
 });
 $(document).ready(function(){
-    //$('input[modelName="main-search"]').on('keyup', searchProducts);
     $('#main-search').on('keyup', searchProducts);
 });
 $('body').click(function(){
-    /// if элеиентПодСтрелкой.modelName != search
     document.getElementById("display-result").style.display = "none";
 });
 
 function searchProducts(e) {
     e.preventDefault();
 
-    var searchRequest = $('#main-search').val().trim()/*.toUpperCase()*/;
+    var searchRequest = $('#main-search').val().trim();
     console.log(searchRequest);
 
     $.ajax({
@@ -42,7 +40,8 @@ function searchProducts(e) {
                     )
                 });
             }
-            else {
+            else
+            {
                 $("#display-result").append(
                     '<p>Ничего не нашлось!</p>'
                 );

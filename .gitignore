@@ -12,10 +12,13 @@ HELP.md
 .sts4-cache
 
 ### IntelliJ IDEA ###
-.idea
+.idea/
 *.iws
 *.iml
 *.ipr
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/
 
 ### NetBeans ###
 /nbproject/private/
@@ -27,3 +30,6 @@ HELP.md
 
 ### VS Code ###
 .vscode/
+
+# Local configuration file (sdk path, etc)
+application.properties
