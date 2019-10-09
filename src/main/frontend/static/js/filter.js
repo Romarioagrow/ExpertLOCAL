@@ -134,10 +134,8 @@ function saveProduct() {
     {
         const name =  this.getAttribute("name");
         let productID = name.substr(0, name.indexOf(";")).toString();
-        let productFinalPriceDB = name.substr(name.indexOf(";")+1);
-        let newPrice = this.value;
-
-        data[productID] = newPrice;
+        //let productFinalPriceDB = name.substr(name.indexOf(";")+1);
+        data[productID] = this.value;
     });
 
     data = JSON.stringify(data);

@@ -6,7 +6,6 @@ import expertshop.domain.ProductBase;
 import expertshop.repos.BaseRepo;
 import expertshop.repos.BrandRepo;
 import expertshop.repos.ProductRepo;
-import expertshop.services.ProductService;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
