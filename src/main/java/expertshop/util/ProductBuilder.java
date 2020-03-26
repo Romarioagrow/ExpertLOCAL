@@ -1,4 +1,4 @@
-package expertshop.products;
+package expertshop.util;
 import expertshop.domain.BrandProduct;
 import expertshop.domain.Product;
 import expertshop.domain.ProductBase;
@@ -8,15 +8,17 @@ import expertshop.repos.ProductRepo;
 import lombok.AllArgsConstructor;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,19 +27,89 @@ import java.util.stream.Collectors;
 @Log
 @Service
 @AllArgsConstructor
-public class ProductMatcher {
+public class ProductBuilder {
     private final BaseRepo      baseRepo;
     private final BrandRepo     brandRepo;
     private final ProductRepo   productRepo;
-    private final ProductParser catalogParser;
+    private final ProductParser productParser;
     static int matchCounter = 0;
 
-    public void updateProductDB(MultipartFile file) {
+    public void updateProductDB(MultipartFile[] supplierFiles) {
         try
         {
             /// checkLinksValid()
-            catalogParser.parseProducts(file);
-            matchProducts();
+            //log.info(file.toString());
+
+            /*
+             *
+             *
+             *
+             *
+             *
+             * */
+
+            /*UPDATE PRODUCTS WITH SUPPLIER DATA*/
+            /// parseProducts(supplierFiles);
+
+            productRepo.findAll().forEach(product -> {
+                product.setIsAvailable(false);
+                productRepo.save(product);
+            });
+
+            /*List<Product> list = productRepo.findAll();
+            list.forEach(product -> {
+                product.setIsAvailable(null);
+                productRepo.save(product);
+            });*/
+
+            for (MultipartFile supplierFile : supplierFiles) {
+                if (supplierFile != null)
+                {
+                    String fileName = supplierFile.getOriginalFilename();
+                    log.info("Parsing file: " + fileName);
+
+                    XSSFSheet excelDataSheet = new XSSFWorkbook(supplierFile.getInputStream()).getSheetAt(0);
+                    final boolean supplierRBT = Objects.requireNonNull(supplierFile.getOriginalFilename()).contains("СП2");
+                    int countCreate = 0, countUpdate = 0;
+
+                    for (Row productRow : excelDataSheet)
+                    {
+                        if (rowIsCorrect(productRow, supplierRBT))
+                        {
+                            String productID = resolveProductID(supplierRBT, productRow);
+
+                            /*Обновить существущий OriginalProduct*/
+                            if (productExists(productID))
+                            {
+                                updateProduct(productRow, productID);
+                                countUpdate++;
+                            }
+                            /*Создать OriginalProduct*/
+                            else
+                            {
+                                if (supplierRBT) createProductRBT(productRow);
+                                else createProductRUSBT(productRow);
+                                countCreate++;
+                            }
+                        }
+                    }
+                    log.info("Added to DB for file: " + fileName);
+                    log.info("Created: " + countCreate);
+                    log.info("Updated: " + countUpdate);
+                }
+                log.warning("File is null!");
+            }
+
+
+
+
+            /*PROCESS PRODUCTS OPERATION DATA*/
+            /// matchProducts();
+
+
+
+            /*catalogParser.parseProducts(file);
+
             resolveFinalPrice();
             resolveDuplicates(); /// в matchProducts()
             resolveAvailable();
@@ -49,14 +121,149 @@ public class ProductMatcher {
                     product.setBonus(10);
                     productRepo.save(product);
                 }
-            });
+            });*/
 
             log.info("Обновление БД завершено!");
         }
-        catch (NullPointerException | NumberFormatException e) {
+        catch (NullPointerException | NumberFormatException | IOException e) {
             e.printStackTrace();
         }
     }
+    private void createProductRBT(Row row) {
+        try
+        {
+            Product product = new Product();
+            product.setProductID(row.getCell(0).toString());
+            product.setOriginalCategory(row.getCell(1).toString());
+            product.setOriginalType(row.getCell(2).toString());
+            product.setOriginalBrand(row.getCell(4).toString());
+            product.setOriginalName(row.getCell(3).getStringCellValue());
+            product.setOriginalAnnotation(row.getCell(5).toString());
+            product.setOriginalAmount(row.getCell(6).toString());
+            product.setOriginalPrice(row.getCell(7).toString().trim());
+            product.setOriginalPic(StringUtils.substringBetween(row.getCell(3).toString(), "\"", "\""));
+            product.setSupplier("1RBT");
+            product.setUpdate(LocalDate.now());
+            product.setIsAvailable(true);
+            productRepo.save(product);
+        }
+        catch (Exception e) {
+            log.warning(e.getClass().getName());
+        }
+    }
+    private void createProductRUSBT(Row row) {
+        try
+        {
+            Product product = new Product();
+            product.setProductID(row.getCell(5).toString().replaceAll("\\\\", "_"));
+            product.setOriginalCategory(row.getCell(0).toString().concat("; ").concat(row.getCell(1).toString()));
+            product.setOriginalGroup(row.getCell(1).toString());
+            product.setOriginalType(row.getCell(3).toString());
+            product.setOriginalBrand(row.getCell(4).toString());
+            product.setOriginalName(row.getCell(6).toString());
+            product.setOriginalAmount(row.getCell(7).toString() + row.getCell(8).toString());
+            product.setOriginalPrice(row.getCell(13).toString());
+            product.setLinkR(row.getCell(15).getHyperlink().getAddress());
+            product.setRType(row.getCell(3).toString());
+            product.setRName(row.getCell(6).toString());
+            product.setSupplier("2RUS-BT");
+            product.setUpdate(LocalDate.now());
+            product.setIsAvailable(true);
+            productRepo.save(product);
+        }
+        catch (NullPointerException ignored) {
+        }
+    }
+    private void updateProduct(Row row, String productID) {
+        Product product = productRepo.findByProductID(productID);
+        if (product.getProductGroup() != null)
+        {
+            String productAmount, productPrice;
+            if (product.getSupplier().equals("1RBT"))
+            {
+                productAmount   = row.getCell(6).toString();
+                productPrice    = row.getCell(7).toString();
+            }
+            else
+            {
+                productAmount   = row.getCell(7).toString().concat(row.getCell(8).toString());
+                productPrice    = row.getCell(13).toString();
+            }
+            try
+            {
+                /*ПРОВЕРКА НА ОСОБЫЕ УСЛОВИЯ ТОВАРОВ*/
+                if (ignoreUpdate(product))
+                {
+                    product.setUpdate(LocalDate.now());
+                    product.setIsAvailable(true);
+                    product.setOriginalPrice(productPrice);
+                    product.setOriginalAmount(productAmount);
+                    productRepo.save(product);
+                    return;
+                }
+
+                product.setOriginalAmount(productAmount);
+                product.setOriginalPrice(productPrice);
+                product.setIsAvailable(true);
+
+                int finalPrice   = roundPrice(product.getDefaultCoefficient(), (int) Double.parseDouble(StringUtils.deleteWhitespace(product.getOriginalPrice().replaceAll(",","."))));
+                int productBonus = matchBonus(finalPrice);
+                product.setFinalPrice(finalPrice);
+                product.setBonus(productBonus);
+            }
+            catch (NullPointerException e) {
+                log.info(e.getClass().getName());
+                e.printStackTrace();
+            }
+        }
+        product.setUpdate(LocalDate.now());
+        productRepo.save(product);
+    }
+
+    private boolean productExists(String productID) {
+        return productRepo.findByProductID(productID) != null;
+    }
+
+    private String resolveProductID(boolean supplierRBT, Row row) {
+        return supplierRBT ? row.getCell(0).toString() : row.getCell(5).toString().replaceAll("\\\\", "_");
+    }
+
+    private boolean rowIsCorrect(Row productRow, boolean supplierRBT) {
+        String firstCell;
+        if (productRow.getCell(0) != null) {
+            firstCell = productRow.getCell(0).getStringCellValue();
+        }
+        else return false;
+        if (supplierRBT) {
+            return (!firstCell.isEmpty() && !firstCell.startsWith("8(351)") && !firstCell.startsWith(".") && !firstCell.startsWith("г. Челябинск") && !firstCell.startsWith("Код товара"));
+        }
+        return (!firstCell.isEmpty() && !StringUtils.containsIgnoreCase(firstCell, "Уценка") && !firstCell.contains("Группа 1"));
+    }
+
+    private boolean ignoreUpdate(Product product) {
+        String brand = product.getOriginalBrand();
+        return  StringUtils.equalsIgnoreCase(brand, "AMCV")     ||
+                StringUtils.equalsIgnoreCase(brand, "ARDIN")    ||
+                StringUtils.equalsIgnoreCase(brand, "BINATONE") ||
+                StringUtils.equalsIgnoreCase(brand, "DOFFLER")  ||
+                StringUtils.equalsIgnoreCase(brand, "LERAN")    ||
+                StringUtils.equalsIgnoreCase(brand, "SENTORE")  ||
+                product.getPriceMod()       != null             ||
+                product.getCoefficientMod() != null;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     private void resolveAvailable() {
         System.out.println();log.info("Проверка наличия товара...");
@@ -102,7 +309,6 @@ public class ProductMatcher {
                     product.setBonus(productBonus);
                     product.setBrandPrice(true);
                     count.getAndIncrement();
-                    productRepo.save(product);
                 }
                 else
                 {
@@ -110,7 +316,6 @@ public class ProductMatcher {
                     productBonus = matchBonus(finalPrice);
                     product.setFinalPrice(finalPrice);
                     product.setBonus(productBonus);
-                    productRepo.save(product);
                 }
             }
             else
@@ -119,8 +324,8 @@ public class ProductMatcher {
                 productBonus = matchBonus(finalPrice);
                 product.setFinalPrice(finalPrice);
                 product.setBonus(productBonus);
-                productRepo.save(product);
             }
+            productRepo.save(product);
         });
         productRepo.findAllByProductGroupIsNotNull().forEach(product -> {
             if (product.getFinalPrice() == null)
@@ -167,7 +372,10 @@ public class ProductMatcher {
     public void matchProducts()
     {
         List<Product> products = productRepo.findAllByProductGroupIsNull();
-        System.out.println();log.info("Разметка товаров...");log.info("Товаров без разметки: " + products.size());
+        System.out.println();
+        log.info("Разметка товаров...");
+        log.info("Товаров без разметки: " + products.size());
+
         for (Product product : products)
         {
             if (productValidToMatch(product))

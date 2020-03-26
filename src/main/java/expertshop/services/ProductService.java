@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import java.util.*;
 import java.util.stream.Collectors;
-import static expertshop.controllers.ControllerService.getSessionID;
+import static expertshop.util.ControllerService.getSessionID;
 
 @Log
 @Service
@@ -25,17 +25,12 @@ public class ProductService {
 
     public Page<Product> findProducts(String request, Pageable pageable, Model model) {
         Page<Product> page = productRepo.findProductsByProductGroupEqualsIgnoreCaseAndIsDuplicateIsNullAndIsAvailableTrue(request, pageable);
-        if (page.getTotalElements() != 0) {
-            model.addAttribute("total", page.getTotalElements());
-            return page;
-        }
-        else /// displayUnmappedProducts();
-        {
+        if (page.getTotalElements() == 0) {
             request = StringUtils.capitalize(request.replaceAll("_", " "));
             page = productRepo.findByOriginalTypeAndIsAvailableIsTrue(request, pageable);
-            model.addAttribute("total", page.getTotalElements());
-            return page;
         }
+        model.addAttribute("total", page.getTotalElements());
+        return page;
     }
 
     public List<Product> searchProducts(String searchRequest) {
@@ -57,7 +52,6 @@ public class ProductService {
 
         /*Поиск по группам*/
         products = productRepo.findByOriginalTypeContainsIgnoreCaseAndIsAvailableTrueAndFinalPriceIsNotNull(searchRequest);
-        if (products.size() != 0) return products;
         return products;
     }
 

@@ -32,21 +32,19 @@ public class Product implements Serializable {
     @Column(name = "original_pic", length = 10000)
     private String originalPic;
 
-    private String originalGroup;
+    private String originalGroup, shortModel, shortSearchName, linkR;;
 
     /*ОБЩИЕ ПОЛЯ*/
     private String supplier;
 
+    @Column
     private LocalDate update;
 
     /*ДЛЯ ВЫВОДА НА СТРАНИЦУ*/
     private String productGroup, productType, singleType, modelName, fullName, productCategory, groupBrand;
-
     private Integer finalPrice, bonus;
-
     private Double defaultCoefficient, modCoefficient;
-
-    private Boolean isDuplicate, hasDuplicates, isAvailable;
+    private Boolean isDuplicate = false, hasDuplicates = false, isAvailable = false, coefficientMod, priceMod, brandPrice;;
 
     @Column(name = "formatted_annotation", length = 20000)
     private String formattedAnnotation;
@@ -55,23 +53,17 @@ public class Product implements Serializable {
     private String rType;
 
     @JsonIgnore
-    @Column(length = 20000)
+    @Column(length = 10000)
     private String rName;
 
-    @Column(length = 20000)
+    @Column(length = 10000)
     private String fullAnnotation;
 
-    @Column(length = 20000)
+    @Column(length = 10000)
     private String pics;
-
-    private String shortModel, shortSearchName;
-
-    private String linkR;
 
     @Column(length = 2000)
     private String localPic;
-
-    private Boolean coefficientMod, priceMod, brandPrice;
 }
 
 

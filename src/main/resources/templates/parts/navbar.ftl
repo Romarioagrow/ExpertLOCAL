@@ -35,6 +35,11 @@
                         <a class="nav-link js-scroll-trigger" href="/user/cabinet">Личный кабинет</a>
                     </#if>
                 </li>
+                <li class="nav-item">
+                    <#if isAdmin>
+                        <a class="nav-link js-scroll-trigger" href="/supplier">Поставщик</a>
+                    </#if>
+                </li>
             </ul>
         </div>
     </div>

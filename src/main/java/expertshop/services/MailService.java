@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Log
 @Service
+
 public class MailService {
     @Autowired
     private JavaMailSender mailSender;

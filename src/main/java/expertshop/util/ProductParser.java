@@ -1,4 +1,4 @@
-package expertshop.products;
+package expertshop.util;
 import com.opencsv.CSVReader;
 import expertshop.domain.BrandProduct;
 import expertshop.domain.Product;
@@ -37,7 +37,7 @@ public class ProductParser {
     private final BrandRepo brandRepo;
     private final BaseRepo baseRepo;
 
-    public void parseProducts(MultipartFile file) {
+    /*public void parseProducts(MultipartFile file) {
         if (file != null && !Objects.requireNonNull(file.getOriginalFilename()).isEmpty())
         {
             log.info("Парсинг " + file.getOriginalFilename());
@@ -53,9 +53,9 @@ public class ProductParser {
                 ex.printStackTrace();
             }
         }
-    }
+    }*/
 
-    private void parseRBT(FileInputStream inputStream) throws IOException {
+    /*private void parseRBT(FileInputStream inputStream) throws IOException {
         int countAdd = 0, countUpdate = 0;
         HSSFWorkbook workbook = new HSSFWorkbook(inputStream);
         HSSFSheet sheet = workbook.getSheetAt(0);
@@ -76,9 +76,9 @@ public class ProductParser {
         inputStream.close();
         log.info("Товаров добавлено: "   + countAdd);
         log.info("Товаров обновлено: "   + countUpdate);
-    }
+    }*/
 
-    private void parseRUSBT(FileInputStream inputStream) throws IOException {
+    /*private void parseRUSBT(FileInputStream inputStream) throws IOException {
         int countAdd = 0, countUpdate = 0;
         XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
         XSSFSheet sheet = workbook.getSheetAt(0);
@@ -99,9 +99,9 @@ public class ProductParser {
         inputStream.close();
         log.info("Товаров добавлено: "   + countAdd);
         log.info("Товаров обновлено: "   + countUpdate);
-    }
+    }*/
 
-    private void updateProduct(Row row, String productID) {
+    /*private void updateProduct(Row row, String productID) {
         Product product = productRepo.findByProductID(productID);
         if (product.getProductGroup() != null)
         {
@@ -144,9 +144,9 @@ public class ProductParser {
         }
         product.setUpdate(LocalDate.now());
         productRepo.save(product);
-    }
+    }*/
 
-    private void createProductRBT(Row row) {
+    /*private void createProductRBT(Row row) {
         try
         {
             Product product = new Product();
@@ -190,9 +190,9 @@ public class ProductParser {
         }
         catch (NullPointerException ignored) {
         }
-    }
+    }*/
 
-    private boolean ignoreUpdate(Product product) {
+    /*private boolean ignoreUpdate(Product product) {
         String brand = product.getOriginalBrand();
         return  StringUtils.equalsIgnoreCase(brand, "AMCV")     ||
                 StringUtils.equalsIgnoreCase(brand, "ARDIN")    ||
@@ -202,7 +202,7 @@ public class ProductParser {
                 StringUtils.equalsIgnoreCase(brand, "SENTORE")  ||
                 product.getPriceMod()       != null             ||
                 product.getCoefficientMod() != null;
-    }
+    }*/
 
     private int roundPrice(double coefficient, int price) {
         int finalPrice = (int) (price * coefficient);

@@ -1,6 +1,6 @@
 package expertshop.controllers;
-import expertshop.products.ProductParser;
-import expertshop.products.ProductMatcher;
+import expertshop.util.ProductParser;
+import expertshop.util.ProductBuilder;
 import expertshop.repos.OrderRepo;
 import expertshop.services.OrderService;
 import expertshop.services.ProductService;
@@ -19,18 +19,39 @@ import org.springframework.web.multipart.MultipartFile;
 @PreAuthorize("hasAuthority('ADMIN')")
 public class AdminController {
     private final ProductParser productParser;
-    private final ProductMatcher productMatcher;
+    private final ProductBuilder productBuilder;
     private final ProductService productService;
     private final OrderService orderService;
     private final OrderRepo orderRepo;
 
     @PostMapping("/updateDB")
     @PreAuthorize("hasAuthority('ADMIN')")
+    public String loadCSV(
+            Model model,
+            @RequestParam("file") MultipartFile[] files
+    ){
+        /*log.info(Arrays.toString(files));
+
+        for (MultipartFile file : files) {
+            log.info(file.toString());
+        }*/
+
+        //ArrayList<MultipartFile> supplierCatalogs = new ArrayList<>();
+        //supplierCatalogs.add(file1);
+        //supplierCatalogs.add(file2);
+
+        productBuilder.updateProductDB(files);
+        model.addAttribute("url", "db");
+        return "pages/supplier";
+    }
+
+    /*@PostMapping("/updateDB")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public String loadCSV(@RequestParam("file") MultipartFile file, Model model) {
         productMatcher.updateProductDB(file);
         model.addAttribute("url", "db");
         return "pages/supplier";
-    }
+    }*/
 
     @PostMapping("/updateBrandsProducts")
     @PreAuthorize("hasAuthority('ADMIN')")
@@ -45,7 +66,7 @@ public class AdminController {
     public String uploadPic(Model model,
                             @RequestParam("file") MultipartFile file,
                             @RequestParam (value = "upload", required = false) String productID) {
-        productMatcher.uploadProductPic(file, productID);
+        productBuilder.uploadProductPic(file, productID);
         model.addAttribute("url", "products");
         return "pages/supplier";
     }
@@ -99,7 +120,7 @@ public class AdminController {
     @PostMapping("/xxx")
     @PreAuthorize("hasAuthority('ADMIN')")
     public String matchDuplicates(Model model) {
-        productMatcher.xxx();
+        productBuilder.xxx();
         model.addAttribute("url", "db");
         return "pages/supplier";
     }

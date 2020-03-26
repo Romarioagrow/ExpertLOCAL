@@ -21,6 +21,13 @@ public class CategoriesController {
     private final ProductRepo       productRepo;
     private final UserRepo userRepo;
 
+    @GetMapping("/")
+    public String showAll(Model model, @AuthenticationPrincipal User user) {
+        model.addAttribute("url", "теле-видео-аудио");
+        model.addAttribute("order", getOrder(user));
+        return "pages/catalog";
+    }
+
     @GetMapping("/order")
     public String getOrder(Model model, @AuthenticationPrincipal User user)
     {
@@ -35,13 +42,6 @@ public class CategoriesController {
         model.addAttribute("orderedProducts", orderService.showOrderedProducts(user));
         model.addAttribute("order", getOrder(user));
         return "pages/order";
-    }
-
-    @GetMapping("/")
-    public String showAll(Model model, @AuthenticationPrincipal User user) {
-        model.addAttribute("url", "теле-видео-аудио");
-        model.addAttribute("order", getOrder(user));
-        return "pages/catalog";
     }
 
     @GetMapping("/categories")

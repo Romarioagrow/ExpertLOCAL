@@ -1,5 +1,31 @@
 <#import "../parts/template.ftl" as t>
 <#include "../parts/security.ftl">
+
+<script type="text/javascript">
+    function uploadFiles(){
+        let form = new FormData();
+        let i = 0;
+        $.each($("input[type='file']")[0].files, function(index, file) {
+            form.append('file', file);
+            index++;
+        });
+        $.ajax({
+            type: 'POST',
+            url: '/supplier/updateDB',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data : form,
+            success: function(result){
+                console.log(result);
+            },
+            error: function(err){
+                console.log(err);
+            }
+        })
+    }
+</script>
+
 <@t.template>
     <div class="container-fluid" style="margin-top: 6rem; /*width: 50rem*/" xmlns="http://www.w3.org/1999/html">
         <div class="row">
@@ -21,10 +47,26 @@
                 <div class="tab-content pt-0" style="margin-top: 2rem">
                     <div class="tab-pane fade <#if url?contains("db")>in show active</#if>" id="cat1" role="tabpanel">
 
-                        <div class="card" style="width: 30rem; margin-left: 40rem">
+                        <div class="card" style="width: 50%; margin-left: 30rem;">
                             <div class="card-body">
                                 <h3>База товаров</h3>
-                                <form method="post" action="/supplier/updateDB" enctype="multipart/form-data">
+
+                                <form class="md-form" method="post" action="/supplier/updateDB" enctype="multipart/form-data">
+                                    <div class="file-field">
+                                        <div class="btn btn-primary btn-sm float-left">
+                                            <span>XLSX Файлы</span>
+                                            <input type="file" name="files[]" multiple>
+
+                                        </div>
+                                        <div class="file-path-wrapper">
+                                            <input class="file-path validate" type="text" placeholder="RBT, RUSBT">
+                                        </div>
+                                        <div class="form-group">
+                                            <button type="button" onclick="uploadFiles(this)" class="btn btn-success btn-block">Обновить базу!</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <#--<form method="post" action="/supplier/updateDB" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <div class="custom-file">
                                             <input type="file" name="file" id="customFile">
@@ -34,16 +76,18 @@
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-success btn-lg btn-block">Обновить базу!</button>
                                     </div>
-                                </form>
+                                </form>-->
+
                                 <h3>Парсер картинок RUS</h3>
                                 <form method="POST" action="/supplier/pics">
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary">Спарсить картинки</button>
                                     </div>
+
                                 </form>
                             </div>
                         </div>
-                        <div class="card mt-3" style="width: 30rem; margin-left: 40rem">
+                        <div class="card mt-3" style="width: 50%; margin-left: 30rem;">
                             <div class="card-body">
                                 <h5>Обновить Leran и тд</h5>
                                 <form method="post" action="/supplier/updateBrandsProducts" enctype="multipart/form-data">

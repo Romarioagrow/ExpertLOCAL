@@ -1,4 +1,4 @@
-package expertshop.controllers;
+package expertshop.util;
 import lombok.extern.java.Log;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 @Log
 public class ControllerService {
-    static Map<String, String> getValidErrors(BindingResult validResult) {
+    public static Map<String, String> getValidErrors(BindingResult validResult) {
         showValidErrors(validResult);
         Collector<FieldError, ?, Map<String, String>> collector = Collectors.toMap(
                 filedError -> filedError.getField() + "Error", FieldError::getDefaultMessage
@@ -17,7 +17,7 @@ public class ControllerService {
         return validResult.getFieldErrors().stream().collect(collector);
     }
 
-    static Object getValidErrorsSet(BindingResult validResult) {
+    public static Object getValidErrorsSet(BindingResult validResult) {
         showValidErrors(validResult);
         Set<String> validErrors = new HashSet<>();
         validResult.getFieldErrors().forEach(fieldError -> validErrors.add(fieldError.getDefaultMessage()));
